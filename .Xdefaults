@@ -1,0 +1,66 @@
+!*customization: -color
+
+*VT100*colorMode: on
+*VT100*boldColors: on
+*VT100*dynamicColors: on
+
+! Uncomment this for "white" text on a dark background.
+!*VT100*foreground: gray90
+!*VT100*background: black
+! Get emacs too, and everything else while we are at it ...
+*VT100*foreground: gray90
+*VT100*background: black
+*emacs*foreground: gray90
+*emacs*background: black
+
+
+! - OR -
+! Uncomment this for black text on a "white" background.
+!*VT100*foreground: black
+!*VT100*background: gray90
+
+! - OR -
+! leave the foreground/background colors alone (at the mercy of your desktop
+! designer).
+
+! Color the popup/pulldown menu border to match the text widget's foreground.
+!*SimpleMenu*borderColor: gray15
+
+! Uncomment this to use color for underline attribute
+*VT100*colorULMode: on
+*VT100*italicULMode: on
+!*VT100*underLine: off
+
+! Uncomment this to use color for the bold attribute
+*VT100*colorBDMode: on
+
+!! Trashes ASCII terminal escapes
+! Uncomment this to use the bold/underline colors in preference to other colors
+!*VT100*colorAttrMode: on
+
+*VT100*color0: black
+*VT100*color1: red3
+*VT100*color2: green3
+*VT100*color3: yellow3
+*VT100*color4: blue
+*VT100*color5: magenta3
+*VT100*color6: cyan3
+*VT100*color7: gray90
+*VT100*color8: gray50
+*VT100*color9: red
+*VT100*color10: green
+*VT100*color11: yellow
+*VT100*color12: rgb:5c/5c/ff
+*VT100*color13: magenta
+*VT100*color14: cyan
+*VT100*color15: white
+*VT100*colorUL: green
+*VT100*colorBD: white
+
+
+
+*font: 8x16
+
+! Allows one to use mad fresh GNU meta-key combos in xterm (like I
+! need to be able to easily enter FÅÂÅÒÅ¢Å• chars)
+XTerm*metaSendsEscape: true
