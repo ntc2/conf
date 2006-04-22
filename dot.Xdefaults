@@ -58,8 +58,13 @@
 *VT100*colorBD: white
 
 
-! This might not be a very good idea ...
-*font: 8x16
+! Setting the font might not be a very good idea ...
+!*font: 8x16
+! I am finding emacs fonts by googling for ``emacs `clean 6x8'''
+! This is called clean 6x8 in emacs
+!*font: -schumacher-clean-medium-r-normal--8-*-*-*-c-60-iso8859-1
+! This is called lucidasanstypewriter-12 in emacs
+*font: -b&h-lucidatypewriter-medium-r-normal-sans-*-120-*-*-*-*-iso8859-1
 
 ! Allows one to use mad fresh GNU meta-key combos in xterm (like I
 ! need to be able to easily enter FÅÂÅÒÅ¢Å• chars)
@@ -67,3 +72,12 @@ XTerm*metaSendsEscape: true
 
 ! The computers in Deschutes 100 don't have wheel mice.
 XTerm*scrollBar: true
+! And when you have a scroll bar, you really want to scroll.
+XTerm*saveLines: 2006
+
+! Make the xclock rock.
+XClock*foreground:      black
+XClock*background:      grey
+XClock*highlight:       red
+XClock*update:          1
+XClock*chime:           true
