@@ -58,9 +58,12 @@
 *VT100*colorBD: white
 
 
-
+! This might not be a very good idea ...
 *font: 8x16
 
 ! Allows one to use mad fresh GNU meta-key combos in xterm (like I
 ! need to be able to easily enter Fåñ¢¥ chars)
 XTerm*metaSendsEscape: true
+
+! The computers in Deschutes 100 don't have wheel mice.
+XTerm*scrollBar: true
