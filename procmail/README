@@ -1,0 +1,1 @@
+You need to set some variables in rc.gmail with a custom script that is imported somewhere else, before rc.gmail is imported.
