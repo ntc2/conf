@@ -1,0 +1,37 @@
+# *** MAKE SURE YOU IMPORT rc.gmail.custom TO SET $ORIGINAL_ADDRESS *** 
+
+# rc.gmail.custom should be somthing like:
+## This is the variable, should be imported.
+##ORIGINAL_ADDRESS=ncollin1_at_uoregon_dot_edu
+
+# Stop loops:
+:0 h
+* !^X-Loop: Nathan Loop
+{
+# Add loop header:
+:0 f
+| formail -i "X-Loop: Nathan Loop"
+
+# Add orginal address header:
+:0 f
+| formail -i "X-Original-Address: $ORIGINAL_ADDRESS"
+
+# Search for this in pine or gmail or whatever.  Gmail is dumb and
+# doesn't support header filters.  *** $ORIGINAL_ADDRESS *** needs to
+# be imported.
+
+# Note: This doesn't quite work with MIME messages:  it appears in the
+# raw body, but not in the presentation.  In particular, you  can't
+# filter on it in Gmail, which basically defeats the purpose.
+
+# ${VAR:-<default>} interpolates to <default> if VAR is unset.
+
+PREPEND_STRING="[ procmailed_from ${ORIGINAL_ADDRESS:-\$ORIGINAL_ADDRESS NOT SET} ]"
+# Add a line of text to the body.  Only filter (f) the header (h):
+:0 fh
+| cat -; echo "$PREPEND_STRING"; echo
+
+# Keep a copy (c) and forward (!) to gmail
+:0 c
+! nathan.collins@gmail.com
+}
