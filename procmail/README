@@ -1,1 +1,14 @@
-You need to set some variables in rc.gmail with a custom script that is imported somewhere else, before rc.gmail is imported.
+You need to set some variables in rc.gmail with a custom script that
+is imported somewhere else, before rc.gmail is imported.
+
+E.g., on uoregon.edu, I have a .procmailrc consisting of:
+
+INCLUDERC=$HOME/rc.spamassassin
+INCLUDERC=$HOME/rc.gmail.custom
+INCLUDERC=$HOME/rc.gmail
+
+The rc.spamassassin line was put there by the uoregon spam scripts.
+
+rc.gmail.custom consists of:
+
+ORIGINAL_ADDRESS=ncollin1_at_uoregon_dot_edu
