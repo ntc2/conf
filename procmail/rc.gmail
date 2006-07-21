@@ -16,6 +16,15 @@
 :0 f
 | formail -i "X-Original-Address: $ORIGINAL_ADDRESS"
 
+# From the header (h) extract (-x) the subject with white space
+# removed (-z):
+:0 h
+SUBJECT=| formail -zx 'Subject:'
+
+# Insert (-i) a modified subject by filtering (f) the header (h):
+:0 fh
+| formail -i "Subject: $SUBJECT [ORCPT:$ORIGINAL_ADDRESS]"
+
 # Search for this in pine or gmail or whatever.  Gmail is dumb and
 # doesn't support header filters.  *** $ORIGINAL_ADDRESS *** needs to
 # be imported.
@@ -26,10 +35,10 @@
 
 # ${VAR:-<default>} interpolates to <default> if VAR is unset.
 
-PREPEND_STRING="[ procmailed_from ${ORIGINAL_ADDRESS:-\$ORIGINAL_ADDRESS NOT SET} ]"
-# Add a line of text to the body.  Only filter (f) the header (h):
-:0 fh
-| cat -; echo "$PREPEND_STRING"; echo
+#PREPEND_STRING="[ procmailed_from ${ORIGINAL_ADDRESS:-\$ORIGINAL_ADDRESS NOT SET} ]"
+## Add a line of text to the body.  Only filter (f) the header (h):
+#:0 fh
+#| cat -; echo "$PREPEND_STRING"; echo
 
 # Keep a copy (c) and forward (!) to gmail
 :0 c
