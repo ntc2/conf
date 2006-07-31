@@ -58,6 +58,7 @@ load-custom () {
     fi
 }
 load-custom ~/.LESSOPEN
+load-custom ~/local/scripts/maybe-capswap.sh
 
 alias grep="egrep --color=auto"
 # Colorized case insensitive egrep with context

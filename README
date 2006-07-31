@@ -1,1 +1,5 @@
-THIS REPOSITORY IS FOR CONFIGURATION AND RELATED FILES LIKE .bashrc OR MOZILLA bookmarks.html
+THIS REPOSITORY IS FOR CONFIGURATION AND RELATED FILES LIKE .bashrc OR
+MOZILLA bookmarks.html
+
+The scripts assume the existence of ~/local/scripts.  Ad hoc as heck,
+huh?
