@@ -140,3 +140,8 @@ SAVEHIST=1000
 HISTSIZE=10000
 # Share history between processes.  This is annoying
 #setopt SHARE_HISTORY
+
+# Python
+
+# Doesn't work with ~ in path.
+export PYTHONSTARTUP="$HOME/.pythonrc"
