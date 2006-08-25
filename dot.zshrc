@@ -125,7 +125,7 @@ $bl\$$pl "
 
 PS2="$gr%_$pl> "
 
-umask 022
+umask 077
 
 #             #
 ##           ##
