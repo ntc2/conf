@@ -10,10 +10,14 @@ PATH=~/local/scripts${PATH:+:$PATH}
 # lock, and switching it if it is.  So this is probably nonsense, in
 # that it will break Sun keyboards that have control in the right
 # place to begin with.
-
-if [ $(xmodmap | grep lock | awk '{ print $3 }') = '(0x42)' ]; then
-    echo Swapping control and caps lock
-    capswap.sh
+if [ -n "$DISPLAY" ]; then
+    if [ $(xmodmap | grep lock | awk '{ print $3 }') = '(0x42)' ]; then
+	echo Swapping control and caps lock
+	capswap.sh
+    else
+	echo Control and caps lock are properly mapped
+    fi
 else
-    echo Control and caps lock are properly mapped
+    echo \$DISPLAY not set, so can\'t use xmodmap to remap keys
+    echo Control and caps lock are probably not properly mapped
 fi
