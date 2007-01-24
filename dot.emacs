@@ -7,9 +7,11 @@
  '(mouse-wheel-follow-mouse t)
  '(mouse-wheel-mode t nil (mwheel))
  '(ps-line-number t)
+ '(save-place t nil (saveplace))
  '(show-paren-mode t nil (paren))
  '(standard-indent 4)
- '(transient-mark-mode t))
+ '(transient-mark-mode t)
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 (custom-set-faces
   ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
   ;; Your init file should contain only one such instance.
@@ -27,6 +29,7 @@
 ; code here.  This is useful if I want to version control my .emacs,
 ; because I might not want to load all the same stuff on all systems
 ; (e.g. no need for matlab-mode on a system without matlab).
-(load-file "~/.emacs.d/system-custom.el")
-
-(put 'upcase-region 'disabled nil)
+(let ((file "~/.emacs.d/system-custom.el"))
+  (if (file-exists-p file)
+       (load-file file)))
+  
