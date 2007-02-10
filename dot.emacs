@@ -17,9 +17,36 @@
   ;; Your init file should contain only one such instance.
  )
 
-;; Make it darker
+; Make it darker
 (set-foreground-color "grey")
 (set-background-color "black")
+
+;;; Some customization from the UW CSL .emacs
+(column-number-mode t)
+(display-time)
+
+;; If you would like smooth scrolling, uncomment this line
+(setq scroll-step 1)
+
+;; For a much better buffer list:
+(global-set-key "\C-x\C-b" 'electric-buffer-list)
+
+; Not sure which modes become more decorated?
+(setq font-lock-maximum-decoration t)
+
+; A useful looking snippet for setting up custom colors...
+
+;        (font-lock-make-faces t)
+;        (setq font-lock-face-attributes
+;              '((font-lock-comment-face "Firebrick")
+;                (font-lock-string-face "RosyBrown")
+;                (font-lock-keyword-face "Purple")
+;                (font-lock-function-name-face "Blue")
+;                (font-lock-variable-name-face "DarkGoldenrod")
+;                (font-lock-type-face "DarkOliveGreen")
+;                (font-lock-reference-face "CadetBlue")))
+
+;;; End CSL stuff
 
 ;; Make custom modes available
 
