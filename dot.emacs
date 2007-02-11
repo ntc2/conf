@@ -9,7 +9,10 @@
  '(ps-line-number t)
  '(save-place t nil (saveplace))
  '(show-paren-mode t nil (paren))
- '(standard-indent 4)
+ '(standard-indent 2)
+ ; Don't use tabs to indent.  Use spaces instead.
+ '(indent-tabs-mode nil)
+ '(tab-width 2)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 (custom-set-faces
