@@ -57,6 +57,7 @@ load-custom () {
 	echo "Skipping missing extension $FILE"
     fi
 }
+load-custom ~/.zshrc.system-custom
 load-custom ~/.LESSOPEN
 load-custom ~/local/scripts/maybe-capswap.sh
 
