@@ -37,6 +37,10 @@
 ; Not sure which modes become more decorated?
 (setq font-lock-maximum-decoration t)
 
+; The default history length, at least in sml-run, is apparently 30,
+; which is pretty worthless for an interpreter.
+(setq history-length 500)
+
 ; A useful looking snippet for setting up custom colors...
 
 ;        (font-lock-make-faces t)
