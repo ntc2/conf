@@ -21,7 +21,50 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+## Prompt (Colors!)
 
+# Set up the prompt.  I think it would be inherited, but a sys script
+# (/etc/bash.bashrc) overrides it for each new shell.
+
+# See PROMPT EXPANSION in man zshmisc for details.
+
+rd=%{$'\e[31m'%}	# red
+gr=%{$'\e[32m'%}	# green
+yl=%{$'\e[33m'%}	# yellow
+bl=%{$'\e[34m'%}	# blue
+pl=%{$'\e[0m'%}		# plain
+bk=%{$'\e[5m'%}		# blinking
+bd=%{$'\e[1m'%}		# bold
+
+# Now this is a prompt.
+PS1="[$rd%n$pl@$bl%m$pl][$gr%/$pl][%%$rd%j$pl][#$bd%h$pl][%*]
+$bl\$$pl "
+
+PS2="$gr%_$pl> "
+
+# Fancy looking messages.
+message () {
+    # -P means interpret % escapes
+    print -P "${rd}[${bl}* ${gr}$@ ${bl}*${rd}]${pl}"
+}
+
+## Platform specific extensions
+
+message Loading extensions
+load-custom () {
+    local FILE=$1
+    if [ -e $FILE ]; then
+	source $FILE
+	echo "Loaded extension $FILE"
+    else
+	echo "Skipping missing extension $FILE"
+    fi
+}
+load-custom ~/.zshrc.system-custom
+load-custom ~/.LESSOPEN
+load-custom ~/local/scripts/maybe-capswap.sh
+
+## Two million aliases
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -30,7 +73,6 @@ compinit
 #10/1/04 a good ol` fashion bashrc
 #
 # to lazy to learn tcsh, not to mention bash rocks anyway.
-#
 
 alias ls="ls --color=auto"
 alias l="ls -lF"
@@ -47,19 +89,6 @@ alias xterm="xterm -sb"
 
 # Interpret ascii escapes and show verbose status and ignore case in searches
 alias less="less -RMi"
-# Platform specific extensions
-load-custom () {
-    FILE=$1
-    if [ -e $FILE ]; then
-	source $FILE
-	echo "Loaded extension $FILE"
-    else
-	echo "Skipping missing extension $FILE"
-    fi
-}
-load-custom ~/.zshrc.system-custom
-load-custom ~/.LESSOPEN
-load-custom ~/local/scripts/maybe-capswap.sh
 
 alias grep="egrep --color=auto"
 # Colorized case insensitive egrep with context
@@ -70,6 +99,8 @@ alias eg="grep -niC2"
 ## it had default properties.  i set up properties for all instances in my 
 ## .Xdefaults file.
 # alias xclock="xclock -fg black -bg grey -hl red -update 1 -chime"
+
+## A million random functions
 
 # super cool dir listerator.  trippy.
 lsd () { l $@ | egrep '^d'; }
@@ -100,39 +131,13 @@ iperl ()
     perl -ne 'BEGIN { print ">> " }; print eval "$_"; print "\n>> "'
 }
 
-
 # if we are graphical kill that god awful bell:
 if [ $DISPLAY ]; then
     xset -b
 #    xrdb -merge ~/.Xdefaults
 fi
 
-# Set up the prompt.  I think it would be inherited, but a sys script
-# (/etc/bash.bashrc) overrides it for each new shell.
-
-# See Prompting in man bash^H^H^H^H zshmisc for details.
-
-rd=%{$'\e[31m'%}	# red
-gr=%{$'\e[32m'%}	# green
-yl=%{$'\e[33m'%}	# yellow
-bl=%{$'\e[34m'%}	# blue
-pl=%{$'\e[0m'%}		# plain
-bk=%{$'\e[5m'%}		# blinking
-bd=%{$'\e[1m'%}		# bold
-
-# Now this is a prompt.
-PS1="[$rd%n$pl@$bl%m$pl][$gr%/$pl][%%$rd%j$pl][#$bd%h$pl][%*]
-$bl\$$pl "
-
-PS2="$gr%_$pl> "
-
-umask 077
-
-#             #
-##           ##
-### HISTORY ###
-##           ##
-#             #
+## HISTORY
 
 # If these first two aren't set no history is saved or loaded
 HISTFILE=~/.zsh-history
@@ -142,7 +147,19 @@ HISTSIZE=10000
 # Share history between processes.  This is annoying
 #setopt SHARE_HISTORY
 
-# Python
+## Python 
 
 # Doesn't work with ~ in path.
 export PYTHONSTARTUP="$HOME/.pythonrc"
+
+## Run last
+
+# Remind me to make sure all my conf repos are current.
+message SVN conf dir info
+(# Make conf_dir go out of scope after the svn commands
+    conf_dir=$(dirname $(readlink -f ~/.zshrc))
+    svn info  $conf_dir # General info
+    svn st -q $conf_dir # Prints uncommitted modifications
+)
+
+umask 077
