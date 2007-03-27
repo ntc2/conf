@@ -94,6 +94,10 @@ alias grep="egrep --color=auto"
 # Colorized case insensitive egrep with context
 alias eg="grep -niC2"
 
+# Subversion
+alias svnlsjunk="svn st | grep '^\\?' | awk '{print \$2}'"
+alias svnrmjunk="svnlsjunk | xargs rm"
+
 # make the xclock look super neat (TM).
 ## this was problematic because when i started the xclock from ions run menu
 ## it had default properties.  i set up properties for all instances in my 
