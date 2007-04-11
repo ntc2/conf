@@ -5,7 +5,7 @@ PATH=~/local/scripts${PATH:+:$PATH}
 
 # Pass in a command and have it serialized
 serialize () {
-    if which lockfile 2>/dev/null ; then
+    if which lockfile &>/dev/null ; then
         LOCKFILE=~/local/scripts/maybe-capswap.lock
         # lockfile -sleeptime waits sleeptime seconds between retries
         # when I lockfile is found.  Default was 8 seconds I think.
