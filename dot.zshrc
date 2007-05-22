@@ -151,6 +151,10 @@ HISTSIZE=10000
 # Share history between processes.  This is annoying
 #setopt SHARE_HISTORY
 
+## Emacs
+
+export VISUAL=emacs EDITOR=emacs
+
 ## Python 
 
 # Doesn't work with ~ in path.
