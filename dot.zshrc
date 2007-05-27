@@ -17,7 +17,7 @@ zstyle ':completion:*' substitute 1
 zstyle ':completion:*' verbose true
 zstyle :compinstall filename '/root/.zshrc'
 
-autoload -Uz compinit
+autoload -U compinit
 compinit
 # End of lines added by compinstall
 
