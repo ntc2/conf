@@ -96,7 +96,7 @@ alias eg="grep -niC2"
 
 # Subversion
 alias svnlsjunk="svn st | grep '^\\?' | awk '{print \$2}'"
-alias svnrmjunk="svnlsjunk | xargs rm"
+alias svnrmjunk="svnlsjunk | xargs rm -r"
 
 # make the xclock look super neat (TM).
 ## this was problematic because when i started the xclock from ions run menu
