@@ -74,8 +74,8 @@ load-custom ~/local/scripts/maybe-capswap.sh
 #
 # to lazy to learn tcsh, not to mention bash rocks anyway.
 
-alias ls="ls --color=auto"
-alias l="ls -lF"
+alias ls="ls --color=auto -F"
+alias l="ls -l"
 alias la="l -a"
 eval $(dircolors)
 
