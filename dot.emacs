@@ -39,7 +39,7 @@
 
 ; The default history length, at least in sml-run, is apparently 30,
 ; which is pretty worthless for an interpreter.
-(setq history-length 500)
+(setq history-length 5000)
 
 ; A useful looking snippet for setting up custom colors...
 
