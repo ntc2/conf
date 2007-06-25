@@ -4,14 +4,15 @@
  '(case-fold-search t)
  '(current-language-environment "English")
  '(global-font-lock-mode t nil (font-lock))
+ '(indent-tabs-mode nil)
  '(mouse-wheel-follow-mouse t)
  '(mouse-wheel-mode t nil (mwheel))
+ '(ps-black-white-faces (quote ((font-lock-builtin-face "black" nil bold underline) (font-lock-comment-face "gray20" nil italic) (font-lock-constant-face "black" nil bold) (font-lock-function-name-face "black" nil bold) (font-lock-keyword-face "black" nil bold underline) (font-lock-string-face "black" nil italic) (font-lock-type-face "black" nil italic) (font-lock-variable-name-face "black" nil bold italic) (font-lock-warning-face "black" nil bold italic))))
  '(ps-line-number t)
+ '(ps-print-color-p (quote black-white))
  '(save-place t nil (saveplace))
  '(show-paren-mode t nil (paren))
  '(standard-indent 2)
- ; Don't use tabs to indent.  Use spaces instead.
- '(indent-tabs-mode nil)
  '(tab-width 2)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
@@ -19,6 +20,18 @@
   ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
   ;; Your init file should contain only one such instance.
  )
+
+; Soft wrap lines in split frames.  Lines in full width frames are
+; soft wrapped by default, and lines in split frames are truncated by
+; default.
+(setq truncate-partial-width-windows nil)
+
+; Always spell check in text mode, and any font-locked mode, which,
+; together, is most modes.  Might be better to use M-$ and M-x
+; flyspell-region in coding modes ...
+(mapc (lambda (hook) (add-hook hook (lambda () (flyspell-mode t))))
+      '(text-mode-hook font-lock-mode-hook)) ; I don't really
+					     ; understand why I don't need more quotes?
 
 ; Make it darker
 (set-foreground-color "grey")
