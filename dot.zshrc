@@ -42,6 +42,14 @@ $bl\$$pl "
 
 PS2="$gr%_$pl> "
 
+# By default zsh backs up to the beginning of the line (opt name
+# implies it's a carriage return) before displaying the prompt, so
+# output that doesn't end in newline gets covered up, e.g. if you echo
+# -n <some string> then <some string> gets covered by the prompt.
+# This can be confusing, so we turn the "feature" off.
+
+setopt nopromptcr
+
 # Fancy looking messages.
 message () {
     # -P means interpret % escapes
