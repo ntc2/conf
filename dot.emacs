@@ -54,6 +54,9 @@
 ; which is pretty worthless for an interpreter.
 (setq history-length 5000)
 
+;; Make emacs shell display ascii color escapes properly.
+(ansi-color-for-comint-mode-on)
+
 ; A useful looking snippet for setting up custom colors...
 
 ;        (font-lock-make-faces t)
