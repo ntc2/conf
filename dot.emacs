@@ -13,13 +13,16 @@
  '(save-place t nil (saveplace))
  '(show-paren-mode t nil (paren))
  '(standard-indent 2)
- '(tab-width 2)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 (custom-set-faces
   ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
   ;; Your init file should contain only one such instance.
  )
+; '(tab-width 2) ; removed.
+
+(iswitchb-mode t)
+(icomplete-mode t)
 
 ; Soft wrap lines in split frames.  Lines in full width frames are
 ; soft wrapped by default, and lines in split frames are truncated by
