@@ -61,7 +61,7 @@
 [miscellany]
 ### Set global-ignores to a set of whitespace-delimited globs
 ### which Subversion will ignore in its 'status' output.
-global-ignores = *.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class *.pyc
+global-ignores = *.o *.lo *.la #*#  .*~ *~ *.class *.pyc *.out *.out.* RCS TAGS
 ### Set log-encoding to the default encoding for log messages
 # log-encoding = latin1
 ### Set use-commit-times to make checkout/update/switch/revert
@@ -86,9 +86,9 @@ enable-auto-props = yes
 # *.dsp = svn:eol-style=CRLF
 # *.dsw = svn:eol-style=CRLF
 # *.sh = svn:eol-style=native;svn:executable
-#*.{java,txt} = svn:eol-style=native;svn:keywords=Author Date;
-*.java = svn:eol-style=native;svn:keywords=Author Date;
-*.txt  = svn:eol-style=native;svn:keywords=Author Date;
+#*.{java,txt} = svn:eol-style=native;svn:keywords=Author Date; # Doesn't work
+# *.java = svn:eol-style=native;svn:keywords=Author Date;
+# *.txt  = svn:eol-style=native;svn:keywords=Author Date;
 # *.png = svn:mime-type=image/png
 # *.jpg = svn:mime-type=image/jpeg
 # Makefile = svn:eol-style=native
