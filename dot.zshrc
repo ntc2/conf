@@ -42,6 +42,15 @@ $bl\$$pl "
 
 PS2="$gr%_$pl> "
 
+# Based on snippet from http://forums.gentoo.org/viewtopic-p-176209.html#176209.
+case $TERM in
+    *xterm*|rxvt|(dt|k|E)term)
+        precmd () { print -Pn "\e]0;$HOST:%~\a" }
+        preexec () { print -Pn "\e]0;$HOST:$1\a" }
+        ;;
+esac
+
+
 # By default zsh backs up to the beginning of the line (opt name
 # implies it's a carriage return) before displaying the prompt, so
 # output that doesn't end in newline gets covered up, e.g. if you echo
@@ -62,10 +71,10 @@ message Loading extensions
 load-custom () {
     local FILE=$1
     if [ -e $FILE ]; then
-	source $FILE
-	echo "Loaded extension $FILE"
+	      source $FILE
+	      echo "Loaded extension $FILE"
     else
-	echo "Skipping missing extension $FILE"
+	      echo "Skipping missing extension $FILE"
     fi
 }
 load-custom ~/.zshrc.system-custom
@@ -82,7 +91,7 @@ load-custom ~/local/scripts/maybe-capswap.sh
 #
 # to lazy to learn tcsh, not to mention bash rocks anyway.
 
-alias ls="ls --color=auto -F"
+alias ls="ls --color=auto -Fh"
 alias l="ls -l"
 alias la="l -a"
 eval $(dircolors)
