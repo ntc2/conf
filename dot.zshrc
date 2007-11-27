@@ -128,6 +128,10 @@ lsd () { l $@ | egrep '^d'; }
 # there is an argument.
 ldot () { l -d ${1:+${1/%\//}/}.*; }
 
+# List all the executable files in $1, or ./ if no args.
+lsex () { find ${1:-./} -maxdepth 1 -perm +0100 -type f; }
+lsex () { \ls -F "$@" | \grep '\*' | sed -re 's/\*$//g'; }
+
 # Fancy log output.  Pass log file name as input.  Highlights perl files and line nums, and indents stack trace.
 log-tail(){ tail -f $1 |sed -re 's/\\n/\n\t/gp' -e "s/^$|[0-9]+|[^ ]*\.p[^ ]*/`echo -ne '\e[31m'`&`echo -ne '\e[0m'`/g";}
 
@@ -148,6 +152,15 @@ if [ $DISPLAY ]; then
     xset -b
 #    xrdb -merge ~/.Xdefaults
 fi
+
+# Make HOME and END work.
+
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+case $TERM in (xterm*)
+    bindkey '\e[H' beginning-of-line
+    bindkey '\e[F' end-of-line ;;
+esac
 
 ## HISTORY
 
