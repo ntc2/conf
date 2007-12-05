@@ -168,7 +168,9 @@ bindkey '\e[1~' beginning-of-line
 bindkey '\e[4~' end-of-line
 case $TERM in (xterm*)
     bindkey '\e[H' beginning-of-line
-    bindkey '\e[F' end-of-line ;;
+    bindkey '\eOH' beginning-of-line
+    bindkey '\e[F' end-of-line
+    bindkey '\eOF' end-of-line ;;
 esac
 
 ## HISTORY
