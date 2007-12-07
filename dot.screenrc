@@ -1,0 +1,9 @@
+# ~/.screenrc
+# use visual bell
+vbell on
+# replace ctrl-A by ctrl-O
+escape ^Oo
+# set a big scrolling buffer
+defscrollback 5000
+# Set the caption on the bottom line to display all windows
+caption always "%{= kw}%-w%{= BW}%n %t%{-}%+w %-= @%H - %LD %d %LM - %c"
