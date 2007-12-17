@@ -21,6 +21,10 @@ autoload -U compinit
 compinit
 # End of lines added by compinstall
 
+# Path
+
+export PATH=$PATH:~/local/bin
+
 ## Prompt (Colors!)
 
 # Set up the prompt.  I think it would be inherited, but a sys script
