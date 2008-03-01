@@ -166,6 +166,8 @@ if [ $DISPLAY ]; then
 #    xrdb -merge ~/.Xdefaults
 fi
 
+## Key bindings
+
 # Make HOME and END work.
 
 bindkey '\e[1~' beginning-of-line
@@ -176,6 +178,11 @@ case $TERM in (xterm*)
     bindkey '\e[F' end-of-line
     bindkey '\eOF' end-of-line ;;
 esac
+
+# Enable emacs style line opening in when editing multiline commands
+# in history.
+
+bindkey '^O' vi-open-line-above
 
 ## HISTORY
 
