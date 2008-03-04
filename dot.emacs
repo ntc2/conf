@@ -37,8 +37,8 @@
 					     ; understand why I don't need more quotes?
 
 ; Make it darker
-(set-foreground-color "grey")
-(set-background-color "black")
+;(set-foreground-color "grey")
+;(set-background-color "black")
 
 ;;; Some customization from the UW CSL .emacs
 (column-number-mode t)
@@ -83,7 +83,7 @@
 ;; save the desktop file automatically if it already exists
 (setq desktop-save 'if-exists)
 ;NC This was causing an undefined var error on startup
-;(desktop-save-mode 1)
+(desktop-save-mode 1)
 
 ;; save a bunch of variables to the desktop file
 ;; for lists specify the len of the maximal saved data also
