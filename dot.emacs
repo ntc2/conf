@@ -82,8 +82,8 @@
 ;; save a list of open files in ~/.emacs.desktop
 ;; save the desktop file automatically if it already exists
 (setq desktop-save 'if-exists)
-;NC This was causing an undefined var error on startup
-(desktop-save-mode 1)
+(when (boundp 'desktop-save-mode) ; Not defined on UW CS machines.
+  (desktop-save-mode 1))
 
 ;; save a bunch of variables to the desktop file
 ;; for lists specify the len of the maximal saved data also
