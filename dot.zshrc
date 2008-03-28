@@ -213,4 +213,4 @@ message SVN conf dir info
     svn st -q $conf_dir # Prints uncommitted modifications
 )
 
-umask 077
+umask 022
