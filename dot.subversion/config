@@ -32,7 +32,7 @@
 # diff3-has-program-arg = [true | false]
 
 ### Section for configuring tunnel agents.
-# [tunnels]
+[tunnels]
 ### Configure svn protocol tunnel schemes here.  By default, only
 ### the 'ssh' scheme is defined.  You can define other schemes to
 ### be used with 'svn+scheme://hostname/path' URLs.  A scheme
@@ -46,7 +46,7 @@
 ### passed to the tunnel agent as <user>@<hostname>.)  If the
 ### built-in ssh scheme were not predefined, it could be defined
 ### as:
-# ssh = $SVN_SSH ssh
+2222ssh = ssh -p 2222
 ### If you wanted to define a new 'rsh' scheme, to be used with
 ### 'svn+rsh:' URLs, you could do so as follows:
 # rsh = rsh
