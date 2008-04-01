@@ -21,6 +21,10 @@ autoload -U compinit
 compinit
 # End of lines added by compinstall
 
+# Enable "tab once" completion, e.g.
+# /u/s/d/python<TAB> => /usr/share/doc/python
+compctl -D -f + -U -Q -K multicomp 
+
 # Path
 
 export PATH=$PATH:~/local/bin
