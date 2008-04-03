@@ -40,6 +40,10 @@
 ;(set-foreground-color "grey")
 ;(set-background-color "black")
 
+;; Enable math-mode by default, i.e. the ` escapes in auctex.
+;(require 'latex)                ; defines LaTeX-math-mode
+(add-hook 'TeX-mode-hook 'LaTeX-math-mode)
+
 ;;; Some customization from the UW CSL .emacs
 (column-number-mode t)
 (display-time)
