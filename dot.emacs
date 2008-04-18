@@ -23,6 +23,7 @@
 
 (iswitchb-mode t)
 (icomplete-mode t)
+(partial-completion-mode t)
 
 ; Soft wrap lines in split frames.  Lines in full width frames are
 ; soft wrapped by default, and lines in split frames are truncated by
