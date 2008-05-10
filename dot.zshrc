@@ -53,8 +53,8 @@ PS2="$gr%_$pl> "
 # Based on snippet from http://forums.gentoo.org/viewtopic-p-176209.html#176209.
 case $TERM in
     *xterm*|rxvt|(dt|k|E)term)
-        precmd () { print -Pn "\e]0;$HOST:%~\a" }
-        preexec () { print -Pn "\e]0;$HOST:$1\a" }
+        precmd () { print -Pn "\e]0;$(hostname | cut -d . -f 1):%~\a" }
+        preexec () { print -Pn "\e]0;$(hostname | cut -d . -f 1):$1\a" }
         ;;
 esac
 
@@ -205,6 +205,7 @@ export VISUAL=emacs EDITOR=emacs
 ## Python 
 
 # Doesn't work with ~ in path.
+export PYTHONPATH=$PYTHONPATH:$HOME/local/scripts
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
 ## Run last
