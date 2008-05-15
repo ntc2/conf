@@ -20,8 +20,8 @@
 
     # From the header (h) extract (-x) the subject with white space
     # removed (-z):
-    :0 h
-    SUBJECT=| formail -zx 'Subject:'
+#    :0 h
+#    SUBJECT=| formail -zx 'Subject:'
     # Note: The above =| trick *only* works in recipes.  However, you
     # can use backticks (`` but not $()) anywhere.  So, e.g., if you
     # are trying to figure out the current working dir when procmail
@@ -35,8 +35,8 @@
     # file.
 
     # Insert (-i) a modified subject by filtering (f) the header (h):
-    :0 fh
-    | formail -i "Subject: $SUBJECT [ORCPT:$ORIGINAL_ADDRESS]"
+#    :0 fh
+#    | formail -i "Subject: $SUBJECT [ORCPT:$ORIGINAL_ADDRESS]"
 
     # Forward (!) to gmail
     :0
