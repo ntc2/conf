@@ -21,6 +21,13 @@
  )
 ; '(tab-width 2) ; removed.
 
+; Make all backups in same place: Avoid clutter, and danger of typing
+; {rm -rf * ~} instead of {rm -rf *~} when removing clutter. See
+; http://www.gnu.org/software/emacs/manual/html_node/emacs/Backup.html
+; for some explanation of when backups are created, and some ways to
+; force backup creation.
+(setq backup-directory-alist '(("" . "~/.emacs-backups")))
+
 (iswitchb-mode t)
 (icomplete-mode t)
 (partial-completion-mode t)
