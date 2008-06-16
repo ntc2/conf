@@ -8,12 +8,11 @@ def foo(bar):
         if baz(x):
             import ipydb # <-- start IPython here, with current value of x.
 '''
-import inspect
+import inspect,IPython
+
 __up_frame = inspect.currentframe().f_back
-import IPython
 eval('IPython.Shell.IPShellEmbed([])()', # Empty list arg is ipythons argv
      __up_frame.f_globals,
      dict(__up_frame.f_locals.items() + locals().items()))
-# Exit right away.
-#import sys
-#sys.exit(1)
+import sys
+del sys.modules[__name__]
