@@ -86,8 +86,12 @@ load-custom () {
     fi
 }
 load-custom ~/.zshrc.system-custom
-load-custom ~/.LESSOPEN
+#load-custom ~/.LESSOPEN
 load-custom ~/local/scripts/maybe-capswap.sh
+
+if which lesspipe &>/dev/null; then
+    eval $(lesspipe)
+fi
 
 ## Two million aliases
 
