@@ -1,2 +1,0 @@
-# -*- shell-script -*-
-export LESSOPEN="|lesspipe.sh %s"

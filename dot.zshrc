@@ -86,7 +86,6 @@ load-custom () {
     fi
 }
 load-custom ~/.zshrc.system-custom
-#load-custom ~/.LESSOPEN
 load-custom ~/local/scripts/maybe-capswap.sh
 
 if which lesspipe &>/dev/null; then
@@ -211,6 +210,18 @@ export VISUAL=emacs EDITOR=emacs
 # Doesn't work with ~ in path.
 export PYTHONPATH=$PYTHONPATH:$HOME/local/scripts
 export PYTHONSTARTUP="$HOME/.pythonrc"
+
+## LESSOPEN
+
+# standard
+if which lesspipe &>/dev/null; then
+    eval $(lesspipe)
+# Gentoo
+elif which lesspipe.sh &>/dev/null; then
+    export LESSOPEN="|lesspipe.sh %s"
+else
+    message "Unable to setup LESSOPEN filter."
+fi
 
 ## Run last
 
