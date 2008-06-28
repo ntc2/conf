@@ -196,7 +196,7 @@ bindkey '^O' vi-open-line-above
 # If these first two aren't set no history is saved or loaded
 HISTFILE=~/.zsh-history
 # How many command to save
-SAVEHIST=1000
+SAVEHIST=10000
 HISTSIZE=10000
 # Share history between processes.  This is annoying
 #setopt SHARE_HISTORY
