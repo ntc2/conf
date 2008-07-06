@@ -200,6 +200,8 @@ SAVEHIST=10000
 HISTSIZE=10000
 # Share history between processes.  This is annoying
 #setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY # use fc -RI to manually merge the other shells' history
+alias mergehist="fc -RI"
 
 ## Emacs
 
