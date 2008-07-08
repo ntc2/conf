@@ -1,3 +1,4 @@
+;-*- emacs-lisp -*-
 (custom-set-variables
   ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
   ;; Your init file should contain only one such instance.
@@ -43,6 +44,13 @@
 (mapc (lambda (hook) (add-hook hook (lambda () (flyspell-mode t))))
       '(text-mode-hook font-lock-mode-hook)) ; I don't really
 					     ; understand why I don't need more quotes?
+
+; vi/less style jk navigation in view-mode.  Kind of pointless because
+; du keys scroll half page.  But the default <enter>y for <down><up>
+; were too annoying.
+(mapc (lambda (kv) (define-key view-mode-map (car kv) (cadr kv)))
+      '(("j" View-scroll-line-forward)
+        ("k" View-scroll-line-backward)))
 
 ; Make it darker
 ;(set-foreground-color "grey")
