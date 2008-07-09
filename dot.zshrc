@@ -87,7 +87,6 @@ load-custom () {
 }
 load-custom ~/.zshrc.system-custom
 load-custom ~/local/scripts/maybe-capswap.sh
-load-custom ~/local/scripts/gen-fix-ssh.sh
 
 if which lesspipe &>/dev/null; then
     eval $(lesspipe)
@@ -225,6 +224,11 @@ elif which lesspipe.sh &>/dev/null; then
 else
     message "Unable to setup LESSOPEN filter."
 fi
+
+## Screen
+
+alias genfixssh='source ~/local/scripts/gen-fix-ssh.sh'
+alias attach='genfixssh ; screen -dRR'
 
 ## Run last
 
