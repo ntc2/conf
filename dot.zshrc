@@ -87,6 +87,7 @@ load-custom () {
 }
 load-custom ~/.zshrc.system-custom
 load-custom ~/local/scripts/maybe-capswap.sh
+load-custom ~/local/scripts/gen-fix-ssh.sh
 
 if which lesspipe &>/dev/null; then
     eval $(lesspipe)
