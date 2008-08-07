@@ -118,9 +118,9 @@ alias xterm="xterm -sb"
 # Interpret ascii escapes and show verbose status and ignore case in searches
 alias less="less -RMi"
 
-alias grep="egrep --color=auto"
+alias grep="egrep -nH --color=auto"
 # Colorized case insensitive egrep with context
-alias eg="grep -niC2"
+alias eg="grep -iC2"
 
 # Subversion
 alias svnlsjunk="svn st | grep '^\\?' | awk '{print \$2}'"
