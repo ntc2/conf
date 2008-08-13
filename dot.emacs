@@ -1,11 +1,17 @@
 ;-*- emacs-lisp -*-
 (custom-set-variables
-  ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  '(case-fold-search t)
  '(current-language-environment "English")
  '(global-font-lock-mode t nil (font-lock))
  '(indent-tabs-mode nil)
+ '(js2-auto-indent-flag nil)
+ '(js2-bounce-indent-flag t)
+ '(js2-highlight-level 3)
+ '(js2-mirror-mode nil)
  '(mouse-wheel-follow-mouse t)
  '(mouse-wheel-mode t nil (mwheel))
  '(ps-black-white-faces (quote ((font-lock-builtin-face "black" nil bold underline) (font-lock-comment-face "gray20" nil italic) (font-lock-constant-face "black" nil bold) (font-lock-function-name-face "black" nil bold) (font-lock-keyword-face "black" nil bold underline) (font-lock-string-face "black" nil italic) (font-lock-type-face "black" nil italic) (font-lock-variable-name-face "black" nil bold italic) (font-lock-warning-face "black" nil bold italic))))
@@ -17,8 +23,10 @@
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  )
 ; '(tab-width 2) ; removed.
 
@@ -38,12 +46,17 @@
 ; default.
 (setq truncate-partial-width-windows nil)
 
-; Always spell check in text mode, and any font-locked mode, which,
-; together, is most modes.  Might be better to use M-$ and M-x
-; flyspell-region in coding modes ...
+; Make svn commits hapen in text mode. SVN commit tmp files have names
+; like svn-commit.2.tmp or svn-commit.tmp.  NB: it seems the file name
+; that the auto-mode regexps match against is a *full* path, so it
+; doesn't work to anchor at the beginning (^).
+(add-to-list 'auto-mode-alist '("svn-commit\\(\\.[0-9]+\\)?\\.tmp$" . text-mode))
+
+; Always spell check in text mode.  Use M-$ and M-x flyspell-region in
+; coding modes.
 (mapc (lambda (hook) (add-hook hook (lambda () (flyspell-mode t))))
-      '(text-mode-hook font-lock-mode-hook)) ; I don't really
-					     ; understand why I don't need more quotes?
+      '(text-mode-hook)) ; I don't really understand why I don't need
+                         ; more quotes?
 
 ; vi/less style jk navigation in view-mode.  Kind of pointless because
 ; du keys scroll half page.  But the default <enter>y for <down><up>
