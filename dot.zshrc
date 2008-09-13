@@ -25,6 +25,15 @@ compinit
 # /u/s/d/python<TAB> => /usr/share/doc/python
 compctl -D -f + -U -Q -K multicomp 
 
+# SSH host completion (from Gentoo Wiki:
+# http://gentoo-wiki.com/TIP_Advanced_zsh_Completion)
+#
+# NB: Doesn't work when HashKnownHosts is set to yes (can override in
+# ~/.ssh/config if you don't have root).
+local _myhosts
+_myhosts=( ${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
+zstyle ':completion:*' hosts $_myhosts
+
 # Path
 
 export PATH=$PATH:~/local/bin
