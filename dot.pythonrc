@@ -1,3 +1,5 @@
 import readline, rlcompleter
 readline.parse_and_bind("tab: complete")
-print "You *should* be using IPython instead..."
+# nag in a way compatible with python 2 and 3
+import sys
+sys.stdout.write("You *should* be using IPython instead...\n")
