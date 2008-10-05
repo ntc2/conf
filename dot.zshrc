@@ -214,7 +214,7 @@ alias mergehist="fc -RI"
 
 ## Emacs
 
-export VISUAL=emacs EDITOR=emacs
+export VISUAL="emacs -nw" EDITOR="emacs -nw"
 
 ## Python 
 
