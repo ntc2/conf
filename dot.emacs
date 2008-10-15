@@ -107,6 +107,9 @@
 
 ;;; End CSL stuff
 
+;; more flexible auto-completion
+(global-set-key (kbd "M-/") 'hippie-expand)
+
 ;;; Some customization from
 ;;; http://www.xsteve.at/prg/emacs/power-user-tips.html
 
