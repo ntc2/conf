@@ -30,9 +30,11 @@ compctl -D -f + -U -Q -K multicomp
 #
 # NB: Doesn't work when HashKnownHosts is set to yes (can override in
 # ~/.ssh/config if you don't have root).
-local _myhosts
-_myhosts=( ${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
-zstyle ':completion:*' hosts $_myhosts
+if [[ -e $HOME/.ssh/known_hosts ]]; then
+  local _myhosts
+  _myhosts=( ${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
+  zstyle ':completion:*' hosts $_myhosts
+fi
 
 # Path
 
