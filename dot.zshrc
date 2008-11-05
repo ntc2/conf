@@ -252,8 +252,12 @@ message SVN conf dir info
 unset NOTIFY
 # Make conf_dir go out of scope after the svn commands
     conf_dir=$(dirname $(readlink -f ~/.zshrc))
-    svn info  $conf_dir # General info
-    svn st -uq $conf_dir & # Prints uncommitted modifications and available updates
+    #svn info  $conf_dir # General info
+
+    # Print uncommitted modifications and available updates, but don't
+    # show the revision we're currenty at, so that there is only
+    # output when something is changed
+    svn st -uq $conf_dir | head -n -1 & 
 )
 
 umask 022
