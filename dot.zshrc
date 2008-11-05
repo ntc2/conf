@@ -247,10 +247,13 @@ alias attach='genfixssh ; screen -dRR'
 
 # Remind me to make sure all my conf repos are current.
 message SVN conf dir info
-(# Make conf_dir go out of scope after the svn commands
+(
+# don't print info about background jobs in this subshell
+unset NOTIFY
+# Make conf_dir go out of scope after the svn commands
     conf_dir=$(dirname $(readlink -f ~/.zshrc))
     svn info  $conf_dir # General info
-    svn st -q $conf_dir # Prints uncommitted modifications
+    svn st -uq $conf_dir & # Prints uncommitted modifications and available updates
 )
 
 umask 022
