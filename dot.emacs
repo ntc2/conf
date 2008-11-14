@@ -37,6 +37,11 @@
 ; force backup creation.
 (setq backup-directory-alist '(("" . "~/.emacs-backups")))
 
+; Make M-x apropos, and maybe C-h a, show more results. This var has
+; documentation *after* apropos.el loads, e.g. after using M-x
+; apropos.
+(setq apropos-do-all t)
+
 (iswitchb-mode t)
 (icomplete-mode t)
 (partial-completion-mode t)
@@ -52,11 +57,16 @@
 ; doesn't work to anchor at the beginning (^).
 (add-to-list 'auto-mode-alist '("svn-commit\\(\\.[0-9]+\\)?\\.tmp$" . text-mode))
 
-; Always spell check in text mode.  Use M-$ and M-x flyspell-region in
-; coding modes.
-(mapc (lambda (hook) (add-hook hook (lambda () (flyspell-mode t))))
-      '(text-mode-hook)) ; I don't really understand why I don't need
-                         ; more quotes?
+;(add-hook 'font-lock-mode-hook 'flyspell-prog-mode)
+;(add-hook 'text-mode-hook 'flyspell-mode)
+
+; Turn on flyspell-prog-mode in all modes except text-mode, which
+; should use full flyspell-mode.
+(add-hook 'font-lock-mode-hook
+          (lambda ()
+            (if (equal major-mode 'text-mode)
+                (flyspell-mode)
+              (flyspell-prog-mode))))
 
 ; vi/less style jk navigation in view-mode.  Kind of pointless because
 ; du keys scroll half page.  But the default <enter>y for <down><up>
