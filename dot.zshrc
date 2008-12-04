@@ -167,7 +167,7 @@ lsex () { \ls -F "$@" | \grep '\*' | sed -re 's/\*$//g'; }
 log-tail(){ tail -f $1 |sed -re 's/\\n/\n\t/gp' -e "s/^$|[0-9]+|[^ ]*\.p[^ ]*/`echo -ne '\e[31m'`&`echo -ne '\e[0m'`/g";}
 
 # Fancy highlighted cat
-fancy-cat(){ enscript -w ansi -E -p- $1  | perl -pe '$_ = "$.: $_"';}
+fancy-cat(){ enscript --color -w ansi -E -p- $1  | cat -n; }
 
 # Set the title of an xterm
 xtitle(){ echo -e '\e]0;'$@'\a';}
