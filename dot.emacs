@@ -60,11 +60,11 @@
 ;(add-hook 'font-lock-mode-hook 'flyspell-prog-mode)
 ;(add-hook 'text-mode-hook 'flyspell-mode)
 
-; Turn on flyspell-prog-mode in all modes except text-mode, which
-; should use full flyspell-mode.
+; Turn on flyspell-prog-mode in all modes except text-mode and
+; rst-mode, which should use full flyspell-mode.
 (add-hook 'font-lock-mode-hook
           (lambda ()
-            (if (equal major-mode 'text-mode)
+            (if (member major-mode '(text-mode rst-mode))
                 (flyspell-mode)
               (flyspell-prog-mode))))
 
