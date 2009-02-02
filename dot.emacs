@@ -22,12 +22,6 @@
  '(standard-indent 2)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
 ; '(tab-width 2) ; removed.
 
 ; Make all backups in same place: Avoid clutter, and danger of typing
@@ -35,7 +29,11 @@
 ; http://www.gnu.org/software/emacs/manual/html_node/emacs/Backup.html
 ; for some explanation of when backups are created, and some ways to
 ; force backup creation.
-(setq backup-directory-alist '(("" . "~/.emacs-backups")))
+;
+; NB: The backup dir specified here is created if it doesn't exist.
+; This is bad if this creation happens while you're sudo'd since then
+; root owns the backup dir ...
+(setq backup-directory-alist '(("" . "~/.emacs.d/backups")))
 
 ; Make M-x apropos, and maybe C-h a, show more results. This var has
 ; documentation *after* apropos.el loads, e.g. after using M-x
@@ -171,4 +169,3 @@
 (let ((file "~/.emacs.d/system-custom.el"))
   (if (file-exists-p file)
        (load-file file)))
-  
