@@ -217,6 +217,8 @@ alias mergehist="fc -RI"
 ## Emacs
 
 export VISUAL="emacs -nw" EDITOR="emacs -nw"
+function nc:ex () { emacs -fs -rv "$@" &! }
+function nc:et () { emacs -nw -rv "$@" }
 
 ## Python 
 
