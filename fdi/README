@@ -1,0 +1,7 @@
+These .fdi snippets go in /etc/hal/fdi/policy/.  It seems that each
+must be a valid xml file, so it doesn't work to concatenate them into
+a single file.  The mouse wheel emulation fails after resuming from
+suspend :P
+
+The old way of configuring wheel emulation, using /etc/X11/xorg.conf,
+was better: only one configuration and doesn't break when you suspend.
