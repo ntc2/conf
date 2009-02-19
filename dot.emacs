@@ -69,9 +69,10 @@
 ; vi/less style jk navigation in view-mode.  Kind of pointless because
 ; du keys scroll half page.  But the default <enter>y for <down><up>
 ; were too annoying.
-(mapc (lambda (kv) (define-key view-mode-map (car kv) (cadr kv)))
-      '(("j" View-scroll-line-forward)
-        ("k" View-scroll-line-backward)))
+(when (boundp 'view-mode-map)
+  (mapc (lambda (kv) (define-key view-mode-map (car kv) (cadr kv)))
+        '(("j" View-scroll-line-forward)
+          ("k" View-scroll-line-backward))))
 
 ; Make it darker
 ;(set-foreground-color "grey")
