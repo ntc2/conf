@@ -19,3 +19,5 @@ for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config', '.zshrc'):
         c('mv %(to)s %(to)s.backup' % locals())
     c('ln -s %(from_)s %(to)s'  % locals())
 c('ln -s %(home)s/versioned/conf/scripts %(home)s/local/' % locals())
+print """you need to download docs and create a link from docs/scripts
+to ~/local/more-scripts."""

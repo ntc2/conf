@@ -38,7 +38,7 @@ fi
 
 # Path
 
-export PATH=$PATH:~/local/bin
+export PATH=~/local/bin:~/local/scripts:~/local/more-scripts:$PATH
 
 ## Prompt (Colors!)
 
@@ -129,9 +129,12 @@ alias xterm="xterm -sb"
 # Interpret ascii escapes and show verbose status and ignore case in searches
 alias less="less -RMi"
 
-alias grep="egrep -nH --color=auto"
+alias nc:grep="egrep -nH --color=auto"
 # Colorized case insensitive egrep with context
-alias eg="grep -iC2"
+alias eg="nc:grep -iC2"
+
+# grep -P may also work. be sure to escape "/"s ...
+function perlgrep () { perl -ne "/$1/"' && print "$.:\t$_"' $2 }
 
 # Subversion
 alias svnlsjunk="svn st | grep '^\\?' | awk '{print \$2}'"

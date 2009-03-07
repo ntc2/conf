@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Only add :$PATH if $PATH is non empty.
-PATH=~/local/scripts${PATH:+:$PATH}
-
 # Pass in a command and have it serialized
 serialize () {
     if which lockfile &>/dev/null ; then
@@ -29,7 +26,7 @@ lambda () {
 if [ -n "$DISPLAY" ]; then
     if [ $(xmodmap | grep lock | awk '{ print $3 }') = '(0x42)' ]; then
 	echo Swapping control and caps lock
-	capswap.sh
+	~/local/scripts/capswap.sh
     else
 	echo Control and caps lock are properly mapped
     fi
