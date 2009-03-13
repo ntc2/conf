@@ -21,8 +21,8 @@
  '(show-paren-mode t nil (paren))
  '(standard-indent 2)
  '(transient-mark-mode t)
- '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
-; '(tab-width 2) ; removed.
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify))
+ '(tab-width 4))
 
 ; Make all backups in same place: Avoid clutter, and danger of typing
 ; {rm -rf * ~} instead of {rm -rf *~} when removing clutter. See
