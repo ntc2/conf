@@ -15,11 +15,14 @@ zstyle ':completion:*' max-errors 1
 zstyle ':completion:*' prompt 'Error Completion [%e]: '
 zstyle ':completion:*' substitute 1
 zstyle ':completion:*' verbose true
-zstyle :compinstall filename '/root/.zshrc'
+#zstyle :compinstall filename '/root/.zshrc' #???
 
 autoload -U compinit
 compinit
 # End of lines added by compinstall
+
+# from http://osdir.com/ml/shells.zsh.user/2007-06/msg00001.html
+_comp_options+=(globdots)
 
 # Enable "tab once" completion, e.g.
 # /u/s/d/python<TAB> => /usr/share/doc/python
