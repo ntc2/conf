@@ -6,6 +6,7 @@
   ;; If there is more than one, they won't work right.
  '(case-fold-search t)
  '(current-language-environment "English")
+ '(desktop-save-mode 1)
  '(global-font-lock-mode t nil (font-lock))
  '(indent-tabs-mode nil)
  '(js2-auto-indent-flag nil)
@@ -126,9 +127,9 @@
 
 ;; save a list of open files in ~/.emacs.desktop
 ;; save the desktop file automatically if it already exists
-(setq desktop-save 'if-exists)
-(when (boundp 'desktop-save-mode) ; Not defined on UW CS machines.
-  (desktop-save-mode 1))
+;(setq desktop-save 'if-exists)
+;;(when (boundp 'desktop-save-mode) ; Not defined on UW CS machines.
+;;  (desktop-save-mode 1))
 
 ;; save a bunch of variables to the desktop file
 ;; for lists specify the len of the maximal saved data also
@@ -147,7 +148,7 @@
                 tags-file-name
                 register-alist)))
 
-(desktop-read) ; From the ``desktop'' docs.
+;(desktop-read) ; From the ``desktop'' docs.
 
 
 ;; Use M-x desktop-save once to save the desktop.  When it exists,
