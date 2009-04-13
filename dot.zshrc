@@ -251,6 +251,36 @@ alias genfixssh='source ~/local/scripts/gen-fix-ssh.sh'
 # screen doesn't see the alias defined by genfixssh?
 alias attach='genfixssh ; screen -dRR'
 
+## Java
+
+# cat the MANIFEST file, which contains the library version
+function jar-manifest () {
+    JAR="$(pwd)/$1"
+    DIR=$(mktemp -d)
+    (
+    cd $DIR
+    jar -xf $JAR META-INF
+    cat META-INF/MANIFEST.MF
+    )
+    \rm -r "$DIR"
+}
+
+# cat all of META-INF
+function jar-meta-inf () {
+    JAR="$(pwd)/$1"
+    DIR=$(mktemp -d)
+    (
+    cd $DIR
+    jar -xf $JAR META-INF
+    cd META-INF
+    for f in $(ls); do
+        echo "====[FILE $f]===="
+        cat $f
+    done
+    )
+    \rm -r "$DIR"
+}
+
 ## Run last
 
 # Remind me to make sure all my conf repos are current.
