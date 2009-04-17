@@ -2,17 +2,13 @@
 
 # Pass in a command and have it serialized
 serialize () {
-    if which lockfile &>/dev/null ; then
-        LOCKFILE=~/local/scripts/maybe-capswap.lock
-        # lockfile -sleeptime waits sleeptime seconds between retries
-        # when I lockfile is found.  Default was 8 seconds I think.
-        lockfile -1 $LOCKFILE
-        $1
-        rm -f $LOCKFILE
-    else
-        echo "lockfile command not on path, can't serialize."
-        echo "Running $1 anyway..."
-    fi
+    LOCKFILE=~/local/scripts/maybe-capswap.lock
+    while ! mktemp -q $LOCKFILE; do
+        echo LOCKFILE $LOCKFILE found, sleeping ... >/dev/stderr
+        sleep 1
+    done
+    $1
+    rm -f $LOCKFILE
 }
 
 # Put caps lock in the right place.  I don't exactly understand what I
@@ -23,8 +19,8 @@ serialize () {
 # that it will break Sun keyboards that have control in the right
 # place to begin with.
 lambda () {
-if [ -n "$DISPLAY" ]; then
-    if [ $(xmodmap | grep lock | awk '{ print $3 }') = '(0x42)' ]; then
+if [[ -n "$DISPLAY" ]]; then
+    if [ $(xmodmap | awk '/lock/ { print $3 }') = '(0x42)' ]; then
 	echo Swapping control and caps lock
 	~/local/scripts/capswap.sh
     else

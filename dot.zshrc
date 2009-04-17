@@ -285,17 +285,22 @@ function jar-meta-inf () {
 
 # Remind me to make sure all my conf repos are current.
 message SVN conf dir info
+sleep 1 && clear
 (
 # don't print info about background jobs in this subshell
 unset NOTIFY
+
 # Make conf_dir go out of scope after the svn commands
     conf_dir=$(dirname $(readlink -f ~/.zshrc))
+    docs_dir=$(dirname $(readlink -f ~/local/more-scripts))
     #svn info  $conf_dir # General info
 
     # Print uncommitted modifications and available updates, but don't
     # show the revision we're currenty at, so that there is only
     # output when something is changed
-    svn st -uq $conf_dir | head -n -1 & 
+    svn st -uq $conf_dir | head -n -1 &
+    # No --update when on stupid AFS file system
+    [[ -e $docs_dir ]] && svn st $docs_dir &
 )
 
 umask 022
