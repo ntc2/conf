@@ -253,6 +253,17 @@ alias attach='genfixssh ; screen -dRR'
 
 ## Java
 
+# pretend deepest dirs are packages and list them
+function jar-packages () {
+    jar -tf $1 \
+    | grep -v META-INF \
+    | grep '/$' \
+    | sort \
+    # :) Whats a "pure" shell equiv?
+    | xargs python -c 'import sys; as = sys.argv[1:]; ps = [x for (x,y) in zip(as,as[1:]+[""]) if x not in y]; map(lambda p: sys.stdout.write(p[:-1]+"\n"), ps)' \
+    | sed -re 's!/!.!g'
+}
+
 # cat the MANIFEST file, which contains the library version
 function jar-manifest () {
     JAR="$(pwd)/$1"
