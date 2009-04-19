@@ -259,9 +259,15 @@ function jar-packages () {
     | grep -v META-INF \
     | grep '/$' \
     | sort \
-    # :) Whats a "pure" shell equiv?
     | xargs python -c 'import sys; as = sys.argv[1:]; ps = [x for (x,y) in zip(as,as[1:]+[""]) if x not in y]; map(lambda p: sys.stdout.write(p[:-1]+"\n"), ps)' \
     | sed -re 's!/!.!g'
+}
+
+# print classes in package form
+function jar-classes () {
+    jar -tf $1 \
+    | grep '\.class$' \
+    | sed -re 's!/!.!g' -e 's/\.class//g'
 }
 
 # cat the MANIFEST file, which contains the library version
