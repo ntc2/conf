@@ -254,7 +254,7 @@ alias attach='genfixssh ; screen -dRR'
 ## Java
 
 # pretend deepest dirs are packages and list them
-function jar-packages () {
+function nc:jar-packages () {
     jar -tf $1 \
     | grep -v META-INF \
     | grep '/$' \
@@ -264,15 +264,15 @@ function jar-packages () {
 }
 
 # print classes in package form
-function jar-classes () {
+function nc:jar-classes () {
     jar -tf $1 \
     | grep '\.class$' \
     | sed -re 's!/!.!g' -e 's/\.class//g'
 }
 
 # cat the MANIFEST file, which contains the library version
-function jar-manifest () {
-    JAR="$(pwd)/$1"
+function nc:jar-manifest () {
+    JAR=$(readlink -f $1)
     DIR=$(mktemp -d)
     (
     cd $DIR
@@ -283,8 +283,8 @@ function jar-manifest () {
 }
 
 # cat all of META-INF
-function jar-meta-inf () {
-    JAR="$(pwd)/$1"
+function nc:jar-meta-inf () {
+    JAR=$(readlink -f $1)
     DIR=$(mktemp -d)
     (
     cd $DIR
