@@ -9,6 +9,7 @@
  '(desktop-save-mode 1)
  '(global-font-lock-mode t nil (font-lock))
  '(indent-tabs-mode nil)
+ '(jit-lock-defer-time 0.25)
  '(js2-auto-indent-flag nil)
  '(js2-bounce-indent-flag t)
  '(js2-highlight-level 3)
@@ -18,12 +19,13 @@
  '(ps-black-white-faces (quote ((font-lock-builtin-face "black" nil bold underline) (font-lock-comment-face "gray20" nil italic) (font-lock-constant-face "black" nil bold) (font-lock-function-name-face "black" nil bold) (font-lock-keyword-face "black" nil bold underline) (font-lock-string-face "black" nil italic) (font-lock-type-face "black" nil italic) (font-lock-variable-name-face "black" nil bold italic) (font-lock-warning-face "black" nil bold italic))))
  '(ps-line-number t)
  '(ps-print-color-p (quote black-white))
+ '(rst-level-face-base-color "not-a-color-so-ill-get-black")
  '(save-place t nil (saveplace))
  '(show-paren-mode t nil (paren))
  '(standard-indent 2)
+ '(tab-width 4)
  '(transient-mark-mode t)
- '(uniquify-buffer-name-style (quote forward) nil (uniquify))
- '(tab-width 4))
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 
 ; Make all backups in same place: Avoid clutter, and danger of typing
 ; {rm -rf * ~} instead of {rm -rf *~} when removing clutter. See
@@ -171,3 +173,9 @@
 (let ((file "~/.emacs.d/system-custom.el"))
   (if (file-exists-p file)
        (load-file file)))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
