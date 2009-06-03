@@ -253,25 +253,22 @@ alias attach='genfixssh ; screen -dRR'
 
 ## Java
 
-# pretend deepest dirs are packages and list them
 function nc:jar-packages () {
-    jar -tf $1 \
-    | grep -v META-INF \
-    | grep '/$' \
-    | sort \
-    | xargs python -c 'import sys; as = sys.argv[1:]; ps = [x for (x,y) in zip(as,as[1:]+[""]) if x not in y]; map(lambda p: sys.stdout.write(p[:-1]+"\n"), ps)' \
-    | sed -re 's!/!.!g'
+    : print sorted list of distinct packages of classes
+    nc:jar-classes $1 \
+    | sed -re 's/\.[^.]*?$//g' \
+    | sort -u
 }
 
-# print classes in package form
 function nc:jar-classes () {
+    : print classes in package form
     jar -tf $1 \
     | grep '\.class$' \
     | sed -re 's!/!.!g' -e 's/\.class//g'
 }
 
-# cat the MANIFEST file, which contains the library version
 function nc:jar-manifest () {
+    : cat the MANIFEST file, which contains the library version
     JAR=$(readlink -f $1)
     DIR=$(mktemp -d)
     (
@@ -282,8 +279,8 @@ function nc:jar-manifest () {
     \rm -r "$DIR"
 }
 
-# cat all of META-INF
 function nc:jar-meta-inf () {
+    : cat all of META-INF
     JAR=$(readlink -f $1)
     DIR=$(mktemp -d)
     (
@@ -317,7 +314,7 @@ unset NOTIFY
     # output when something is changed
     svn st -uq $conf_dir | head -n -1 &
     # No --update when on stupid AFS file system
-    [[ -e $docs_dir ]] && svn st $docs_dir &
+    #[[ -e $docs_dir ]] && svn st $docs_dir &
 )
 
 umask 022
