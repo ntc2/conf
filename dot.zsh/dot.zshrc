@@ -90,14 +90,8 @@ message () {
 for f in ~/.zsh/rc.d/*; do
     source $f
 done
-load-custom () {
-    local FILE=$1
-    if [ -e $FILE ]; then
-	      source $FILE
-    fi
-}
-load-custom ~/.zshrc.system-custom
-load-custom ~/local/scripts/maybe-capswap.sh
+nc:load-custom ~/.zshrc.system-custom
+nc:load-custom ~/local/scripts/maybe-capswap.sh
 
 ## Run last
 
@@ -105,7 +99,7 @@ load-custom ~/local/scripts/maybe-capswap.sh
 #message SVN conf dir info
 #sleep 1 && clear
 (
-# don't print info about background jobs in this subshell
+# don't print info about background jobs in this sub shell
 unset NOTIFY
 
 # Make conf_dir go out of scope after the svn commands
@@ -117,6 +111,9 @@ unset NOTIFY
     # show the revision we're currenty at, so that there is only
     # output when something is changed
     svn st -u $conf_dir | head -n -1 &
+    for f in ~/.zsh{rc,env}.system-custom; do
+        [[ -e $f ]] && svn st $(readlink -f $f)
+    done
     # No --update when on stupid AFS file system
     #[[ -e $docs_dir ]] && svn st $docs_dir &
 )
