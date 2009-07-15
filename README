@@ -3,3 +3,9 @@ MOZILLA bookmarks.html
 
 The scripts assume the existence of ~/local/scripts.  Ad hoc as heck,
 huh?
+
+scripts/its-all-text-emacs.sh
+  for the It's All Text firefox plugin.  After installing the plugin
+  set the editor preference to point to
+  local/scripts/its-all-text-emacs.sh
+
