@@ -6,9 +6,9 @@
   ;; If there is more than one, they won't work right.
  '(case-fold-search t)
  '(current-language-environment "English")
- '(desktop-save-mode 1)
  '(global-font-lock-mode t nil (font-lock))
  '(indent-tabs-mode nil)
+ '(inhibit-startup-screen t)
  '(jit-lock-defer-time 0.25)
  '(js2-auto-indent-flag nil)
  '(js2-bounce-indent-flag t)
@@ -26,6 +26,8 @@
  '(tab-width 4)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
+ ; removed
+ ;'(desktop-save-mode 1)
 
 ; Make all backups in same place: Avoid clutter, and danger of typing
 ; {rm -rf * ~} instead of {rm -rf *~} when removing clutter. See
@@ -61,12 +63,12 @@
 ;(add-hook 'font-lock-mode-hook 'flyspell-prog-mode)
 ;(add-hook 'text-mode-hook 'flyspell-mode)
 
-; Turn on flyspell-prog-mode in all modes except text-mode and
-; rst-mode, which should use full flyspell-mode.
+; Turn on flyspell-prog-mode in all modes except ..., which should use
+; full flyspell-mode.
 (add-hook 'font-lock-mode-hook
           (lambda ()
-            (if (member major-mode '(text-mode rst-mode))
-                (flyspell-mode)
+            (if (member major-mode '(text-mode rst-mode latex-mode))
+                (flyspell-mode t)
               (flyspell-prog-mode))))
 
 ; vi/less style jk navigation in view-mode.  Kind of pointless because
