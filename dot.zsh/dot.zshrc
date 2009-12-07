@@ -103,7 +103,8 @@ nc:load-custom ~/local/scripts/maybe-capswap.sh
 unset NOTIFY
 
 # Make conf_dir go out of scope after the svn commands
-    conf_dir=$(dirname $(readlink -f ~/.zshrc))
+    # .zshrc -> $conf_dir/dot.zsh/dot.zshrc
+    conf_dir=$(dirname $(dirname $(readlink -f ~/.zshrc)))
     docs_dir=$(dirname $(readlink -f ~/local/more-scripts))
     #svn info  $conf_dir # General info
 
