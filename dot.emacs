@@ -164,7 +164,14 @@
 
 ;;; End xsteve stuff.
 
-;; Make custom modes available
+;;; Org mode
+
+;; suggested global bindings from docs
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(setq org-agenda-files '("~/org.org"))
+
+;;; Make custom modes available
 
 ; Add my custom lib dir to the path.
 (push "~/.emacs.d" load-path)
