@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# see http://wiki.eclipse.org/FAQ_How_do_I_increase_the_permgen_size_available_to_Eclipse%3F
+
+/home/collins/e/crono/opt/eclipse/eclipse "$@" -vmargs -XX:PermSize=64M -XX:MaxPermSize=128M -Xmx1024M -Xms128M
