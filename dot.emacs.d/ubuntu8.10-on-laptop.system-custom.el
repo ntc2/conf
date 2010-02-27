@@ -14,3 +14,8 @@
 ;;it had focus last.  
 
 ;;(setq browse-url-new-window-flag t)
+
+;; control-lock
+
+(require 'control-lock)
+(control-lock-keys)
