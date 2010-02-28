@@ -171,6 +171,11 @@
 (global-set-key "\C-ca" 'org-agenda)
 (setq org-agenda-files '("~/org.org"))
 
+;;; control-lock
+(add-to-list 'load-path "~/.emacs.d/")
+(require 'control-lock)
+(control-lock-keys)
+
 ;;; Make custom modes available
 
 ; Add my custom lib dir to the path.
