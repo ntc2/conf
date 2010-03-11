@@ -2,8 +2,8 @@
 
 '''Run from your home dir.'''
 from subprocess import call
-from os import chdir, getcwd, getenv
-from os.path import exists
+from os import chdir, getenv
+from os.path import exists, realpath
 
 def c(cmd):
     call(cmd,shell=True)
@@ -16,9 +16,11 @@ def main():
     existing install.
     """
 
-    home = getcwd()
-    if home != getenv('HOME'):
-        raise Exception('You should run this from your home dir.')
+    cur  = realpath('')
+    home = realpath(getenv('HOME'))
+    if cur != home:
+        raise Exception('You should run this from your home dir.\n%s!=%s' %
+                        (cur, home))
 
     for d in ('versioned', 'local', '.subversion'):
         if not exists(d): c('mkdir %s') % d
