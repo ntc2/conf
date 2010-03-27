@@ -26,6 +26,21 @@
  '(tab-width 4)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
+ 
+;; java
+;;
+;; make arguments indented only 4 spaces past function, when all
+;; function args on subsequent lines.  Good for
+;; reallyLongJavaMethodNames.
+;;
+;; setting the c-style messes up the indent distance (c-basic-offset),
+;; so reset after setting c-style.
+(add-hook 'java-mode-hook
+          (lambda ()
+            (progn
+              (c-set-style "linux")
+              (setq c-basic-offset 4))))
+
  ; removed
  ;'(desktop-save-mode 1)
 
