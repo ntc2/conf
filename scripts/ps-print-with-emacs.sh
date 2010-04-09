@@ -24,16 +24,20 @@ emacs \
     --quick \
     --file "$in" \
     --eval "
-(let ((ps-top-margin 0)
+;; most printers don't print all the way up to the edge, so some
+;; margin is necessary if you want to print without needing to scale,
+;; e.g. with lpr.
+(let ((ps-top-margin 15)
 ;; adjust this and font size if enabling line numbers
-      (ps-left-margin 0)
-      (ps-right-margin 0)
+      (ps-left-margin 15)
+      (ps-bottom-margin 15)
+      (ps-right-margin 15)
       (ps-inter-column 0)
       (ps-landscape-mode t)
 ;;      (ps-paper-type 'ledger)
       (ps-number-of-columns 2)
 ;; 80 chars per line
-      (ps-font-size 8.25)
+      (ps-font-size 7.9)
 ;;      (ps-line-number t)
       (ps-line-number-font-size 10)
       (ps-line-number-step 10)
