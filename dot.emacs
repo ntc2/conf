@@ -184,7 +184,7 @@
 ;; suggested global bindings from docs
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
-(setq org-agenda-files '("~/org.org"))
+(setq org-agenda-files '("~/versioned/org/"))
 
 ;;; control-lock
 (add-to-list 'load-path "~/.emacs.d/")
