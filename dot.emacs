@@ -191,6 +191,11 @@
 (require 'control-lock)
 (control-lock-keys)
 
+
+;;; linum-mode, new in emacs 23
+(when (require 'linum nil t)
+  (global-linum-mode t))
+
 ;;; Make custom modes available
 
 ; Add my custom lib dir to the path.
