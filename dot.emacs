@@ -194,7 +194,11 @@
 
 ;;; linum-mode, new in emacs 23
 (when (require 'linum nil t)
-  (global-linum-mode t))
+  (global-linum-mode t)
+  ;; linum in terminal has no margin after numbers.  don't add the
+  ;; margin in x11 since then you get two margins.
+  (when (null (window-system))
+    (setq linum-format "%d ")))
 
 ;;; Make custom modes available
 
