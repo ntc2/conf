@@ -185,6 +185,10 @@
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (setq org-agenda-files '("~/versioned/org/"))
+;; turn on soft wrapping mode for org mode, from
+;; http://osdir.com/ml/emacs-orgmode-gnu/2009-04/msg00618.html
+(add-hook 'org-mode-hook 
+  (lambda () (setq truncate-lines nil)))
 
 ;;; control-lock
 (add-to-list 'load-path "~/.emacs.d/")
