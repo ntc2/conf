@@ -118,3 +118,4 @@ unset NOTIFY
     # No --update when on stupid AFS file system
     #[[ -e $docs_dir ]] && svn st $docs_dir &
 )
+which fortune >/dev/null && fortune

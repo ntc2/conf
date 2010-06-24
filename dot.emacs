@@ -197,12 +197,15 @@
 
 
 ;;; linum-mode, new in emacs 23
-(when (require 'linum nil t)
-  (global-linum-mode t)
-  ;; linum in terminal has no margin after numbers.  don't add the
-  ;; margin in x11 since then you get two margins.
-  (when (null (window-system))
-    (setq linum-format "%d ")))
+;;
+;;; this got annoying on my small screen, and made org-mode slooooow.
+;;; need to enable only on large monitor, and not in org-mode ...
+;; (when (require 'linum nil t)
+;;   (global-linum-mode t)
+;;   ;; linum in terminal has no margin after numbers.  don't add the
+;;   ;; margin in x11 since then you get two margins.
+;;   (when (null (window-system))
+;;     (setq linum-format "%d ")))
 
 ;;; Make custom modes available
 
