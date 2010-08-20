@@ -26,6 +26,12 @@
  '(tab-width 4)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
+
+;; disable tool bar
+; some mode might use this in a useful way, e.g. debuggers or web
+; browsers.  special case those as necessary ... or only disable for
+; specific modes ...
+(tool-bar-mode nil)
  
 ;; java
 ;;
