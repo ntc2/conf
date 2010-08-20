@@ -105,7 +105,7 @@ unset NOTIFY
 # Make conf_dir go out of scope after the svn commands
     # .zshrc -> $conf_dir/dot.zsh/dot.zshrc
     conf_dir=$(dirname $(dirname $(readlink -f ~/.zshrc)))
-    docs_dir=$(dirname $(readlink -f ~/local/more-scripts))
+    #docs_dir=$(dirname $(readlink -f ~/local/more-scripts))
     #svn info  $conf_dir # General info
 
     # Print uncommitted modifications and available updates, but don't
