@@ -30,7 +30,7 @@ def main():
                         (cur, home))
 
     for d in ('v', 'local', '.subversion'):
-        if not exists(d): c('mkdir %s') % d
+        if not exists(d): c('mkdir %s' % d)
 
     chdir('v')
 
@@ -56,7 +56,13 @@ def main():
 
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())
 
-    if not exists('%(home)s/local/more-scripts' % locals()):
-        print """You may need to download v/docs and create a link from v/docs/scripts to ~/local/more-scripts (or not ...)."""
+    # if not exists('%(home)s/local/more-scripts' % locals()):
+    #     print """You may need to download v/docs and create a link from v/docs/scripts to ~/local/more-scripts."""
+
+    # use zsh?
+    shell = getenv('SHELL')
+    if 'zsh' not in shell:
+        print '''You are using "%(shell)s" but this conf is for zsh.  Changing shell to zsh ...'''
+        c('chsh -s /bin/zsh')
 
 if __name__ == '__main__': main()
