@@ -118,4 +118,9 @@ unset NOTIFY
     # No --update when on stupid AFS file system
     #[[ -e $docs_dir ]] && svn st $docs_dir &
 )
+
+# ALSO SET in .zshenv, although that is sometimes overridden, and this
+# only runs for interactive shells
+umask 077
+
 which fortune &>/dev/null && fortune
