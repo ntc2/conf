@@ -16,9 +16,16 @@
 -- TODO
 --
 -- -  tabbing or stacking
+--
+--    see http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-SubLayouts.html
+--
 -- -  disable "smart" workspace switching, whereby xmonad swaps
 --    current workspace and target when both appear on monitors
 --    currently
+--
+--    see
+--    http://www.haskell.org/haskellwiki/Xmonad/Frequently_asked_questions#Multi_head_and_workspaces_.28desktops.29
+--
 -- -  dzen or xmobar
 -- 
 -- DONE
@@ -27,15 +34,15 @@
 import XMonad
 import XMonad.Config.Gnome
 import XMonad.Actions.UpdatePointer -- mouse follows focus
-import XMonad.Layout.TabBarDecoration -- tabs: sucks by default: the tabs don't do anything :P
--- import XMonad.Hooks.ManageHelpers -- fullscreen flash: fucks up everything else
-import System.Process -- use xmodmap to add another meta
-
--- myManageHook = composeOne [ isFullscreen -?> doFullFloat ] 
+--import XMonad.Layout.TabBarDecoration -- tabs: sucks by default: the tabs don't do anything :P
+import XMonad.Hooks.ManageHelpers -- fullscreen flash
+import XMonad.Config.Desktop (desktopLayoutModifiers) -- custom layoutHook + gnome
 
 main = xmonad gnomeConfig
-       { logHook    = updatePointer (Relative 0.5 0.0) -- mouse
-         -- follows focus to middle-top i have two mod keys: the left
+       { logHook = logHook gnomeConfig
+                   -- mouse follows focus to middle-top
+                   >> updatePointer (Relative 0.5 0.0) 
+         -- i have two mod keys: the left
          -- windows key (Super_L) and the right menu key (Menu)
          -- 
          -- - use xmodmap to get list of modifiers, e.g. Super_L is a
@@ -53,9 +60,21 @@ main = xmonad gnomeConfig
          --   things in that order ... YES!
        , modMask     = mod4Mask
        , startupHook = spawn "xmodmap -e \"keysym Menu = Super_L\""
---       , manageHook = myManageHook <+> manageHook defaultConfig -- full-screen flash
---       , layoutHook = simpleTabBar $ layoutHook defaultConfig
+       , manageHook  = myManageHook -- full-screen flash
+                       <+> manageHook gnomeConfig
+         -- http://haskell.cs.yale.edu/haskellwiki/Xmonad/Using_xmonad_in_Gnome#Layouts
+       , layoutHook  = desktopLayoutModifiers $ Full ||| tall ||| Mirror tall
+--       , layoutHook = simpleTabBar $ layoutHook gnomeConfig
        }
+
+-- two master, 1/10th resize increment, only show master by default
+tall = Tall 2 (1/10) 1
+
+-- fullscreen
+--
+-- - flash in youtube: this managehook fixes it
+-- - mplayer: add {-fstype none -fs} to your command line
+myManageHook = composeOne [ isFullscreen -?> doFullFloat ] 
 
 -- http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Layout-Tabbed.html
 -- http://haskell.org/haskellwiki/Xmonad/Frequently_asked_questions#Multi_head_and_workspaces_.28desktops.29
