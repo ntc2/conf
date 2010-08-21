@@ -113,7 +113,7 @@ unset NOTIFY
     # output when something is changed
     svn st -u $conf_dir | head -n -1 &
     for f in ~/.zsh{rc,env}.system-custom; do
-        [[ -e $f ]] && svn st $(readlink -f $f)
+        [[ -e $f ]] && svn st $(readlink -f $f) 2>/dev/null
     done
     # No --update when on stupid AFS file system
     #[[ -e $docs_dir ]] && svn st $docs_dir &
