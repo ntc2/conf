@@ -37,6 +37,7 @@ import XMonad.Actions.UpdatePointer -- mouse follows focus
 --import XMonad.Layout.TabBarDecoration -- tabs: sucks by default: the tabs don't do anything :P
 import XMonad.Hooks.ManageHelpers -- fullscreen flash
 import XMonad.Config.Desktop (desktopLayoutModifiers) -- custom layoutHook + gnome
+import XMonad.Layout.NoBorders (smartBorders)
 
 main = xmonad gnomeConfig
        { logHook = logHook gnomeConfig
@@ -62,8 +63,11 @@ main = xmonad gnomeConfig
        , startupHook = spawn "xmodmap -e \"keysym Menu = Super_L\""
        , manageHook  = myManageHook -- full-screen flash
                        <+> manageHook gnomeConfig
+                       -- no borders for single window
+       , layoutHook  = smartBorders 
          -- http://haskell.cs.yale.edu/haskellwiki/Xmonad/Using_xmonad_in_Gnome#Layouts
-       , layoutHook  = desktopLayoutModifiers $ Full ||| tall ||| Mirror tall
+                       $ desktopLayoutModifiers 
+                       $ Full ||| tall ||| Mirror tall
 --       , layoutHook = simpleTabBar $ layoutHook gnomeConfig
        }
 
