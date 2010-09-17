@@ -13,3 +13,14 @@ set runtimepath=/home/collins/.vimperator
 source! /home/collins/.vimperatorrc.local
 
 " vim: set ft=vimperator:
+
+" shortcuts to remember
+
+" :help : see them all
+" b <page title snippet> : jump to tabs by name
+" [[ or ]] : previous, next page
+" D or d : delete current tab and move left or right
+" C^x or C^a : decrement or increment last # in url
+" :ju[mps] : to see history with jump offsets (for use with <num>C^o or C^i)
+" :dialog <dialog> : open a firefox dialog
+" . : repeat last command
