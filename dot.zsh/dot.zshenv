@@ -15,6 +15,7 @@ HISTSIZE=10000
 #setopt SHARE_HISTORY
 setopt INC_APPEND_HISTORY # use fc -RI to manually merge the other shells' history
 alias nc:mergehist="fc -RI"
+alias nc:grephist="fc -l 1 | grep -E --color=auto"
 
 ## Colors
 
