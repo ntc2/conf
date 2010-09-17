@@ -1,0 +1,15 @@
+"2.3.1 (created: 2010/04/07 18:56:53)
+
+" use :source ~/.vimperatorrc to reload this file
+
+" disable vimperator shortcuts in gmail (like C-z)
+autocmd LocationChange .* js modes.passAllKeys = /mail\.google\.com/.test(buffer.URL)
+
+" add "T" to turn on address and search boxes ("toolbar")
+" "n" adds tab numbers
+set guioptions=rbn
+
+set runtimepath=/home/collins/.vimperator
+source! /home/collins/.vimperatorrc.local
+
+" vim: set ft=vimperator:
