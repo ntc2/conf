@@ -9,12 +9,15 @@ autocmd LocationChange .* js modes.passAllKeys = /mail\.google\.com/.test(buffer
 " "n" adds tab numbers
 set guioptions=rbn
 
+" added by vimperator
+
 set runtimepath=/home/collins/.vimperator
 source! /home/collins/.vimperatorrc.local
 
 " vim: set ft=vimperator:
 
 " shortcuts to remember
+" =====================
 
 " :help : see them all
 " b <page title snippet> : jump to tabs by name
@@ -24,3 +27,15 @@ source! /home/collins/.vimperatorrc.local
 " :ju[mps] : to see history with jump offsets (for use with <num>C^o or C^i)
 " :dialog <dialog> : open a firefox dialog
 " . : repeat last command
+" :w[in]c[close] : close current window
+" C-[ : <ESC>
+" C-^ or C-6 : switch to most recent buffer in *current* window
+
+" text selection
+" --------------
+
+" i : enter caret mode and position caret
+" v : enter visual mode and highlight text by moving caret
+" Y : copy text in visual mode
+" <ESC> : leave caret or visual mode
+" p or P : open clipboard in current or new tab
