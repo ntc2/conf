@@ -1,7 +1,16 @@
-# ~/.screenrc
+# ~/.screenrc -*- conf -*-
 # use visual bell
 vbell on
-# replace ctrl-A by ctrl-O
+# replace ctrl-A by ctrl-O: NB: this setting overrides even an
+# explicit command line setting with -e :P one way to work around this
+# is to set the control care in screen: e.g.
+#
+#   ^o:escape ^ee
+#
+# to change escape to ^e.  NB: if you're doing this to change the
+# escape in a *nested* screen, then you must escape the escape:
+#
+#   ^oo:escape ^ee
 escape ^Oo
 # set a big scrolling buffer
 defscrollback 5000
