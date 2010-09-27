@@ -30,6 +30,8 @@ source! /home/collins/.vimperatorrc.local
 " :w[in]c[close] : close current window
 " C-[ : <ESC>
 " C-^ or C-6 : switch to most recent buffer in *current* window
+" :emenu Rec<TAB> : select a recently closed tab (like History -> Recently Closed Tabs on menu bar)
+" G or gg: beginning or end of document
 
 " text selection
 " --------------
