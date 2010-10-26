@@ -80,6 +80,7 @@ enable-auto-props = yes
 ### Note that auto-props functionality must be enabled, which
 ### is typically done by setting the 'enable-auto-props' option.
 [auto-props]
+*.trellys = svn:eol-style=native
 # *.c = svn:eol-style=native
 # *.cpp = svn:eol-style=native
 # *.h = svn:eol-style=native
