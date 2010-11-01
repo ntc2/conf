@@ -31,7 +31,11 @@
 ; some mode might use this in a useful way, e.g. debuggers or web
 ; browsers.  special case those as necessary ... or only disable for
 ; specific modes ...
-(tool-bar-mode nil)
+(if (functionp 'tool-bar-mode) 
+    (tool-bar-mode nil))
+; less direct way: tool-bar-mode only def in graphics
+;(when window-system
+;  (tool-bar-mode nil))
  
 ;; java
 ;;
