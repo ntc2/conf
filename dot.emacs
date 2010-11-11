@@ -217,6 +217,16 @@
 ;;   (when (null (window-system))
 ;;     (setq linum-format "%d ")))
 
+;;; fix it's-all-text gmail buffers
+(defun nc:replace-nbsp ()
+  "replace all non-breaking spaces (ASCII char 160; HTML &nbsp;)
+in buffer with regular spaces"
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (while (search-forward " " nil t)
+      (replace-match " " nil t))))
+
 ;;; Make custom modes available
 
 ; Add my custom lib dir to the path.
