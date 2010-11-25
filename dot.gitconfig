@@ -1,0 +1,19 @@
+[user]
+	name = Nathan Collins
+	email = nathan.collins@gmail.com
+[color]
+	ui = auto
+# from https://git.wiki.kernel.org/index.php/Aliases
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    di = diff
+    lg = log -p
+    who = shortlog -s --
+    # on newer gits, --onelline abbreviates --pretty=oneline --abbrev-commit
+    # 
+    # to get more verbose commit info, append --pretty=short or similar
+    gr2 = log --graph --all --pretty=oneline --decorate --abbrev-commit
+    gr  = log --graph --all --pretty='format:%h %C(yellow)%ar%Creset %Cgreen%aN%Creset%C(yellow)%d%Creset %s'
