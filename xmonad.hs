@@ -39,6 +39,30 @@ import XMonad.Hooks.ManageHelpers -- fullscreen flash
 import XMonad.Config.Desktop (desktopLayoutModifiers) -- custom layoutHook + gnome
 import XMonad.Layout.NoBorders (smartBorders)
 
+-- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-SubLayouts.html
+--
+-- and below in layoutHook.  Not actually doing anything right now ...
+import XMonad.Layout.SubLayouts
+import XMonad.Layout.WindowNavigation
+import XMonad.Layout.BoringWindows
+
+-- named workspaces
+-- ================
+--
+-- send windows to named workspaces
+--
+--  http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#15
+import qualified XMonad.StackSet as W
+-- function to change to workspace by name
+--
+--   http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Prompt-Workspace.html
+import XMonad.Prompt
+import XMonad.Prompt.Workspace (workspacePrompt)
+-- add keybinding to change to workspace by name function
+--
+--   http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#10
+import qualified Data.Map as M
+
 main = xmonad gnomeConfig
        { logHook = logHook gnomeConfig
                    -- mouse follows focus to middle-top
@@ -64,11 +88,14 @@ main = xmonad gnomeConfig
        , manageHook  = myManageHook -- full-screen flash
                        <+> manageHook gnomeConfig
                        -- no borders for single window
-       , layoutHook  = smartBorders 
+       , layoutHook  = id -- windowNavigation $ subTabbed $ boringWindows
+                       $ smartBorders
          -- http://haskell.cs.yale.edu/haskellwiki/Xmonad/Using_xmonad_in_Gnome#Layouts
                        $ desktopLayoutModifiers 
                        $ Full ||| tall ||| Mirror tall
 --       , layoutHook = simpleTabBar $ layoutHook gnomeConfig
+       , workspaces = myWorkspaces
+       , keys = myKeys
        }
 
 -- two master, 1/10th resize increment, only show master by default
@@ -78,7 +105,31 @@ tall = Tall 2 (1/10) 1
 --
 -- - flash in youtube: this managehook fixes it
 -- - mplayer: add {-fstype none -fs} to your command line
-myManageHook = composeOne [ isFullscreen -?> doFullFloat ] 
+fullscreenHook = composeOne [ isFullscreen -?> doFullFloat ]
+
+-- named workspaces
+namedWorkspaces = ["update"]
+-- put the named workspaces at the end of the list: ??? turns out
+-- there are still 9 numeric workspaces ???
+myWorkspaces = map show [1 .. (9 - length namedWorkspaces)] ++ namedWorkspaces
+-- http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#15
+-- use xprop to find the resource strings
+namedWorkspaceHook = composeAll [ resource =? "update-manager" --> doF (W.shift "update") 
+                                , resource =? "synaptic"       --> doF (W.shift "update")
+                                ]
+
+myManageHook = fullscreenHook <+> namedWorkspaceHook
+
+-- http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#10
+-- but use gnomeConfig instead of defaultConfig
+myKeys x = M.union (keys gnomeConfig x) (M.fromList (newKeys x))
+newKeys conf@(XConfig {XMonad.modMask = modm}) =
+             [ {- ((modm, xK_F12), xmonadPrompt defaultXPConfig)
+             , ((modm, xK_F3 ), shellPrompt  defaultXPConfig)
+                       -- "go"                                          -- use W.shift instead
+                                                                        -- to move current window
+             ,-} ((modm, xK_g), workspacePrompt defaultXPConfig (windows . W.view))
+             ]
 
 -- http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Layout-Tabbed.html
 -- http://haskell.org/haskellwiki/Xmonad/Frequently_asked_questions#Multi_head_and_workspaces_.28desktops.29
