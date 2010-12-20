@@ -200,12 +200,6 @@
 (add-hook 'org-mode-hook 
   (lambda () (setq truncate-lines nil)))
 
-;;; control-lock
-(add-to-list 'load-path "~/.emacs.d/")
-(require 'control-lock)
-(control-lock-keys)
-
-
 ;;; linum-mode, new in emacs 23
 ;;
 ;;; this got annoying on my small screen, and made org-mode slooooow.
@@ -227,20 +221,18 @@ in buffer with regular spaces"
     (while (search-forward " " nil t)
       (replace-match " " nil t))))
 
-;;; Make custom modes available
+;;; Load customizations ;;;
 
-; Add my custom lib dir to the path.
-(push "~/.emacs.d" load-path)
-; I'll put system (as in the math.wisc.edu vs uoregon.edu) specific
-; code here.  This is useful if I want to version control my .emacs,
-; because I might not want to load all the same stuff on all systems
-; (e.g. no need for matlab-mode on a system without matlab).
-(let ((file "~/.emacs.d/system-custom.el"))
-  (if (file-exists-p file)
-       (load-file file)))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
+;; Add my custom lib dir to the path.
+(add-to-list 'load-path "~/.emacs.d/") ;(push "~/.emacs.d" load-path)
+;; Common extensions to load on *all* systems.
+(mapc 'load-file (file-expand-wildcards "~/.emacs.d/extensions/*.el"))
+;; System (e.g. math.wisc.edu vs uoregon.edu) *specific* code.  In
+;; practice I symlink a system specific versioned file here.
+(let ((custom "~/.emacs.d/system-custom.el"))
+  (if (file-exists-p custom)
+      (load-file custom)))
+
+;; control-lock
+;(require 'control-lock) ; already loaded above
+(control-lock-keys)
