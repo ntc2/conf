@@ -51,9 +51,11 @@ def main():
         to = '%(home)s/%(f)s' % locals()
         c('ln -Tfs %(from_)s %(to)s'  % locals())
 
-    # abstract this if I add more emacs extensions.
-    c('ln -fs %(home)s/v/conf/dot.emacs.d/control-lock.el %(home)s/.emacs.d/' % locals())
+    # emacs extensions.
+    c('ln -fs %(home)s/v/conf/dot.emacs.d/extensions %(home)s/.emacs.d/'
+      % locals())
 
+    # misc programs.
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())
 
     # if not exists('%(home)s/local/more-scripts' % locals()):
