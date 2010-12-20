@@ -189,6 +189,12 @@
 
 ;;; End xsteve stuff.
 
+;;; Haskell
+(add-hook 'haskell-mode-hook
+          ;;see http://www.haskell.org/haskellwiki/Haskell-mode
+          ;;         #inf-haskell.el:_the_best_thing_since_the_breadknife
+          (lambda () (require 'inf-haskell)))
+
 ;;; Org mode
 
 ;; suggested global bindings from docs
