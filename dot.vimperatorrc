@@ -30,7 +30,17 @@ source! /home/collins/.vimperatorrc.local
 " :w[in]c[close] : close current window
 " C-[ : <ESC>
 " C-^ or C-6 : switch to most recent buffer in *current* window
-" G or gg: beginning or end of document
+" G or gg : beginning or end of document
+" gi : focus last input field; useful for focussing google search box
+" oO or tT or wW: open/tab/window, starting with current url if upper case
+
+
+" zooming
+" -------
+" zI or zO : increase/reduce *full* zoom
+" zi or zo : increase/reduce *text* zoom
+" [percent] zz or zZ : set text/full zoom to percent, default 100
+
 
 " open recently closed tab
 " ------------------------
@@ -40,7 +50,6 @@ source! /home/collins/.vimperatorrc.local
 
 " text selection
 " --------------
-
 " i : enter caret mode and position caret
 " v : enter visual mode and highlight text by moving caret
 " Y : copy text in visual mode
