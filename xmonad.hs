@@ -104,7 +104,12 @@ tall = Tall 2 (1/10) 1
 -- fullscreen
 --
 -- - flash in youtube: this managehook fixes it
--- - mplayer: add {-fstype none -fs} to your command line
+--
+-- - mplayer: add {-fstype none -fs} to your command line.  here's a
+--   full command line for playing a dvd, and with panscan enabled
+--   ('w' and 'e') for zooming a letter box format:
+--
+--     mplayer -dvd-device /dev/dvd3 dvd://1 -fstype none -fs -vo xv -panscan 1 -panscanrange 3
 fullscreenHook = composeOne [ isFullscreen -?> doFullFloat ]
 
 -- named workspaces
