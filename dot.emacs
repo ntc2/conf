@@ -233,6 +233,13 @@ in buffer with regular spaces"
 ;; Variations: terminus:bold terminus-20:bold
 (add-to-list 'default-frame-alist '(font . "terminus"))
 
+;;; version control
+
+;; Stop emacs from asking: "Symbolic link to SVN-controlled source
+;; file; follow link?" every time I open a symlink to a versioned
+;; file.
+(setq vc-follow-symlinks t)
+
 ;;; Load customizations ;;;
 
 ;; Add my custom lib dir to the path.
