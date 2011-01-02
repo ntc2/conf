@@ -4,8 +4,12 @@ alias less="less -RMi"
 # get syntax highlighting in less, like on gentoo (doesn't work with
 # pipe though :P)
 #
-# sudo aptitude install vim-runtime vim-scripts (or vim-runtime vim-nox)
-alias vless='vim -u /usr/share/vim/vimcurrent/macros/less.vim'
+# to get original less.vim script do
+#
+#   $ sudo aptitude install vim-runtime vim-scripts (or vim-runtime vim-nox)
+#
+# the one in conf/lib is slightly modified (lines added at the end).
+alias vless='vim -u ~/v/conf/lib/less.vim'
 
 # standard
 if which lesspipe &>/dev/null; then
