@@ -70,8 +70,10 @@ function nc:serialize () {
 ## Emacs 
 
 export VISUAL="emacs -nw" EDITOR="emacs -nw"
-
-function nc:ex () { emacs -fs -rv "$@" &! }
+# The -font is redundant, since it's also def in dot.emacs, but the
+# latter takes effect after emacs has loaded, which changes the screen
+# size and confuses xmonad :P
+function nc:ex () { emacs -fs -rv "$@" -font terminus &! }
 function nc:et () { emacs -nw -rv "$@" }
 
 ## Python 

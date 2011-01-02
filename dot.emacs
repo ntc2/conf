@@ -227,6 +227,12 @@ in buffer with regular spaces"
     (while (search-forward " " nil t)
       (replace-match " " nil t))))
 
+;;; default font
+
+;; NB: also def in nc:ex command.
+;; Variations: terminus:bold terminus-20:bold
+(add-to-list 'default-frame-alist '(font . "terminus"))
+
 ;;; Load customizations ;;;
 
 ;; Add my custom lib dir to the path.
