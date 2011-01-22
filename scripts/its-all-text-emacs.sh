@@ -1,3 +1,3 @@
 #!/bin/bash
 
-/usr/bin/emacs --no-splash --fullscreen --reverse-video --no-desktop "$@"
+/usr/bin/emacs -font terminus --no-splash --fullscreen --reverse-video --no-desktop "$@"
