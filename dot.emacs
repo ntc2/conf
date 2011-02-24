@@ -5,7 +5,6 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(case-fold-search t)
- '(tags-case-fold-search nil)
  '(current-language-environment "English")
  '(global-font-lock-mode t nil (font-lock))
  '(indent-tabs-mode nil)
@@ -25,26 +24,34 @@
  '(show-paren-mode t nil (paren))
  '(standard-indent 2)
  '(tab-width 4)
+ '(tags-case-fold-search nil)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 
-;; Whitespace
+;;; Whitespace
 ;;
-;; Show pointless whitespace.  Delete pointless whitespace in region
-;; with M-x delete-trailing-whitespace
+;; Show pointless whitespace.
 (setq-default show-trailing-whitespace t) ; at end of line
+;; Unfortunately, that highlights as you type, which is really
+;; annoying ... but the while-you-type face is a different color than
+;; the on-another-line face, so the former can be turned off.  See
+;; custom set faces below (found with M-x describe-face).
 (setq-default indicate-empty-lines t) ; at end of file
+;; Delete pointless whitespace in region
+(defun nc:del-ws ()
+  (interactive)
+  (whitespace-cleanup-region))
 
 ;; disable tool bar
 ; some mode might use this in a useful way, e.g. debuggers or web
 ; browsers.  special case those as necessary ... or only disable for
 ; specific modes ...
-(if (functionp 'tool-bar-mode) 
+(if (functionp 'tool-bar-mode)
     (tool-bar-mode nil))
 ; less direct way: tool-bar-mode only def in graphics
 ;(when window-system
 ;  (tool-bar-mode nil))
- 
+
 ;; java
 ;;
 ;; make arguments indented only 4 spaces past function, when all
@@ -211,7 +218,7 @@
 (setq org-agenda-files '("~/v/org/"))
 ;; turn on soft wrapping mode for org mode, from
 ;; http://osdir.com/ml/emacs-orgmode-gnu/2009-04/msg00618.html
-(add-hook 'org-mode-hook 
+(add-hook 'org-mode-hook
   (lambda () (setq truncate-lines nil)))
 
 ;;; linum-mode, new in emacs 23
@@ -263,3 +270,9 @@ in buffer with regular spaces"
 ;; control-lock
 ;(require 'control-lock) ; already loaded above
 (control-lock-keys)
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(show-ws-trailing-whitespace ((t nil))))
