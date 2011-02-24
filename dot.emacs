@@ -5,6 +5,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(case-fold-search t)
+ '(tags-case-fold-search nil)
  '(current-language-environment "English")
  '(global-font-lock-mode t nil (font-lock))
  '(indent-tabs-mode nil)
@@ -26,6 +27,13 @@
  '(tab-width 4)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
+
+;; Whitespace
+;;
+;; Show pointless whitespace.  Delete pointless whitespace in region
+;; with M-x delete-trailing-whitespace
+(setq-default show-trailing-whitespace t) ; at end of line
+(setq-default indicate-empty-lines t) ; at end of file
 
 ;; disable tool bar
 ; some mode might use this in a useful way, e.g. debuggers or web
