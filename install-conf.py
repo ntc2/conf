@@ -29,7 +29,7 @@ def main():
         raise Exception('You should run this from your home dir.\n%s!=%s' %
                         (cur, home))
 
-    for d in ('v', 'local', '.subversion', '.ghc', '.emacs.d'):
+    for d in ('v', 'local', '.subversion', '.ghc', '.emacs.d', '.xmonad'):
         if not exists(d): c('mkdir %s' % d)
     chdir('v')
 
@@ -40,7 +40,7 @@ def main():
     # create file *in* target if target is a dir.  this is needed for
     # the idempotence of {ln ~/v/conf/dot.zsh ~/.zsh}.
     for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config', '.zsh',
-              '.ghc/ghci.conf', '.vimperatorrc', '.gitconfig'):
+              '.ghc/ghci.conf', '.vimperatorrc', '.gitconfig', '.xmonad/xmonad.hs'):
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()
         to = '%(home)s/%(f)s' % locals()
 #         if exists(to):
