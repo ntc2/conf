@@ -249,3 +249,4 @@ colorscheme elflord
 set ignorecase
 set smartcase
 set number
+set noswapfile
