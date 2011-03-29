@@ -3,6 +3,8 @@
 ## Path
 
 export PATH=~/local/bin:~/local/scripts:~/local/more-scripts:$PATH
+# zsh looks for "functions" here, which includes completion functions
+export FPATH=$FPATH:~/.zsh/completion
 
 ## HISTORY
 
