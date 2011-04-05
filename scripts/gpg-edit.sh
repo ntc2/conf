@@ -53,6 +53,6 @@ echo
 stty echo
 
 # edit
-gpg --yes -o $t --passphrase-file $pw $in && \
+gpg --yes --no-use-agent   -o $t --passphrase-file $pw $in && \
 $edit $t && \
-gpg --yes -aco $in --passphrase-file $pw $t
+gpg --yes --no-use-agent -aco $in --passphrase-file $pw $t
