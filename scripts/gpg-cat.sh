@@ -7,4 +7,4 @@ if [[ $1 == -h || $# -ne 1 ]]; then
     exit 1
 fi
 
-gpg -o - $1
+gpg --no-use-agent -o - $1
