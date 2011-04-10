@@ -28,10 +28,18 @@
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 
+;;; Mouse
+;; use SHIFT+<arrow> to navigate windows
+(windmove-default-keybindings)
+;; like focus follows mouse in gnome
+;(setq mouse-autoselect-window t)
+
+
 ;;; Whitespace
 ;;
 ;; Show pointless whitespace.
-(setq-default show-trailing-whitespace t) ; at end of line
+;; (UPDATE: this is annoying)
+;(setq-default show-trailing-whitespace t) ; at end of line
 ;; Unfortunately, that highlights as you type, which is really
 ;; annoying ... but the while-you-type face is a different color than
 ;; the on-another-line face, so the former can be turned off.  See
