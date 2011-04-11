@@ -14,3 +14,14 @@
 ;;it had focus last.  
 
 ;;(setq browse-url-new-window-flag t)
+
+;; proof-general
+;;;;;;;;;;;;;;;;
+(setq coq-prog-args '("-I" "/home/collins/v/cpdt-reading-course.redmine.git/cpdt/src"))
+;; "~" doesn't work here, but does if passed on command line, or used in a .v file with LoadPath ???
+;(setq coq-prog-args '("-I" "~/v/cpdt-reading-course.redmine.git/cpdt/src"))
+(setq proof-three-window-enable t)
+(setq proof-electric-terminator-enable t)
+(defun nc:del-coq-comments ()
+  (interactive)
+  (query-replace-regexp "(\\*\\(.\n*\\)*?\\*)\n*" ""))
