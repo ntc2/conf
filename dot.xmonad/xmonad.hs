@@ -63,6 +63,9 @@ import XMonad.Prompt.Workspace (workspacePrompt)
 --   http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#10
 import qualified Data.Map as M
 
+-- from http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-CycleWindows.html
+import XMonad.Actions.CycleWindows
+
 main = xmonad gnomeConfig
        { logHook = logHook gnomeConfig
                    -- mouse follows focus to middle-top
@@ -84,6 +87,7 @@ main = xmonad gnomeConfig
          --   the second line alone may be enough, but I didn't do
          --   things in that order ... YES!
        , modMask     = mod4Mask
+-- this is probably not the right way: sometimes needs a mod-q to reload the xmodmap setting?
        , startupHook = spawn "xmodmap -e \"keysym Menu = Super_L\""
        , manageHook  = myManageHook -- full-screen flash
                        <+> manageHook gnomeConfig
@@ -134,6 +138,14 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
                        -- "go"                                          -- use W.shift instead
                                                                         -- to move current window
              ,-} ((modm, xK_g), workspacePrompt defaultXPConfig (windows . W.view))
+
+-- import XMonad.Actions.CycleWindows
+             , ((mod4Mask,  xK_s), cycleRecentWindows [xK_Super_L] xK_s xK_w)
+             , ((modm, xK_z),                 rotOpposite)
+             , ((modm                , xK_i), rotUnfocusedUp)
+             , ((modm                , xK_u), rotUnfocusedDown)
+             , ((modm .|. controlMask, xK_i), rotFocusedUp)
+             , ((modm .|. controlMask, xK_u), rotFocusedDown)
              ]
 
 -- http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Layout-Tabbed.html
