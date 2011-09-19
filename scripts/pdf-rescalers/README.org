@@ -1,0 +1,17 @@
+* pdfnup (from pdfjam package): variable trim + nup
+
+usage examples:
+: bash pdfnup --paper letterpaper --trim "3cm 5cm 4.5cm 3.5cm" programming-with-narrowing.pdf
+: bash pdfnup --paper letterpaper --trim "3.5cm 3.5cm 3.5cm 3.5cm" ~/outsidein-x-v3.pdf
+
+the --trim options are <left> <bottom> <right> <top>
+* pdfrescale (from a CMU student): scale based uniform trim
+doesn't seem to like relative paths to target file, but relative path
+to script is ok.
+
+usage examples:
+: ~/v/cpdt-reading-course.redmine.git/pdf-rescalers/pdfrescale outsidein-x-v3 1.3
+
+there are many more options, such as --delta, that i have not used
+* what i really want: something that draws lines on a pdf every .5 cm
+remove the guess work from trimming
