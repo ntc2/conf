@@ -91,7 +91,13 @@ for f in ~/.zsh/rc.d/*; do
     source $f
 done
 nc:load-custom ~/.zshrc.system-custom
-nc:load-custom ~/local/scripts/maybe-capswap.sh
+# This is usually unused on Linux systems, confusing in Cygwin
+# (because only the *nix part gets swapped), and annoys people when I
+# use their system to SSH into one of mine and inadvertantly swap
+# their caps lock.  So, in the rare case where I want this, just run
+# ~/local/scripts/capswap.sh manually once on login, and once before
+# logout if using someone else's machine.
+#nc:load-custom ~/local/scripts/maybe-capswap.sh
 
 ## Run last
 
