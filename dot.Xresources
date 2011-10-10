@@ -1,3 +1,23 @@
+!!! These are X resources, merged with xrdb -merge ~/.Xresources,
+!!! according to man Xsession. For system local configuration you can
+!!! manually merge a second file with xrdb -merge, e.g. from
+!!! ~/.zshenv.system-custom.  Or, a CPP macro might also work, since
+!!! man xrdb says CPP is supported by default. 
+
+!!! When SSHing into an external system, it's the X resources of the
+!!! local system that are used.
+
+!!! When editing this file and trying different things, use
+
+!!!   xrdb -remove ~/.Xresources
+!!!   <edit>
+!!!   xrdb -merge ~/.Xresources
+
+!!! The initial 'remove' causes all specified properties to be unset,
+!!! and so properties you remove settings for entirely will still be
+!!! treated properly (I had some trouble with a bad font setting,
+!!! where I decided on no font setting at all).
+
 !*customization: -color
 
 *VT100*colorMode: on
@@ -12,7 +32,6 @@
 *VT100*background: black
 *emacs*foreground: gray90
 *emacs*background: black
-
 
 ! - OR -
 ! Uncomment this for black text on a "white" background.
@@ -64,8 +83,9 @@
 ! This is called clean 6x8 in emacs
 !*font: -schumacher-clean-medium-r-normal--8-*-*-*-c-60-iso8859-1
 ! This is called lucidasanstypewriter-12 in emacs
-*font: -b&h-lucidatypewriter-medium-r-normal-sans-*-120-*-*-*-*-iso8859-1
+!*font: -b&h-lucidatypewriter-medium-r-normal-sans-*-120-*-*-*-*-iso8859-1
 
+!!! The one important setting in this file.
 ! Allows one to use mad fresh GNU meta-key combos in xterm (like I
 ! need to be able to easily enter FÅÂÅÒÅ¢Å• chars)
 XTerm*metaSendsEscape: true
