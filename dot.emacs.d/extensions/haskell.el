@@ -12,12 +12,18 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
 ;;; indentation modes
+;;;
+;;; Debian systems with haskell-mode installed add a hook enabling
+;;; fancy indentation in /etc/emacs/site-start.d/50haskell-mode.el, so
+;;; we remove that hook here before adding our preferred hook.
+
 
 ;; the three indentation modes are mutually exclusive ... and i don't
 ;; know where the differences are documented :PA
 
 ;; this one is supposed to be the most fancy.
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ;; this one has the "insert the function name and a space" behavior
 ;; when tabbing under a function def, which the "fancy" one does not.
