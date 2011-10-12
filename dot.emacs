@@ -28,6 +28,21 @@
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 
+;;; Load customizations
+;;;
+;;; Use a defvar to guard any configurable code, e.g. for code you
+;;; only want to run conditionally, set the variable to nil in the
+;;; system-custom.el to disable the guarded code. See
+;;; extensions/flyspell.el for an example.
+
+;; Add my custom lib dir to the path.
+(add-to-list 'load-path "~/.emacs.d/") ;(push "~/.emacs.d" load-path)
+;; System (e.g. math.wisc.edu vs uoregon.edu) *specific* code.  In
+;; practice I symlink a system specific versioned file here.
+(load "~/.emacs.d/system-custom.el" t)
+;; Common extensions to load on *all* systems.
+(mapc 'load-file (file-expand-wildcards "~/.emacs.d/extensions/*.el"))
+
 ;;; Mouse
 ;; use SHIFT+<arrow> to navigate windows
 (windmove-default-keybindings)
@@ -55,7 +70,7 @@
 ; browsers.  special case those as necessary ... or only disable for
 ; specific modes ...
 (if (functionp 'tool-bar-mode)
-    (tool-bar-mode nil))
+    (tool-bar-mode 0))
 ; less direct way: tool-bar-mode only def in graphics
 ;(when window-system
 ;  (tool-bar-mode nil))
@@ -107,17 +122,6 @@
 ; that the auto-mode regexps match against is a *full* path, so it
 ; doesn't work to anchor at the beginning (^).
 (add-to-list 'auto-mode-alist '("svn-commit\\(\\.[0-9]+\\)?\\.tmp$" . text-mode))
-
-;(add-hook 'font-lock-mode-hook 'flyspell-prog-mode)
-;(add-hook 'text-mode-hook 'flyspell-mode)
-
-; Turn on flyspell-prog-mode in all modes except ..., which should use
-; full flyspell-mode.
-(add-hook 'font-lock-mode-hook
-          (lambda ()
-            (if (member major-mode '(text-mode rst-mode latex-mode))
-                (flyspell-mode t)
-              (flyspell-prog-mode))))
 
 ; vi/less style jk navigation in view-mode.  Kind of pointless because
 ; du keys scroll half page.  But the default <enter>y for <down><up>
@@ -212,12 +216,6 @@
 
 ;;; End xsteve stuff.
 
-;;; Haskell
-(add-hook 'haskell-mode-hook
-          ;;see http://www.haskell.org/haskellwiki/Haskell-mode
-          ;;         #inf-haskell.el:_the_best_thing_since_the_breadknife
-          (lambda () (require 'inf-haskell)))
-
 ;;; Org mode
 
 ;; suggested global bindings from docs
@@ -262,18 +260,6 @@ in buffer with regular spaces"
 ;; file; follow link?" every time I open a symlink to a versioned
 ;; file.
 (setq vc-follow-symlinks t)
-
-;;; Load customizations ;;;
-
-;; Add my custom lib dir to the path.
-(add-to-list 'load-path "~/.emacs.d/") ;(push "~/.emacs.d" load-path)
-;; Common extensions to load on *all* systems.
-(mapc 'load-file (file-expand-wildcards "~/.emacs.d/extensions/*.el"))
-;; System (e.g. math.wisc.edu vs uoregon.edu) *specific* code.  In
-;; practice I symlink a system specific versioned file here.
-(let ((custom "~/.emacs.d/system-custom.el"))
-  (if (file-exists-p custom)
-      (load-file custom)))
 
 ;; control-lock
 ;(require 'control-lock) ; already loaded above

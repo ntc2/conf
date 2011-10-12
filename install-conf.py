@@ -29,7 +29,8 @@ def main():
         raise Exception('You should run this from your home dir.\n%s!=%s' %
                         (cur, home))
 
-    for d in ('v', 'local', '.subversion', '.ghc', '.emacs.d', '.xmonad'):
+    for d in ('v', 'local', 'local/opt', '.subversion', '.ghc', '.emacs.d',
+              '.xmonad'):
         if not exists(d): c('mkdir %s' % d)
     chdir('v')
 
@@ -54,7 +55,18 @@ def main():
     # emacs extensions.
     c('ln -fs %(home)s/v/conf/dot.emacs.d/extensions %(home)s/.emacs.d/'
       % locals())
-
+    # haskell-mode via darcs
+    to = '%(home)s/local/opt/haskellmode-emacs' % locals()
+    if not exists(to):
+        print 'Downloading haskell-mode ...'
+        # tags are listed on the main page
+        # http://projects.haskell.org/haskellmode-emacs/, or use
+        # 'darcs list tags'.
+        if c('darcs get --lazy --tag 2.8.0 \
+                http://code.haskell.org/haskellmode-emacs %(to)s'
+             % locals()):
+            print 'Error downloading haskellmode-emacs.  Do you have darcs installed?'
+        c('cd %(to)s && make' % locals())
     # misc programs.
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())
 
