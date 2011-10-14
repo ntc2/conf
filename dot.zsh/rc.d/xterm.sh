@@ -13,7 +13,7 @@ alias xterm="xterm -sb"
 function xtitle () { echo -e '\e]0;'$@'\a'; }
 
 # if we are graphical kill that god awful bell:
-if [ $DISPLAY ]; then
+if [[ -n "$DISPLAY" ]] && `which xset &>/dev/null`; then
     xset -b
 #    xrdb -merge ~/.Xdefaults
 fi
