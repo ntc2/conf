@@ -1,7 +1,13 @@
-alias fixssh='source ~/local/bin/fix-ssh.sh'
-alias genfixssh='source ~/local/scripts/gen-fix-ssh.sh'
+# Fix environment on screen resume.
+#
+# Things like ssh-agents and $DISPLAY can change each time you ssh
+# into a host.  Here nc:genfixssh generates an updated environment and
+# nc:fixssh loads the environment.
+
+alias nc:fixssh='source ~/local/bin/fix-ssh.sh'
+alias nc:genfixssh='source ~/local/scripts/gen-fix-ssh.sh'
 # screen doesn't see the alias defined by genfixssh?
-alias attach='genfixssh ; screen -dRR'
+alias nc:screen='nc:genfixssh ; screen'
 
 # Set the title of the screen.
 #
@@ -16,7 +22,8 @@ alias attach='genfixssh ; screen -dRR'
 # a new command.
 if [[ $TERM == "screen" ]]; then
     precmd () {
-        : display current directory while waiting for commands
+        : fix env and display current directory while waiting for commands
+        nc:fixssh
         echo -ne "\ek$(basename $(pwd))/\e\\"
         #'screen -X title <title>' also works ...
     }
