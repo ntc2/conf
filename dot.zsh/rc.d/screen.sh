@@ -23,7 +23,17 @@ alias nc:screen='nc:genfixssh ; screen'
 if [[ $TERM == "screen" ]]; then
     precmd () {
         : fix env and display current directory while waiting for commands
-        nc:fixssh
+
+        # There is a bug [1] in zsh 4.3.10 which causes 'source' in
+        # 'precmd' to segfault. So, I'm incorporating the relevant
+        # parts of scripts/gen-fix-ssh.sh here.
+        #
+        # [1] http://comments.gmane.org/gmane.comp.shells.zsh.user/11056
+ 
+        #nc:fixssh
+        for x in SSH_CLIENT SSH_TTY SSH_AUTH_SOCK SSH_CONNECTION DISPLAY; do
+            eval export $x=\"\$$x\" # e.g. {export DISPLAY="$DISPLAY"}
+        done
         echo -ne "\ek$(basename $(pwd))/\e\\"
         #'screen -X title <title>' also works ...
     }
