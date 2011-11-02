@@ -1,1 +1,1 @@
-(setq nc:use-flyspell nil)
+;;(setq nc:use-flyspell nil)
