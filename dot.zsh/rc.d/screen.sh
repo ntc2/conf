@@ -29,7 +29,12 @@ if [[ $TERM == "screen" ]]; then
 
     preexec () {
         : fix env and then display current command while it runs
-        nc:fixssh
+        # XXX, BUG: When we ssh inside screen, our $TERM is still
+        # screen, but there may not be a fix-ssh.sh.  But moreover,
+        # even if there is, it will probably be invalid, so this is
+        # still wrong ... but right now I just want to make the error
+        # message go away.
+        if [[ -e ~/local/bin/fix-ssh.sh ]] && nc:fixssh
         echo -ne "\ek$1\e\\"
     }
 fi
