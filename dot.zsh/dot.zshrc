@@ -117,7 +117,7 @@ unset NOTIFY
     # Print uncommitted modifications and available updates, but don't
     # show the revision we're currenty at, so that there is only
     # output when something is changed
-    svn st -u $conf_dir | head -n -1 &
+    svn st -u $conf_dir | head -n -1 &!
     for f in ~/.zsh{rc,env}.system-custom; do
         [[ -e $f ]] && svn st $(readlink -f $f) 2>/dev/null
     done
@@ -129,4 +129,5 @@ unset NOTIFY
 # only runs for interactive shells
 umask 077
 
+# Procrastinate
 which fortune &>/dev/null && fortune

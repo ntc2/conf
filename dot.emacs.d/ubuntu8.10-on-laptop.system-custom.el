@@ -25,3 +25,7 @@
 (defun nc:del-coq-comments ()
   (interactive)
   (query-replace-regexp "(\\*\\(.\n*\\)*?\\*)\n*" ""))
+
+;; use haskell-mode for .trellys files.  .trellys is close enough .hs
+;; that this is useful
+(add-to-list 'auto-mode-alist '("\\.trellys\\'" . haskell-mode))
