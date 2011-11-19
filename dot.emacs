@@ -9,6 +9,7 @@
  '(global-font-lock-mode t nil (font-lock))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
+ '(iswitchb-default-method (quote maybe-frame))
  '(jit-lock-defer-time 0.25)
  '(js2-auto-indent-flag nil)
  '(js2-bounce-indent-flag t)
