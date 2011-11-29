@@ -113,6 +113,9 @@
 (icomplete-mode t)
 (partial-completion-mode t)
 
+; Make backspace work more often.
+(normal-erase-is-backspace-mode 1)
+
 ; Soft wrap lines in split frames.  Lines in full width frames are
 ; soft wrapped by default, and lines in split frames are truncated by
 ; default.
