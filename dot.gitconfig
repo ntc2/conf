@@ -10,7 +10,8 @@
     br = branch
     co = checkout
     di = diff
-    lg = log -p
+    lgp = !git lgs -p
+    lgs = log --stat
     who = shortlog -s --
     # on newer gits, --onelline abbreviates --pretty=oneline --abbrev-commit
     # 
