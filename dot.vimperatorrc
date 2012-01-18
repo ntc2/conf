@@ -7,7 +7,10 @@ autocmd LocationChange .* js modes.passAllKeys = /mail\.google\.com/.test(buffer
 
 " add "T" to turn on address and search boxes ("toolbar")
 " "n" adds tab numbers
-set guioptions=rbn
+
+" changed in a recent version of vimperator
+" set guioptions=rbn
+set gui=none,tabs
 
 " added by vimperator
 
