@@ -34,3 +34,6 @@
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
 (setq haskell-program-name "ghci -ignore-dot-ghci")
+
+;; Indent 2 spaces
+(setq haskell-indent-offset 2)
