@@ -23,12 +23,22 @@ edit="$EDITOR"
 if [[ -z "$edit" ]]; then
     edit="$(which editor 2>/dev/null)"
     if [[ -z "$edit" ]]; then
-        echo "you must set EDITOR in your environment or have \
+        echo "error: you must set EDITOR in your environment or have \
 a program called 'editor' on your path" >&2
         exit 1
     fi
 fi
 
+# tempfile permissions
+name=$(basename $0)
+if [[ $name == gpg-edit.sh ]]; then
+  mode=edit
+elif [[ $name == gpg-view.sh ]]; then
+  mode=view
+else
+  echo "error: unknown usage mode" >&2
+  exit 1
+fi
 # set up tempfiles for auto deletion
 in="$1"
 t=$(tempfile -d /tmp -m 0600)
@@ -52,7 +62,12 @@ head -n 1 > $pw
 echo
 stty echo
 
-# edit
+# view file and maybe edit and save
 gpg --yes --no-use-agent   -o $t --passphrase-file $pw $in && \
+if [[ $mode != edit ]]; then
+  chmod 0400 $t
+fi && \
 $edit $t && \
-gpg --yes --no-use-agent -aco $in --passphrase-file $pw $t
+if [[ $mode == edit ]]; then
+  gpg --yes --no-use-agent -aco $in --passphrase-file $pw $t
+fi
