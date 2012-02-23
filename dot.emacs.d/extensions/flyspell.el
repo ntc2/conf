@@ -14,6 +14,6 @@
 (when nc:use-flyspell
   (add-hook 'font-lock-mode-hook
             (lambda ()
-              (if (member major-mode '(text-mode rst-mode latex-mode))
+              (if (member major-mode '(text-mode rst-mode latex-mode fundamental-mode))
                   (flyspell-mode t)
                 (flyspell-prog-mode)))))
