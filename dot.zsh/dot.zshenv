@@ -89,6 +89,14 @@ export PYTHONSTARTUP="$HOME/.pythonrc"
 alias nc:svnlsjunk="svn st | grep '^\\?' | awk '{print \$2}'"
 alias nc:svnrmjunk="nc:svnlsjunk | xargs rm -r"
 
+## Run quietly
+function nc:quiet () {
+    : Run a command in background with all output discarded.  Useful
+    : for starting noisy programs like firefox or evince from the shell.
+
+    "$@" &>/dev/null &!
+}
+
 ## Load extensions
 
 for f in ~/.zsh/env.d/*; do
