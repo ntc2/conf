@@ -66,8 +66,9 @@ import qualified Data.Map as M
 -- from http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-CycleWindows.html
 import XMonad.Actions.CycleWindows
 
-main = xmonad gnomeConfig
-       { logHook = logHook gnomeConfig
+myDefaultConfig = gnomeConfig -- defaultConfig
+main = xmonad myDefaultConfig
+       { logHook = logHook myDefaultConfig
                    -- mouse follows focus to middle-top
                    >> updatePointer (Relative 0.5 0.0) 
          -- i have two mod keys: the left
@@ -88,9 +89,9 @@ main = xmonad gnomeConfig
          --   things in that order ... YES!
        , modMask     = mod4Mask
 -- this is probably not the right way: sometimes needs a mod-q to reload the xmodmap setting?
-       , startupHook = spawn "xmodmap -e \"keysym Menu = Super_L\""
+--       , startupHook = spawn "xmodmap -e \"keysym Menu = Super_L\""
        , manageHook  = myManageHook -- full-screen flash
-                       <+> manageHook gnomeConfig
+                       <+> manageHook myDefaultConfig
                        -- no borders for single window
        , layoutHook  = id -- windowNavigation $ subTabbed $ boringWindows
                        $ smartBorders
@@ -131,7 +132,9 @@ myManageHook = fullscreenHook <+> namedWorkspaceHook
 
 -- http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#10
 -- but use gnomeConfig instead of defaultConfig
-myKeys x = M.union (keys gnomeConfig x) (M.fromList (newKeys x))
+--
+-- I guess this is where my caps-lock = control comes from?
+myKeys x = M.union (keys myDefaultConfig x) (M.fromList (newKeys x))
 newKeys conf@(XConfig {XMonad.modMask = modm}) =
              [ {- ((modm, xK_F12), xmonadPrompt defaultXPConfig)
              , ((modm, xK_F3 ), shellPrompt  defaultXPConfig)
