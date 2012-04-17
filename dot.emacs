@@ -66,7 +66,15 @@
   (interactive)
   (whitespace-cleanup-region))
 
-;; disable tool bar
+;; Make regexp search (C-M-s) handle line wrapping intelligently. NB:
+;; after starting a regexp search, you can use regular C-s to jump to
+;; the next match
+;; 
+;; But how to get the same for non-regexp search (C-s)?  Could rebind
+;; regular search to regexp search?
+(setq search-whitespace-regexp "[ \t\r\n]+")
+
+;;; disable tool bar
 ; some mode might use this in a useful way, e.g. debuggers or web
 ; browsers.  special case those as necessary ... or only disable for
 ; specific modes ...
