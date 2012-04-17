@@ -5,7 +5,12 @@
 # THIS DOESN'T WORK, but if it does if I run the command manually
 # after already logged in.  So, put it in a zsh init script.
 #
-#xmodmap -e "keysym Menu = Super_L"
+#xmodmap -e "keysym Menu = Super_R"
+#
+# Didn't verify that this one doesn't work here.  Also, are the "_R"
+# suffixes necessary?
+#
+#xmodmap -e "keysym ISO_Level3_Shift = Alt_R"
 
 # Fix the screen
 xrandr --output DVI-0 --auto --output VGA-0 --auto --left-of DVI-0
