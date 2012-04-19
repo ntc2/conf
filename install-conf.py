@@ -40,8 +40,10 @@ def main():
     # {ln -T} mean treat destination as a normal file, i.e. don't
     # create file *in* target if target is a dir.  this is needed for
     # the idempotence of {ln ~/v/conf/dot.zsh ~/.zsh}.
-    for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config', '.zsh',
-              '.ghc/ghci.conf', '.vimperatorrc', '.gitconfig', '.xmonad/xmonad.hs'):
+    for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config',
+              '.zsh', '.ghc/ghci.conf', '.vimperatorrc', '.gitconfig',
+              '.xmonad/xmonad.hs', '.Xresources'
+              ):
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()
         to = '%(home)s/%(f)s' % locals()
 #         if exists(to):
