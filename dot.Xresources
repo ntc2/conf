@@ -1,0 +1,81 @@
+!!! The resource names are case sensitive. See a programs man page for
+!!! a list of its resources.
+
+!!! See https://wiki.archlinux.org/index.php/X_resources for info on
+!!! ~/.Xresources.
+
+!!! It appears that X resources are only read by programs once at
+!!! start-up, so changes made after start-up may not be visible.  In
+!!! other words, restart any affected programs after changing X
+!!! resources.  E.g., when testing you might do
+
+!!!   xrdb -remove; xrdb -merge <xresources>; xrdb -query
+!!!   <command to test>
+
+!!! These are X resources, merged with xrdb -merge ~/.Xresources,
+!!! according to man Xsession (there is also ~/.Xdefaults, which is
+!!! deprecated). For system local configuration you can manually
+!!! merge a second file with xrdb -merge, e.g. from
+!!! ~/.zshenv.system-custom.  Or, a CPP macro might also work, since
+!!! man xrdb says CPP is supported by default.
+
+!!! When SSHing into an external system, it's the X resources of the
+!!! local system that are used.
+
+!!! When editing this file and trying different things, use
+
+!!!   xrdb -remove ~/.Xresources
+!!!   <edit>
+!!!   xrdb -merge ~/.Xresources
+
+!!! To query current settings, use
+
+!!!   xrdb -query
+
+!!! The initial 'remove' causes all specified properties to be unset,
+!!! and so properties you remove settings for entirely will still be
+!!! treated properly (I had some trouble with a bad font setting,
+!!! where I decided on no font setting at all).
+
+!!! XTerm
+
+!! Colors
+
+! Use colors instead of decoration for bold and underlined text.
+! Makes man pages more readable.
+
+! Colored man pages:
+! https://wiki.archlinux.org/index.php/Man_Page#Colored_man_pages_on_xterm_or_rxvt-unicode
+! ??? Not sure how to get colors *and* bold/underline decorations.
+XTerm*colorULMode: on
+XTerm*colorUL: green
+XTerm*colorBDMode: on
+XTerm*colorBD: purple
+XTerm*reverseVideo: on
+
+!! Misc
+
+XTerm*scrollBar: off
+
+! Might have to install a package to get terminus font.  To get this
+! manually do xterm -fa terminus-12.  It's an XFT.
+XTerm*faceName: Terminus
+XTerm*faceSize: 12
+!XTerm*font: terminus-12
+
+! So that, e.g., M-Backspace deletes a word, instead inserting a 'y'
+! with an umlaut on it :P
+XTerm*metaSendsEscape: on
+
+! Number of lines of output history to save for scroll back.
+XTerm*saveLines: 5000
+
+!!! Emacs
+Emacs.font: terminus-12
+Emacs.reverseVideo: on
+! Already on by default.  This is *not* the toolbar.
+!Emacs.menuBar: on
+
+! Number of lines for toolBar.  Stops screen resize on start-up, due
+! to toolbar being removed by ~/.emacs .
+Emacs.toolBar: 0

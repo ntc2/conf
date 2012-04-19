@@ -74,12 +74,14 @@
 ;; regular search to regexp search?
 (setq search-whitespace-regexp "[ \t\r\n]+")
 
-;;; disable tool bar
+;;; disable tool bar (DISABLED IN ~/.Xresources NOW)
 ; some mode might use this in a useful way, e.g. debuggers or web
 ; browsers.  special case those as necessary ... or only disable for
 ; specific modes ...
-(if (functionp 'tool-bar-mode)
-    (tool-bar-mode 0))
+
+;(if (functionp 'tool-bar-mode)
+;    (tool-bar-mode 0))
+
 ; less direct way: tool-bar-mode only def in graphics
 ;(when window-system
 ;  (tool-bar-mode nil))
