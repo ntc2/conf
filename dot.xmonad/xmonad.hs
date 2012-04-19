@@ -101,6 +101,7 @@ main = xmonad myDefaultConfig
 --       , layoutHook = simpleTabBar $ layoutHook gnomeConfig
        , workspaces = myWorkspaces
        , keys = myKeys
+       , terminal = "xterm"
        }
 
 -- two master, 1/10th resize increment, only show master by default
