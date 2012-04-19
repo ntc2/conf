@@ -1,22 +1,4 @@
-!!! These are X resources, merged with xrdb -merge ~/.Xresources,
-!!! according to man Xsession. For system local configuration you can
-!!! manually merge a second file with xrdb -merge, e.g. from
-!!! ~/.zshenv.system-custom.  Or, a CPP macro might also work, since
-!!! man xrdb says CPP is supported by default. 
-
-!!! When SSHing into an external system, it's the X resources of the
-!!! local system that are used.
-
-!!! When editing this file and trying different things, use
-
-!!!   xrdb -remove ~/.Xresources
-!!!   <edit>
-!!!   xrdb -merge ~/.Xresources
-
-!!! The initial 'remove' causes all specified properties to be unset,
-!!! and so properties you remove settings for entirely will still be
-!!! treated properly (I had some trouble with a bad font setting,
-!!! where I decided on no font setting at all).
+!!! My old Xresources from UO days.
 
 !*customization: -color
 
