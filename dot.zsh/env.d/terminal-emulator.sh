@@ -21,14 +21,10 @@ case $TERM in
         ;;
 esac
 
-#get a scroll bar.
-alias xterm="xterm -sb" 
-
 # Set the title of an xterm
-function xtitle () { echo -e '\e]0;'$@'\a'; }
+function nc:xtitle () { echo -e '\e]0;'$@'\a'; }
 
 # if we are graphical kill that god awful bell:
 if [[ -n "$DISPLAY" ]] && `which xset &>/dev/null`; then
     xset -b
-#    xrdb -merge ~/.Xdefaults
 fi
