@@ -1,5 +1,5 @@
-!!! The resource names are case sensitive. See a programs man page for
-!!! a list of its resources.
+!!! The resource names (at least the final part anyway ...) are case
+!!! sensitive. See a programs man page for a list of its resources.
 
 !!! See https://wiki.archlinux.org/index.php/X_resources for info on
 !!! ~/.Xresources.
@@ -9,7 +9,7 @@
 !!! other words, restart any affected programs after changing X
 !!! resources.  E.g., when testing you might do
 
-!!!   xrdb -remove; xrdb -merge <xresources>; xrdb -query
+!!!   xrdb -remove; xrdb -merge ~/.Xresources; xrdb -query
 !!!   <command to test>
 
 !!! These are X resources, merged with xrdb -merge ~/.Xresources,
@@ -69,6 +69,10 @@ XTerm*metaSendsEscape: on
 
 ! Number of lines of output history to save for scroll back.
 XTerm*saveLines: 5000
+
+! Let xterm skip output when it falls behind.  Try running 'yes' and
+! hitting C-c with and without this option turned on.
+XTerm*jumpScroll: on
 
 !!! Emacs
 Emacs.font: terminus-12
