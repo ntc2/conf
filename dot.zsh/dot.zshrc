@@ -74,7 +74,7 @@ bindkey '^O' vi-open-line-above
 # (/etc/bash.bashrc) overrides it for each new shell.
 
 # Now this is a prompt.
-PS1="[$rd%n$pl@$bl%m$pl][$gr%/$pl][%%$rd%j$pl][#$bd%h$pl][%*]
+PS1="[$rd%n$pl@$bl%m$pl][$gr%~$pl][%%$rd%j$pl][#$bd%h$pl][%*]
 $bl\$$pl "
 
 PS2="$gr%_$pl> "
