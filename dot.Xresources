@@ -46,16 +46,34 @@
 
 ! Colored man pages:
 ! https://wiki.archlinux.org/index.php/Man_Page#Colored_man_pages_on_xterm_or_rxvt-unicode
-! ??? Not sure how to get colors *and* bold/underline decorations.
 XTerm*colorULMode: on
 XTerm*colorUL: green
 XTerm*colorBDMode: on
 XTerm*colorBD: purple
+! Colors *and* bold/underline decorations!  Took me a while to find
+! this.
+XTerm*veryBoldColors: 6
 XTerm*reverseVideo: on
 
-!! Misc
+! Display underline as italic instead.
+! Need to use a "trutype" font for this, and I guess terminus is not
+! such a font.
+! XTerm*italicULMode: on
 
-XTerm*scrollBar: off
+!! Scrolling
+
+XTerm*scrollBar: on
+XTerm*thickness: 4
+XTerm*scrollBarBorder: 0
+
+! Let xterm skip output when it falls behind.  Try running 'yes' and
+! hitting C-c with and without this option turned on.
+XTerm*jumpScroll: on
+
+! Number of lines of output history to save for scroll back.
+XTerm*saveLines: 5000
+
+!! Font
 
 ! Might have to install a package to get terminus font.  To get this
 ! manually do xterm -fa terminus-12.  It's an XFT.
@@ -63,16 +81,12 @@ XTerm*faceName: Terminus
 XTerm*faceSize: 12
 !XTerm*font: terminus-12
 
+!! Misc
+
 ! So that, e.g., M-Backspace deletes a word, instead inserting a 'y'
 ! with an umlaut on it :P
 XTerm*metaSendsEscape: on
 
-! Number of lines of output history to save for scroll back.
-XTerm*saveLines: 5000
-
-! Let xterm skip output when it falls behind.  Try running 'yes' and
-! hitting C-c with and without this option turned on.
-XTerm*jumpScroll: on
 
 !!! Emacs
 Emacs.font: terminus-12
