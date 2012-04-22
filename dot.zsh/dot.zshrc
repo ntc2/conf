@@ -28,6 +28,18 @@ zstyle ':completion:complete-files:*' completer _files
 bindkey "^X^I" complete-files
 bindkey "^[[Z" complete-files
 
+# From http://www.zsh.org/mla/users/2005/msg01314.html and
+# http://www.zsh.org/mla/users/2001/msg00870.html
+#
+# Delete word stops at slash, like in bash.
+backward-delete-to-slash () {
+  local WORDCHARS=${WORDCHARS//\//}
+  zle .backward-delete-word
+}
+zle -N backward-delete-to-slash
+# '^[^?' means M-Backspace :P
+bindkey '^[^?' backward-delete-to-slash
+
 autoload -U compinit
 compinit
 # End of lines added by compinstall
