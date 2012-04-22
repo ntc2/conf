@@ -20,6 +20,14 @@ zstyle ':completion:*' substitute 1
 zstyle ':completion:*' verbose true
 #zstyle :compinstall filename '/root/.zshrc' #???
 
+# From http://chneukirchen.org/blog/archive/2011/02/10-more-zsh-tricks-you-may-not-know.html
+#
+# Force file name completion on C-x TAB, Shift-TAB.
+zle -C complete-files complete-word _generic
+zstyle ':completion:complete-files:*' completer _files
+bindkey "^X^I" complete-files
+bindkey "^[[Z" complete-files
+
 autoload -U compinit
 compinit
 # End of lines added by compinstall
