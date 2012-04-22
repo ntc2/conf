@@ -17,7 +17,12 @@ case $TERM in
 
         # I.e., use `${~1:gs/%/%%}` to escape the percents before
         # expansion.
-        preexec () { printf "\e]0;$(hostname | cut -d . -f 1):$1\a" }
+        
+        # UPDATE: switching to `printf` from `print -P` made `date
+        # +%s` work, but then I had trouble from `echo $((10%3))`.  I
+        # don't really understand the leading ~ in the expansion, so I
+        # left it out ...
+        preexec () { printf "\e]0;$(hostname | cut -d . -f 1):${1:gs/%/%%}\a" }
         ;;
 esac
 
