@@ -47,7 +47,7 @@
 ! Colored man pages:
 ! https://wiki.archlinux.org/index.php/Man_Page#Colored_man_pages_on_xterm_or_rxvt-unicode
 XTerm*colorULMode: on
-XTerm*colorUL: green
+XTerm*colorUL: light green
 XTerm*colorBDMode: on
 XTerm*colorBD: purple
 ! Colors *and* bold/underline decorations!  Took me a while to find
