@@ -20,26 +20,6 @@ zstyle ':completion:*' substitute 1
 zstyle ':completion:*' verbose true
 #zstyle :compinstall filename '/root/.zshrc' #???
 
-# From http://chneukirchen.org/blog/archive/2011/02/10-more-zsh-tricks-you-may-not-know.html
-#
-# Force file name completion on C-x TAB, Shift-TAB.
-zle -C complete-files complete-word _generic
-zstyle ':completion:complete-files:*' completer _files
-bindkey "^X^I" complete-files
-bindkey "^[[Z" complete-files
-
-# From http://www.zsh.org/mla/users/2005/msg01314.html and
-# http://www.zsh.org/mla/users/2001/msg00870.html
-#
-# Delete word stops at slash, like in bash.
-backward-delete-to-slash () {
-  local WORDCHARS=${WORDCHARS//\//}
-  zle .backward-delete-word
-}
-zle -N backward-delete-to-slash
-# '^[^?' means M-Backspace :P
-bindkey '^[^?' backward-delete-to-slash
-
 autoload -U compinit
 compinit
 # End of lines added by compinstall
@@ -88,6 +68,38 @@ esac
 
 bindkey '^O' vi-open-line-above
 
+# Force file name completion on C-x TAB, Shift-TAB.
+#
+# From http://chneukirchen.org/blog/archive/2011/02/10-more-zsh-tricks-you-may-not-know.html
+zle -C complete-files complete-word _generic
+zstyle ':completion:complete-files:*' completer _files
+bindkey "^X^I" complete-files
+bindkey "^[[Z" complete-files
+
+# Delete word stops at slash, like in bash.
+#
+# From http://www.zsh.org/mla/users/2005/msg01314.html and
+# http://www.zsh.org/mla/users/2001/msg00870.html
+backward-delete-to-slash () {
+  local WORDCHARS=${WORDCHARS//\//}
+  zle .backward-delete-word
+}
+zle -N backward-delete-to-slash
+# '^[^?' means M-Backspace :P
+bindkey '^[^?' backward-delete-to-slash
+
+# Disable flow control with C-s
+#
+# From http://smlv.cc.gatech.edu/2010/07/08/small-tip-for-terminal-prevent-ctrl-s-ctrl-q/
+stty stop undef
+
+# Make incremental history search with C-s and C-r support glob
+# patterns
+#
+# From http://chneukirchen.org/blog/archive/2012/02/10-new-zsh-tricks-you-may-not-know.html
+bindkey "^R" history-incremental-pattern-search-backward
+bindkey "^S" history-incremental-pattern-search-forward
+
 ## Prompt
 
 # Set up the prompt.  I think it would be inherited, but a sys script
@@ -103,6 +115,13 @@ PS2="$gr%_$pl> "
 message () {
     # -P means interpret % escapes
     print -P "${rd}[${bl}* ${gr}$@ ${bl}*${rd}]${pl}"
+}
+
+## Poor man's attempt at bash's 'help' command
+#
+# From http://chneukirchen.org/blog/archive/2012/02/10-new-zsh-tricks-you-may-not-know.html
+zman () {
+  PAGER="less -g -s '+/^       $1\b'" man zshall
 }
 
 ## Load extensions
