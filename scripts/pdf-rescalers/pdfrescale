@@ -13,6 +13,14 @@
 # produces
 #       sillyLNCSpaper-1.2.pdf
 
+# NC: Started getting weird error:
+#
+# NC: Not writing to <some file>.aux (openout_any = p).
+#
+# NC: Fix:
+# NC: http://email.esm.psu.edu/pipermail/macosx-tex/2006-February/020580.html
+export openout_any=r
+
 jobname=$1
 if [ ! -f $jobname.pdf ]; then
   echo "Input file $jobname.pdf not found"
@@ -30,5 +38,5 @@ pdflatex \
    -jobname="$jobname-$scale" \
    '\documentclass[twoside]{article}\usepackage{pdfpages}\begin{document}\includepdf[pages=-,scale='"$scale"']{'"$tmp"'}\end{document}\batchmode' \
    > /dev/null
-\rm $tmp
+\rm -f $tmp
 \rm $jobname-$scale.aux $jobname-$scale.log
