@@ -51,6 +51,11 @@ if [[ -e $HOME/.ssh/known_hosts ]]; then
 fi
 
 ## Key bindings
+#
+# See `stty -a` and `bindkey` for key bindings.  The stty bindings
+# take precedence (e.g. the C-s freezing the terminal (disabled below)
+# taking precedence over C-s incremental forward searching the
+# history).
 
 # Make HOME and END work.
 

@@ -101,7 +101,7 @@ main = xmonad myDefaultConfig
 --       , layoutHook = simpleTabBar $ layoutHook gnomeConfig
        , workspaces = myWorkspaces
        , keys = myKeys
-       , terminal = "xterm"
+       , terminal = "urxvt" -- "xterm" -- Had trouble with jumpscrolling not working in xterm.
        }
 
 -- two master, 1/10th resize increment, only show master by default
