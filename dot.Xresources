@@ -12,6 +12,8 @@
 !!!   xrdb -remove; xrdb -merge ~/.Xresources; xrdb -query
 !!!   <command to test>
 
+!!! If you''re testing in a tty, then use `xrdb -display :0 ...`.
+
 !!! These are X resources, merged with xrdb -merge ~/.Xresources,
 !!! according to man Xsession (there is also ~/.Xdefaults, which is
 !!! deprecated). For system local configuration you can manually
@@ -19,7 +21,7 @@
 !!! ~/.zshenv.system-custom.  Or, a CPP macro might also work, since
 !!! man xrdb says CPP is supported by default.
 
-!!! When SSHing into an external system, it's the X resources of the
+!!! When SSHing into an external system, it''s the X resources of the
 !!! local system that are used.
 
 !!! When editing this file and trying different things, use
@@ -69,6 +71,7 @@ XTerm*scrollBarBorder: 0
 ! Let xterm skip output when it falls behind.  Try running 'yes' and
 ! hitting C-c with and without this option turned on.
 XTerm*jumpScroll: on
+XTerm*multiScroll: on
 
 ! Number of lines of output history to save for scroll back.
 XTerm*saveLines: 5000
@@ -76,7 +79,7 @@ XTerm*saveLines: 5000
 !! Font
 
 ! Might have to install a package to get terminus font.  To get this
-! manually do xterm -fa terminus-12.  It's an XFT.
+! manually do xterm -fa terminus-12.  It''s an XFT.
 XTerm*faceName: Terminus
 XTerm*faceSize: 12
 !XTerm*font: terminus-12
@@ -87,6 +90,43 @@ XTerm*faceSize: 12
 ! with an umlaut on it :P
 XTerm*metaSendsEscape: on
 
+!!! ATerm
+!
+! ATerm uses XTerm resources when they overlap.
+!
+! Conflicts with XTerm.reverseVideo ???
+!XTerm*reverseVideo: off
+!ATerm*reverseVideo: off
+
+!!! URxvt
+!
+! URxvt uses Rxvt resources when they overlap.
+!
+! Mostly copying XTerm resources here :P
+Rxvt.colorULMode: on
+Rxvt.colorUL: light green
+Rxvt.colorBDMode: on
+Rxvt.colorBD: purple
+Rxvt.veryBoldColors: 6
+Rxvt.reverseVideo: on
+Rxvt.scrollBar: on
+! Values lower than about 6 are all treated as about 6.
+Rxvt.thickness: 4
+! Rxvt only: simple scrollbar.  There are other choices ...
+Rxvt.scrollstyle: plain
+Rxvt.scrollBarBorder: 0
+Rxvt.jumpScroll: on
+Rxvt.saveLines: 5000
+! Seems to be the same as terminus-12 in emacs and xterm, except the interline spacing is less ???
+Rxvt.font: terminus-14
+! Was having a bunch of trouble with *rxvt ignoring Alt as a modifier.
+! None of these options helped, but then I rebooted and all was well ...
+!Rxvt.meta: ignore
+!Rxvt.meta8: off
+! Make scrolling in screen work directly!
+Rxvt.secondaryScroll: on
+! Rxvt only: remove some of the scrollbar decorations.
+Rxvt.scrollBar_floating: on
 
 !!! Emacs
 Emacs.font: terminus-12
