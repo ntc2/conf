@@ -12,6 +12,10 @@
 #
 #xmodmap -e "keysym ISO_Level3_Shift = Alt_R"
 
+function log {
+    echo "`date -R`:" "$@" | tee -a ~/.xsession-log ~/.xsession-errors
+}
+
 # Fix the screen
 xrandr --output DVI-0 --auto --output VGA-0 --auto --left-of DVI-0
 
@@ -26,12 +30,17 @@ gnome-panel &
 # "gnome-control-center sound" as the command to run.
 #
 # `gnome-control-center` starts the configuration dialog.
-gnome-terminal &
-gnome-terminal &
+if which urxvt &>/dev/null; then
+    urxvt &
+    urxvt &
+else
+    log "Could not find urxvt; running xterm."
+    xterm &
+    xterm &
+fi
+# gnome-terminal &
+# gnome-terminal &
 
-function log {
-    echo "`date -R`:" "$@" | tee -a ~/.xsession-log ~/.xsession-errors
-}
 
 log "~/.xsession was run"
 
