@@ -92,6 +92,8 @@ where args must include source pdf filename(s) and optionally also
   according to whether or not a thin line is required around pages
 * a page-trimming specification such as
          --trim \"1cm 1cm 1cm 1cm\"
+  The arguments are
+         --trim \"<left> <bottom> <right> <top>\"
   (Note that trimming does not mix well with --frame true.)
 * an \"offset\" specification such as
          --offset \"1cm 0.5cm\"

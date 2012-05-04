@@ -1,10 +1,14 @@
 * pdfnup (from pdfjam package): variable trim + nup
 
 usage examples:
-: bash pdfnup --paper letterpaper --trim "3cm 5cm 4.5cm 3.5cm" programming-with-narrowing.pdf
-: bash pdfnup --paper letterpaper --trim "3.5cm 3.5cm 3.5cm 3.5cm" ~/outsidein-x-v3.pdf
+: ./pdfnup --paper letterpaper --trim "3cm 5cm 4.5cm 3.5cm" <file>
+: ./pdfnup --paper letterpaper --trim "3.5cm 3.5cm 3.5cm 3.5cm" <file>
+: ./pdfnup --nup 1x1 --paper letterpaper \
+:   --trim "1.5cm 3cm 1.5cm 0cm" <file>
 
-the --trim options are <left> <bottom> <right> <top>
+the --trim options are <left> <bottom> <right> <top> and the program
+seems to be "smart" in that it doesn't necessarily honor your
+request :P
 * pdfrescale (from a CMU student): scale based uniform trim
 doesn't seem to like relative paths to target file, but relative path
 to script is ok.
