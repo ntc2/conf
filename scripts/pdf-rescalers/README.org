@@ -18,7 +18,7 @@ usage examples:
 
 there are many more options, such as --delta, that i have not used
 * watermarking to avoid guessing
-example for a4 paper.
+Work flow:
 
 1. use `pdfinfo` (from poppler-utils package) to determine paper size
    of the to-be-cropped pdf:
@@ -27,9 +27,9 @@ example for a4 paper.
 
 2. apply the watermark with `pdftk`:
 
-     pdftk in.pdf background watermark-a4.pdf output /tmp/in.wm.pdf
+     pdftk in.pdf background watermark-<paper size from step 1>.pdf output /tmp/in.wm.pdf
 
-3. figure out padding distances by looking at watermarked pdf
+3. figure out padding distances by looking at watermarked pdf:
 
      evince /tmp/in.wm.pdf
 
@@ -38,7 +38,7 @@ example for a4 paper.
 
 4. use ./pdfnup to trim and nup:
 
-     pdfnup --paper a4paper \
+     pdfnup --paper letterpaper \
             --nup 2x1 \
             --trim <left> <bottom> <right> <top> \
             --delta <horizontal> <vertical> \
