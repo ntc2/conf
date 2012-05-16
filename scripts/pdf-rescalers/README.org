@@ -17,5 +17,28 @@ usage examples:
 : ~/v/cpdt-reading-course.redmine.git/pdf-rescalers/pdfrescale outsidein-x-v3 1.3
 
 there are many more options, such as --delta, that i have not used
-* what i really want: something that draws lines on a pdf every .5 cm
-remove the guess work from trimming
+* watermarking to avoid guessing
+example for a4 paper.
+
+1. use `pdfinfo` (from poppler-utils package) to determine paper size
+   of the to-be-cropped pdf:
+
+     pdfinfo in.pdf
+
+2. apply the watermark with `pdftk`:
+
+     pdftk in.pdf background watermark-a4.pdf output /tmp/in.wm.pdf
+
+3. figure out padding distances by looking at watermarked pdf
+
+     evince /tmp/in.wm.pdf
+
+   the watermark lines are in .5cm increments
+
+4. use ./pdfnup to trim and nup:
+
+     pdfnup --paper a4paper \
+            --nup 2x1 \
+            --trim <left> <bottom> <right> <top> \
+            --delta <horizontal> <vertical> \
+            in.pdf

@@ -1,0 +1,70 @@
+% Based on
+%
+%   \newlength\myborder
+%   \myborder=10pt%please adjust the border width :-)
+%    
+%    
+%   \pagecolor{red}%please change it back to black :-)
+%    
+%   \AddToShipoutPictureBG
+%   {%
+%       \AtPageLowerLeft
+%       {%
+%           \color{white}%
+%       \hspace{\myborder}%
+%       \rule[\myborder]{\paperwidth-2\myborder}{\paperheight-2\myborder}%
+%     }%
+%   }
+%
+% from http://tex.stackexchange.com/questions/8764/border-on-pages-edge
+
+\usepackage{eso-pic,xcolor,calc,type1cm}
+
+% The \rule command: \rule[distance to raise base]{width}{height}
+
+% Disable page numbering (the "1" on the watermark is not useful :P)
+\pagenumbering{gobble}
+
+\newcommand{\drawBorder}[2]{
+\AddToShipoutPicture
+{%
+    \AtPageLowerLeft
+    {%
+    \color{#2}%
+    \rule[#1]{\paperwidth}{1px}%
+    }%
+    \AtPageLowerLeft
+    {%
+    \color{#2}%
+    \rule[\paperheight-#1]{\paperwidth}{1px}%
+    }%
+    \AtPageLowerLeft
+    {%
+    \hspace{#1}%
+    \color{#2}%
+    \rule{1px}{\paperheight}%
+    }%
+    \AtPageLowerLeft
+    {%
+    \hspace{\paperwidth}%
+    \hspace{-#1}%
+    \color{#2}%
+    \rule{1px}{\paperheight}%
+    }%
+}
+}
+
+\drawBorder{0.5cm}{red}
+\drawBorder{1cm}{black}
+\drawBorder{1.5cm}{blue}
+\drawBorder{2cm}{black}
+\drawBorder{2.5cm}{green}
+\drawBorder{3cm}{black}
+\drawBorder{3.5cm}{red}
+\drawBorder{4cm}{black}
+\drawBorder{4.5cm}{blue}
+\drawBorder{5cm}{black}
+
+\begin{document}
+\phantom{lalala}% To avoid empty output.
+\end{document}

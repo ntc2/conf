@@ -101,6 +101,8 @@ where args must include source pdf filename(s) and optionally also
 * a \"delta\" specification such as
          --delta \"1cm 1cm\"
   to put space between logical pages (see the pdfpages manual)
+  The arguments are
+         --delta \"<horizontal> <vertical>\"
 * a \"scale\" specification such as
          --scale 0.91
   to scale the output up or down in size (decrease or increase margins)
