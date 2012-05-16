@@ -35,7 +35,7 @@ tempfileDir="/var/tmp" ## /var/tmp is standard on many unix systems
 ##
 frame=false            ## do not print a thin border around pages
 nup=2x1                ## two logical pages side by side
-paper=a4paper          ## alternatives are other LaTeX paper sizes
+paper=letterpaper      ## alternatives are other LaTeX paper sizes
 orient=auto            ## alternatives are landscape and portrait
 pages=all
 turn=true              ## landscape pages are landscape-oriented
