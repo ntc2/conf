@@ -33,7 +33,8 @@ example for a4 paper.
 
      evince /tmp/in.wm.pdf
 
-   the watermark lines are in .5cm increments
+   the watermark lines are in .5cm increments (black lines at 1cm
+   increments).
 
 4. use ./pdfnup to trim and nup:
 
