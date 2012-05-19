@@ -32,10 +32,14 @@
 --
 -- -  {aptitude install dmenu}
 import XMonad
-import XMonad.Config.Gnome
+import XMonad.Config.Gnome (gnomeConfig)
 import XMonad.Actions.UpdatePointer -- mouse follows focus
 --import XMonad.Layout.TabBarDecoration -- tabs: sucks by default: the tabs don't do anything :P
-import XMonad.Hooks.ManageHelpers -- fullscreen flash
+import XMonad.Hooks.ManageHelpers -- fullscreen flash Using
+-- gnomeConfig and desktopLayoutModifiers take care of avoidStruts and
+-- more. See XMonad.Config.Desktop docs.
+import XMonad.Hooks.ManageDocks (SetStruts(..),ToggleStruts(..),Direction2D(..),avoidStrutsOn)
+import XMonad.Actions.UpdateFocus (adjustEventInput)
 import XMonad.Config.Desktop (desktopLayoutModifiers) -- custom layoutHook + gnome
 import XMonad.Layout.NoBorders (smartBorders)
 
@@ -45,6 +49,10 @@ import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.SubLayouts
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.BoringWindows
+
+-- Get a prompt for running XMonad X () actions interactively.
+import XMonad.Prompt
+import XMonad.Prompt.XMonad
 
 -- named workspaces
 -- ================
@@ -88,15 +96,20 @@ main = xmonad myDefaultConfig
          --   the second line alone may be enough, but I didn't do
          --   things in that order ... YES!
        , modMask     = mod4Mask
--- this is probably not the right way: sometimes needs a mod-q to reload the xmodmap setting?
---       , startupHook = spawn "xmodmap -e \"keysym Menu = Super_L\""
+       , startupHook = myStartupHook
        , manageHook  = myManageHook -- full-screen flash
                        <+> manageHook myDefaultConfig
                        -- no borders for single window
        , layoutHook  = id -- windowNavigation $ subTabbed $ boringWindows
-                       $ smartBorders
-         -- http://haskell.cs.yale.edu/haskellwiki/Xmonad/Using_xmonad_in_Gnome#Layouts
-                       $ desktopLayoutModifiers 
+
+                       -- !!!: Here I say to avoid *no* struts, but
+                       -- leaving this out means strut toggling
+                       -- operations (M-b an C-M-b) don't work
+                       -- ... seems like a bug.
+                       . avoidStrutsOn []
+                       . smartBorders
+                       -- http://haskell.cs.yale.edu/haskellwiki/Xmonad/Using_xmonad_in_Gnome#Layouts
+                       -- . desktopLayoutModifiers -- desktopLayoutModifiers = avoidStruts :P
                        $ Full ||| tall ||| Mirror tall
 --       , layoutHook = simpleTabBar $ layoutHook gnomeConfig
        , workspaces = myWorkspaces
@@ -135,7 +148,9 @@ myManageHook = fullscreenHook <+> namedWorkspaceHook
 -- but use gnomeConfig instead of defaultConfig
 --
 -- I guess this is where my caps-lock = control comes from?
-myKeys x = M.union (keys myDefaultConfig x) (M.fromList (newKeys x))
+--
+-- See EZConfig lib for emacs style key specs.
+myKeys x = M.fromList (newKeys x) `M.union` keys myDefaultConfig x
 newKeys conf@(XConfig {XMonad.modMask = modm}) =
              [ {- ((modm, xK_F12), xmonadPrompt defaultXPConfig)
              , ((modm, xK_F3 ), shellPrompt  defaultXPConfig)
@@ -150,7 +165,30 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
              , ((modm                , xK_u), rotUnfocusedDown)
              , ((modm .|. controlMask, xK_i), rotFocusedUp)
              , ((modm .|. controlMask, xK_u), rotFocusedDown)
+
+             -- From XMonad.Prompt.XMonad:
+             , ((modm                , xK_x), xmonadPrompt defaultXPConfig)
+
+             -- Toggle the top strut.  M-b is bound to toggle all struts.
+             , ((modm                , xK_b), sendMessage $ ToggleStruts)
+             , ((modm .|. controlMask, xK_b), sendMessage $ ToggleStrut U)
+             -- Disable all struts.
+             -- , ((modm .|. controlMask, xK_b), sendMessage $ SetStruts [] [minBound .. maxBound])
+             -- , ((modm                , xK_x), evalPrompt defaultEvalConfig defaultXPConfig)
              ]
+
+-- this is probably not the right way: sometimes needs a mod-q to reload the xmodmap setting?
+--       , startupHook = spawn "xmodmap -e \"keysym Menu = Super_L\""
+myStartupHook = do
+  startupHook myDefaultConfig
+
+
+  -- spawn "xmonad-restart.sh"
+  adjustEventInput
+
+-- Hide/show all gaps. From XMonad.Hooks.ManageDocks docs.
+-- hideStruts = sendMessage $ SetStruts [] [minBound .. maxBound]
+-- showStruts = sendMessage $ SetStruts [minBound .. maxBound] [] 
 
 -- http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Layout-Tabbed.html
 -- http://haskell.org/haskellwiki/Xmonad/Frequently_asked_questions#Multi_head_and_workspaces_.28desktops.29
@@ -159,3 +197,9 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
 -- complicated config, could be educational:
 --
 -- http://snipt.net/doitian/xmonad-configuration/
+
+-- Another config with lots of good stuff.  Has lots of comments, and
+-- cool named workspace set-up and search engines (I have similar in
+-- vimperator, but I have to recreate them on each new vimperator
+-- install).
+-- http://www.haskell.org/haskellwiki/Xmonad/Config_archive/Brent_Yorgey%27s_darcs_xmonad.hs
