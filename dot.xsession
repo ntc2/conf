@@ -12,14 +12,23 @@
 #
 #xmodmap -e "keysym ISO_Level3_Shift = Alt_R"
 
+# Delay commands to avoid problems with late starting gnome-panel
+# (only have this problem on eeepc).
+function delay {
+    { sleep 10; "$@" } &
+}
+
 function log {
     echo "`date -R`:" "$@" | tee -a ~/.xsession-log ~/.xsession-errors
 }
 
+# XXX: this only makes sense on some systems ...
+
 # Fix the screen
 xrandr --output DVI-0 --auto --output VGA-0 --auto --left-of DVI-0
 
-gnome-panel &
+# Start gnome-panel first in hopes of avoiding problems with terminals
+#gnome-panel & # Causes problems on Ubuntu 11.04
 #gnome-settings-daemon &
 
 # Applets
@@ -31,12 +40,12 @@ gnome-panel &
 #
 # `gnome-control-center` starts the configuration dialog.
 if which urxvt &>/dev/null; then
-    urxvt &
-    urxvt &
+    delay urxvt
+    delay urxvt
 else
     log "Could not find urxvt; running xterm."
-    xterm &
-    xterm &
+    delay xterm
+    delay xterm
 fi
 # gnome-terminal &
 # gnome-terminal &
@@ -49,3 +58,4 @@ log "~/.xsession was run"
 #
 #export WINDOW_MANAGER=`which xmonad`
 exec gnome-session --session=local-xmonad-session
+#exec xmonad

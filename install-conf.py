@@ -30,8 +30,8 @@ def main():
                         (cur, home))
 
     for d in ('v', 'local', 'local/opt', '.subversion', '.ghc', '.emacs.d',
-              '.xmonad'):
-        if not exists(d): c('mkdir %s' % d)
+              '.xmonad', '.local/share/applications', '.config/gnome-session/sessions'):
+        if not exists(d): c('mkdir -p %s' % d)
     chdir('v')
 
     if not exists('conf'):
@@ -42,7 +42,9 @@ def main():
     # the idempotence of {ln ~/v/conf/dot.zsh ~/.zsh}.
     for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config',
               '.zsh', '.ghc/ghci.conf', '.vimperatorrc', '.gitconfig',
-              '.xmonad/xmonad.hs', '.Xresources'
+              '.xmonad/xmonad.hs', '.Xresources', '.xsession',
+              '.config/gnome-session/sessions/local-xmonad-session.session',
+              '.local/share/applications/local-xmonad-windowmanager-provider.desktop',
               ):
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()
         to = '%(home)s/%(f)s' % locals()

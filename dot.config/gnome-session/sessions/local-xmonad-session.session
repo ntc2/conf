@@ -1,0 +1,15 @@
+# -*- mode: conf -*-
+[GNOME Session]
+Name=ThereDoesNotNeedToBeANameHere
+#RequiredComponents=gnome-panel;gnome-settings-daemon;
+#RequiredApplications=gnome-panel;gnome-settings-daemon;
+#
+#To avoid errors about no applications by running one.  Otherwise
+#these can be apps in ~/.xsession ... except on eeepc (Ubuntu 11.04)
+#the gnome-panel only works when started here :P
+DefaultApps=gnome-panel;gnome-settings-daemon;
+# I can't figure out how to start this in the ~/.xsession
+Required=windowmanager;
+# NB: This is NOT a path. It's the name of a .desktop file
+# containing an Exec entry with a path.
+Required-windowmanager=local-xmonad-windowmanager-provider
