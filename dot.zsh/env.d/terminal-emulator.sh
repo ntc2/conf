@@ -1,3 +1,10 @@
+if [[ "$TERM" == "rxvt-256color" ]]; then
+    # Was getting very strange behavior in Ubuntu 11.04 without this,
+    # e.g. backspace inserting a phantom space, and man complaining
+    # that my terminal was not fully functional.
+    export TERM=rxvt
+fi
+
 # Based on snippet from http://forums.gentoo.org/viewtopic-p-176209.html#176209.
 case $TERM in
     *xterm*|rxvt|(dt|k|E)term)
