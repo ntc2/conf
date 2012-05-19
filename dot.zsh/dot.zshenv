@@ -2,7 +2,8 @@
 
 ## Path
 
-export PATH=~/local/bin:~/local/scripts:~/local/more-scripts:$PATH
+export PATH=~/.cabal/bin:~/local/opt/bin:~/local/bin:~/local/scripts:~/local/more-scripts:$PATH
+export MANPATH=~/local/opt/share/man:$MANPATH
 # zsh looks for "functions" here, which includes completion functions
 export FPATH=$FPATH:~/.zsh/completion
 
