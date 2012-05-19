@@ -23,7 +23,7 @@ alias nc:screen='nc:genfixssh ; screen'
 if [[ $TERM == "screen" ]]; then
     precmd () {
         : display current directory while waiting for commands
-        echo -ne "\ek$(basename $(pwd))/\e\\"
+        echo -ne "\ek$(basename "$(pwd)")/\e\\"
         #'screen -X title <title>' also works ...
     }
 
