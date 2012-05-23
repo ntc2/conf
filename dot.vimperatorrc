@@ -1,3 +1,4 @@
+" -*- vimrc-generic -*-
 "2.3.1 (created: 2010/04/07 18:56:53)
 
 " use :source ~/.vimperatorrc to reload this file
@@ -12,7 +13,37 @@ autocmd LocationChange .* js modes.passAllKeys = /mail\.google\.com/.test(buffer
 " set guioptions=rbn
 set gui=none,tabs
 
+" search engine shortcuts
+" =======================
+"
+" by default, when you tell vimperator to open something that doesn't
+" look like an address, e.g. with
+" 
+"   open the pickles
+"
+" it runs the shortcut with keyword defined by the defsearch variable.
+" This variable defaults to 'google', which is the default keyword for
+" google in firefox.  So, if you change the keyword for google, say to
+" 'g', then this default search behavior breaks.  You can fix it by
+" manually setting defsearch:
+"
+"   set defsearch=g
+"
+" Got this from:
+" http://code.google.com/p/vimperator-labs/issues/detail?id=589
+"
+" XXX: need to figure out how to store the search engines.
+"
+" You can access the search engines and change the keywords with
+"
+"   dialog searchengines
+"
+" but the only way I know to *install* search engines is click on
+" links, e.g. the 'search plugin' link at the top of
+" haskell.org/hoogle.
+
 " added by vimperator
+" ===================
 
 set runtimepath=/home/collins/.vimperator
 source! /home/collins/.vimperatorrc.local
