@@ -1,8 +1,14 @@
+# -*- conf -*-
 [core]
-# can't figure out how to defeat vc-git from setting fundamental-mode
-# and ruining flyspell ... so, i added fundamental-mode to my auto
-# flyspell-mode modes, in extensions/flyspell.el.
+    # This is supposed to give something like svn:eol-style=native,
+    # but it's not working with git-svn ...
+	autocrlf = true
 
+    # can't figure out how to stop emacs's vc-git from setting
+    # fundamental-mode and ruining flyspell ... so, i added
+    # fundamental-mode to my auto flyspell-mode modes, in
+    # extensions/flyspell.el.
+    #
     # editor = emacs -nw -f text-mode
     # editor = emacs -nw --eval '(setq nc:use-flyspell nil)' -f flyspell-mode
 [user]
