@@ -1,8 +1,46 @@
 # -*- conf -*-
 [core]
-    # This is supposed to give something like svn:eol-style=native,
-    # but it's not working with git-svn ...
-	autocrlf = true
+    # Line ending normalization: see
+    # http://timclem.wordpress.com/2012/03/01/mind-the-end-of-your-line/
+    #
+    # Apparently git-svn is a buggy when it comes to
+    # svn:eol-style=native: git does not perform any translation in
+    # the working copy when this attribute is set, and doesn't convert
+    # line endings to LF before committing when this attribute is set.
+    # Together, these mean that you can git-svn commit a file with
+    # CRLF line endings, while setting the svn:eol-style=native
+    # attribute via ~/.subversion/config (which git-svn honors),
+    # without actually changing the CRLF to LF in the committed file.
+    # The end result is that the subversion repo will store the file
+    # with CRLF line endings, even though svn:eol-style=native is
+    # supposed to mean that the file is stored with native line
+    # endings (since setting this attribute in a subversion working
+    # copy automatically causes the files line endings to be
+    # converted).  When you check the file out in git again, git will
+    # leave the CRLF line endings in tact :P And maybe worse,
+    # subversion will convert them on checkout, but then any edits
+    # will result in the full file being marked as changed :P
+    #
+    # I didn't find any nice
+    # make-git-do-the-subversion-style-conversion solution, but by
+    # setting autorclf = input and safecrlf = warn (warn might be the
+    # default), you can have git convert CRLF to LF *before*
+    # committing, and warn you about it.  This doesn't help with
+    # already screwed up files, but it will hopefully stop me from
+    # accidentally committing CRLF files in the future.
+    #
+    # The 'eol' setting controls what line endings you get in the
+    # working copy, but the default value of 'native' doesn't help
+    # with the above problem, and changing it to 'lf' to force LF
+    # marks all files with CRLF as modified :P
+
+    autocrlf = input
+    # Default ?
+    safecrlf = warn
+    # Default:
+    #
+    # eol = native
+
 
     # can't figure out how to stop emacs's vc-git from setting
     # fundamental-mode and ruining flyspell ... so, i added
