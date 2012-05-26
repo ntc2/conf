@@ -3,7 +3,7 @@
     # Line ending normalization: see
     # http://timclem.wordpress.com/2012/03/01/mind-the-end-of-your-line/
     #
-    # Apparently git-svn is a buggy when it comes to
+    # Apparently git-svn is buggy when it comes to
     # svn:eol-style=native: git does not perform any translation in
     # the working copy when this attribute is set, and doesn't convert
     # line endings to LF before committing when this attribute is set.
@@ -34,15 +34,28 @@
     # with the above problem, and changing it to 'lf' to force LF
     # marks all files with CRLF as modified :P
 
-    autocrlf = input
-    # Default ?
+    # Solution: see http://stackoverflow.com/a/10762396/470844
+
+    # Subsumed by ~/.gitattributes.
+    #
+    # autocrlf = input
+
+    # Warn when line endings are converted. Default?
     safecrlf = warn
-    # Default:
+
+    # Convert files with the 'text' attribute to native line endings
+    # on checkout (Default).
     #
     # eol = native
 
+    # File containing global git attributes.  See 'git help
+    # attributes'.  I'm setting '* text=auto' there, which subsumes
+    # 'core.autocrlf=input'.
+	attributesfile = ~/.gitattributes
 
-    # can't figure out how to stop emacs's vc-git from setting
+
+
+    # I can't figure out how to stop emacs's vc-git from setting
     # fundamental-mode and ruining flyspell ... so, i added
     # fundamental-mode to my auto flyspell-mode modes, in
     # extensions/flyspell.el.
@@ -64,8 +77,18 @@
     lgp = !git lgs -p
     lgs = log --stat
     who = shortlog -s --
-    # on newer gits, --onelline abbreviates --pretty=oneline --abbrev-commit
-    # 
-    # to get more verbose commit info, append --pretty=short or similar
-    gr2 = log --graph --all --pretty=oneline --decorate --abbrev-commit
-    gr  = log --graph --all --pretty='format:%h %C(yellow)%ar%Creset %Cgreen%aN%Creset%C(yellow)%d%Creset %s'
+
+    # On newer gits, --onelline abbreviates --pretty=oneline
+    # --abbrev-commit.  To get more verbose commit info, append
+    # --pretty=short or similar
+    #
+    # grOneline = log --graph --all --pretty='format:%h %C(yellow)%ar%Creset %Cgreen%aN%Creset%C(yellow)%d%Creset %s'
+    grShort = log --graph --all --pretty=oneline --decorate --abbrev-commit
+    # The rest is based on http://stackoverflow.com/a/9074343/470844
+    grTwoLines = log --graph --all --format=format:'%C(red)%h%C(reset) %C(green)(%cr)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%cn%C(reset)%n''%C(white)%s%C(reset)' --abbrev-commit
+    # All entries have an extra newline here :P Using '%+b' to avoid
+    # two extra newlines when body is empty though.
+    grFull = log --graph --all --format=format:'%C(red)%h%C(reset) %C(green)(%cr)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%cn%C(reset)%n''%C(white)%s%C(reset)%n%+b' --abbrev-commit
+    # Seems like a bug: git will only accept underline versions of the
+    # above aliases.
+    gr = !"git grtwolines"

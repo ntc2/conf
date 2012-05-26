@@ -1,0 +1,6 @@
+# -*- conf -*-
+
+# Mark all files for autmatical end-of-line normalization.  Files are
+# normalized *if* they identified as text by git's heuristics. See
+# 'git help attributes'
+* text=auto
