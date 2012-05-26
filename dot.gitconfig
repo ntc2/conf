@@ -1,4 +1,8 @@
 # -*- conf -*-
+#
+# Best git tutorial I've read:
+# http://newartisans.com/2008/04/git-from-the-bottom-up/
+# http://ftp.newartisans.com/pub/git.from.bottom.up.pdf
 [core]
     # Line ending normalization: see
     # http://timclem.wordpress.com/2012/03/01/mind-the-end-of-your-line/
@@ -74,21 +78,29 @@
     br = branch
     co = checkout
     di = diff
-    lgp = !git lgs -p
+    # lgs -p
+    lgp = log --stat -p
     lgs = log --stat
     who = shortlog -s --
 
-    # On newer gits, --onelline abbreviates --pretty=oneline
+    # On newer gits, --oneline abbreviates --pretty=oneline
     # --abbrev-commit.  To get more verbose commit info, append
     # --pretty=short or similar
     #
     # grOneline = log --graph --all --pretty='format:%h %C(yellow)%ar%Creset %Cgreen%aN%Creset%C(yellow)%d%Creset %s'
+
+    # This version uses only one line per commit, and includes only
+    # the commit hash, the subject, and the refs.  The refs are added
+    # with '--decorate', which does a much better job than '%d' used
+    # below: different colors for different kinds of refs (HEAD vs
+    # branchesvs tags), and prefixes tags with 'tag: '.
     grShort = log --graph --all --pretty=oneline --decorate --abbrev-commit
-    # The rest is based on http://stackoverflow.com/a/9074343/470844
+    # The rest are based on http://stackoverflow.com/a/9074343/470844
     grTwoLines = log --graph --all --format=format:'%C(red)%h%C(reset) %C(green)(%cr)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%cn%C(reset)%n''%C(white)%s%C(reset)' --abbrev-commit
     # All entries have an extra newline here :P Using '%+b' to avoid
     # two extra newlines when body is empty though.
     grFull = log --graph --all --format=format:'%C(red)%h%C(reset) %C(green)(%cr)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%cn%C(reset)%n''%C(white)%s%C(reset)%n%+b' --abbrev-commit
     # Seems like a bug: git will only accept underline versions of the
-    # above aliases.
-    gr = !"git grtwolines"
+    # above aliases.  Also, aliases break zsh completion.
+    gr         = !git grtwolines
+    grTopology = !git grtwolines --simplify-by-decoration

@@ -94,7 +94,7 @@ enable-auto-props = yes
 #*.java = svn:eol-style=native;svn:keywords=Author Date;
 *.java = svn:eol-style=native
 #*.txt  = svn:eol-style=native;svn:keywords=Author Date;
-*.txt  = svn:eol-style=native
+*.txt = svn:eol-style=native
 *.png = svn:mime-type=image/png
 *.jpg = svn:mime-type=image/jpeg
 Makefile = svn:eol-style=native
