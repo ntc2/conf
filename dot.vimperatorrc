@@ -13,6 +13,13 @@ autocmd LocationChange .* js modes.passAllKeys = /mail\.google\.com/.test(buffer
 " set guioptions=rbn
 set gui=none,tabs
 
+" reverse video
+" =============
+"
+" Install the BYM add-on.  The default shortcut is C-M-b.  It can be
+" changed in the preferences, but doesn't take effect until after a
+" restart.
+
 " search engine shortcuts
 " =======================
 "
