@@ -41,7 +41,8 @@ def main():
     # create file *in* target if target is a dir.  this is needed for
     # the idempotence of {ln ~/v/conf/dot.zsh ~/.zsh}.
     for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config',
-              '.zsh', '.ghc/ghci.conf', '.vimperatorrc', '.gitconfig',
+              '.zsh', '.ghc/ghci.conf', '.vimperatorrc',
+              '.gitconfig', '.gitattributes',
               '.xmonad/xmonad.hs', '.Xresources', '.xsession',
               '.config/gnome-session/sessions/local-xmonad-session.session',
               '.local/share/applications/local-xmonad-windowmanager-provider.desktop',
