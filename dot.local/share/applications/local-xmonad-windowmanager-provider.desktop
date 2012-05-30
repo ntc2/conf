@@ -3,7 +3,7 @@ Type=Application
 Encoding=UTF-8
 Name=ThereNeedsToBeANameHereOrItDoesntWork
 # This IS a path.
-Exec=/home/collins/.cabal/bin/xmonad
+Exec=~/.cabal/bin/xmonad
 NoDisplay=true
 X-GNOME-WMName=Xmonad
 X-GNOME-Autostart-Phase=WindowManager
