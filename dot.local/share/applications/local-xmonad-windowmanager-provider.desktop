@@ -3,7 +3,34 @@ Type=Application
 Encoding=UTF-8
 Name=ThereNeedsToBeANameHereOrItDoesntWork
 # This IS a path.
-Exec=~/.cabal/bin/xmonad
+#
+# The 'Exec' key spec:
+#
+# http://standards.freedesktop.org/desktop-entry-spec/latest/ar01s06.html
+#
+# But apparently '~' is not directly supported, because both of
+#
+#   Exec=~/.cabal/bin/xmonad
+#   Exec="~/.cabal/bin/xmonad"
+#
+# don't work.  According to that documentation, '~' is a "reserved
+# character" and should be quoted, but they don't explain how path
+# expansion happens.  The '~' does expand to the user's $HOME, as can
+# be verified with
+#
+#   Exec=sh -c "readlink -f ~ > /tmp/home-in-gnome.txt"
+#
+# but giving the '~' prefixed path results in "file not found" errors
+# in ~/.xsession-errors.
+#
+# However, this works:
+#
+#   Exec=sh -c "~/.cabal/bin/xmonad"
+#
+# But just 'Exec=xmonad' suffices , since '~/.cabal/bin' is on my
+# PATH, which is set-up before ~/.xsession is run.  The PATH is used
+# to look up the 'Exec' program, according to the above docs.
+Exec=xmonad
 NoDisplay=true
 X-GNOME-WMName=Xmonad
 X-GNOME-Autostart-Phase=WindowManager
