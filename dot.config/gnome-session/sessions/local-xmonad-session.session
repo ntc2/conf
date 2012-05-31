@@ -1,15 +1,44 @@
 # -*- mode: conf -*-
 [GNOME Session]
 Name=ThereDoesNotNeedToBeANameHere
-#RequiredComponents=gnome-panel;gnome-settings-daemon;
-#RequiredApplications=gnome-panel;gnome-settings-daemon;
+# Gnome 2 and Gnome 3 configs are incompatible. This config contains
+# settings that work in both Ubuntu 11.04 (EeePc, GNOME 2.32.1) and
+# 11.10 (desktop, GNOME 3.2.1).
 #
-#To avoid errors about no applications by running one.  Otherwise
-#these can be apps in ~/.xsession ... except on eeepc (Ubuntu 11.04)
-#the gnome-panel only works when started here :P
+# The ~/.xsession-errors is helpful for debugging some problems here,
+# but on Ubuntu 11.10 I got no errors related to ignored keys
+# (e.g. 'Required' when I need 'RequiredProviders').
+
+# In Ubuntu 11.10 I get error in ~/.xsession-errors:
+#
+#   gnome-session[5187]: WARNING: Cannot use session 
+#     '/home/collins/.config/gnome-session/sessions/
+#     local-xmonad-session.session': no component in the session.
+#
+# without 'RequiredComponents'.  However, Ubuntu 11.04 needed the
+# 'DefaultApps' config instead, giving "no applications" errors
+# otherwise :P If not for these "you must start some apps"
+# requirements, all apps could be started in ~/.xsession.
+#
+# Ubuntu 11.04:
 DefaultApps=gnome-panel;gnome-settings-daemon;
-# I can't figure out how to start this in the ~/.xsession
+# Ubuntu 11.10:
+RequiredComponents=gnome-panel;gnome-settings-daemon;
+# Does not work:
+#   RequiredApplications=gnome-panel;gnome-settings-daemon;
+
+# I can't figure out how to start the window manager in the
+# ~/.xsession ... the 'export WINDOW_MANAGER=xmonad' does not work.
+#
+# Ubuntu 11.04:
 Required=windowmanager;
+# Ubuntu 11.10:
+RequiredProviders=windowmanager;
+
 # NB: This is NOT a path. It's the name of a .desktop file
 # containing an Exec entry with a path.
+#
+# Ubuntu 11.04:
 Required-windowmanager=local-xmonad-windowmanager-provider
+# Ubuntu 11.10:
+DefaultProvider-windowmanager=local-xmonad-windowmanager-provider
