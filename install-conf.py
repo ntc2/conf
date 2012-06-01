@@ -41,7 +41,8 @@ def main():
     # create file *in* target if target is a dir.  this is needed for
     # the idempotence of {ln ~/v/conf/dot.zsh ~/.zsh}.
     for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config',
-              '.zsh', '.ghc/ghci.conf', '.vimperatorrc',
+              '.zsh', '.zshrc', '.zshenv', '.zprofile',
+              '.ghc/ghci.conf', '.vimperatorrc',
               '.gitconfig', '.gitattributes',
               '.xmonad/xmonad.hs', '.Xresources', '.xsession',
               '.config/gnome-session/sessions/local-xmonad-session.session',
@@ -52,10 +53,10 @@ def main():
 #         if exists(to):
 #             c('mv %(to)s %(to)s.backup' % locals())
         c('ln -Tfs %(from_)s %(to)s'  % locals())
-    for f in ('.zshrc', '.zshenv'):
-        from_ = '%(home)s/.zsh/dot%(f)s' % locals()
-        to = '%(home)s/%(f)s' % locals()
-        c('ln -Tfs %(from_)s %(to)s'  % locals())
+    # for f in ('.zshrc', '.zshenv'):
+    #     from_ = '%(home)s/.zsh/dot%(f)s' % locals()
+    #     to = '%(home)s/%(f)s' % locals()
+    #     c('ln -Tfs %(from_)s %(to)s'  % locals())
 
     # emacs extensions.
     c('ln -fs %(home)s/v/conf/dot.emacs.d/extensions %(home)s/.emacs.d/'
