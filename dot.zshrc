@@ -153,8 +153,8 @@ nc:load-custom ~/.zshrc.system-custom
 unset NOTIFY
 
 # Make conf_dir go out of scope after the svn commands
-    # .zshrc -> $conf_dir/dot.zsh/dot.zshrc
-    conf_dir=$(dirname $(dirname $(readlink -f ~/.zshrc)))
+    # .zshrc -> $conf_dir/dot.zshrc
+    conf_dir=$(dirname $(readlink -f ~/.zshrc))
     #docs_dir=$(dirname $(readlink -f ~/local/more-scripts))
     #svn info  $conf_dir # General info
 
@@ -162,7 +162,7 @@ unset NOTIFY
     # show the revision we're currenty at, so that there is only
     # output when something is changed
     svn st -u $conf_dir | head -n -1 &!
-    for f in ~/.zsh{rc,env}.system-custom; do
+    for f in ~/.{zshrc,zshenv,zprofile}.system-custom; do
         [[ -e $f ]] && svn st $(readlink -f $f) 2>/dev/null
     done
     # No --update when on stupid AFS file system

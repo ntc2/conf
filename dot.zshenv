@@ -1,12 +1,5 @@
 # -*- shell-script -*-
 
-## Path
-
-export PATH=~/.cabal/bin:~/local/opt/bin:~/local/bin:~/local/scripts:~/local/more-scripts:$PATH
-export MANPATH=~/local/opt/share/man:$MANPATH
-# zsh looks for "functions" here, which includes completion functions
-export FPATH=$FPATH:~/.zsh/completion
-
 ## HISTORY
 
 # If these first two aren't set no history is saved or loaded
@@ -82,7 +75,6 @@ function nc:et () { emacs -nw -rv "$@" }
 ## Python 
 
 # Doesn't work with ~ in path.
-export PYTHONPATH=$PYTHONPATH:$HOME/local/scripts
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
 ## Subversion
