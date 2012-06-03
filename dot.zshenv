@@ -1,6 +1,36 @@
 # -*- shell-script -*-
 
-## HISTORY
+## Path
+
+# If you want to be sure that path elements are unique, you can use
+# `typeset -U`.  Seems to only work on scalars that are "tied".  I.e.,
+# do:
+#
+#   FOO=...
+#   typeset -TU FOO foo :
+#
+# Now 'foo' is an array consisting of 'FOO' split on ':', and both
+# have had duplicates removed.  NB: a plain `typeset -U FOO` doesn't
+# seem to work, altho my reading of `man zshbuiltins` indicates that
+# it should :P OTOH, PATH, MANPATH, and FPATH are already tied, and
+# retying them results in an error.
+
+# Having '~/.cabal/bin' first here could be dangerous: a malicious
+# package could install a rogue core util.  So, do I need to make a
+# point of looking in '~/.cabal/bin' after running 'cabal install'?
+# Well, cabal install can spawn arbitrary shell commands for all I
+# know, so this is not the primary concern.
+
+typeset -U PATH
+export PATH=~/.cabal/bin:~/local/opt/bin:~/local/bin:~/local/scripts:~/local/more-scripts:/opt/bin:$PATH
+typeset -U MANPATH
+export MANPATH=~/local/opt/share/man:/opt/share/man:$MANPATH
+# zsh looks for "functions" here, which includes completion functions
+typeset -U FPATH
+export FPATH=~/.zsh/completion:$FPATH
+typeset -TU PYTHONPATH pythonpath
+export PYTHONPATH=$HOME/local/scripts:$PYTHONPATH
+
 
 # If these first two aren't set no history is saved or loaded
 HISTFILE=~/.zsh-history
