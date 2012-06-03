@@ -23,8 +23,17 @@
 
 typeset -U PATH
 export PATH=~/.cabal/bin:~/local/opt/bin:~/local/bin:~/local/scripts:~/local/more-scripts:/opt/bin:$PATH
-typeset -U MANPATH
-export MANPATH=~/local/opt/share/man:/opt/share/man:$MANPATH
+# It turns out that `manpath`, which is used to find paths to search
+# for man pages, will infer MANPATH from PATH.  In particular, when
+# D/bin is on path, then D/share/man, if it exists, will be on
+# MANPATH.  This is not documented anywhere than I can find, although
+# this old email
+# http://linux.derkeiler.com/Mailing-Lists/Debian/2003-08/0956.html
+# explains that D on PATH implies D/man and D/../man on MANPATH, if
+# they exist.
+
+#typeset -U MANPATH
+#export MANPATH=~/local/opt/share/man:/opt/share/man:$MANPATH
 # zsh looks for "functions" here, which includes completion functions
 typeset -U FPATH
 export FPATH=~/.zsh/completion:$FPATH
