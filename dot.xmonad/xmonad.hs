@@ -32,7 +32,7 @@
 --
 -- -  {aptitude install dmenu}
 import XMonad
-import XMonad.Config.Gnome (gnomeConfig)
+import XMonad.Config.Gnome (gnomeConfig,gnomeRun)
 import XMonad.Actions.UpdatePointer -- mouse follows focus
 --import XMonad.Layout.TabBarDecoration -- tabs: sucks by default: the tabs don't do anything :P
 import XMonad.Hooks.ManageHelpers -- fullscreen flash Using
@@ -54,25 +54,31 @@ import XMonad.Layout.BoringWindows
 import XMonad.Prompt
 import XMonad.Prompt.XMonad
 
--- named workspaces
--- ================
+-- * Named workspaces
 --
--- send windows to named workspaces
+-- ** Send windows to named workspaces
 --
 --  http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#15
 import qualified XMonad.StackSet as W
--- function to change to workspace by name
+-- ** Change to workspace by name
 --
---   http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Prompt-Workspace.html
+-- http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Prompt-Workspace.html
+-- http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#10
 import XMonad.Prompt
 import XMonad.Prompt.Workspace (workspacePrompt)
--- add keybinding to change to workspace by name function
---
---   http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#10
-import qualified Data.Map as M
+-- ** Create new named workspaces
+import XMonad.Actions.DynamicWorkspaces
+-- See docs:
+-- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-CopyWindow.html
+-- Lots of good stuff there, e.g. copy firefox to current workspace,
+-- do what you want, and then delete copy.
+import XMonad.Actions.CopyWindow (copy)
 
 -- from http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-CycleWindows.html
 import XMonad.Actions.CycleWindows
+
+import qualified Data.Map as M
+
 
 myDefaultConfig = gnomeConfig -- defaultConfig
 main = xmonad myDefaultConfig
@@ -131,11 +137,24 @@ tall = Tall 2 (1/10) 1
 --     mplayer -dvd-device /dev/dvd3 dvd://1 -fstype none -fs -vo xv -panscan 1 -panscanrange 3
 fullscreenHook = composeOne [ isFullscreen -?> doFullFloat ]
 
--- named workspaces
-namedWorkspaces = ["update"]
--- put the named workspaces at the end of the list: ??? turns out
--- there are still 9 numeric workspaces ???
-myWorkspaces = map show [1 .. (9 - length namedWorkspaces)] ++ namedWorkspaces
+-- named workspaces -- XXX: better to create this automatically *only when* there are windows to put there.
+namedWorkspaces = ["web","scratch","update"]
+-- !!!: there is a bug in xmonad + xinerama whereby fewer initial
+-- workspaces than xinerama screens results in xmonad failing at
+-- startup with
+--
+--   xmonad-i386-linux: xmonad: StackSet: non-positive argument to StackSet.new
+--
+-- in ~/.xsession-errors.
+--
+-- Related: to restart xmonad from a tty after hosing your graphical set-up with:
+--
+--   DISPLAY=:0 xmonad --recompile; DISPLAY=:0 xmonad --restart; DISPLAY=:0 xmonad --replace
+--
+-- This is better than C-M-BACKSPACE since you don't lose your open
+-- windows.  Some subset of those commands should be sufficient ...
+myWorkspaces = -- map show [1 .. (9 - length namedWorkspaces)] ++
+               namedWorkspaces
 -- http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#15
 -- use xprop to find the resource strings
 namedWorkspaceHook = composeAll [ resource =? "update-manager" --> doF (W.shift "update") 
@@ -152,15 +171,9 @@ myManageHook = fullscreenHook <+> namedWorkspaceHook
 -- See EZConfig lib for emacs style key specs.
 myKeys x = M.fromList (newKeys x) `M.union` keys myDefaultConfig x
 newKeys conf@(XConfig {XMonad.modMask = modm}) =
-             [ {- ((modm, xK_F12), xmonadPrompt defaultXPConfig)
-             , ((modm, xK_F3 ), shellPrompt  defaultXPConfig)
-                       -- "go"                                          -- use W.shift instead
-                                                                        -- to move current window
-             ,-} ((modm, xK_g), workspacePrompt defaultXPConfig (windows . W.view))
-
--- import XMonad.Actions.CycleWindows
-             , ((mod4Mask,  xK_s), cycleRecentWindows [xK_Super_L] xK_s xK_w)
-             , ((modm, xK_z),                 rotOpposite)
+             -- * Cycle windows
+             [ ((modm                , xK_s), cycleRecentWindows [xK_Super_L] xK_s xK_w)
+             , ((modm                , xK_z), rotOpposite)
              , ((modm                , xK_i), rotUnfocusedUp)
              , ((modm                , xK_u), rotUnfocusedDown)
              , ((modm .|. controlMask, xK_i), rotFocusedUp)
@@ -169,22 +182,82 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
              -- From XMonad.Prompt.XMonad:
              , ((modm                , xK_x), xmonadPrompt defaultXPConfig)
 
+             -- * Rebind launcher.
+             --
+             -- Work around for idiotic ubuntu bug: Mod4+p is
+             -- hardcoded to toggle display mode, for *all* users on
+             -- all platforms, because some laptops work this way.
+             --
+             -- See:
+             --
+             -- - Ubuntu bug report:
+             --   https://bugs.launchpad.net/ubuntu/+source/gnome-settings-daemon/+bug/694910
+             -- - Not sure if there's a good way to reply to this, but
+             --   could encourage people to mark the ubuntu bug as "affects me"
+             --   http://www.haskell.org/pipermail/xmonad/2011-March/011161.html
+
+             -- Original 'keys' defined in
+             -- http://hackage.haskell.org/packages/archive/xmonad/0.10/doc/html/src/XMonad-Config.html#defaultConfig
+             -- and in 
+             -- http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Gnome.html#gnomeConfig
+             -- for gnome:
+             --
+             --  , ((modm, xK_p), gnomeRun)
+             , ((modm, xK_F4), gnomeRun)
+
+             -- * Struts
+             --
              -- Toggle the top strut.  M-b is bound to toggle all struts.
              , ((modm                , xK_b), sendMessage $ ToggleStruts)
              , ((modm .|. controlMask, xK_b), sendMessage $ ToggleStrut U)
              -- Disable all struts.
              -- , ((modm .|. controlMask, xK_b), sendMessage $ SetStruts [] [minBound .. maxBound])
              -- , ((modm                , xK_x), evalPrompt defaultEvalConfig defaultXPConfig)
+
+             -- * Named workspaces
+             --
+             -- Bindings from http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-DynamicWorkspaces.html
+
+               -- Remove current.  Moves windows to another workspace
+             , ((modm .|. shiftMask, xK_BackSpace), removeWorkspace)
+               -- Remove by name.
+             , ((modm .|. shiftMask, xK_r        ), renameWorkspace defaultXPConfig)
+               -- Select by name. If hitting tab is annoying, see
+               -- http://www.haskell.org/pipermail/xmonad/2011-April/011319.html
+             , ((modm              , xK_g        ), selectWorkspace defaultXPConfig)
+               -- Move window.
+             , ((modm              , xK_m        ), withWorkspace defaultXPConfig (windows . W.shift))
+               -- Copy window.
+             , ((modm .|. shiftMask, xK_m        ), withWorkspace defaultXPConfig (windows . copy))
+
+             -- Prompt for named workspace to switch to. Can use
+             -- W.shift instead to move current window to named
+             -- workspace.  Version above is better: creates workspace
+             -- if it doesn't exist.
+             --
+             -- , ((modm, xK_g), workspacePrompt defaultXPConfig (windows . W.view))
              ]
+             -- * Override usual M-<n>/M-S-<n> workspace bindings.
+             --
+             -- From from
+             -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-DynamicWorkspaces.html
+             --
+             -- mod-[1..9]       %! Switch to workspace N
+             -- mod-shift-[1..9] %! Move client to workspace N
+             ++
+             zip (zip (repeat (modm)) [xK_1..xK_9]) (map (withNthWorkspace W.greedyView) [0..])
+             ++
+             zip (zip (repeat (modm .|. shiftMask)) [xK_1..xK_9]) (map (withNthWorkspace W.shift) [0..])
 
 -- this is probably not the right way: sometimes needs a mod-q to reload the xmodmap setting?
 --       , startupHook = spawn "xmodmap -e \"keysym Menu = Super_L\""
 myStartupHook = do
   startupHook myDefaultConfig
 
-
   -- spawn "xmonad-restart.sh"
   adjustEventInput
+
+
 
 -- Hide/show all gaps. From XMonad.Hooks.ManageDocks docs.
 -- hideStruts = sendMessage $ SetStruts [] [minBound .. maxBound]
