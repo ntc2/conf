@@ -236,9 +236,9 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
                -- http://www.haskell.org/pipermail/xmonad/2011-April/011319.html
              , ((modm              , xK_g        ), selectWorkspace defaultXPConfig)
                -- Move window.
-             , ((modm              , xK_m        ), withWorkspace defaultXPConfig (windows . W.shift))
+             , ((modm .|. shiftMask, xK_g        ), withWorkspace defaultXPConfig (windows . W.shift))
                -- Copy window.
-             , ((modm .|. shiftMask, xK_m        ), withWorkspace defaultXPConfig (windows . copy))
+             --, ((modm .|. shiftMask, xK_m        ), withWorkspace defaultXPConfig (windows . copy))
 
              -- Prompt for named workspace to switch to. Can use
              -- W.shift instead to move current window to named
