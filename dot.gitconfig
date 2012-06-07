@@ -78,14 +78,35 @@
 	ui = auto
 [log]
     # Show times in my time zone.
+    #
+    # This triggers a bug in `git stash list`: the stashes receive
+    # relative dates instead of numbers (e.g. 'starch@{0}' for the
+    # first stash).  The bug is fixed here (gmane git list: git stash
+    # list shows timestamp in stead of "stash number", when setting
+    # date = local for log in config, 2009 September 15):
+    #
+    #   http://thread.gmane.org/gmane.comp.version-control.git/128569
+    #
+    # and then later reintroduced, which is discussed here (magit
+    # list: Bug in git-stash(.sh) ?, 2012 April 27):
+    #
+    #   https://groups.google.com/forum/?fromgroups#!topic/magit/KpJtJ956D3Y
+    #
+    # So, looks like it's been fixed recently, but is not in stable
+    # gits on ubuntu :P
     date = local
 [grep]
     extendedRegexp = true
 [merge]
     # Fancier setup at http://emacswiki.org/emacs/EmergeDiff
     tool = emerge
-# from https://git.wiki.kernel.org/index.php/Aliases
 [alias]
+    # Work around 'log.date = local' bug discussed above.
+    stashlist = !git stash list --date=default
+
+    # SVN style short aliases.
+    #
+    # from https://git.wiki.kernel.org/index.php/Aliases
     st = status
     ci = commit
     br = branch
