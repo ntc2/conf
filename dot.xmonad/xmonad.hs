@@ -1,4 +1,6 @@
--- Gnome config from
+-- Gnome config now given in org/notes/fresh-ubuntu-install.org.
+--
+-- Gnome config from (OLD)
 -- http://haskell.org/haskellwiki/Xmonad/Basic_Desktop_Environment_Integration
 -- see also
 -- http://donsbot.wordpress.com/2010/03/13/after-3-years-my-xmonad-configuration-now-uses-gnome/
@@ -14,6 +16,8 @@
 -- this gives multihead for free.
 --
 -- TODO
+--
+-- -  better completion of workspace names: something more like iswitchb in emacs?
 --
 -- -  tabbing or stacking
 --
@@ -76,6 +80,9 @@ import XMonad.Actions.CopyWindow (copy)
 
 -- from http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-CycleWindows.html
 import XMonad.Actions.CycleWindows
+
+-- * Work space selection
+import XMonad.Actions.CycleWS (toggleWS)
 
 import qualified Data.Map as M
 
@@ -181,6 +188,9 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
 
              -- From XMonad.Prompt.XMonad:
              , ((modm                , xK_x), xmonadPrompt defaultXPConfig)
+
+             -- * Cycle workspace
+             , ((modm,               xK_Tab), toggleWS)
 
              -- * Rebind launcher.
              --
