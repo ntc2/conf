@@ -24,7 +24,7 @@
  '(save-place t nil (saveplace))
  '(show-paren-mode t nil (paren))
  '(standard-indent 2)
- '(tab-width 4)
+ '(tab-width 2)
  '(tags-case-fold-search nil)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
@@ -119,10 +119,6 @@
 ; apropos.
 (setq apropos-do-all t)
 
-(iswitchb-mode t)
-(icomplete-mode t)
-(partial-completion-mode t)
-
 ; Make backspace work more often.
 
 ; Causes problems in text-only emacs that isn't already broken :P
@@ -188,9 +184,6 @@
 ;                (font-lock-reference-face "CadetBlue")))
 
 ;;; End CSL stuff
-
-;; more flexible auto-completion
-(global-set-key (kbd "M-/") 'hippie-expand)
 
 ;;; Some customization from
 ;;; http://www.xsteve.at/prg/emacs/power-user-tips.html
