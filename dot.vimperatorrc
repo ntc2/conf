@@ -3,8 +3,18 @@
 
 " use :source ~/.vimperatorrc to reload this file
 
-" disable vimperator shortcuts in gmail (like C-z)
+" disable vimperator shorcuts
+" ===========================
+"
+" Use Esc-S or INSERT to toggle
 autocmd LocationChange .* js modes.passAllKeys = /mail\.google\.com/.test(buffer.URL)
+" * Etherpad style collaborative editing sites
+"
+" ???: typewith.me lets you name pads, which is cool, but this
+" 'LocationChage' doesn't work?
+autocmd LocationChange .* js modes.passAllKeys = /typewith\.me/.test(buffer.URL)
+" ... this works.
+autocmd LocationChange .* js modes.passAllKeys = /piratepad\.net/.test(buffer.URL)
 
 " add "T" to turn on address and search boxes ("toolbar")
 " "n" adds tab numbers
