@@ -1,4 +1,53 @@
-;-*- emacs-lisp -*-
+;; -*- emacs-lisp -*-
+;;
+;; * Custom set variables.
+;;
+;; Multiple `custom-set-variables' calls can be confusing [1], but
+;; having a single monolithic call is not modular.  Solution: use
+;; multiple calls, but comment each variable with a comment indicating
+;; where it was set.  The comment is shown when using the customize
+;; interface to customize the variable.
+;;
+;; See `./extensions/white-space.el' for example usage.
+;;
+;; Note: `setq' does not always work as a replacement for a
+;; `custom-set-variables' entry.  E.g. `(setq tab-width 2)' has no
+;; effect. The following do work:
+;;
+;;   (custom-set-default 'tab-width 2)
+;;   (setq-default tab-width 2)
+;;   (custom-set-variables '(tab-width 2))
+;;
+;;
+;; On the other hand, it's not necessarily a good idea to use
+;; `custom-set-variables' on a variable that isn't hooked into the
+;; customize interface (you get a warning from customize, but I'm not
+;; sure if there are any pitfalls).
+
+;; [1]: http://www.dotemacs.de/custbuffer.html
+
+(defun nc:custom-set-warning ()
+  "Warning to insert in comment field of `custom-set-variable' entries."
+  (format "!!! CAREFUL: CUSTOM-SET IN %s !!!" load-file-name))
+
+(defmacro nc:custom-set-variable (var value)
+  "Call `custom-set-variables' with a comment warning about
+customizing using the customize GUI.
+
+XXX: does not support setting the optional NOW and
+REQUEST (dependency) fields."
+  (custom-set-variables
+    ;; 'load-file-name' is set by 'load':
+    ;; http://stackoverflow.com/a/1971376/470844
+    `(,var ,value nil nil ,(nc:custom-set-warning))))
+
+(defmacro nc:custom-set-face (face spec)
+  "XXX: untested.
+
+See `nc:custom-set-variable'."
+  (custom-set-faces
+    `(,face ,spec nil ,(nc:custom-set-warning))))
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -7,7 +56,6 @@
  '(case-fold-search t)
  '(current-language-environment "English")
  '(global-font-lock-mode t nil (font-lock))
- '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(iswitchb-default-method (quote maybe-frame))
  '(jit-lock-defer-time 0.25)
@@ -24,10 +72,15 @@
  '(save-place t nil (saveplace))
  '(show-paren-mode t nil (paren))
  '(standard-indent 2)
- '(tab-width 2)
  '(tags-case-fold-search nil)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  )
 
 ;;; Load customizations
 ;;;
@@ -49,30 +102,6 @@
 (windmove-default-keybindings)
 ;; like focus follows mouse in gnome
 ;(setq mouse-autoselect-window t)
-
-
-;;; Whitespace
-;;
-;; Show pointless whitespace.
-;; (UPDATE: this is annoying)
-;(setq-default show-trailing-whitespace t) ; at end of line
-;; Unfortunately, that highlights as you type, which is really
-;; annoying ... but the while-you-type face is a different color than
-;; the on-another-line face, so the former can be turned off.  See
-;; custom set faces below (found with M-x describe-face).
-(setq-default indicate-empty-lines t) ; at end of file
-;; Delete pointless whitespace in region
-(defun nc:del-ws ()
-  (interactive)
-  (whitespace-cleanup-region))
-
-;; Make regexp search (C-M-s) handle line wrapping intelligently. NB:
-;; after starting a regexp search, you can use regular C-s to jump to
-;; the next match
-;; 
-;; But how to get the same for non-regexp search (C-s)?  Could rebind
-;; regular search to regexp search?
-(setq search-whitespace-regexp "[ \t\r\n]+")
 
 ;;; disable tool bar (DISABLED IN ~/.Xresources NOW)
 ; some mode might use this in a useful way, e.g. debuggers or web
@@ -215,7 +244,6 @@
 
 ;(desktop-read) ; From the ``desktop'' docs.
 
-
 ;; Use M-x desktop-save once to save the desktop.  When it exists,
 ;; Emacs updates it on every exit.  The desktop is saved in the
 ;; directory where you started emacs, i.e. you have per-project
@@ -247,16 +275,6 @@
 ;;   (when (null (window-system))
 ;;     (setq linum-format "%d ")))
 
-;;; fix it's-all-text gmail buffers
-(defun nc:replace-nbsp ()
-  "replace all non-breaking spaces (ASCII char 160; HTML &nbsp;)
-in buffer with regular spaces"
-  (interactive)
-  (save-excursion
-    (beginning-of-buffer)
-    (while (search-forward " " nil t)
-      (replace-match " " nil t))))
-
 ;;; default font
 
 ;; NB: also def in nc:ex command.
@@ -273,9 +291,3 @@ in buffer with regular spaces"
 ;; control-lock
 ;(require 'control-lock) ; already loaded above
 (control-lock-keys)
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(show-ws-trailing-whitespace ((t nil))))
