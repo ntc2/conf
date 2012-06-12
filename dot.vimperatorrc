@@ -6,21 +6,27 @@
 " disable vimperator shorcuts
 " ===========================
 "
-" Use Esc-S or INSERT to toggle
-autocmd LocationChange .* js modes.passAllKeys = /mail\.google\.com/.test(buffer.URL)
-" * Etherpad style collaborative editing sites
+" Use Esc-S or INSERT to toggle.
 "
-" ???: typewith.me lets you name pads, which is cool, but this
-" 'LocationChage' doesn't work?
-autocmd LocationChange .* js modes.passAllKeys = /typewith\.me/.test(buffer.URL)
-" ... this works.
-autocmd LocationChange .* js modes.passAllKeys = /piratepad\.net/.test(buffer.URL)
+" Can also combine them all into one:
+"
+"   autocmd LocationChange .* js modes.passAllKeys =
+"     /(mail\.google\.com|typewith\.me|piratepad\.net)/.test(buffer.URL)
+"
+" See confusion at:
+" https://code.google.com/p/vimperator-labs/issues/detail?id=406
+"
+" See `:help autocmd`.
+"
+" These run in order: the first rule sets default policy and the
+" subsequent rules add exceptions.
+autocmd LocationChange .*                  js modes.passAllKeys = false
+autocmd LocationChange mail\\.google\\.com js modes.passAllKeys = true
+autocmd LocationChange typewith\\.me       js modes.passAllKeys = true
+autocmd LocationChange piratepad\\.net     js modes.passAllKeys = true
 
-" add "T" to turn on address and search boxes ("toolbar")
-" "n" adds tab numbers
-
-" changed in a recent version of vimperator
-" set guioptions=rbn
+" menus
+" =====
 set gui=none,tabs
 
 " reverse video
