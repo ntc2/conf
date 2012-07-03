@@ -49,9 +49,9 @@ set gui=none,tabs
 " google in firefox.  So, if you change the keyword for google, say to
 " 'g', then this default search behavior breaks.  You can fix it by
 " manually setting defsearch:
-"
-"   set defsearch=g
-"
+
+set defsearch=g
+
 " Got this from:
 " http://code.google.com/p/vimperator-labs/issues/detail?id=589
 "
