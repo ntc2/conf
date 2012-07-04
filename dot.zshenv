@@ -130,16 +130,10 @@ function nc:quiet () {
 }
 
 ## Load extensions
-
+source ~/.zsh/env.d/util.sh
 for f in ~/.zsh/env.d/*; do
     source $f
 done
-nc:load-custom () {
-    local FILE=$1
-    if [[ -e $FILE ]]; then
-	      source $FILE
-    fi
-}
 nc:load-custom ~/.zshenv.system-custom
 
 ## Run last
