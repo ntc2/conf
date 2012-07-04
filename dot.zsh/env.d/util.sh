@@ -24,11 +24,10 @@ function nc:usage {
     : 'or'
     :
     :     'return `(nc:usage ARGS; echo $?)`'
-    fun="$1"
-    error_msg="$2"
+    local fun="$1"
+    local error_msg="$2"
     if [[ -n "$error_msg" ]]; then
-        echo "error: $error_msg" > /dev/stderr
-        echo
+        echo "error: $error_msg\n" > /dev/stderr
     fi
     type -f "$fun" > /dev/stderr
     exit 2
