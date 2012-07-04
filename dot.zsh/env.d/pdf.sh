@@ -30,7 +30,7 @@ local wm=$( pdfinfo "$file" \
 
 local wmfile=$(nc:pdf:watermark $wm "$file")
 local nupfile=/tmp/$(basename "$file").pdfnup.pdf
-evince "$wmfile" &>/dev/null &
+evince "$wmfile" &>/dev/null &!
 
 local left bottom right top nup
 echo -n '<left> <bottom> <right> <top> (trims in cm): '
@@ -41,7 +41,8 @@ read nup
 print -z \
 "pdfnup --paper $wm --nup $nup \
 --trim \"${left}cm ${bottom}cm ${right}cm ${top}cm\" \
---outfile \"$nupfile\" \"$file\""
+--outfile \"$nupfile\" \"$file\" \\\\
+&& evince \"$nupfile\""
 }
 
 nc:pdf:watermark () {
