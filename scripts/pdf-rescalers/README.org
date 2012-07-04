@@ -1,3 +1,4 @@
+See also: output of `nc:pdf:tutorial`.
 * pdfnup (from pdfjam package): variable trim + nup
 
 usage examples:
