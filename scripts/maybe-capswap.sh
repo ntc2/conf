@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Put caps lock in the right place.  I don't exactly understand what I
 # have done here.  From looking at the output of xmodmap I know that
@@ -14,7 +14,7 @@ nc:maybe-capswap () {
     	    #echo Swapping control and caps lock
     	    ~/local/scripts/capswap.sh
         else
-    	    #echo Control and caps lock are properly mapped
+          #echo Control and caps lock are properly mapped
         fi
     fi
 }
