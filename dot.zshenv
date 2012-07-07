@@ -116,11 +116,6 @@ function nc:et () { emacs -nw -rv "$@" }
 # Doesn't work with ~ in path.
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
-## Subversion
-
-alias nc:svnlsjunk="svn st | grep '^\\?' | awk '{print \$2}'"
-alias nc:svnrmjunk="nc:svnlsjunk | xargs rm -r"
-
 ## Run quietly
 function nc:quiet () {
     : Run a command in background with all output discarded.  Useful
