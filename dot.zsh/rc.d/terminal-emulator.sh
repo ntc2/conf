@@ -5,9 +5,18 @@ if [[ "$TERM" == "rxvt-256color" ]]; then
     export TERM=rxvt
 fi
 
+# Set the title of the terminal to the current command.
+#
+# The `precmd` is used to reset the title before displaying a prompt,
+# and `preexec` is used to set it to the current command before
+# running the current command.
+#
+# See `man zshall` for description of `precmd` and `preexec`.
+#
 # Based on snippet from http://forums.gentoo.org/viewtopic-p-176209.html#176209.
 case $TERM in
     *xterm*|rxvt|(dt|k|E)term)
+        # Run before each prompt is displayed.
         precmd () { print -Pn "\e]0;$(hostname | cut -d . -f 1):%~\a" }
         # Need to be careful with percent escapes in the command $1.
         # Solution from
@@ -29,6 +38,10 @@ case $TERM in
         # +%s` work, but then I had trouble from `echo $((10%3))`.  I
         # don't really understand the leading ~ in the expansion, so I
         # left it out ...
+
+        # Run before each command is run.  The second argument, `$1`
+        # contains a "size limited" version of the command, and `$2`
+        # contains the full command.
         preexec () { printf "\e]0;$(hostname | cut -d . -f 1):${1:gs/%/%%}\a" }
         ;;
 esac
