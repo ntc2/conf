@@ -1,0 +1,12 @@
+# Make C-/ send C-_, which is mapped to "undo" by emacs and readline.
+#
+# Usage:
+#
+#   sudo loadkeys <this file>
+#
+# to apply these changes to the console keymaps.
+
+            keycode 53 = slash question
+control     keycode 53 = Control_underscore
+        alt keycode 53 = Meta_slash
+shift   alt keycode 53 = Meta_question
