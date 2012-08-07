@@ -3,6 +3,14 @@
 
 " use :source ~/.vimperatorrc to reload this file
 
+" notes
+" =====
+" 
+" - variables
+"
+"   To get the current value of a variable do `:set <variable>?`. From
+"   http://awhan.wordpress.com/2010/07/15/default-values-of-variables-in-vimperator/
+
 " disable vimperator shorcuts
 " ===========================
 "
@@ -51,6 +59,16 @@ set gui=none,tabs
 " manually setting defsearch:
 
 set defsearch=g
+
+" On the other hand, when 'defsearch' is set to 'g', as above, but the
+" google search keyword is still 'google', nothing breaks !!!  Using
+" `:set defsearch?` to get the value of 'defsearch', I see that still
+" has the value 'google' after the above runs, when there is not 'g'
+" keyword.  So, I guess the 'set' of 'defsearch' is "smart" in that it
+" only lets you set to the value of a defined search engine.
+"
+" After changing the keyword from 'google' to 'g' the default searches
+" failed until I restarted vimperator.
 
 " Got this from:
 " http://code.google.com/p/vimperator-labs/issues/detail?id=589
