@@ -2,5 +2,14 @@
 
 # Mark all files for autmatical end-of-line normalization.  Files are
 # normalized *if* they identified as text by git's heuristics. See
-# 'git help attributes'
+# 'git help attributes'.
+#
+# To override this in a repo that already has files with messed up
+# line endings, create a .gitattributes in the repo with contents
+#
+#   * text=unspecified
+#
+# or
+#
+#   * text=
 * text=auto
