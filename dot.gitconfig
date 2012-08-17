@@ -55,6 +55,11 @@
     # File containing global git attributes.  See 'git help
     # attributes'.  I'm setting '* text=auto' there, which subsumes
     # 'core.autocrlf=input'.
+    #
+    # To override this in a repo that already has files with messed up
+    # line endings, create a .gitattributes in the repo with contents
+    #
+    #   * text=unspecified
     attributesfile = ~/.gitattributes
 
     # Turn this on temporarily if git(-svn) gets confused by an
