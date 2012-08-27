@@ -6,6 +6,8 @@ local watermark=${1-\$watermark} file="${2-\$file}"
 cat <<EOF
 usage: $0 [WATERMARK [FILE]]
 
+USE nc:pdf:magic INSTEAD!
+
 See ~/v/conf/scripts/pdf-rescalers/README.org for more details.
 
 pdfinfo "$file"
