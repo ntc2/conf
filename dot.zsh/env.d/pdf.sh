@@ -35,8 +35,8 @@ local nupfile=/tmp/$(basename "$file").pdfnup.pdf
 evince "$wmfile" &>/dev/null &!
 
 local left bottom right top nup
-echo -n '<left> <bottom> <right> <top> (trims in cm): '
-read left bottom right top
+echo -n '<top> <left> <right> <bottom> (trims in cm): '
+read top left right bottom
 echo -n '<nup> (probably 2x1 or 1x1): '
 read nup
 # Insert pdfnup command into command line without running it.
