@@ -24,8 +24,15 @@ autoload -U compinit
 compinit
 # End of lines added by compinstall
 
-# from http://osdir.com/ml/shells.zsh.user/2007-06/msg00001.html
+# Include dot files in tab completion of file names.
+# From http://osdir.com/ml/shells.zsh.user/2007-06/msg00001.html
 _comp_options+=(globdots)
+# Not sure how that differs from `setopt globdots`.
+
+# See FILENAME GENERATION section of man zshexpn.
+#
+# Enabled operators include difference (~), negation (^), repetition (#, ##)
+setopt extendedglob
 
 # Enable "tab once" completion, e.g.
 # /u/s/d/python<TAB> => /usr/share/doc/python
