@@ -69,8 +69,9 @@ bd=%{$'\e[1m'%}		# bold
 export VISUAL="emacs -nw" EDITOR="emacs -nw"
 # The -font is redundant, since it's also def in dot.emacs, but the
 # latter takes effect after emacs has loaded, which changes the screen
-# size and confuses xmonad :P
-function nc:ex () { emacs -fs -rv "$@" -font terminus &! }
+# size and confuses xmonad :P ... and some computers don't have
+# terminus, so try again if the '-fn terminus' version fails.
+function nc:ex () { emacs -fs -rv "$@" -font terminus || emacs -fs -rv "$@" &! }
 function nc:et () { emacs -nw -rv "$@" }
 
 ## Python 
