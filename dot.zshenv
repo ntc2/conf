@@ -71,7 +71,9 @@ export VISUAL="emacs -nw" EDITOR="emacs -nw"
 # latter takes effect after emacs has loaded, which changes the screen
 # size and confuses xmonad :P ... and some computers don't have
 # terminus, so try again if the '-fn terminus' version fails.
-function nc:ex () { emacs -fs -rv "$@" -font terminus || emacs -fs -rv "$@" &! }
+function nc:ex () {
+  { emacs -fs -rv "$@" -font terminus || emacs -fs -rv "$@" } &!
+}
 function nc:et () { emacs -nw -rv "$@" }
 
 ## Python 
