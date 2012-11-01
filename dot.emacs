@@ -108,6 +108,10 @@ See `nc:custom-set-variable'."
 ; browsers.  special case those as necessary ... or only disable for
 ; specific modes ...
 
+; e.g., something like
+; (add-hook 'coq-mode-hook
+;           (lambda () (tool-bar-mode t)))
+
 ;(if (functionp 'tool-bar-mode)
 ;    (tool-bar-mode 0))
 
