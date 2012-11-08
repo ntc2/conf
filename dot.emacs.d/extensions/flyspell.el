@@ -11,9 +11,13 @@
 
 ; Turn on flyspell-prog-mode in all modes except ..., which should use
 ; full flyspell-mode.
+;
+; Might be better to do the opposite: specify which modes should use
+; flyspell-prog-mode, and default to plain flyspell. The problem is
+; that flyspell-prog-mode is confusing when it doesn't work.
 (when nc:use-flyspell
   (add-hook 'font-lock-mode-hook
             (lambda ()
-              (if (member major-mode '(text-mode rst-mode latex-mode fundamental-mode))
+              (if (member major-mode '(text-mode rst-mode latex-mode bibtex-mode fundamental-mode))
                   (flyspell-mode t)
                 (flyspell-prog-mode)))))
