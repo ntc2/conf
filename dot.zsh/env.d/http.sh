@@ -13,22 +13,25 @@
 #
 # to share DIR with .c, .hs, and .sh files having mimetype text/plain.
 function nc:www-server () {
- : 'usage: $0 [DIR | [-m MIMETYPE | -t] FILE]'
+ : 'usage: $0 [-p PORT] [DIR | [-m MIMETYPE | -t] FILE]'
  :
- : 'Start a webserver on port 8000 sharing DIR or FILE.'
+ : 'Start a webserver on given port (default 8000) sharing DIR or FILE.'
  : 
  : 'When sharing FILE, optionally set mimetype.'
  : 'If not set, then mimetype is determined using `file`.'
  :
  : 'NB: when sharing a FILE, the parent (`dirname FILE`) is *not* shared.'
  (
+     local port
+     local mimetype
      local o
      # See `zman getopts`.  NB: leading ':' needed to get '?' in '$o'
      # for bad options.
-     while getopts :tm: o
+     while getopts :tm:p: o
      do  case "$o" in
              t) mimetype="text/plain";;
              m) mimetype="$OPTARG";;
+             p) port="$OPTARG";;
              ?) nc:usage nc:www-server "bad option: $o";;
          esac
      done
@@ -63,8 +66,9 @@ function nc:www-server () {
          nc:usage nc:www-server "does not exist: $file"
      fi
 
+     # The BaseHTTPServer.test() looks for port in sys.argv[1] and uses 8000 otherwise.
      python -c "import SimpleHTTPServer; \
                 $set_mimetype; \
-                SimpleHTTPServer.test()"
+                SimpleHTTPServer.test()" $port
  )
 }
