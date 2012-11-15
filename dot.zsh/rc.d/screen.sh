@@ -7,7 +7,10 @@
 alias nc:fixssh='source ~/local/bin/fix-ssh.sh'
 alias nc:genfixssh='source ~/local/scripts/gen-fix-ssh.sh'
 # screen doesn't see the alias defined by genfixssh?
-alias nc:screen='nc:genfixssh ; screen'
+function nc:screen () {
+  nc:genfixssh
+  screen "$@"
+}
 
 # Set the title of the screen.
 #
