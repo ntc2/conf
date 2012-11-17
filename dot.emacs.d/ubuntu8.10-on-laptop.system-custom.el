@@ -17,9 +17,13 @@
 
 ;; proof-general
 ;;;;;;;;;;;;;;;;
-(setq coq-prog-args '("-I" "/home/collins/v/cpdt-reading-course.redmine.git/cpdt/src"))
-;; "~" doesn't work here, but does if passed on command line, or used in a .v file with LoadPath ???
-;(setq coq-prog-args '("-I" "~/v/cpdt-reading-course.redmine.git/cpdt/src"))
+
+;; See [[file:~/v/org/notes/coq.org *bedrock]] for a way to set the
+;; coq-prog-args per project using a .dir-locals.el file.
+; (setq coq-prog-args '("-I" "/home/collins/v/cpdt-reading-course.redmine.git/cpdt/src"))
+
+(load-file "~/local/opt/ProofGeneral-4.2/generic/proof-site.el")
+
 (setq proof-three-window-enable t)
 (setq proof-electric-terminator-enable t)
 (defun nc:del-coq-comments ()
