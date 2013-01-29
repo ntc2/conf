@@ -29,7 +29,7 @@ def main():
         raise Exception('You should run this from your home dir.\n%s!=%s' %
                         (cur, home))
 
-    for d in ('v', 'local', 'local/opt', '.subversion', '.ghc', '.emacs.d',
+    for d in ('v', 'tmp', 'local', 'local/opt', '.subversion', '.ghc', '.emacs.d',
               '.xmonad', '.local/share/applications', '.config/gnome-session/sessions'):
         if not exists(d): c('mkdir -p %s' % d)
     chdir('v')

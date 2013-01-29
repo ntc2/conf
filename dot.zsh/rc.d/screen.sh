@@ -8,6 +8,12 @@ alias nc:fixssh='source ~/local/bin/fix-ssh.sh'
 alias nc:genfixssh='source ~/local/scripts/gen-fix-ssh.sh'
 # screen doesn't see the alias defined by genfixssh?
 function nc:screen () {
+  : fix env vars and log host \(useful to help find screen sessions
+  : e.g. for linuxlab.cs.pdx.edu DNS tricks\)
+
+  echo `date`        >> ~/tmp/nc:screen.log
+  echo `hostname -f` >> ~/tmp/nc:screen.log
+  echo "$@"          >> ~/tmp/nc:screen.log
   nc:genfixssh
   screen "$@"
 }
