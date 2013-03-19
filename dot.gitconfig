@@ -3,6 +3,11 @@
 # Best git tutorial I've read:
 # http://newartisans.com/2008/04/git-from-the-bottom-up/
 # http://ftp.newartisans.com/pub/git.from.bottom.up.pdf
+[user]
+	name = Nathan Collins
+	email = nathan.collins@gmail.com
+[apply]
+	whitespace = fix
 [core]
     # Line ending normalization: see
     # http://timclem.wordpress.com/2012/03/01/mind-the-end-of-your-line/
@@ -76,9 +81,6 @@
     #
     # editor = emacs -nw -f text-mode
     # editor = emacs -nw --eval '(setq nc:use-flyspell nil)' -f flyspell-mode
-[user]
-	name = Nathan Collins
-	email = nathan.collins@gmail.com
 [color]
 	ui = auto
 [log]
