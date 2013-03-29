@@ -30,6 +30,14 @@
   (interactive)
   (query-replace-regexp "(\\*\\(.\n*\\)*?\\*)\n*" ""))
 
+;; trellys
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; use haskell-mode for .trellys files.  .trellys is close enough .hs
 ;; that this is useful
 (add-to-list 'auto-mode-alist '("\\.trellys\\'" . haskell-mode))
+
+;; twelf
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq twelf-root "/home/collins/v/twelf-spring-2013.git/bin/twelf/")
