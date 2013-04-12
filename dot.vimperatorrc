@@ -32,6 +32,7 @@ autocmd LocationChange .*                  js modes.passAllKeys = false
 autocmd LocationChange mail\\.google\\.com js modes.passAllKeys = true
 autocmd LocationChange typewith\\.me       js modes.passAllKeys = true
 autocmd LocationChange piratepad\\.net     js modes.passAllKeys = true
+autocmd LocationChange duolingo\\.com      js modes.passAllKeys = true
 
 " menus
 " =====
