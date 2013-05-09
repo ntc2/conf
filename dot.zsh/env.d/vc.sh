@@ -11,6 +11,8 @@ function nc:svn:ls-junk {
 
 ## Git
 
+# See ../completion/README for completion.
+
 function nc:git:disable-whitespace-conversion {
   : usage: $0 PATH
   :
