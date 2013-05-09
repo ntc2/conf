@@ -38,14 +38,6 @@ setopt extendedglob
 # /u/s/d/python<TAB> => /usr/share/doc/python
 compctl -D -f + -U -Q -K multicomp 
 
-# By default zsh backs up to the beginning of the line (opt name
-# implies it's a carriage return) before displaying the prompt, so
-# output that doesn't end in newline gets covered up, e.g. if you echo
-# -n <some string> then <some string> gets covered by the prompt.
-# This can be confusing, so we turn the "feature" off.
-
-setopt nopromptcr
-
 # SSH host completion (from Gentoo Wiki:
 # http://gentoo-wiki.com/TIP_Advanced_zsh_Completion)
 #
@@ -111,17 +103,6 @@ stty stop undef
 # From http://chneukirchen.org/blog/archive/2012/02/10-new-zsh-tricks-you-may-not-know.html
 bindkey "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
-
-## Prompt
-
-# Set up the prompt.  I think it would be inherited, but a sys script
-# (/etc/bash.bashrc) overrides it for each new shell.
-
-# Now this is a prompt.
-PS1="[$rd%n$pl@$bl%m$pl][$gr%~$pl][%%$rd%j$pl][#$bd%h$pl][%*]
-$bl\$$pl "
-
-PS2="$gr%_$pl> "
 
 ## Fancy looking messages.
 message () {
