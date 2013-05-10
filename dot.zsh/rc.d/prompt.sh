@@ -24,10 +24,10 @@ setopt prompt_subst
 # 'vcs_info', e.g. '%b' for branch and '%r' for revision.
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' actionformats \
-    '%F{5}[%f%s%F{5}:%F{2}%b%f %K{1}%a%k%u%c%m%F{5}]%f'
+    '[%F{magenta}%s%f:%F{2}%b%f %K{1}%a%k%u%c%m]'
 zstyle ':vcs_info:*' formats       \
-    '%F{5}[%f%s%F{5}:%F{2}%b%F{5}%f%u%c%m%F{5}]%f'
-zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{5}:%F{3}%r'
+    '[%F{magenta}%s%f:%F{2}%b%F{5}%f%u%c%m]'
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%f:%F{yellow}%r%f'
 zstyle ':vcs_info:*' enable git svn
 
 # This is disabled by default, because it can be slow for large repos
@@ -93,7 +93,7 @@ function +vi-git-st() {
     (( $behind )) && gitstatus+=( "%F{red}-%f${behind}" )
 
     #hook_com[misc]+=" "${(j:/:)gitstatus}
-    [[ -n "$gitstatus" ]] && hook_com[misc]+=" "${(j: :)gitstatus}
+    [[ -n "$gitstatus" ]] && hook_com[misc]+=" "${(j::)gitstatus}
 }
 
 function +vi-git-set-message { +vi-git-st ; +vi-git-untracked ; }
