@@ -35,6 +35,10 @@ export PATH=~/.cabal/bin:~/local/opt/bin:~/local/bin:~/local/scripts:~/local/mor
 #typeset -U MANPATH
 #export MANPATH=~/local/opt/share/man:/opt/share/man:$MANPATH
 # zsh looks for "functions" here, which includes completion functions
+#
+# ???: the lowercase version, e.g. $fpath, don't seem to do the right
+# thing, e.g. I can't use $fpath in .zshenv.system-custom for git
+# completion (see ~/v/conf/install-git.sh).
 typeset -U FPATH
 export FPATH=~/.zsh/completion:$FPATH
 typeset -TU PYTHONPATH pythonpath

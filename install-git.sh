@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# XXX: to make this resumable, could instead use a Makefile, with a
+# sequence of "checkpoint" targets.
+
+# You can clone the git.git source repo and then checkout a particular
+# tag, corresponding to a stable release, but it easy to just choose a
+# stable release source tarball
+
+release=1.8.2.3
+prefix=~/local/opt/git-${release}
+
+cd /tmp
+wget https://git-core.googlecode.com/files/git-${release}.tar.gz -O- | tar xzf -
+cd git-${release}
+
+# Git actually needs to be installed, not just built.
+#
+# Instead of configure, we can use `make prefix=...` and then `make
+# prefix=... install`.  However, configure automatically checks
+# dependencies and disables features for which we don't have the
+# corresponding header files.  NOTE: if libcurl-dev is not installed,
+# then git is built without http(s) support.  There are multiple
+# versions of libcurl-dev, so we have to choose one :P
+sudo aptitude install libcurl4-openssl-dev
+mkdir -p ~/local/opt
+# make configure
+# ./configure --prefix=$(readlink -f $prefix)
+make prefix=$(readlink -f $prefix)
+make prefix=$(readlink -f $prefix) install
+
+# The docs can be built, but that is slow, and requires asciidoc and
+# xmlto, which are not installed on linuxlab machines.  Instead, just
+# download the prebuilt docs (there is also a
+# git-htmldocs-${release}):
+
+(cd $prefix/share/man &&
+wget https://git-core.googlecode.com/files/git-manpages-${release}.tar.gz -O- | tar xzf -)
+
+# ZSH configuration.
+#
+# MANPATH works automatically for sane PATH, so we only need to set
+# PATH.
+
+# Git/bin.
+(cd ~/local/opt && ln -fs git-$release git)
+# ZSH completion.
+cp -r contrib $prefix
+(cd $prefix/contrib/completion && ln -fs git-completion.zsh _git)
+
+echo
+echo
+echo
+echo "ZSH CONFIGURATION:"
+echo
+echo "echo 'export PATH=~/local/opt/git/bin:\$PATH' >> ~/.zshenv.system-custom"
+echo "echo 'export FPATH=~/local/opt/git/contrib/completion:\$FPATH' >> ~/.zshenv.system-custom"
