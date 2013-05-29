@@ -4,7 +4,6 @@ Default Git completion on Ubuntu comes from
 
   /usr/share/zsh/functions/Completion/Unix/_git
 
-installed by zsh package.  But, I'm overriding that with Git
-distribution's completion from
-http://repo.or.cz/w/git.git/tree/HEAD:/contrib/completion (I believe I
-copied version 1.8.3).
+installed by zsh package. If git is installed locally using
+~/v/conf/install-git.sh, then git completion comes from
+~/local/opt/git/contrib/completion/_git.
