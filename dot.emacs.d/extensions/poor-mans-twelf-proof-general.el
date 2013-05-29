@@ -43,8 +43,22 @@ until point is reached, or until there is an error."
       (twelf-check-declaration-and-move)
       (setq done (> (point) start)))))
 
+;; ???: the save-excursion / save-current-buffer don't seem to
+;; actually save and restore the buffer :P ???  May be related to the
+;; save done by twelf-save-check-file.
+(defun twelf-check-declarations-to-point2 ()
+  "Check all declarations from beginning of buffer,
+until point is reached, or until there is an error."
+  (interactive)
+  (save-current-buffer
+    (save-excursion
+      (twelf-end-of-par)
+      (insert "%.")
+      (twelf-save-check-file))))
+
 ;; Add Proof-General-style key bindings.
 (add-hook 'twelf-mode-hook
   (lambda ()
     (local-set-key (kbd "C-c C-n") 'twelf-check-declaration-and-move)
+    (local-set-key (kbd "C-c C-a") 'twelf-check-declarations-to-point2)
     (local-set-key (kbd "C-c <C-return>") 'twelf-check-declarations-to-point)))
