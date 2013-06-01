@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # XXX: to make this resumable, could instead use a Makefile, with a
 # sequence of "checkpoint" targets.
@@ -48,10 +48,12 @@ wget https://git-core.googlecode.com/files/git-manpages-${release}.tar.gz -O- | 
 cp -r contrib $prefix
 (cd $prefix/contrib/completion && ln -fs git-completion.zsh _git)
 
-echo
-echo
-echo
-echo "ZSH CONFIGURATION:"
-echo
-echo "echo 'export PATH=~/local/opt/git/bin:\$PATH' >> ~/.zshenv.system-custom"
-echo "echo 'export FPATH=~/local/opt/git/contrib/completion:\$FPATH' >> ~/.zshenv.system-custom"
+customize () {
+    echo $@ >> ~/.zshenv.system-custom
+}
+customize ''
+customize '# Git'
+customize 'export PATH=~/local/opt/git/bin:$PATH'
+customize 'export FPATH=~/local/opt/git/contrib/completion:$FPATH'
+
+print -P '%K{red}YOUR ~/.zshenv.system-custom HAS BEEN UPDATED!%k'
