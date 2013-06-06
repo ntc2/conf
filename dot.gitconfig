@@ -145,3 +145,7 @@
     # above aliases.  Also, aliases break zsh completion.
     gr         = !git grtwolines
     grTopology = !git grtwolines --simplify-by-decoration
+[push]
+    # Make `git push` only push the current branch, and only if it has
+    # matching name upstream branch.
+    default = simple
