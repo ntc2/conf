@@ -107,6 +107,9 @@
 [merge]
     # Fancier setup at http://emacswiki.org/emacs/EmergeDiff
     tool = emerge
+    # Make 'git fetch; git merge' behave like 'git pull' on the
+    # current branch.
+    defaultToUpstream = true
 [alias]
     # Work around 'log.date = local' bug discussed above.
     stashlist = !git stash list --date=default
