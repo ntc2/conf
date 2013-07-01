@@ -33,7 +33,20 @@
 ;; previous line, like text-mode.
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
-(setq haskell-program-name "ghci -ignore-dot-ghci")
+;; Avoid custom prompt trouble.  Instead, I factored out the prompt
+;; into ~/.ghc/ghci-prompt.conf, which is loaded by `nc:ghci`.  Kind
+;; of annoying but e.g. the below does not work, since the
+;; -ignore-dot-ghci causes ghci to ignore the subsequent -ghci-script
+;; (bug?).  If I ever want to avoid the `nc:ghci` hack, I might look
+;; at the variables:
+;;
+;;   inferior-haskell-send-command
+;;   inferior-haskell-wait-for-prompt
+;;   comint-prompt-regexp
+;;
+;; defined by inf-haskell.el and comint mode.
+
+;;(setq haskell-program-name "ghci -ignore-dot-ghci -ghci-script ~/.ghc/non-prompt.ghci")
 
 ;; Indent 2 spaces
 (setq haskell-indent-offset 2)
