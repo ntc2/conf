@@ -42,7 +42,8 @@ def main():
     # the idempotence of {ln ~/v/conf/dot.zsh ~/.zsh}.
     for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config',
               '.zsh', '.zshrc', '.zshenv', '.zprofile',
-              '.ghc/ghci.conf', '.vimperatorrc',
+              '.ghc/ghci.conf', '.ghc/ghci-prompt.conf',
+              '.vimperatorrc',
               '.gitconfig', '.gitattributes',
               '.xmonad/xmonad.hs', '.Xresources', '.xsession',
               '.config/gnome-session/sessions/local-xmonad-session.session',
