@@ -111,6 +111,10 @@
     # current branch.
     defaultToUpstream = true
 [alias]
+    # Clean up whitespace. See
+    # http://stackoverflow.com/questions/591923/make-git-automatically-remove-trailing-whitespace-before-committing/15398512#15398512
+    fixws = !export VISUAL=: && git -c apply.whitespace=fix add -ue . && git checkout . && git reset
+
     # Work around 'log.date = local' bug discussed above.
     stashlist = !git stash list --date=default
 
