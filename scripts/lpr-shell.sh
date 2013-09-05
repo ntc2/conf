@@ -21,7 +21,7 @@ echo "SSH_ORIGINAL_COMMAND=$cmd" >> $log
 
 # Only run the command if it's a print command.
 printcmd=$(echo "$cmd" \
-  | grep --max-count=1 -E '^lpr -P [0-9a-zA-Z]+ -#[0-9]+$')
+  | grep --max-count=1 -E '^lpr (-o [- :_=0-9a-zA-Z]+)* -P [0-9a-zA-Z]+ -#[0-9]+$')
 if [[ -z "$printcmd" ]]; then
     echo "Invalid print command: $cmd"
     exit 2
