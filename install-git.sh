@@ -7,7 +7,7 @@
 # tag, corresponding to a stable release, but it easy to just choose a
 # stable release source tarball
 
-release=1.8.2.3
+release=1.8.4
 prefix=~/local/opt/git-${release}
 
 cd /tmp
@@ -43,7 +43,10 @@ wget https://git-core.googlecode.com/files/git-manpages-${release}.tar.gz -O- | 
 # PATH.
 
 # Git/bin.
-(cd ~/local/opt && ln -fs git-$release git)
+#
+# Need -T (--no-target-directory) to prevent ln from creating the link
+# *inside* an existing git dir when upgrading :P
+(cd ~/local/opt && ln -Tfs git-$release git)
 # ZSH completion.
 cp -r contrib $prefix
 (cd $prefix/contrib/completion && ln -fs git-completion.zsh _git)
