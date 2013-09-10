@@ -11,6 +11,11 @@
 # from the user who actually printed, server is the host and queue is the
 # print queue name as it would get passed to lpr -P queue.
 
+# This backend is not secure! Its input is not validated, and could
+# result in arbitrary shell commands being run as the lp user. See
+# - http://www.cups.org/documentation.php/doc-1.7/api-filter.html#SECURITY
+# - http://www.cups.org/documentation.php/doc-1.7/api-filter.html#PERMISSIONS
+
 # ################################################################
 
 # Messages appear in
@@ -49,6 +54,11 @@ then
 	exit 0
 fi
 
+# Refuse to run as root.
+if [ `whoami` != lp ]; then
+  fail "Fix file permissions (0555)."
+fi
+
 # If we get the correct number of arguments, as per:
 # 	$1=job-id $2=user $3=title $4=copies $5=options $6=[file]
 [ $# -lt 5 -o $# -gt 6 ] && fail "Bad arguments"
@@ -74,10 +84,6 @@ then
 fi
 
 # Build options by prefixing them with '-o '.
-#
-# XXX: the options should probably be validated, since they are used
-# with lpr below, but as long as the target machine is using
-# ./lpr-shell.sh everything will be validated anyway ...
 options="-o $(echo "$5" | sed -re 's/ / -o /g')"
 
 # See the file that cups wants to print:
@@ -85,12 +91,14 @@ options="-o $(echo "$5" | sed -re 's/ / -o /g')"
 # cat $6 > /tmp/file.ps
 # chmod a+r /tmp/file.ps
 
-# fail
+# fail "Debug"
 
-log "SSHLPR: lpr $options -P $printer -#$4"
+log "SSHLPR: ssh -q ${user}@$server lpr $options -P $printer -#$4"
 log
 
 # This is a little tricky: if $6 is empty then we will be catting
 # stdin, otherwise the specified file.
-cat $6 | su $localuser -c "ssh -i /home/collins/.ssh/keys-to-not-try-automatically/id_rsa_linuxlab_print -q ${user}@$server lpr $options -P $printer -#$4" || fail "Could not SSH"
+cat $6 | ssh -q ${user}@$server lpr $options -P $printer -#$4 || fail "Could not SSH"
+# Root version:
+#cat $6 | su $localuser -c "ssh -i /home/collins/.ssh/keys-to-not-try-automatically/id_rsa_linuxlab_print -q ${user}@$server lpr $options -P $printer -#$4" || fail "Could not SSH"
 exit 0
