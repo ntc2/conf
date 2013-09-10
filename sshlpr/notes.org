@@ -1,0 +1,49 @@
+* Original
+The original sshlpr script is from
+http://www.masella.name/technical/sshlpr.html
+** Original docs
+SSH-LPR Backend for CUPS
+
+So, you want to print from off campus or your personal notebook on
+campus? Well, it's easy with CUPS. This is a SSH-LPR backend that lets
+you create printers on remote systems that you can only access through
+SSH. For this to work, you are going to need CUPS, OpenSSH and a
+remote host with lpr. You must be able to log into the system without
+entering a password. That is, using a password-less key pair.
+
+To begin, copy the following into /usr/lib/cups/backend/sshlpr and
+make it executable.
+
+  ./sshlpr
+
+Now, restart CUPS and add a printer. Select the SSH-LPR back end and
+enter a URI in the form sshlpr://[[localuser:]remoteuser@]server/queue
+where remoteuser is the remote user-name if it is different from the
+local name of the user who is printing, localuser is the user account
+the request should be made from if it is different from the user who
+is making the request, server is the host you want and queue is the
+remote printer name.
+
+So, say you want to print to the GAFF lab. Let's say your user
+accounts are the same (i.e., your home user name is the same as your
+NEXUS user-name) and your classmate also has an account on your system
+also with harmonised names. Then, you can use the URI
+sshlpr://engage.uwaterloo.ca/gaff. Now, say your user-names are
+different, but you want to print as jrhacker, then you can use
+sshlpr://jrhack@engage.uwaterloo.ca/gaff. This requires that each of
+you has a key in jrhacker's account on Engage. If you want to just use
+one pair, stored in the local user jay, then use
+sshlpr://jay:jrhack@engage.uwaterloo.ca/gaff.
+
+Now, to print, just use it like any other CUPS printer.
+
+This script makes use of su to become users to access their SSH
+keys. If CUPS runs as root, this is not a problem, but if it does not,
+you will need to add a line printuser:ALL:NOPASS to /etc/suauth where
+printuser is the user that CUPS runs as.
+
+And a quick way to dump all the printer names in the printcap file is
+
+  grep "^[a-z].*:" /etc/printcap | /usr/bin/sed -e '/^lp/d;s/[:|].*//'.
+
+Sat, 18 Sep 2010 08:11:14 -0400
