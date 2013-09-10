@@ -3,18 +3,19 @@
 # SSH-LPR Backend
 
 # The purpose of the back end is to send print jobs to a remote system
-# through ssh and lpr on the remote side. It requires that the user who
-# wishes to print have a key-based authentication set up for the server in
-# question. The printer URI is sshlpr://[[luser:]ruser@]server/queue where
-# ruser is the name of remote user if it is different from the local user
-# name, luser is the local user account with the SSH key, if different
-# from the user who actually printed, server is the host and queue is the
+# through ssh and lpr on the remote side. It requires that the lp user
+# have a key-based authentication set up for the server in
+# question. The printer URI is sshlpr://ruser@server/queue where
+# ruser is the name of remote user, server is the host and queue is the
 # print queue name as it would get passed to lpr -P queue.
 
 # This backend is not secure! Its input is not validated, and could
 # result in arbitrary shell commands being run as the lp user. See
 # - http://www.cups.org/documentation.php/doc-1.7/api-filter.html#SECURITY
 # - http://www.cups.org/documentation.php/doc-1.7/api-filter.html#PERMISSIONS
+#
+# The input could be validated in the style of the ./lpr-shell.sh
+# script.
 
 # ################################################################
 
@@ -64,23 +65,18 @@ fi
 [ $# -lt 5 -o $# -gt 6 ] && fail "Bad arguments"
 
 # Parse URL
-user=$2
-localuser=$2
+#user=$2
 
 [ -z "$DEVICE_URI" ] && fail "No device URI"
 
-server="`echo $DEVICE_URI | cut -f 3 -d /`"
+userserver="`echo $DEVICE_URI | cut -f 3 -d /`"
 printer="`echo $DEVICE_URI | cut -f 4 -d /`"
-if echo $server | grep '@' > /dev/null 2> /dev/null
+if echo $userserver | grep -q '@'
 then
-	user="`echo $server | cut -f 1 -d '@' `"
-	server="`echo $server | cut -f 2 -d '@' `"
-fi
-
-if echo $user | grep ':' > /dev/null 2> /dev/null
-then
-	localuser="`echo $user | cut -f 1 -d ':' `"
-	user="`echo $user | cut -f 2 -d ':' `"
+	user="`echo $userserver | cut -f 1 -d '@' `"
+	server="`echo $userserver | cut -f 2 -d '@' `"
+else
+  fail "Bad URI: no remote user specified"
 fi
 
 # Build options by prefixing them with '-o '.
