@@ -47,3 +47,93 @@ And a quick way to dump all the printer names in the printcap file is
   grep "^[a-z].*:" /etc/printcap | /usr/bin/sed -e '/^lp/d;s/[:|].*//'.
 
 Sat, 18 Sep 2010 08:11:14 -0400
+
+* Changes
+** Use a special ssh key to print
+See the "-i <key>" part of the final ssh command.
+** Pass options to lpr on remote host
+E.g. for duplex printing, we need to pass -o options.
+** Send errors back to GUI when failing
+Use logging API to communicate with the user / printer GUI.
+
+** Created ./lpr-shell.sh restricted shell.
+* Docs
+** Installation
+- See [[*Original docs]] above.
+- Copy sshlpr script to /usr/lib/cups/backend/sshlpr.
+
+  Make sure to change ownership to root:root, to avoid
+  cups-insecure-filter-warning.
+
+  The filter man page
+  (http://www.cups.org/documentation.php/api-filter.html#SECURITY)
+  says:
+
+    File Permissions
+
+    For security reasons, CUPS will only run filters and backends that
+    are owned by root and do not have world or group write
+    permissions. The recommended permissions for filters and backends
+    are 0555 - read and execute but no write. Backends that must run as
+    root should use permissions of 0500 - read and execute by root, no
+    access for other users. Write permissions can be enabled for the
+    root user only.
+
+    To avoid a warning message, the directory containing your filter(s)
+    must also be owned by root and have world and group write disabled -
+    permissions of 0755 or 0555 are strongly encouraged.
+- Install the private ssh key
+
+    /home/collins/.ssh/keys-to-not-try-automatically/id_rsa_linuxlab_print
+
+  on the local host
+
+- Install the public ssh key on the remote host.
+
+  Use the restricted shell lpr-shell.sh.  I.e., add a line like
+
+    command="~/local/scripts/lpr-shell.sh",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwdW8Opyavu21mMJa7Bzht/Xw4yPhS89y/yq7HuACUmw5XalgI4IBnsaSwOLEJO5ZGWL/NCzDPzweddIdvhBllABBp2kHm9xm1QqhVBWvHhJvqf2LpkBby7J3YR+QX0l9BpaxfRmVJVGNcULEYqWXlo2CfgQvKbBGrpN60fk5Vi5+oYZLl+ZwJmzz2OBMIEwxCYVhPPzK0eQH/MBvSjvp0AYRIoj1QjGPdfkpfn3KChmYYECYDqpTP7tkQUEtb43vMwUP5bpbTYKikw9Kfv0nYdq7eGfNJpModC1xdN969VrjsBafg/23QIRTmqOasrp4htjPun8zYBOPw78YfvAetw== id_rsa_linuxlab_print
+
+  to ~/.ssh/authorized_keys on the remote host.
+
+- Add a new printer in CUPS.
+
+  The system-config-printer GUI is nice:
+  - Click "add".
+  - Choose "other" and enter URI like
+    : sshlpr://collins:ntc2@linuxlab.cs.pdx.edu/fab115bw1
+  - Go through the guided dialog to find a driver.
+
+    Some drivers work better than others, so start with the
+    recommended, but try others if something doesn't work (duplex,
+    scaling, resolution, ...).
+- Make sure root can ssh to the remote host using the special key.
+
+  Trying sshing from the command as root, using the ssh command from
+  the sshlpr script.  In particular, we may need the remote host's
+  public key to be in known_hosts, and the manual sshing will set this
+  up.
+
+** CUPS docs
+- filter/backend docs:
+  - http://www.cups.org/documentation.php/api-filter.html
+    - overview
+    - includes log message format: "Filters and backends communicate
+      with the scheduler by writing messages to the standard error
+      file."
+  - http://www.cups.org/documentation.php/doc-1.7/man-backend.html
+    - includes exit codes
+    - backends are a special case of filters? in any case, filter docs
+      are more detailed
+    - permissions: "Backends without world execute permissions are run
+      as the root user. Otherwise, the backend is run using an
+      unprivileged user account, typically "lp"."
+  - http://www.cups.org/documentation.php/doc-1.7/man-filter.html?TOPIC=Man+Pages
+    - includes env variables, and in particular mentions that PPD
+      contains path to PPD file for current printer, and elsewhere
+      mentions that defaults specified in PPD file may not be passed
+      in options on the command line.
+  - http://www.cups.org/documentation.php/doc-1.7/man-cupsfilter.html?TOPIC=Man+Pages
+    - manually apply a filter! could be useful for a rewrite of
+      sshlpr: use this to manually process the file, and then just cat
+      over ssh?
