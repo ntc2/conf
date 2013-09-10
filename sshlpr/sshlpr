@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # SSH-LPR Backend
 
@@ -11,6 +11,37 @@
 # from the user who actually printed, server is the host and queue is the
 # print queue name as it would get passed to lpr -P queue.
 
+# ################################################################
+
+# Messages appear in
+#
+#   tail -f /var/log/cups/error_log
+#
+# See http://www.cups.org/documentation.php/api-filter.html#MESSAGES
+#
+# On the x60s, the following test shows that we see ERROR, ALERT, and
+# WARNING messages with the default CUPS log settings.
+
+# for level in NOTICE INFO ERROR ALERT WARNING; do
+#   echo "$level: Do we see messages of level $level?" >&2
+# done
+# echo "Do we see messages with no level?" >&2
+
+function log {
+    echo "ALERT:" "$@" >&2
+}
+
+# EXIT code 5 tells the schedular to cancel the job:
+# http://www.cups.org/documentation.php/doc-1.7/man-backend.html
+#
+# This has the added of bonus of making the schedular dump a huge
+# amount of helpful debugging info into the log file. In other words,
+# if we exit this way, there's no need for 'log'.
+function fail {
+    echo "ERROR: $@" >&2
+    exit 5
+}
+
 # With no parameters, we need to tell CUPS what we are.
 if [ $# -le 0 ]
 then
@@ -20,13 +51,13 @@ fi
 
 # If we get the correct number of arguments, as per:
 # 	$1=job-id $2=user $3=title $4=copies $5=options $6=[file]
-[ $# -lt 5 -o $# -gt 6 ] && exit 1
+[ $# -lt 5 -o $# -gt 6 ] && fail "Bad arguments"
 
 # Parse URL
 user=$2
 localuser=$2
 
-[ -z "$DEVICE_URI" ] && exit 1
+[ -z "$DEVICE_URI" ] && fail "No device URI"
 
 server="`echo $DEVICE_URI | cut -f 3 -d /`"
 printer="`echo $DEVICE_URI | cut -f 4 -d /`"
@@ -42,8 +73,24 @@ then
 	user="`echo $user | cut -f 2 -d ':' `"
 fi
 
-echo Doing su $localuser -c "ssh -q ${user}@$server lpr -P $printer -#$4" >&2
+# Build options by prefixing them with '-o '.
+#
+# XXX: the options should probably be validated, since they are used
+# with lpr below, but as long as the target machine is using
+# ./lpr-shell.sh everything will be validated anyway ...
+options="-o $(echo "$5" | sed -re 's/ / -o /g')"
 
-# Has CUPS given us a file in $6?
-cat $6 | su $localuser -c "ssh -q ${user}@$server lpr -P $printer -#$4" || exit 1
+# See the file that cups wants to print:
+
+# cat $6 > /tmp/file.ps
+# chmod a+r /tmp/file.ps
+
+# fail
+
+log "SSHLPR: lpr $options -P $printer -#$4"
+log
+
+# This is a little tricky: if $6 is empty then we will be catting
+# stdin, otherwise the specified file.
+cat $6 | su $localuser -c "ssh -i /home/collins/.ssh/keys-to-not-try-automatically/id_rsa_linuxlab_print -q ${user}@$server lpr $options -P $printer -#$4" || fail "Could not SSH"
 exit 0
