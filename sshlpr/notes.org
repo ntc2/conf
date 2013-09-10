@@ -56,11 +56,17 @@ E.g. for duplex printing, we need to pass -o options.
 ** Send errors back to GUI when failing
 Use logging API to communicate with the user / printer GUI.
 
-** Created ./lpr-shell.sh restricted shell.
+** Created ./lpr-shell.sh restricted shell
+** Run script as lp user, not root and "local" user
+Script only runs as lp user now and "local" user to su to is ignored.
 * Docs
 ** Installation
-- See [[*Original docs]] above.
+These instructions are for running the script as the unprivileged lp
+user.
+
 - Copy sshlpr script to /usr/lib/cups/backend/sshlpr.
+
+  : sudo cp ~/v/conf/sshlpr/sshlpr /usr/lib/cups/backend && sudo chmod 0555 /usr/lib/cups/backend/sshlpr
 
   Make sure to change ownership to root:root, to avoid
   cups-insecure-filter-warning.
@@ -82,17 +88,22 @@ Use logging API to communicate with the user / printer GUI.
     To avoid a warning message, the directory containing your filter(s)
     must also be owned by root and have world and group write disabled -
     permissions of 0755 or 0555 are strongly encouraged.
-- Install the private ssh key
+- Install the private ssh key for the lp user.
 
-    /home/collins/.ssh/keys-to-not-try-automatically/id_rsa_linuxlab_print
+  The lp user's "home dir" /var/spool/lpd did not exist for me:
 
-  on the local host
+  : sudo mkdir -p `readlink -f ~lp`/.ssh
+
+  Copy the existing print key (or set up a new one):
+
+  : sudo cp ~/.ssh/keys-to-not-try-automatically/id_rsa_linuxlab_print `readlink -f ~lp`/.ssh/id_rsa
+  : sudo chown -R lp: `readlink -f ~lp`
 
 - Install the public ssh key on the remote host.
 
   Use the restricted shell lpr-shell.sh.  I.e., add a line like
 
-    command="~/local/scripts/lpr-shell.sh",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwdW8Opyavu21mMJa7Bzht/Xw4yPhS89y/yq7HuACUmw5XalgI4IBnsaSwOLEJO5ZGWL/NCzDPzweddIdvhBllABBp2kHm9xm1QqhVBWvHhJvqf2LpkBby7J3YR+QX0l9BpaxfRmVJVGNcULEYqWXlo2CfgQvKbBGrpN60fk5Vi5+oYZLl+ZwJmzz2OBMIEwxCYVhPPzK0eQH/MBvSjvp0AYRIoj1QjGPdfkpfn3KChmYYECYDqpTP7tkQUEtb43vMwUP5bpbTYKikw9Kfv0nYdq7eGfNJpModC1xdN969VrjsBafg/23QIRTmqOasrp4htjPun8zYBOPw78YfvAetw== id_rsa_linuxlab_print
+  : command="~/local/scripts/lpr-shell.sh",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwdW8Opyavu21mMJa7Bzht/Xw4yPhS89y/yq7HuACUmw5XalgI4IBnsaSwOLEJO5ZGWL/NCzDPzweddIdvhBllABBp2kHm9xm1QqhVBWvHhJvqf2LpkBby7J3YR+QX0l9BpaxfRmVJVGNcULEYqWXlo2CfgQvKbBGrpN60fk5Vi5+oYZLl+ZwJmzz2OBMIEwxCYVhPPzK0eQH/MBvSjvp0AYRIoj1QjGPdfkpfn3KChmYYECYDqpTP7tkQUEtb43vMwUP5bpbTYKikw9Kfv0nYdq7eGfNJpModC1xdN969VrjsBafg/23QIRTmqOasrp4htjPun8zYBOPw78YfvAetw== id_rsa_linuxlab_print
 
   to ~/.ssh/authorized_keys on the remote host.
 
@@ -101,18 +112,25 @@ Use logging API to communicate with the user / printer GUI.
   The system-config-printer GUI is nice:
   - Click "add".
   - Choose "other" and enter URI like
-    : sshlpr://collins:ntc2@linuxlab.cs.pdx.edu/fab115bw1
+    : sshlpr://ntc2@linuxlab.cs.pdx.edu/fab115bw1
   - Go through the guided dialog to find a driver.
 
     Some drivers work better than others, so start with the
     recommended, but try others if something doesn't work (duplex,
     scaling, resolution, ...).
-- Make sure root can ssh to the remote host using the special key.
+- Make sure lp can ssh to the remote host using the special key.
 
-  Trying sshing from the command as root, using the ssh command from
-  the sshlpr script.  In particular, we may need the remote host's
-  public key to be in known_hosts, and the manual sshing will set this
-  up.
+  Trying sshing from the command line as root, using the ssh command
+  corresponding to the URI entered above.
+
+  : sudo -u lp -i
+  : ssh ntc2@linuxlab.cs.pdx.edu
+
+  In particular, we may need the remote host's public key to be in
+  known_hosts, and the manual sshing will set this up.
+
+  See /var/log/cups/error_log for the exact command attempted by the
+  sshlpr script.
 
 ** CUPS docs
 - filter/backend docs:
