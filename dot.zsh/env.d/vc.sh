@@ -22,3 +22,16 @@ function nc:git:disable-whitespace-conversion {
 
   echo "$1 -text -whitespace" >> $(git rev-parse --git-dir)/info/attributes
 }
+
+function nc:git:disable-whitespace-conversion-on-all-modified-files {
+  : usage: $0
+  :
+  : Disable whitespace-conversion related attributes on all
+  : currently modified files, locally in the current repo.
+
+  (cd `git rev-parse --show-toplevel` && \
+   git st -s | grep '^ M' | awk '{print $2}' | \
+   while read f; do
+     nc:git:disable-whitespace-conversion $f
+   done)
+}
