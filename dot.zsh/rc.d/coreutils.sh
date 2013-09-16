@@ -7,7 +7,11 @@
 alias ls="ls --color=auto -Fh"
 alias l="ls -l"
 alias la="l -a"
-eval $(dircolors)
+# Set LS_COLORS.
+#
+# Make directory color more readable on dark background.  The
+# ~/.Xresources make the bold specified here display as purple.
+eval $(dircolors | sed -re 's/\bdi=01;34\b/di=01/')
 
 alias rm="rm -iv"
 alias cp="cp -v"
