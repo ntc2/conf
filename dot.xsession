@@ -41,10 +41,8 @@ xrandr --output DVI-0 --auto --output VGA-0 --auto --left-of DVI-0
 # `gnome-control-center` starts the configuration dialog.
 if which urxvt &>/dev/null; then
     delay urxvt
-    delay urxvt
 else
     log "Could not find urxvt; running xterm."
-    delay xterm
     delay xterm
 fi
 # gnome-terminal &
