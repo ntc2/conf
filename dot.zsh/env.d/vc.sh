@@ -35,3 +35,10 @@ function nc:git:disable-whitespace-conversion-on-all-modified-files {
      nc:git:disable-whitespace-conversion $f
    done)
 }
+
+function nc:git:mirror {
+  : 'usage: $0'
+  :
+  : 'Mirror the current Git repo.'
+  nc:mirror $(git rev-parse --show-toplevel)
+}
