@@ -8,9 +8,11 @@ function nc:mirror {
   if [[ ! ($# -eq 1 && -e "$1") ]]; then
     return $(nc:usage nc:mirror "Wrong number of arguments.")
   fi
-  # Normalize path expanding and removing any trailing slash.  Rsync
-  # behaves very differently with a trailing slash on source dirs!
+  # Normalize path by expanding and then removing any trailing slash.
+  # Rsync behaves very differently with a trailing slash on source
+  # dirs!
   local abspath=$(readlink -f "$1")
   local normalpath=$(dirname "$abspath")/$(basename "$abspath")
-  rsync -avz --delete "$normalpath" ntc2@linuxlab.cs.pdx.edu:mirror
+  rsync -avz --human-readable --delete "$normalpath" \
+    ntc2@linuxlab.cs.pdx.edu:mirror/$(hostname -f)/
 }
