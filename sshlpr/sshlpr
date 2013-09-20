@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # SSH-LPR Backend
+# Based on http://www.masella.name/technical/sshlpr.html
 
 # The purpose of the back end is to send print jobs to a remote system
 # through ssh and lpr on the remote side. It requires that the lp user
@@ -57,7 +58,7 @@ fi
 
 # Refuse to run as root.
 if [ `whoami` != lp ]; then
-  fail "Fix file permissions (0555)."
+  fail "Fix sshlpr file permissions (0555)."
 fi
 
 # If we get the correct number of arguments, as per:
@@ -94,7 +95,17 @@ log
 
 # This is a little tricky: if $6 is empty then we will be catting
 # stdin, otherwise the specified file.
-cat $6 | ssh -q ${user}@$server lpr $options -P $printer -#$4 || fail "Could not SSH"
+#
+# The -o options mean we don't have to manually login as the lp
+# user once before printing will work. Details:
+#
+#   http://linuxcommando.blogspot.com/2008/10/how-to-disable-ssh-host-key-checking.html
+cat $6 | ssh -q \
+             -o UserKnownHostsFile=/dev/null \
+             -o StrictHostKeyChecking=no \
+             ${user}@$server \
+             lpr $options -P $printer -#$4 \
+|| fail "Could not SSH"
 # Root version:
 #cat $6 | su $localuser -c "ssh -i /home/collins/.ssh/keys-to-not-try-automatically/id_rsa_linuxlab_print -q ${user}@$server lpr $options -P $printer -#$4" || fail "Could not SSH"
 exit 0
