@@ -40,5 +40,5 @@ function nc:git:mirror {
   : 'usage: $0'
   :
   : 'Mirror the current Git repo.'
-  nc:mirror $(git rev-parse --show-toplevel)
+  nc:mirror:put $(git rev-parse --show-toplevel)
 }
