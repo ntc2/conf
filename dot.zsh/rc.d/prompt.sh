@@ -112,6 +112,6 @@ function _nc:vcs_info {
 
 PS1='[$rd%n$pl@$bl%m$pl][$gr%~$pl][%%$rd%j$pl][%*]\
 $(_nc:vcs_info)
-$bl\$$pl '
+%K{green} %k'
 
 PS2="$gr%_$pl> "

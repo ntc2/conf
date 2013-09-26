@@ -79,6 +79,10 @@
     # fundamental-mode to my auto flyspell-mode modes, in
     # extensions/flyspell.el.
     #
+    # UPDATE: now git has also learned to set default-generic-mode in
+    # some cases ??? So, updated auto flyspell-mode modes to include
+    # that ... this is obviously the wrong approach :P
+    #
     # editor = emacs -nw -f text-mode
     # editor = emacs -nw --eval '(setq nc:use-flyspell nil)' -f flyspell-mode
 [color]
