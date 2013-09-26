@@ -18,6 +18,7 @@
 (when nc:use-flyspell
   (add-hook 'font-lock-mode-hook
             (lambda ()
-              (if (member major-mode '(text-mode rst-mode latex-mode bibtex-mode fundamental-mode))
+              (if (member major-mode '(text-mode rst-mode latex-mode bibtex-mode
+                                       fundamental-mode default-generic-mode))
                   (flyspell-mode t)
                 (flyspell-prog-mode)))))
