@@ -126,7 +126,7 @@
     #
     # from https://git.wiki.kernel.org/index.php/Aliases
     st = status
-    ci = commit
+    ci = commit --verbose
     br = branch
     co = checkout
     di = diff
