@@ -35,6 +35,6 @@ function nc:mirror:ls {
   : 'List mirror in format suitable as input to nc:mirror:get.'
   ssh ntc2@linuxlab.cs.pdx.edu \
     'cd ~/mirror \
-     && find * -mindepth 1 -maxdepth 1 \
-        | sed -re "s|/| |"'
+     && find * -mindepth 1 -maxdepth 1 -printf "%Ac: %p\n" \
+        | sed -re "s|/| |" | column -t'
 }
