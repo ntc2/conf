@@ -105,7 +105,8 @@
     #
     # So, looks like it's been fixed recently, but is not in stable
     # gits on ubuntu :P
-    date = local
+    #date = local
+    date = relative
 [grep]
     extendedRegexp = true
 [merge]
@@ -115,6 +116,8 @@
     # current branch.
     defaultToUpstream = true
 [alias]
+    aliases = !git config --get-regexp alias
+
     # Clean up whitespace. See
     # http://stackoverflow.com/questions/591923/make-git-automatically-remove-trailing-whitespace-before-committing/15398512#15398512
     fixws = !export VISUAL=: && git -c apply.whitespace=fix add -ue . && git checkout . && git reset
@@ -160,3 +163,8 @@
     # Make `git push` only push the current branch, and only if it has
     # matching name upstream branch.
     default = simple
+[diff]
+    # Helpful if you don't know which file is which.
+    #mnemonicprefix = true
+    # Helpful if you want to double click copy a file name.
+    noprefix = true
