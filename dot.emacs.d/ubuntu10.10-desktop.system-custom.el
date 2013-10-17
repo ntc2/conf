@@ -8,6 +8,6 @@
 ;; spire
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(load-file "/home/collins/v/spire.git/editor/emacs/spire-mode.el")
+(load-file "/home/collins/v/spire/spire.git/editor/emacs/spire-mode.el")
 (require 'spire-mode)
-(nc:custom-set-variable spire-command "/home/collins/v/spire.git/spire")
+(nc:custom-set-variable spire-command "/home/collins/v/spire/spire.git/spire")
