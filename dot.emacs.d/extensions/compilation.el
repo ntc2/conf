@@ -13,6 +13,13 @@
 ;; compilation saves the buffer
 (setq mode-compile-always-save-buffer-p t)
 
+;; Compilation buffer follows output and stops at first error.
+;;
+;; ??? Would like to optionally not stop at warnings, but I'm not sure
+;; how to toggle this easily (they're displayed in a different color,
+;; so some error matching regexp knows the difference ...).
+(setq compilation-scroll-output 'first-error)
+
 ;; Compilation window
 ;;
 ;; XXX: These functions are kind of annoying: they modify existing
@@ -20,19 +27,24 @@
 ;; resize / close if they have to create a *new* window.
 ;;
 ;; make compile window 12 lines tall
-(setq compilation-window-height 12)
-;; from enberg on #emacs
-;; if the compilation has a zero exit code, 
-;; the windows disappears after two seconds
-;; otherwise it stays
-(setq compilation-finish-function
+
+;; (setq compilation-window-height 12)
+
+;; Based on code from enberg on #emacs
+(setq compilation-finish-functions '(
       (lambda (buf str)
         (unless (string-match "exited abnormally" str)
-          ;;no errors, make the compilation window go away in a few seconds
+          ;; No errors, so make the compilation window go away in a
+          ;; few seconds. The 'bury-buffer' function could be useful
+          ;; here, to push the compilation buffer to the bottom of the
+          ;; buffer stack.
+          ;;
+          ;; If the compilation created a split in the frame, then
+          ;; that split will remain. However, that's easy to get rid
+          ;; of with 'C-x 1'.
           (run-at-time
-           "2 sec" nil 'delete-windows-on
-           (get-buffer-create "*compilation*"))
-          (message "No Compilation Errors!"))))
+           "2 sec" nil 'set-window-buffer (get-buffer-window buf) (other-buffer))
+          (message "No Compilation Errors!")))))
 
 ;; one-button compilation
 (global-set-key [f10] 'compile)
