@@ -11,14 +11,20 @@
 (require 'compile)
 
 ;; compilation saves the buffer
-(setq mode-compile-always-save-buffer-p t)
+(nc:custom-set-variable mode-compile-always-save-buffer-p t)
 
 ;; Compilation buffer follows output and stops at first error.
-;;
-;; ??? Would like to optionally not stop at warnings, but I'm not sure
+(nc:custom-set-variable compilation-scroll-output 'first-error)
+;; Problem: Would like to optionally not stop at warnings, but I'm not sure
 ;; how to toggle this easily (they're displayed in a different color,
 ;; so some error matching regexp knows the difference ...).
-(setq compilation-scroll-output 'first-error)
+;;
+;; Solution: set 'compilation-skip-threshold'.
+;; http://www.gnu.org/software/emacs/manual/html_node/emacs/Compilation-Mode.html
+;;
+;; This affects all the compilation commands, e.g. 'next-error' and
+;; 'compilation-next-error'.
+(nc:custom-set-variable compilation-skip-threshold 1)
 
 ;; Compilation window
 ;;
@@ -31,6 +37,8 @@
 ;; (setq compilation-window-height 12)
 
 ;; Based on code from enberg on #emacs
+;;
+;; This part does not work in haskell mode's GHCi compilation buffer :P
 (setq compilation-finish-functions '(
       (lambda (buf str)
         (unless (string-match "exited abnormally" str)
