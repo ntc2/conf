@@ -151,10 +151,10 @@
     # branches tags), and prefixes tags with 'tag: '.
     grShort = log --graph --pretty=oneline --decorate --abbrev-commit
     # The rest are based on http://stackoverflow.com/a/9074343/470844
-    grTwoLines = log --graph --format=format:'%C(red)%h%C(reset) %C(green)(%cr)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%cn%C(reset)%n''%C(white)%s%C(reset)' --abbrev-commit
+    grTwoLines = log --graph --format=format:'%C(red)%h%C(reset) %C(green)(%cr)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%an%C(reset)%n''%C(white)%s%C(reset)' --abbrev-commit
     # All entries have an extra newline here :P Using '%+b' to avoid
     # two extra newlines when body is empty though.
-    grFull = log --graph --format=format:'%C(red)%h%C(reset) %C(green)(%cr)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%cn%C(reset)%n''%C(white)%s%C(reset)%n%+b' --abbrev-commit
+    grFull = log --graph --format=format:'%C(red)%h%C(reset) %C(green)(%cr)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%an%C(reset)%n''%C(white)%s%C(reset)%n%+b' --abbrev-commit
     # Seems like a bug: git will only accept underline versions of the
     # above aliases.  Also, aliases break zsh completion.
     gr         = !git grtwolines --all
