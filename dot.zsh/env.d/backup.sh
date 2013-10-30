@@ -15,6 +15,10 @@ function nc:mirror:put {
   local normalpath=$(dirname "$abspath")/$(basename "$abspath")
   rsync -avz --human-readable --delete "$normalpath" \
     ntc2@linuxlab.cs.pdx.edu:mirror/$(hostname -f)/
+  # Rsync in archive mode mirrors the timestamps as well.  So, we
+  # touch the top level dir to get more helpful output from
+  # nc:mirror:ls.
+  ssh ntc2@linuxlab.cs.pdx.edu "touch mirror/$(hostname -f)/$(basename "$abspath")"
 }
 
 function nc:mirror:get {
@@ -35,6 +39,6 @@ function nc:mirror:ls {
   : 'List mirror in format suitable as input to nc:mirror:get.'
   ssh ntc2@linuxlab.cs.pdx.edu \
     'cd ~/mirror \
-     && find * -mindepth 1 -maxdepth 1 -printf "%Ac: %p\n" \
+     && find * -mindepth 1 -maxdepth 1 -printf "%Tc: %p\n" \
         | sed -re "s|/| |" | column -t'
 }
