@@ -24,7 +24,7 @@
 ;;
 ;; This affects all the compilation commands, e.g. 'next-error' and
 ;; 'compilation-next-error'.
-(nc:custom-set-variable compilation-skip-threshold 1)
+(nc:custom-set-variable compilation-skip-threshold 2)
 
 ;; Compilation window
 ;;
