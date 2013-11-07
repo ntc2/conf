@@ -48,6 +48,7 @@ def main():
               '.xmonad/xmonad.hs', '.Xresources', '.xsession',
               '.config/gnome-session/sessions/local-xmonad-session.session',
               '.local/share/applications/local-xmonad-windowmanager-provider.desktop',
+              '.gdbinit'
               ):
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()
         to = '%(home)s/%(f)s' % locals()
