@@ -49,6 +49,27 @@ esac
 # Set the title of an xterm
 function nc:xtitle () { echo -e '\e]0;'$@'\a'; }
 
+function nc:term {
+: "usage: $0 [PATH]"
+:
+: "Start a terminal, in currently dir, or at PATH if specified."
+(
+  if [[ $# == 1 ]]; then
+    cd "$1"
+  fi
+
+  if which urxvt &> /dev/null; then
+    urxvt
+  elif which rxvt &> /dev/null; then
+    rxvt
+  elif which xterm &> /dev/null; then
+    xterm
+  else
+    nc:usage "nc:term" "No suitable terminal available."
+  fi
+) &!
+}
+
 # if we are graphical kill that god awful bell:
 if [[ -n "$DISPLAY" ]] && `which xset &>/dev/null`; then
     xset -b
