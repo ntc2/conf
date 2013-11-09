@@ -1,4 +1,4 @@
-# Interpret ascii escapes and show verbose status and ignore case in searches
+# Interpret ANSI escapes and show verbose status and ignore case in searches
 alias less="less -RMi"
 
 # get syntax highlighting in less, like on gentoo (doesn't work with
