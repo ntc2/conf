@@ -9,6 +9,16 @@
 [apply]
 	whitespace = fix
 [core]
+  # Apparently git sets 'LESS=FRSX'. The 'F' means to quit if output
+  # fits on one screen, the 'R' means to interpret escapes (e.g. ANSI
+  # color), the 'S' means to chop long lines, and the 'X' means not to
+  # clear the screen after leaving 'less'.  Below, the 'M' means to
+  # show a detailed status line, and the 'i' means to ignore case in
+  # searches. The '+Gg' means read the whole file (so that the
+  # percentage can be computed).
+  #
+  # See http://stackoverflow.com/a/19871578/470844.
+  pager = less -Mi +Gg
     # Line ending normalization: see
     # http://timclem.wordpress.com/2012/03/01/mind-the-end-of-your-line/
     #
