@@ -18,7 +18,37 @@
   # percentage can be computed).
   #
   # See http://stackoverflow.com/a/19871578/470844.
-  pager = less -Mi +Gg
+  #
+  #pager = less -Mi +Gg
+  #
+  # Turns out that is annoying for short output: the whole screen gets
+  # filled with tildes (using '--tilde' makes them disappear, but the
+  # whole screen is still full).
+  #
+  # Unrelated: because my prompt is multiple lines (usually 2; 3 when
+  # in a repo), the trick where 'less' exits if the output fits on one
+  # screen does not work correctly.  Looking at 'man less', I would
+  # think that setting 'LINES' would help, but it does not. The man
+  # page mentions that 'TIOCGWINSZ' or 'WIOCGETD' take precedence if
+  # supported (no idea what these are), so that must be the problem.
+  # 
+  # This Stack Exchange question is helpful:
+  # http://unix.stackexchange.com/questions/93173/how-does-less-know-the-terminal-resolution
+  #
+  # Using 'stty rows <n>' to set the number of rows to 'n' caused
+  # other problems.
+  #
+  # So just disable '-F' and have to hit 'q' a little more often.
+  #
+  # The good solution is probably to use a simple preprocessor that
+  # only invokes 'less' if the output is longer than the specified
+  # number of lines. The "specified number of lines" can then be
+  # calculated based on the size of the prompt.  After all, changing
+  # the terminal height setting to an incorrect value confuses less
+  # with good reason.  As a bonus, using this preprocessor would mean
+  # that the tilde problem when using '+Gg' described above would also
+  # go away.
+  pager =  less -Mi -+F
     # Line ending normalization: see
     # http://timclem.wordpress.com/2012/03/01/mind-the-end-of-your-line/
     #
@@ -130,7 +160,7 @@
 
     # Clean up whitespace. See
     # http://stackoverflow.com/questions/591923/make-git-automatically-remove-trailing-whitespace-before-committing/15398512#15398512
-    fixws = !export VISUAL=: && git -c apply.whitespace=fix add -ue . && git checkout . && git reset
+    fixws = !export GIT_EDITOR=: && git -c apply.whitespace=fix add -ue . && git checkout . && git reset
 
     # Work around 'log.date = local' bug discussed above.
     stashlist = !git stash list --date=default

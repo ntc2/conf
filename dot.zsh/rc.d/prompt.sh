@@ -110,6 +110,10 @@ function _nc:vcs_info {
     fi
 }
 
+# The green block on the last line has a point: the command still
+# stands out from the output, but triple-click-to-copy also copies a
+# valid command, whereas a leading '$' makes the command invalid when
+# copied.
 PS1='[$rd%n$pl@$bl%m$pl][$gr%~$pl][%%$rd%j$pl][%*]\
 $(_nc:vcs_info)
 %K{green} %k'
