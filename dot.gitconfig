@@ -183,34 +183,50 @@
     #
     #     git add --all :/ && git fixws && git reset
     #
+    # Logic:
+    #
     # The 'git stash save' fails if the tree is clean (instead of
-    # creating an empty stash :P), so we need to consider the case of
-    # a clean tree separately.
+    # creating an empty stash :P). So, we only 'stash' and 'pop' if
+    # the tree is dirty.
     #
-    # The if-statements:
-    # - if index is dirty
-    #   - if tree is dirty
+    # The 'git rebase --whitespace=fix HEAD~' throws away the commit
+    # if it's empty, and adding '--keep-empty' prevents the whitespace
+    # from being fixed. So, we first check that the index is dirty.
     #
-    # The complicated sequencing in the first branch (dirty tree):
-    # hide the index while fixing the tree, and then hide the tree
-    # while fixing the index.
+    # Also:
+    # - '(! git diff-index --quiet --cached HEAD)' is true (zero) if
+    #   the index is dirty
+    # - 'git diff-files --quiet `git rev-parse --show-toplevel`' is
+    #   non-zero if the tree is dirty
+    #
+    # The 'rebase --whitespace=fix' trick is from here:
+    # http://stackoverflow.com/a/19156679/470844
     fixws =!"\
       if (! git diff-index --quiet --cached HEAD); then \
-        cd `git rev-parse --show-toplevel` && \
-        export GIT_EDITOR=: && \
-        if (! git diff-files --quiet .) ; then \
-          git commit --allow-empty -m FIXWS_SAVE_INDEX && \
-          git stash save FIXWS_SAVE_TREE && \
-          git reset 'HEAD^' && \
-          git -c apply.whitespace=fix add -ue . && \
-          git checkout . && \
-          git stash pop ; \
-        else \
-          git reset && \
-          git -c apply.whitespace=fix add -ue . && \
-          git checkout . ; \
-        fi ; \
+        \
+        git diff-files --quiet `git rev-parse --show-toplevel` ; \
+        export NEED_TO_STASH=$? ; \
+        \
+        git commit -m FIXWS_SAVE_INDEX && \
+        if [ 1 = $NEED_TO_STASH ] ; then git stash save FIXWS_SAVE_TREE; fi && \
+        git rebase --whitespace=fix HEAD~ && \
+        git reset --soft HEAD~ && \
+        if [ 1 = $NEED_TO_STASH ] ; then git stash pop; fi ; \
       fi"
+
+    # Fix whitespace in the index and the tree.
+    #
+    # BROKEN: Does not work because the 'git rebase --whitespace=fix'
+    # is not compatible with empty commits (adding '--keep-empty'
+    # makes Git not fix the whitespace :P).
+    #
+    # fixws-global-tree-and-index =!\
+    #   git commit --allow-empty -m FIXWS_SAVE_INDEX && \
+    #   git add -u :/ && \
+    #   git commit --allow-empty -m FIXWS_SAVE_TREE && \
+    #   git rebase --whitespace=fix --keep-empty HEAD~2 && \
+    #   git reset HEAD~ && \
+    #   git reset --soft HEAD~
 
     # Fix whitespace in local-tree files (sub-tree rooted at current
     # dir). Fail gracefully if the index is dirty.
@@ -295,7 +311,7 @@
       # git stash pop
 
     # Fix whitespace in the index and the tree.
-    fixws-global-tree-and-index =!git fixws-local-tree-and-index
+    fixws-global-tree-and-index = !git fixws-local-tree-and-index
 
     ######################################################################
 
