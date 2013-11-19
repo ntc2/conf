@@ -201,7 +201,7 @@
     #
     # The 'rebase --whitespace=fix' trick is from here:
     # http://stackoverflow.com/a/19156679/470844
-    fixws =!"\
+    fixws = !"\
       if (! git diff-index --quiet --cached HEAD); then \
         \
         git diff-files --quiet `git rev-parse --show-toplevel` ; \
@@ -212,6 +212,27 @@
         git rebase --whitespace=fix HEAD~ && \
         git reset --soft HEAD~ && \
         if [ 1 = $NEED_TO_STASH ] ; then git stash pop; fi ; \
+      fi"
+
+    # Fix whitespace in the index and the tree.
+    fixws-global-tree-and-index = !"\
+      if (! git diff-files --quiet .) && \
+         (! git diff-index --quiet --cached HEAD) ; then \
+        git commit -m FIXWS_SAVE_INDEX && \
+        git add -u :/ && \
+        git commit -m FIXWS_SAVE_TREE && \
+        git rebase --whitespace=fix HEAD~2 && \
+        git reset HEAD~ && \
+        git reset --soft HEAD~ ; \
+      elif (! git diff-files --quiet .) ; then \
+        git add -u :/ && \
+        git commit -m FIXWS_SAVE_TREE && \
+        git rebase --whitespace=fix HEAD~ && \
+        git reset HEAD~ ; \
+      elif (! git diff-index --quiet --cached HEAD) ; then \
+        git commit -m FIXWS_SAVE_INDEX && \
+        git rebase --whitespace=fix HEAD~ && \
+        git reset --soft HEAD~ ; \
       fi"
 
     # Fix whitespace in the index and the tree.
@@ -309,9 +330,6 @@
       # git reset --soft 'HEAD^' && \
       # git fixws-index && \
       # git stash pop
-
-    # Fix whitespace in the index and the tree.
-    fixws-global-tree-and-index = !git fixws-local-tree-and-index
 
     ######################################################################
 
