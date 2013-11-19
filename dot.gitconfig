@@ -196,28 +196,30 @@
     # Also:
     # - '(! git diff-index --quiet --cached HEAD)' is true (zero) if
     #   the index is dirty
-    # - 'git diff-files --quiet `git rev-parse --show-toplevel`' is
-    #   non-zero if the tree is dirty
+    # - '(! git diff-files --quiet .)' is true if the tree is dirty
     #
     # The 'rebase --whitespace=fix' trick is from here:
     # http://stackoverflow.com/a/19156679/470844
     fixws = !"\
-      if (! git diff-index --quiet --cached HEAD); then \
-        \
-        git diff-files --quiet . ; \
-        export NEED_TO_STASH=$? ; \
-        \
+      if (! git diff-files --quiet .) && \
+         (! git diff-index --quiet --cached HEAD) ; then \
         git commit -m FIXWS_SAVE_INDEX && \
-        if [ 1 = $NEED_TO_STASH ] ; then git stash save FIXWS_SAVE_TREE; fi && \
+        git stash save FIXWS_SAVE_TREE && \
         git rebase --whitespace=fix HEAD~ && \
         git reset --soft HEAD~ && \
-        if [ 1 = $NEED_TO_STASH ] ; then git stash pop; fi ; \
+        git stash pop ; \
+      elif (! git diff-index --quiet --cached HEAD) ; then \
+        git commit -m FIXWS_SAVE_INDEX && \
+        git rebase --whitespace=fix HEAD~ && \
+        git reset --soft HEAD~ ; \
       fi"
 
     # Fix whitespace in the index and the tree.
     #
     # Precede with 'git add -N <files>' to also fix whitespace in
     # unversioned files <files>.
+    #
+    # Logic:
     #
     # The different cases are:
     # - dirty tree and dirty index
