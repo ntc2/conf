@@ -204,7 +204,7 @@
     fixws = !"\
       if (! git diff-index --quiet --cached HEAD); then \
         \
-        git diff-files --quiet `git rev-parse --show-toplevel` ; \
+        git diff-files --quiet . ; \
         export NEED_TO_STASH=$? ; \
         \
         git commit -m FIXWS_SAVE_INDEX && \
@@ -215,6 +215,18 @@
       fi"
 
     # Fix whitespace in the index and the tree.
+    #
+    # Precede with 'git add -N <files>' to also fix whitespace in
+    # unversioned files <files>.
+    #
+    # The different cases are:
+    # - dirty tree and dirty index
+    # - dirty tree and clean index
+    # - clean tree and dirty index
+    #
+    # We have to consider separate cases because the 'git rebase
+    # --whitespace=fix' is not compatible with empty commits (adding
+    # '--keep-empty' makes Git not fix the whitespace :P).
     fixws-global-tree-and-index = !"\
       if (! git diff-files --quiet .) && \
          (! git diff-index --quiet --cached HEAD) ; then \
