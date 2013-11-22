@@ -23,11 +23,8 @@ def main():
     existing install.
     """
 
-    cur  = realpath('')
-    home = realpath(getenv('HOME'))
-    if cur != home:
-        raise Exception('You should run this from your home dir.\n%s!=%s' %
-                        (cur, home))
+    home = realpath(getenv('HOME')) 
+    chdir(home)
 
     for d in ('v', 'tmp', 'local', 'local/opt', '.subversion', '.ghc', '.emacs.d',
               '.xmonad', '.local/share/applications', '.config/gnome-session/sessions'):
@@ -42,7 +39,7 @@ def main():
     # the idempotence of {ln ~/v/conf/dot.zsh ~/.zsh}.
     for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config',
               '.zsh', '.zshrc', '.zshenv', '.zprofile',
-              '.ghc/ghci.conf', '.ghc/ghci-prompt.conf',
+              '.ghc/ghci.conf', '.ghc/ghci-prompt.conf', '.haskeline',
               '.vimperatorrc',
               '.gitconfig', '.gitattributes',
               '.xmonad/xmonad.hs', '.Xresources', '.xsession',
