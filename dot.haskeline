@@ -1,0 +1,4 @@
+# See
+# - http://trac.haskell.org/haskeline/wiki/UserPrefs
+# - http://stackoverflow.com/questions/20133443/how-to-configure-amount-of-command-history-saved-by-ghci
+maxhistorysize: Just 5000
