@@ -9,6 +9,7 @@
 # restart I think) and want to sync screen with your new agent vars.
 
 # Note the use of 'eval' and '\$' to reference a variable indirectly.
+mkdir -p ~/local/bin
 for x in SSH_CLIENT SSH_TTY SSH_AUTH_SOCK SSH_CONNECTION DISPLAY; do
     eval echo export $x=\\\"\$$x\\\" # e.g. {export DISPLAY="$DISPLAY"}
-done 1>$HOME/local/bin/fix-ssh.sh
+done 1> ~/local/bin/fix-ssh.sh
