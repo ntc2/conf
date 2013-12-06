@@ -63,15 +63,18 @@ def main():
     # haskell-mode via darcs
     to = '%(home)s/local/opt/haskellmode-emacs' % locals()
     if not exists(to):
-        print 'Downloading haskell-mode ...'
         # tags are listed on the main page
         # http://projects.haskell.org/haskellmode-emacs/, or use
         # 'darcs list tags'.
-        if c('darcs get --lazy --tag 2.8.0 \
+        if c('which darcs') == 0:
+            print 'Downloading haskell-mode ...'
+            c('darcs get --lazy --tag 2.8.0 \
                 http://code.haskell.org/haskellmode-emacs %(to)s'
-             % locals()):
+              % locals())
+            c('cd %(to)s && make' % locals())
+        else:
             print 'Error downloading haskellmode-emacs.  Do you have darcs installed?'
-        c('cd %(to)s && make' % locals())
+
     # misc programs.
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())
 
