@@ -42,22 +42,14 @@
 ;;   (agda-input-setup))
 ;; (add-hook 'org-mode-hook 'run-agda-input-hook)
 
-(defun nc:init-toggle-agda-input ()
-  (interactive)
-  (unless (boundp 'nc:toggle-agda-input-initialized)
-    (require 'agda-input)
-    (make-local-variable 'nc:toggle-agda-input-initialized)
-    (make-local-variable 'default-input-method)
-    (setq default-input-method "Agda")
-    (agda-input-setup)))
+(when (require 'agda-input nil t)
+  (nc:custom-set-variable default-input-method "Agda")
+  ;; Any effect when running this when not in Agda input mode? Seems
+  ;; that Agda input mode works just fine without it.
+  (agda-input-setup))
 
-;; After running this once to turn Agda input mode on the first time,
-;; you can use 'C-\' for subsequent toggles. Alternatively, could run
-;; 'nc:toggle-agda-input-init' once, and then use 'C-\' to toggle to
-;; turn Agda input mode on the first time.  Simplest may be to set
-;; ''default-input-method' to "Agda" by default whenever '(require
-;; 'agda-input)' succeeds.
+;; Named function to help me remember that I can toggle agda mode. Can
+;; just use 'C-\' instead.
 (defun nc:toggle-agda-input ()
   (interactive)
-  (nc:init-toggle-agda-input)
   (toggle-input-method))
