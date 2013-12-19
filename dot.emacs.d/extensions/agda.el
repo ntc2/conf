@@ -29,3 +29,35 @@
 (nc:custom-set-variable
  agda2-include-dirs
  `("." ,(file-truename "~/local/opt/agda-std-lib/src")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Use agda input mode in non-agda modes (thanks Larry!).
+
+;; Larry's code:
+;;
+;; (defun run-agda-input-hook ()
+;;   (require 'agda-input)
+;;   (make-local-variable 'default-input-method)
+;;   (set-input-method "Agda")
+;;   (agda-input-setup))
+;; (add-hook 'org-mode-hook 'run-agda-input-hook)
+
+(defun nc:init-toggle-agda-input ()
+  (interactive)
+  (unless (boundp 'nc:toggle-agda-input-initialized)
+    (require 'agda-input)
+    (make-local-variable 'nc:toggle-agda-input-initialized)
+    (make-local-variable 'default-input-method)
+    (setq default-input-method "Agda")
+    (agda-input-setup)))
+
+;; After running this once to turn Agda input mode on the first time,
+;; you can use 'C-\' for subsequent toggles. Alternatively, could run
+;; 'nc:toggle-agda-input-init' once, and then use 'C-\' to toggle to
+;; turn Agda input mode on the first time.  Simplest may be to set
+;; ''default-input-method' to "Agda" by default whenever '(require
+;; 'agda-input)' succeeds.
+(defun nc:toggle-agda-input ()
+  (interactive)
+  (nc:init-toggle-agda-input)
+  (toggle-input-method))
