@@ -21,6 +21,33 @@ function nc:mirror:put {
   ssh ntc2@linuxlab.cs.pdx.edu "touch mirror/$(hostname -f)/$(basename "$abspath")"
 }
 
+# Like 'nc:git:mirror', but uses more general '.nc-mirror-magic' file
+# instead of looking for '.git' dir.
+function nc:mirror:magic {
+  : 'usage: $0 [DIR]'
+  :
+  : 'Push a mirror of first directory at or above DIR (default ".")'
+  : 'containing a ".nc-mirror-magic" file.'
+(
+  if (($# >= 1)); then
+    cd "$1"
+  fi
+
+  local last=""
+  while [[ "$last" != "$(pwd)" ]]; do
+    if [[ -e .nc-mirror-magic ]]; then
+      echo "Mirroring $(pwd):\n"
+      nc:mirror:put .
+      return $?
+    else
+      last="$(pwd)"
+      cd ..
+    fi
+  done
+  nc:usage nc:mirror:magic "Couldn't find a '.nc-mirror-magic' file."
+)
+}
+
 function nc:mirror:get {
   : 'usage: $0 HOST FILE'
   :

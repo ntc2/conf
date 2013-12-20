@@ -24,6 +24,12 @@ function nc:usage {
     : 'or'
     :
     :     'return `(nc:usage ARGS; echo $?)`'
+    :
+    : "(I don't understand why the first version works; the second"
+    : 'depends on the backticks (``) only capturing stdout, of which'
+    : "there is none.  But the first version is equivalent to 'return'"
+    : "with no arguments.  I can't find any semantics for that in the ZSH"
+    : "man page.)"
     local fun="$1"
     local error_msg="$2"
     if [[ -n "$error_msg" ]]; then
