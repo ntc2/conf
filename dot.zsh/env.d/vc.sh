@@ -71,3 +71,10 @@ function nc:git:clone {
   mkdir -p "$parent"
   git clone "$url" "$parent"/"$repo"
 }
+
+function nc:git:amend {
+  : 'usage: $0'
+  :
+  : 'Add staged changes to most recent commit.'
+  git commit --amend -CHEAD
+}
