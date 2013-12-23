@@ -160,7 +160,11 @@
 # --show-toplevel`, with the variable 'GIT_PREFIX' set to `git
 # rev-parse --show-prefix`.
 [alias]
-    aliases = !git config --get-regexp alias
+    # List all aliases.
+    aliases = config --get-regexp alias
+
+    # Amend, reusing the commit message.
+    autoamend = commit --amend -CHEAD
 
     ######################################################################
     # Clean up whitespace.
