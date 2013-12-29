@@ -136,24 +136,13 @@ See `nc:custom-set-variable'."
  ; removed
  ;'(desktop-save-mode 1)
 
-; Make all backups in same place: Avoid clutter, and danger of typing
-; {rm -rf * ~} instead of {rm -rf *~} when removing clutter. See
-; http://www.gnu.org/software/emacs/manual/html_node/emacs/Backup.html
-; for some explanation of when backups are created, and some ways to
-; force backup creation.
-;
-; NB: The backup dir specified here is created if it doesn't exist.
-; This is bad if this creation happens while you're sudo'd since then
-; root owns the backup dir ...
-(setq backup-directory-alist '(("" . "~/.emacs.d/backups")))
-
 ; Make M-x apropos, and maybe C-h a, show more results. This var has
 ; documentation *after* apropos.el loads, e.g. after using M-x
 ; apropos.
 (setq apropos-do-all t)
 
 ; Make backspace work more often.
-
+;
 ; Causes problems in text-only emacs that isn't already broken :P
 ; (normal-erase-is-backspace-mode 1)
 
