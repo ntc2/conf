@@ -112,7 +112,7 @@ user.
   The system-config-printer GUI is nice:
   - Click "add".
   - Choose "other" and enter URI like
-    : sshlpr://ntc2@linuxlab.cs.pdx.edu/fab115bw1
+    : sshlpr://ntc2@linux.cecs.pdx.edu/fab115bw1
   - Go through the guided dialog to find a driver.
 
     Some drivers work better than others, so start with the
@@ -124,13 +124,18 @@ user.
   corresponding to the URI entered above.
 
   : sudo -u lp -i
-  : ssh ntc2@linuxlab.cs.pdx.edu
+  : ssh ntc2@linux.cecs.pdx.edu
 
   In particular, we may need the remote host's public key to be in
   known_hosts, and the manual sshing will set this up.
 
   See /var/log/cups/error_log for the exact command attempted by the
   sshlpr script.
+
+- WARNING: don't "duplicate" the printer in system-config-printer
+  after you create it. This seems to break everything, giving "could
+  not SSH errors", but I have no idea why. Deleting and recreating the
+  printer works just fine.
 
 ** CUPS docs
 - filter/backend docs:
