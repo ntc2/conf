@@ -35,7 +35,7 @@
 # echo "Do we see messages with no level?" >&2
 
 function log {
-    echo "ALERT:" "$@" >&2
+    echo "ALERT: SSHLPR: $@" >&2
 }
 
 # EXIT code 5 tells the schedular to cancel the job:
@@ -45,7 +45,7 @@ function log {
 # amount of helpful debugging info into the log file. In other words,
 # if we exit this way, there's no need for 'log'.
 function fail {
-    echo "ERROR: $@" >&2
+    echo "ERROR: SSHLPR: $@" >&2
     exit 5
 }
 
@@ -90,8 +90,7 @@ options="-o $(echo "$5" | sed -re 's/ / -o /g')"
 
 # fail "Debug"
 
-log "SSHLPR: ssh -q ${user}@$server lpr $options -P $printer -#$4"
-log
+log "ssh -q ${user}@$server lpr $options -P $printer -#$4"
 
 # This is a little tricky: if $6 is empty then we will be catting
 # stdin, otherwise the specified file.
@@ -100,12 +99,18 @@ log
 # user once before printing will work. Details:
 #
 #   http://linuxcommando.blogspot.com/2008/10/how-to-disable-ssh-host-key-checking.html
+#
+# Ugh: store the output of the ssh command in 'ssh_out' and include it
+# in the error message on failure.
+ssh_out="$(
 cat $6 | ssh -q \
              -o UserKnownHostsFile=/dev/null \
              -o StrictHostKeyChecking=no \
              ${user}@$server \
              lpr $options -P $printer -#$4 \
-|| fail "Could not SSH"
+             2>&1
+)" || fail "Could not SSH: $ssh_out"
 # Root version:
 #cat $6 | su $localuser -c "ssh -i /home/collins/.ssh/keys-to-not-try-automatically/id_rsa_linuxlab_print -q ${user}@$server lpr $options -P $printer -#$4" || fail "Could not SSH"
+log "Success!"
 exit 0
