@@ -114,7 +114,11 @@ function _nc:vcs_info {
 # stands out from the output, but triple-click-to-copy also copies a
 # valid command, whereas a leading '$' makes the command invalid when
 # copied.
-PS1='[$rd%n$pl@$bl%m$pl][$gr%~$pl][%%$rd%j$pl][%*]\
+#
+# Strange: at some point in early 2014 the '%m' (unqualified hostname)
+# started printing as 'linux', and '%M' as 'linux.cecs.pdx.edu' ???
+# Easy test with 'print -P %M'.
+PS1='[$rd%n$pl@$bl$(hostname)$pl][$gr%~$pl][%%$rd%j$pl][%*]\
 $(_nc:vcs_info)
 %K{green} %k'
 
