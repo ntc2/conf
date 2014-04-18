@@ -60,20 +60,21 @@ def main():
     # emacs extensions.
     c('ln -fs %(home)s/v/conf/dot.emacs.d/extensions %(home)s/.emacs.d/'
       % locals())
-    # haskell-mode via darcs
-    to = '%(home)s/local/opt/haskellmode-emacs' % locals()
-    if not exists(to):
-        # tags are listed on the main page
-        # http://projects.haskell.org/haskellmode-emacs/, or use
-        # 'darcs list tags'.
-        if c('which darcs') == 0:
-            print 'Downloading haskell-mode ...'
-            c('darcs get --lazy --tag 2.8.0 \
-                http://code.haskell.org/haskellmode-emacs %(to)s'
-              % locals())
-            c('cd %(to)s && make' % locals())
-        else:
-            print 'Error downloading haskellmode-emacs.  Do you have darcs installed?'
+    # Install haskell-mode via darcs. Managed by el-get now.
+    #
+    # to = '%(home)s/local/opt/haskellmode-emacs' % locals()
+    # if not exists(to):
+    #     # tags are listed on the main page
+    #     # http://projects.haskell.org/haskellmode-emacs/, or use
+    #     # 'darcs list tags'.
+    #     if c('which darcs') == 0:
+    #         print 'Downloading haskell-mode ...'
+    #         c('darcs get --lazy --tag 2.8.0 \
+    #             http://code.haskell.org/haskellmode-emacs %(to)s'
+    #           % locals())
+    #         c('cd %(to)s && make' % locals())
+    #     else:
+    #         print 'Error downloading haskellmode-emacs.  Do you have darcs installed?'
 
     # misc programs.
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())
