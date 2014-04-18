@@ -7,7 +7,11 @@
           ;;see http://www.haskell.org/haskellwiki/Haskell-mode
           ;;         #inf-haskell.el:_the_best_thing_since_the_breadknife
           (lambda () (require 'inf-haskell)))
-;; Now managed by el-get.
+
+;; Now managed by el-get. I'm making sure el-get is loaded before this
+;; file, but I think there's a blessed way to config packages
+;; installed by el-get.
+
 ;(load "~/local/opt/haskellmode-emacs/haskell-site-file" t)
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
