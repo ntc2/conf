@@ -1,4 +1,5 @@
-See also: output of `nc:pdf:tutorial`.
+See also: output of `nc:pdf:tutorial`, or better just run
+`nc:pdf:magic`.
 * pdfnup (from pdfjam package): variable trim + nup
 
 usage examples:
@@ -19,6 +20,12 @@ usage examples:
 
 there are many more options, such as --delta, that i have not used
 * watermarking to avoid guessing
+The .pdf watermarks in this directory are no longer used.  Instead,
+custom watermarks are generated in /tmp/. This means we can handle
+paper that is not letter or a4, which comes up from time to time.
+
+The watermarking is scripted in ./make-watermark.sh.
+
 Work flow:
 
 1. use `pdfinfo` (from poppler-utils package) to determine paper size

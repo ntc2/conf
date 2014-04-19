@@ -26,11 +26,7 @@ nc:pdf:magic () {
 [[ $# -eq 1 ]] && [[ -e "$1" ]] || return `(nc:usage $0)`
 local file="$1"
 
-local wm=$( pdfinfo "$file" \
-          | grep 'Page size:' \
-          | sed -re 's/.*\((.*?)\).*/\1/')
-
-local wmfile=$(nc:pdf:watermark $wm "$file")
+local wmfile=$(nc:pdf:watermark "$file")
 local nupfile=/tmp/$(basename "$file").pdfnup.pdf
 evince "$wmfile" &>/dev/null &!
 
@@ -39,22 +35,35 @@ echo -n '<top> <left> <right> <bottom> (trims in cm): '
 read top left right bottom
 echo -n '<nup> (probably 2x1 or 1x1): '
 read nup
+pdfinfo "$file"
+echo -n '<paper> (default: "letter"; other option: "a4paper") '
+read paper
+if [[ -z "$paper" ]]; then
+  paper=letter
+fi
 # Insert pdfnup command into command line without running it.
 print -z \
-"pdfnup --paper $wm --nup $nup \
+"pdfnup --paper $paper --nup $nup \
 --trim \"${left}cm ${bottom}cm ${right}cm ${top}cm\" \
 --outfile \"$nupfile\" \"$file\" \\\\
 && evince \"$nupfile\""
 }
 
 nc:pdf:watermark () {
-: usage: $0 WATERMARK FILE
+: usage: $0 FILE
 :
 : Apply a watermark to a pdf, to help calculate pdfnup trim params.
-local watermark=$1 file="$2"
-local wmfile=/tmp/$(basename "$file").wm
+local file="$1"
+
+local size="$(pdfinfo "$file" | grep 'Page size:')"
+local  width=$(echo "$size" | sed -nre 's/.*: *([.0-9]+) x ([.0-9]+) pts.*/\1/p')
+local height=$(echo "$size" | sed -nre 's/.*: *([.0-9]+) x ([.0-9]+) pts.*/\2/p')
+
+local watermark="$(~/v/conf/scripts/pdf-rescalers/make-watermark.sh $width $height)"
+local watermarked=/tmp/$(basename "$file").wm
 pdftk "$file" \
-  background ~/v/conf/scripts/pdf-rescalers/watermark-$watermark.pdf \
-  output "$wmfile"
-  echo "$wmfile"
+  background "$watermark" \
+  output "$watermarked"
+
+echo "$watermarked"
 }
