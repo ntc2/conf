@@ -71,7 +71,9 @@
 (setq nc:el-get-packages
       (append
        '("el-get"
-         "haskell-mode")
+         "haskell-mode"
+         ;; Comes with Emacs 24.
+         "package")
        (mapcar 'el-get-source-name el-get-sources)))
 
 ;; Install packages as needed.
