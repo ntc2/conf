@@ -16,8 +16,8 @@
 
 ;; Override the default 'el-get-dir' in 'el-get-install.el'.
 ;;
-;; Seems this results in a pointless extra 'el-get' dir, but the
-;; defaults do the same ...
+;; The directory structure is '<el-get-dir>/<package>'. So,
+;; e.g. 'el-get' package is under '~/local/opt/el-get/el-get.
 (setq el-get-dir "~/local/opt/el-get")
 
 (add-to-list 'load-path "~/local/opt/el-get/el-get")
@@ -31,10 +31,23 @@
 
 ;; I'm not sure what this is for yet ...
 ;(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-(el-get 'sync)
 
-;; Install packages as needed. This is a no-op most of the time, so
-;; make this more manual if it's too slow.
+;; El-get looks here for init code for installed packages. See the
+;; "User Init" section of the El-get info docs.
+(nc:custom-set-variable el-get-user-package-directory "~/.emacs.d/extensions/el-get")
+
+;(el-get 'sync)
+
+;; Install packages as needed.
+;;
+;; The "Distributed Setup" section (6.3) of the El-get info
+;; documentation shows a more complex setup where some packages are
+;; customized with ':after' sections in a magic 'el-get-sources'
+;; variable.  For example, they install 'emacs-goodies-el' via
+;; 'apt-get' using a ':type apt-get' source.
+;;
+;; The 'el-get' command does not perform any updating; that must be
+;; done manually with 'el-get-update'.
 (if (not (executable-find "makeinfo"))
     (error "%s" "You need to install 'makeinfo' with 'sudo aptitude install texinfo'")
-  (el-get-install "haskell-mode"))
+  (el-get 'sync '("haskell-mode")))
