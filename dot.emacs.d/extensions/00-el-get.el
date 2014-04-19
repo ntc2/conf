@@ -1,3 +1,14 @@
+;; Emacs package management.
+;;
+;; The internet seemed to think that El-Get could install MELPA
+;; packages, but I could not figure out how.  The packages.el system,
+;; which is native in Emacs 24, supports MELPA.  El-Get makes it very
+;; easy to set up your own packages (e.g. my old manual haskell-mode
+;; install is a few lines in El-Get) and the MELPA haskell-mode is way
+;; out of date, so it seems good to stick with El-Get.  But it would
+;; be nice if I could combine El-Get and MELPA? Maybe the answer is to
+;; use both El-Get and packages.el?
+;;
 ;; Install el-get automatically if not already installed.  This will
 ;; be annoying if I don't have an internet connection, but I only
 ;; expect to run it once (so maybe I should run in manually?). It
@@ -38,16 +49,37 @@
 
 ;(el-get 'sync)
 
-;; Install packages as needed.
+;; Packages to install
 ;;
-;; The "Distributed Setup" section (6.3) of the El-get info
-;; documentation shows a more complex setup where some packages are
-;; customized with ':after' sections in a magic 'el-get-sources'
-;; variable.  For example, they install 'emacs-goodies-el' via
+;;
+;; Based on the "Distributed Setup" section (6.3) of the El-get info
+;; documentation. For example, they install 'emacs-goodies-el' via
 ;; 'apt-get' using a ':type apt-get' source.
+
+;; This is a magic variable used by El-Get.
+(setq el-get-sources
+      '(
+        ;; This recipe works, but dart-mode is broken in Emacs 23 :P
+        ;; Supposed to work in Emacs 24 though.
+
+        ;; (:name dart-mode
+        ;;  :type git
+        ;;  :url "https://github.com/nex3/dart-mode"
+        ;;  :after (add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode)))
+      ))
+
+(setq nc:el-get-packages
+      (append
+       '("el-get"
+         "haskell-mode")
+       (mapcar 'el-get-source-name el-get-sources)))
+
+;; Install packages as needed.
 ;;
 ;; The 'el-get' command does not perform any updating; that must be
 ;; done manually with 'el-get-update'.
 (if (not (executable-find "makeinfo"))
     (error "%s" "You need to install 'makeinfo' with 'sudo aptitude install texinfo'")
-  (el-get 'sync '("haskell-mode")))
+  ;; Need to include "el-get" in the list of packages or it's info
+  ;; documentation does not get loaded!
+  (el-get 'sync nc:el-get-packages))
