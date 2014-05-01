@@ -7,11 +7,13 @@
 # tag, corresponding to a stable release, but it easy to just choose a
 # stable release source tarball
 
-release=1.8.4
+release=1.9.2
 prefix=~/local/opt/git-${release}
+# Another place to get Git: https://code.google.com/p/git-core/downloads/list
+url=https://www.kernel.org/pub/software/scm/git/
 
 cd /tmp
-wget https://git-core.googlecode.com/files/git-${release}.tar.gz -O- | tar xzf -
+wget $url/git-${release}.tar.gz -O- | tar xzf -
 cd git-${release}
 
 # Git actually needs to be installed, not just built.
@@ -35,7 +37,7 @@ make prefix=$(readlink -f $prefix) install
 # git-htmldocs-${release}):
 
 (cd $prefix/share/man &&
-wget https://git-core.googlecode.com/files/git-manpages-${release}.tar.gz -O- | tar xzf -)
+wget $url/git-manpages-${release}.tar.gz -O- | tar xzf -)
 
 # ZSH configuration.
 #
