@@ -53,16 +53,6 @@
 ;; ** at end of file:
 (nc:custom-set-variable indicate-empty-lines t)
 
-;; Let searches span multiple lines.
-;;
-;; Make regexp search (C-M-s) handle line wrapping intelligently. NB:
-;; after starting a regexp search, you can use regular C-s to jump to
-;; the next match
-;; 
-;; But how to get the same for non-regexp search (C-s)?  Could rebind
-;; regular search to regexp search?
-(nc:custom-set-variable search-whitespace-regexp "[ \t\r\n]+")
-
 ;; Delete pointless whitespace in region
 (defun nc:del-ws ()
   (interactive)
