@@ -7,7 +7,7 @@
 # tag, corresponding to a stable release, but it easy to just choose a
 # stable release source tarball
 
-release=1.9.2
+release=1.9.3
 prefix=~/local/opt/git-${release}
 # Another place to get Git: https://code.google.com/p/git-core/downloads/list
 url=https://www.kernel.org/pub/software/scm/git/
@@ -68,8 +68,9 @@ cd git-${release}
 mkdir -p ~/local/opt
 # make configure
 # ./configure --prefix=$(readlink -f $prefix)
-make -j $flair prefix=$(readlink -f $prefix) && \
-make -j $flair prefix=$(readlink -f $prefix) install
+NUMCPUS=$(grep -c '^processor' /proc/cpuinfo)
+make -j$NUMCPUS $flair prefix=$(readlink -f $prefix) && \
+make -j$NUMCPUS $flair prefix=$(readlink -f $prefix) install
 
 # The docs can be built, but that is slow, and requires asciidoc and
 # xmlto, which are not installed on linuxlab machines.  Instead, just
