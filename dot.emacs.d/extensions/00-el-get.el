@@ -73,7 +73,8 @@
        '("el-get"
          "haskell-mode"
          ;; Comes with Emacs 24.
-         "package")
+         "package"
+         "llvm-mode")
        (mapcar 'el-get-source-name el-get-sources)))
 
 ;; Install packages as needed.
