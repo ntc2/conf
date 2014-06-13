@@ -68,3 +68,14 @@ in buffer with regular spaces"
     (while (search-forward " " nil t)
       (replace-match " " nil t))))
 
+;; Replace "smart" quotes with ASCII quotes. Useful in LaTeX.
+(defun nc:replace-smart-quotes ()
+  "replace all \"smart\" quotes in buffer with regular quotes"
+  (interactive)
+  (dolist (from-to '(("’" . "'") ("‘" . "'") ("”" . "\"") ("“" . "\"")))
+    (let ((from (car from-to))
+          (to (cdr from-to)))
+      (save-excursion
+        (beginning-of-buffer)
+        (while (search-forward from nil t)
+          (replace-match to nil t))))))
