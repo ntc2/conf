@@ -85,7 +85,7 @@ def main():
     # use zsh?
     shell = getenv('SHELL')
     if 'zsh' not in shell:
-        print '''You are using "%(shell)s" but this conf is for zsh.  Changing shell to zsh ...'''
+        print '''You are using "%(shell)s" but this conf is for zsh.  Changing shell to zsh ...''' % locals()
         c('chsh -s /bin/zsh')
 
 if __name__ == '__main__': main()
