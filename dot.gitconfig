@@ -102,9 +102,12 @@
     # 'core.autocrlf=input'.
     #
     # To override this in a repo that already has files with messed up
-    # line endings, create a .gitattributes in the repo with contents
+    # line endings, create a .gitattributes (or .git/info/attributes)
+    # in the repo with contents
     #
     #   * text=unspecified
+    #
+    # or just use 'nc:git:disable-whitespace-conversion*'.
     attributesfile = ~/.gitattributes
 
     # Turn this on temporarily if git(-svn) gets confused by an
