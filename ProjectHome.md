@@ -1,0 +1,5 @@
+**There is no `/svn/trunk` in the repo** so you checkout `/svn`, not `/svn/trunk`.
+
+I have a bunch of  `*`nix accounts and I like to have a consistent configuration, so I version my configuration files and related scripts.  Maybe other people will find them useful?
+
+In short: http://xkcd.com/1319/
