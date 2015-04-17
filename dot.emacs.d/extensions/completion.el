@@ -17,5 +17,12 @@
 (icomplete-mode t)
 ;; For completing e.g. 'h-e-t-f-l' to
 ;; 'hippie-expand-try-functions-list'
-(partial-completion-mode t)
-
+;;
+;; Deprecated in Emacs 24:
+;;
+;(partial-completion-mode t)
+;;
+;; Instead use:
+;;
+(setq completion-styles '(partial-completion initials))
+(setq completion-pcm-complete-word-inserts-delimiters t)
