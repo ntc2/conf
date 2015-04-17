@@ -401,3 +401,5 @@
 
     # Helpful if you want to double click copy a file name.
     noprefix = true
+[blame]
+    date = relative
