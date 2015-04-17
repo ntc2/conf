@@ -138,13 +138,11 @@ nc:load-custom ~/.zshrc.system-custom
 ## Run last
 
 # Remind me to make sure all my conf repos are current.
-#message SVN conf dir info
-#sleep 1 && clear
 (
 # don't print info about background jobs in this sub shell
 unset NOTIFY
 
-# Make conf_dir go out of scope after the svn commands
+# Make conf_dir go out of scope after the vc commands
     # .zshrc -> $conf_dir/dot.zshrc
     conf_dir=$(dirname $(readlink -f ~/.zshrc))
     #docs_dir=$(dirname $(readlink -f ~/local/more-scripts))
@@ -153,10 +151,12 @@ unset NOTIFY
     # Print uncommitted modifications and available updates, but don't
     # show the revision we're currenty at, so that there is only
     # output when something is changed
-    svn st -u $conf_dir | head -n -1 &!
-    for f in ~/.{zshrc,zshenv,zprofile}.system-custom; do
-        [[ -e $f ]] && svn st $(readlink -f $f) 2>/dev/null
-    done
+    cd $conf_dir
+    git fetch
+    git diff --stat &!
+    # for f in ~/.{zshrc,zshenv,zprofile}.system-custom; do
+    #     [[ -e $f ]] && svn st $(readlink -f $f) 2>/dev/null
+    # done
     # No --update when on stupid AFS file system
     #[[ -e $docs_dir ]] && svn st $docs_dir &
 )
