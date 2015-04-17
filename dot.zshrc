@@ -34,6 +34,10 @@ _comp_options+=(globdots)
 # Enabled operators include difference (~), negation (^), repetition (#, ##)
 setopt extendedglob
 
+# Allow comments at repl (vs only in scripts). This may interfere with
+# some extended globs enabled by the last 'setopt'.
+setopt interactivecomments
+
 # Enable "tab once" completion, e.g.
 # /u/s/d/python<TAB> => /usr/share/doc/python
 compctl -D -f + -U -Q -K multicomp 
