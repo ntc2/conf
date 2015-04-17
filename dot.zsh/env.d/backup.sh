@@ -1,7 +1,9 @@
 # The host linuxlab.cs.pdx.edu is faster when it's up, but seems less
 # reliable than linux.cecs.pdx.edu .
-HOST=linux.cecs.pdx.edu
-USER=ntc2
+#
+# These default values can be overridden in ~/.zshenv.system-custom.
+BACKUP_HOST=linux.cecs.pdx.edu
+BACKUP_USER=ntc2
 
 # Mirror a file or directory on linuxlab
 function nc:mirror:put {
@@ -19,11 +21,11 @@ function nc:mirror:put {
   local abspath=$(readlink -f "$1")
   local normalpath=$(dirname "$abspath")/$(basename "$abspath")
   rsync -avz --human-readable --delete "$normalpath" \
-    $USER@$HOST:mirror/$(hostname -f)/
+    $BACKUP_USER@$BACKUP_HOST:mirror/$(hostname -f)/
   # Rsync in archive mode mirrors the timestamps as well.  So, we
   # touch the top level dir to get more helpful output from
   # nc:mirror:ls.
-  ssh $USER@$HOST "touch mirror/$(hostname -f)/$(basename "$abspath")"
+  ssh $BACKUP_USER@$BACKUP_HOST "touch mirror/$(hostname -f)/$(basename "$abspath")"
 }
 
 # Like 'nc:git:mirror', but uses more general '.nc-mirror-magic' file
@@ -54,22 +56,22 @@ function nc:mirror:magic {
 }
 
 function nc:mirror:get {
-  : 'usage: $0 HOST FILE'
+  : 'usage: $0 BACKUP_HOST FILE'
   :
-  : 'Recover a backup of FILE created from host HOST.'
+  : 'Recover a backup of FILE created from host BACKUP_HOST.'
   if [[ $# -ne 2 ]]; then
     return $(nc:usage nc:mirror "Wrong number of arguments.")
   fi
   local normalpath=$(dirname "$2")/$(basename "$2")
   rsync -avz --human-readable \
-    $USER@$HOST:mirror/"$1"/"$normalpath" ./
+    $BACKUP_USER@$BACKUP_HOST:mirror/"$1"/"$normalpath" ./
 }
 
 function nc:mirror:ls {
   : 'usage: $0'
   :
   : 'List mirror in format suitable as input to nc:mirror:get.'
-  ssh $USER@$HOST \
+  ssh $BACKUP_USER@$BACKUP_HOST \
     'cd ~/mirror \
      && find * -mindepth 1 -maxdepth 1 -printf "%Tc: %p\n" \
         | sed -re "s|/| |" | column -t'
