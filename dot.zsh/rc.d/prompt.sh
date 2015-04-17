@@ -115,10 +115,15 @@ function _nc:vcs_info {
 # valid command, whereas a leading '$' makes the command invalid when
 # copied.
 #
+# The '%(?..[$rd%?$pl])' prints the previous command's exit code in
+# red when non-zero. See Section 'CONDITIONAL SUBSTRINGS IN PROMPTS'
+# in 'man zshall' for '%(..)' ternary op docs.
+# http://stackoverflow.com/questions/4466245/customize-zshs-prompt-when-displaying-previous-command-exit-code
+#
 # Strange: at some point in early 2014 the '%m' (unqualified hostname)
 # started printing as 'linux', and '%M' as 'linux.cecs.pdx.edu' ???
 # Easy test with 'print -P %M'.
-PS1='[$rd%n$pl@$bl$(hostname)$pl][$gr%~$pl][%%$rd%j$pl][%*]\
+PS1='[$rd%n$pl@$bl$(hostname)$pl][$gr%~$pl][%%$rd%j$pl][%*]%(?..[$rd%?$pl])\
 $(_nc:vcs_info)
 %K{green} %k'
 
