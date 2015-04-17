@@ -1,5 +1,8 @@
 # -*- conf -*-
-#
+
+# For host-specific customization create a ~/.gitconfig.system-custom
+# file.
+
 # Best git tutorial I've read:
 # http://newartisans.com/2008/04/git-from-the-bottom-up/
 # http://ftp.newartisans.com/pub/git.from.bottom.up.pdf
@@ -403,3 +406,9 @@
     noprefix = true
 [blame]
     date = relative
+# Doesn't matter if these files exist or not. Overridden values that
+# already appear above are configured twice, but only the last value
+# matters for single-value config parameters like 'user.name' and
+# 'user.email'.
+[include]
+    path = ~/.gitconfig.system-custom
