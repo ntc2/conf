@@ -1,11 +1,3 @@
-THIS REPOSITORY IS FOR CONFIGURATION AND RELATED FILES LIKE .bashrc OR
-MOZILLA bookmarks.html
+I have a bunch of  `*`nix accounts and I like to have a consistent configuration, so I version my configuration files and related scripts.  Maybe other people will find them useful?
 
-The scripts assume the existence of ~/local/scripts.  Ad hoc as heck,
-huh?
-
-scripts/its-all-text-emacs.sh
-  for the It's All Text firefox plugin.  After installing the plugin
-  set the editor preference to point to
-  local/scripts/its-all-text-emacs.sh
-
+In short: http://xkcd.com/1319/
