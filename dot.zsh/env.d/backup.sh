@@ -9,23 +9,41 @@ BACKUP_USER=ntc2
 function nc:mirror:put {
   : 'usage: $0 (FILE | DIR)'
   :
-  : 'Copy (FILE | DIR) to ~/mirror/ on linuxlab.'
+  : 'Copy (FILE | DIR) to ~/mirror/ on $BACKUP_HOST.'
+  : 'Structure of mirror is duplicated in ~/mirror-structure'
+  : 'to ease exploration.'
   :
   : 'If `basename DIR` is "." the name of dir will used for the backup.'
-  if [[ ! ($# -eq 1 && -e "$1") ]]; then
-    return $(nc:usage nc:mirror "Wrong number of arguments.")
+  if [[ ! ($# -eq 1) ]]; then
+    return $(nc:usage nc:mirror:put "Wrong number of arguments.")
   fi
+  if [[ ! (-e "$1") ]]; then
+    return $(nc:usage nc:mirror:put "Source '$1' does not exist.")
+  fi
+  ssh $BACKUP_USER@$BACKUP_HOST "mkdir -p ~/mirror"
   # Normalize path by expanding and then removing any trailing slash.
   # Rsync behaves very differently with a trailing slash on source
   # dirs!
   local abspath=$(readlink -f "$1")
   local normalpath=$(dirname "$abspath")/$(basename "$abspath")
-  rsync -avz --human-readable --delete "$normalpath" \
+  # The '--relative' options means to recreate the full source path
+  # under the target directory at the destination. The '--delete'
+  # option means to delete files on the destination which are not on
+  # the host, but only for *directories* that are explicitly
+  # synced. So, e.g, separate syncs of 'foo/a' and 'foo/b' will not
+  # result in only having 'b' in 'foo' on the destination host.
+  rsync -avz --relative --human-readable --delete "$normalpath" \
     $BACKUP_USER@$BACKUP_HOST:mirror/$(hostname -f)/
-  # Rsync in archive mode mirrors the timestamps as well.  So, we
-  # touch the top level dir to get more helpful output from
-  # nc:mirror:ls.
-  ssh $BACKUP_USER@$BACKUP_HOST "touch mirror/$(hostname -f)/$(basename "$abspath")"
+  # Note what was mirrored, to making exploring the mirror later
+  # easier.  Encode the slashes as '<slash>' since they aren't allowed
+  # in file names. May there never be a day that I want '<slash>' in
+  # my file names ...
+  #
+  # The "note" format is "<hostname> <encoded backed up path>", and is
+  # decoded by 'nc:mirror:ls' below.
+  local ghostpath="mirror/$(echo "$(hostname -f) $normalpath" | \
+                            sed -re 's|/|<slash>|g')"
+  ssh $BACKUP_USER@$BACKUP_HOST "touch '$ghostpath'"
 }
 
 # Like 'nc:git:mirror', but uses more general '.nc-mirror-magic' file
@@ -56,11 +74,11 @@ function nc:mirror:magic {
 }
 
 function nc:mirror:get {
-  : 'usage: $0 BACKUP_HOST FILE'
+  : 'usage: $0 SOURCE_HOST FILE'
   :
-  : 'Recover a backup of FILE created from host BACKUP_HOST.'
+  : 'Recover a backup of FILE created from host SOURCE_HOST.'
   if [[ $# -ne 2 ]]; then
-    return $(nc:usage nc:mirror "Wrong number of arguments.")
+    return $(nc:usage nc:mirror:get "Wrong number of arguments.")
   fi
   local normalpath=$(dirname "$2")/$(basename "$2")
   rsync -avz --human-readable \
@@ -73,6 +91,6 @@ function nc:mirror:ls {
   : 'List mirror in format suitable as input to nc:mirror:get.'
   ssh $BACKUP_USER@$BACKUP_HOST \
     'cd ~/mirror \
-     && find * -mindepth 1 -maxdepth 1 -printf "%Tc: %p\n" \
-        | sed -re "s|/| |" | column -t'
+     && find *"<slash>"* -printf "%Tc: %p\n" \
+        | sed -re "s|<slash>|/|g" | column -t'
 }
