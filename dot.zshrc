@@ -153,7 +153,7 @@ unset NOTIFY
     {
     cd $conf_dir
     git fetch
-    git diff --stat
+    git diff --stat origin
     } &!
     # for f in ~/.{zshrc,zshenv,zprofile}.system-custom; do
     #     [[ -e $f ]] && svn st $(readlink -f $f) 2>/dev/null
