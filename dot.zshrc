@@ -148,12 +148,13 @@ unset NOTIFY
     #docs_dir=$(dirname $(readlink -f ~/local/more-scripts))
     #svn info  $conf_dir # General info
 
-    # Print uncommitted modifications and available updates, but don't
-    # show the revision we're currenty at, so that there is only
-    # output when something is changed
+    # Print uncommitted modifications and available updates; there is
+    # only output when something is changed.
+    {
     cd $conf_dir
     git fetch
-    git diff --stat &!
+    git diff --stat
+    } &!
     # for f in ~/.{zshrc,zshenv,zprofile}.system-custom; do
     #     [[ -e $f ]] && svn st $(readlink -f $f) 2>/dev/null
     # done
