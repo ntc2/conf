@@ -32,7 +32,13 @@ RequiredComponents=gnome-panel;gnome-settings-daemon;local-xmonad-windowmanager-
 # xterm. According to http://askubuntu.com/a/541404/56280, the problem
 # is that many Gnome .desktop files are configured to only run when
 # the 'DesktopName' is set to "Unity".
-DesktopName=Unity
+#DesktopName=Unity
+
+# Ubuntu 12.04
+#
+# In 12.04 LTS some .desktop files, include 'gnome-panel.desktop', are
+# instead configured with 'OnlyShowIn=GNOME;' :P
+DesktopName=GNOME
 
 # In Ubuntu 11.10 I get error in ~/.xsession-errors:
 #
