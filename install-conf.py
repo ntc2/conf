@@ -13,7 +13,7 @@ from os import chdir, getenv
 from os.path import exists, realpath
 
 def c(cmd):
-    call(cmd,shell=True)
+    return call(cmd,shell=True)
 
 def main():
     """Set up home dir.
@@ -32,7 +32,13 @@ def main():
     chdir('v')
 
     if not exists('conf'):
-        c('svn co https://nathan-collins--conf.googlecode.com/svn conf --username nathan.collins')
+        if c('git clone git@github.com:ntc2/conf.git conf') != 0:
+            print
+            print '\033[5mWarning:\033[0;31m cloning ~/v/conf repo over HTTPS. You need to update'
+            print 'the remote to use SSH before you can push without a password.\033[0m'
+            c('sleep 5')
+            print
+            c('git clone https://github.com/ntc2/conf.git conf')
 
     # {ln -T} mean treat destination as a normal file, i.e. don't
     # create file *in* target if target is a dir.  this is needed for
