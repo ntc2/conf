@@ -5,9 +5,34 @@ Name=ThereDoesNotNeedToBeANameHere
 # settings that work in both Ubuntu 11.04 (EeePc, GNOME 2.32.1) and
 # 11.10 (desktop, GNOME 3.2.1).
 #
+# UPDATE: and now Ubuntu 14.10 with GNOME 3.8. I left the old configs,
+# but the 'RequiredComponents' had to change, so I don't know if this
+# still works on older versions of Gnome. Going forward, I might
+# instead want to use Mate, a fork of Gnome 2 that's used by Linux
+# Mint.
+#
 # The ~/.xsession-errors is helpful for debugging some problems here,
 # but on Ubuntu 11.10 I got no errors related to ignored keys
-# (e.g. 'Required' when I need 'RequiredProviders').
+# (e.g. 'Required' when I need 'RequiredProviders'). The
+# 'gnome-session' errors are reported to syslog, and adding '--debug'
+# in ~/.xsession increases output.
+
+# Ubuntu 14.10
+#
+# At some point Gnome 3 stopped supporting the 'RequiredProviders'
+# field:
+# https://mail.gnome.org/archives/commits-list/2013-January/msg03356.html. Now,
+# you just list all the things you want to run in the
+# 'RequiredComponents' field.
+RequiredComponents=gnome-panel;gnome-settings-daemon;local-xmonad-windowmanager-provider;
+# Ubuntu 14.10
+#
+# This is essential: otherwise there is no mouse cursor, the
+# gnome-panel doesn't work, and you can't close the last
+# xterm. According to http://askubuntu.com/a/541404/56280, the problem
+# is that many Gnome .desktop files are configured to only run when
+# the 'DesktopName' is set to "Unity".
+DesktopName=Unity
 
 # In Ubuntu 11.10 I get error in ~/.xsession-errors:
 #
@@ -23,7 +48,8 @@ Name=ThereDoesNotNeedToBeANameHere
 # Ubuntu 11.04:
 DefaultApps=gnome-panel;gnome-settings-daemon;
 # Ubuntu 11.10:
-RequiredComponents=gnome-panel;gnome-settings-daemon;
+#RequiredComponents=gnome-panel;gnome-settings-daemon;
+
 # Does not work:
 #   RequiredApplications=gnome-panel;gnome-settings-daemon;
 

@@ -266,7 +266,7 @@ myStartupHook = do
 
   -- spawn "xmonad-restart.sh"
   adjustEventInput
-
+  spawn "~/.xmonad/startup-hook.sh"
 
 
 -- Hide/show all gaps. From XMonad.Hooks.ManageDocks docs.

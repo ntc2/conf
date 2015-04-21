@@ -48,7 +48,8 @@ def main():
               '.ghc/ghci.conf', '.ghc/ghci-prompt.conf', '.haskeline',
               '.vimperatorrc',
               '.gitconfig', '.gitattributes',
-              '.xmonad/xmonad.hs', '.Xresources', '.xsession',
+              '.xmonad/xmonad.hs', '.xmonad/startup-hook.sh',
+              '.Xresources', '.xsession',
               '.config/gnome-session/sessions/local-xmonad-session.session',
               '.local/share/applications/local-xmonad-windowmanager-provider.desktop',
               '.gdbinit'

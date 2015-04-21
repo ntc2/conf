@@ -30,9 +30,26 @@ Name=ThereNeedsToBeANameHereOrItDoesntWork
 # But just 'Exec=xmonad' suffices , since '~/.cabal/bin' is on my
 # PATH, which is set-up before ~/.xsession is run.  The PATH is used
 # to look up the 'Exec' program, according to the above docs.
+
+# If I don't run 'xmonad' in the background like this, then
+# 'gnome-session' fails after about a minute complaining that
+# 'local-xmonad-windowmanager-provider' failed to register. I'm not
+# sure what it means to "register" ...
+#
+# UPDATE: I added a startup script, '~/.xmonad/startup-hook.sh', which
+# registers xmonad following an AskUbuntu question (linked to in that
+# script). Now I can use 'Exec=xmonad' again, but it doesn't seem to
+# have any benefits over the simpler 'Exec=sh -c "xmonad &"' solution.
+#
+#Exec=sh -c 'xmonad &'
 Exec=xmonad
 NoDisplay=true
 X-GNOME-WMName=Xmonad
 X-GNOME-Autostart-Phase=WindowManager
 X-GNOME-Provides=windowmanager
-X-GNOME-Autostart-Notify=false
+# Setting this to 'true' might be required to make
+# 'DESKTOP_AUTOSTART_ID' available.
+#
+#X-GNOME-Autostart-Notify=false
+X-GNOME-Autostart-Notify=true
+#X-Ubuntu-Gettext-Domain=gnome-panel-3.0

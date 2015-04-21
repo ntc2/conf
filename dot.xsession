@@ -14,6 +14,10 @@
 
 # Delay commands to avoid problems with late starting gnome-panel
 # (only have this problem on eeepc).
+#
+# May be able to work around this problem in a more principled way by
+# starting the terminals directly in the XMonad config,
+# ~/.xmonad/xmonad.hs?
 function delay {
     { sleep 10; "$@" } &
 }
@@ -22,10 +26,13 @@ function log {
     echo "`date -R`:" "$@" | tee -a ~/.xsession-log ~/.xsession-errors
 }
 
-# XXX: this only makes sense on some systems ...
-
-# Fix the screen
-xrandr --output DVI-0 --auto --output VGA-0 --auto --left-of DVI-0
+# Fix the screen.
+#
+# TODO: import a ~/.xsession.system-custom with the system specific
+# settings?
+#
+# Setting up the displays using the Gnome display settings works.
+#xrandr --output DVI-0 --auto --rotate left --output VGA-0 --auto --left-of DVI-0
 
 # Start gnome-panel first in hopes of avoiding problems with terminals
 #gnome-panel & # Causes problems on Ubuntu 11.04
@@ -55,5 +62,8 @@ log "~/.xsession was run"
 # .session file which uses the .desktop file :P
 #
 #export WINDOW_MANAGER=`which xmonad`
+#
+# Add '--debug' below to get more output (it also goes to syslog).
+#exec gnome-session --session=local-xmonad-session 2>&1 | tee -a ~/.xsession-log ~/.xsession-errors
+#exec gnome-session --debug --session=local-xmonad-session
 exec gnome-session --session=local-xmonad-session
-#exec xmonad
