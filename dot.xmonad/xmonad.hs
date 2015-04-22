@@ -145,7 +145,7 @@ tall = Tall 2 (1/10) 1
 fullscreenHook = composeOne [ isFullscreen -?> doFullFloat ]
 
 -- named workspaces -- XXX: better to create this automatically *only when* there are windows to put there.
-namedWorkspaces = ["web","scratch","update"]
+namedWorkspaces = ["scratch", "web", "update"]
 -- !!!: there is a bug in xmonad + xinerama whereby fewer initial
 -- workspaces than xinerama screens results in xmonad failing at
 -- startup with
@@ -163,9 +163,10 @@ namedWorkspaces = ["web","scratch","update"]
 myWorkspaces = -- map show [1 .. (9 - length namedWorkspaces)] ++
                namedWorkspaces
 -- http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#15
--- use xprop to find the resource strings
+-- Use 'xprop' to find the resource strings: run 'xprop' and then click on a window of the app in question.
 namedWorkspaceHook = composeAll [ resource =? "update-manager" --> doF (W.shift "update") 
                                 , resource =? "synaptic"       --> doF (W.shift "update")
+                                , className =? "Firefox"       --> doF (W.shift "web")
                                 ]
 
 myManageHook = fullscreenHook <+> namedWorkspaceHook
@@ -263,8 +264,6 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
 --       , startupHook = spawn "xmodmap -e \"keysym Menu = Super_L\""
 myStartupHook = do
   startupHook myDefaultConfig
-
-  -- spawn "xmonad-restart.sh"
   adjustEventInput
   spawn "~/.xmonad/startup-hook.sh"
 
