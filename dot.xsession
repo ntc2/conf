@@ -12,14 +12,21 @@
 #
 #xmodmap -e "keysym ISO_Level3_Shift = Alt_R"
 
-# Delay commands to avoid problems with late starting gnome-panel
-# (only have this problem on eeepc).
+# Delay commands to avoid problems with late starting 'gnome-panel'.
 #
 # May be able to work around this problem in a more principled way by
 # starting the terminals directly in the XMonad config,
-# ~/.xmonad/xmonad.hs?
+# ~/.xmonad/xmonad.hs? However, using 'spawn' in the 'startupHook' is
+# not ideal, since we don't want apps to get loaded again when we
+# reload XMonad with Mod-q.
 function delay {
-    { sleep 10; "$@" } &
+{
+# Spin until 'gnome-panel' is running.
+while ! pgrep gnome-panel; do
+    sleep 0.1
+done
+"$@"
+} &
 }
 
 function log {
@@ -52,9 +59,7 @@ else
     log "Could not find urxvt; running xterm."
     delay xterm
 fi
-# gnome-terminal &
-# gnome-terminal &
-
+delay firefox
 
 log "~/.xsession was run"
 
@@ -65,5 +70,4 @@ log "~/.xsession was run"
 #
 # Add '--debug' below to get more output (it also goes to syslog).
 #exec gnome-session --session=local-xmonad-session 2>&1 | tee -a ~/.xsession-log ~/.xsession-errors
-#exec gnome-session --debug --session=local-xmonad-session
 exec gnome-session --session=local-xmonad-session
