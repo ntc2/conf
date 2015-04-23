@@ -13,7 +13,14 @@ function nc:svn:ls-junk {
 
 # See ../completion/README for completion.
 
-function nc:git:disable-whitespace-conversion {
+function nc:git:disable-whitespace-conversion-on-repo {
+  : 'usage: $0'
+  :
+  : 'Disable whitespace conversion for current repository.'
+  echo '* text=unspecified' >> $(git rev-parse --git-dir)/info/attributes
+}
+
+function nc:git:disable-whitespace-conversion-on-one-file {
   : usage: $0 PATH
   :
   : Disable whitespace-conversion related attributes on PATH, locally
@@ -32,7 +39,7 @@ function nc:git:disable-whitespace-conversion-on-all-modified-files {
   (cd `git rev-parse --show-toplevel` && \
    git st -s | grep '^ M' | awk '{print $2}' | \
    while read f; do
-     nc:git:disable-whitespace-conversion $f
+     nc:git:disable-whitespace-conversion-on-one-file $f
    done)
 }
 
