@@ -150,11 +150,11 @@ unset NOTIFY
 
     # Print uncommitted modifications and available updates; there is
     # only output when something is changed.
-    {
+    (
     cd $conf_dir
     git fetch
-    git diff --stat '@{upstream}'
-    } &!
+    git --no-pager diff --stat '@{upstream}'
+    ) &!
     # for f in ~/.{zshrc,zshenv,zprofile}.system-custom; do
     #     [[ -e $f ]] && svn st $(readlink -f $f) 2>/dev/null
     # done
