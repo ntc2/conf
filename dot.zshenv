@@ -70,7 +70,8 @@ bd=%{$'\e[1m'%}		# bold
 
 ## Emacs 
 
-export VISUAL="emacs -nw" EDITOR="emacs -nw"
+export VISUAL="emacs -nw --no-desktop"
+export EDITOR="$VISUAL"
 # The -font is redundant, since it's also def in dot.emacs, but the
 # latter takes effect after emacs has loaded, which changes the screen
 # size and confuses xmonad :P ... and some computers don't have
