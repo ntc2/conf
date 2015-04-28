@@ -22,7 +22,7 @@
 # know, so this is not the primary concern.
 
 typeset -U PATH
-export PATH=~/.cabal/bin:~/local/opt/bin:~/local/bin:~/local/scripts:~/local/more-scripts:/opt/bin:$PATH
+export PATH=~/.cabal/bin:~/local/scripts:$PATH
 # It turns out that `manpath`, which is used to find paths to search
 # for man pages, will infer MANPATH from PATH.  In particular, when
 # D/bin is on path, then D/share/man, if it exists, will be on
