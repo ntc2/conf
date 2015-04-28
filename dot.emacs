@@ -133,9 +133,6 @@ See `nc:custom-set-variable'."
               (c-set-style "linux")
               (setq c-basic-offset 4))))
 
- ; removed
- ;'(desktop-save-mode 1)
-
 ; Make M-x apropos, and maybe C-h a, show more results. This var has
 ; documentation *after* apropos.el loads, e.g. after using M-x
 ; apropos.
@@ -206,45 +203,6 @@ See `nc:custom-set-variable'."
 ;                (font-lock-reference-face "CadetBlue")))
 
 ;;; End CSL stuff
-
-;;; Some customization from
-;;; http://www.xsteve.at/prg/emacs/power-user-tips.html
-
-(desktop-load-default) ; From the ``desktop'' docs.
-
-;; save a list of open files in ~/.emacs.desktop
-;; save the desktop file automatically if it already exists
-;(setq desktop-save 'if-exists)
-;;(when (boundp 'desktop-save-mode) ; Not defined on UW CS machines.
-;;  (desktop-save-mode 1))
-
-;; save a bunch of variables to the desktop file
-;; for lists specify the len of the maximal saved data also
-(setq desktop-globals-to-save
-      (append '((extended-command-history . 30)
-                (file-name-history        . 100)
-                (grep-history             . 30)
-                (compile-history          . 30)
-                (minibuffer-history       . 50)
-                (query-replace-history    . 60)
-                (read-expression-history  . 60)
-                (regexp-history           . 60)
-                (regexp-search-ring       . 20)
-                (search-ring              . 20)
-                (shell-command-history    . 50)
-                tags-file-name
-                register-alist)))
-
-;(desktop-read) ; From the ``desktop'' docs.
-
-;; Use M-x desktop-save once to save the desktop.  When it exists,
-;; Emacs updates it on every exit.  The desktop is saved in the
-;; directory where you started emacs, i.e. you have per-project
-;; desktops.  If you ever save a desktop in your home dir, then that
-;; desktop will be the default in the future when you start emacs in a
-;; dir with no desktop.  See the ``desktop'' docs for more info.
-
-;;; End xsteve stuff.
 
 ;;; linum-mode, new in emacs 23
 ;;
