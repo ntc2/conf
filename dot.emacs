@@ -88,6 +88,10 @@ See `nc:custom-set-variable'."
 ;;; system-custom.el to disable the guarded code. See
 ;;; extensions/flyspell.el for an example.
 
+;; Byte-compile any out-of-date configurations.
+(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+(byte-recompile-directory (expand-file-name "~/.emacs.d/extensions") 0)
+
 ;; Add my custom lib dir to the path.
 (add-to-list 'load-path "~/.emacs.d/") ;(push "~/.emacs.d" load-path)
 ;; System (e.g. math.wisc.edu vs uoregon.edu) *specific* code.  In
