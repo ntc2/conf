@@ -71,7 +71,6 @@ See `nc:custom-set-variable'."
  '(rst-level-face-base-color "not-a-color-so-ill-get-black")
  '(save-place t nil (saveplace))
  '(show-paren-mode t nil (paren))
- '(standard-indent 2)
  '(tags-case-fold-search nil)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))

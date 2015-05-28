@@ -30,6 +30,9 @@
 
 ;; !!!: 'setq' does not work for 'tab-width'.
 (nc:custom-set-variable tab-width 2)
+(nc:custom-set-variable standard-indent 2)
+(nc:custom-set-variable sh-basic-offset 2)
+(nc:custom-set-variable sh-indentation 2)
 
 ;; Don't use tabs to indent.
 (nc:custom-set-variable indent-tabs-mode nil)
