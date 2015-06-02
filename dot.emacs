@@ -122,20 +122,6 @@ See `nc:custom-set-variable'."
 ;(when window-system
 ;  (tool-bar-mode nil))
 
-;; java
-;;
-;; make arguments indented only 4 spaces past function, when all
-;; function args on subsequent lines.  Good for
-;; reallyLongJavaMethodNames.
-;;
-;; setting the c-style messes up the indent distance (c-basic-offset),
-;; so reset after setting c-style.
-(add-hook 'java-mode-hook
-          (lambda ()
-            (progn
-              (c-set-style "linux")
-              (setq c-basic-offset 4))))
-
 ; Make M-x apropos, and maybe C-h a, show more results. This var has
 ; documentation *after* apropos.el loads, e.g. after using M-x
 ; apropos.
