@@ -74,7 +74,8 @@
          "haskell-mode"
          ;; Comes with Emacs 24.
          "package"
-         "llvm-mode")
+         "llvm-mode"
+         "rust-mode")
        (mapcar 'el-get-source-name el-get-sources)))
 
 ;; Install packages as needed.
