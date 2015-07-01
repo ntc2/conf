@@ -11,6 +11,20 @@
 "   To get the current value of a variable do `:set <variable>?`. From
 "   http://awhan.wordpress.com/2010/07/15/default-values-of-variables-in-vimperator/
 
+
+" custom key bindings
+" ===================
+"
+" See `:help map`.
+"
+" - close tabs in a way that returns to the previously open tab
+"
+"   I'm using the standard Firefox command, `C-w`, but
+"   `map d :quit <CR>` also works.
+
+map d <C-w>
+
+
 " disable vimperator shorcuts
 " ===========================
 "
