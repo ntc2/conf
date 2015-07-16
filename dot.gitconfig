@@ -371,7 +371,7 @@
     # lgs -p
     lgp = log --stat -p
     lgs = log --stat
-    who = shortlog -s --
+    who = shortlog -sn
 
     # On newer gits, --oneline abbreviates --pretty=oneline
     # --abbrev-commit.  To get more verbose commit info, append
