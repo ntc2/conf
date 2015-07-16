@@ -38,6 +38,21 @@ setopt extendedglob
 # some extended globs enabled by the last 'setopt'.
 setopt interactivecomments
 
+# Disable implicit `tee`. E.g., with MULTIOS enabled (the default),
+# there doesn't seem to be any way to only capture the stderr of a
+# process (I have no idea how I didn't run into this many years ago
+# ... so confused right now). E.g., in Bash you can do
+#
+#   { echo stdout ; echo stderr >&2; } 2>&1 1>/dev/null | less
+#
+# to see only "stderr", but in ZSH with MULTIOS enabled, you'll see
+# both "stdout" and "stderr". It's like you did
+#
+#   { echo stdout ; echo stderr >&2; } 2>&1 | tee /dev/null | less
+#
+# Baffles the mind ...
+setopt no_multios
+
 # Enable "tab once" completion, e.g.
 # /u/s/d/python<TAB> => /usr/share/doc/python
 compctl -D -f + -U -Q -K multicomp 
