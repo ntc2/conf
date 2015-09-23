@@ -93,7 +93,12 @@ See `nc:custom-set-variable'."
 (byte-recompile-directory (expand-file-name "~/.emacs.d/extensions") 0)
 
 ;; Add my custom lib dir to the path.
-(add-to-list 'load-path "~/.emacs.d/") ;(push "~/.emacs.d" load-path)
+;;
+;; Emacs now (Since Emacs 24?) warns that I shouldn't add '~/.emacs.d'
+;; to my path.
+;;
+;;(add-to-list 'load-path "~/.emacs.d/") ;(push "~/.emacs.d" load-path)
+
 ;; System (e.g. math.wisc.edu vs uoregon.edu) *specific* code.  In
 ;; practice I symlink a system specific versioned file here.
 (load "~/.emacs.d/system-custom.el" t)
