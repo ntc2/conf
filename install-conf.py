@@ -86,9 +86,6 @@ def main():
     # misc programs.
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())
 
-    # if not exists('%(home)s/local/more-scripts' % locals()):
-    #     print """You may need to download v/docs and create a link from v/docs/scripts to ~/local/more-scripts."""
-
     # use zsh?
     shell = getenv('SHELL')
     if 'zsh' not in shell:

@@ -71,7 +71,6 @@ See `nc:custom-set-variable'."
  '(rst-level-face-base-color "not-a-color-so-ill-get-black")
  '(save-place t nil (saveplace))
  '(show-paren-mode t nil (paren))
- '(standard-indent 2)
  '(tags-case-fold-search nil)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
@@ -89,8 +88,17 @@ See `nc:custom-set-variable'."
 ;;; system-custom.el to disable the guarded code. See
 ;;; extensions/flyspell.el for an example.
 
+;; Byte-compile any out-of-date configurations.
+(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+(byte-recompile-directory (expand-file-name "~/.emacs.d/extensions") 0)
+
 ;; Add my custom lib dir to the path.
-(add-to-list 'load-path "~/.emacs.d/") ;(push "~/.emacs.d" load-path)
+;;
+;; Emacs now (Since Emacs 24?) warns that I shouldn't add '~/.emacs.d'
+;; to my path.
+;;
+;;(add-to-list 'load-path "~/.emacs.d/") ;(push "~/.emacs.d" load-path)
+
 ;; System (e.g. math.wisc.edu vs uoregon.edu) *specific* code.  In
 ;; practice I symlink a system specific versioned file here.
 (load "~/.emacs.d/system-custom.el" t)
@@ -118,23 +126,6 @@ See `nc:custom-set-variable'."
 ; less direct way: tool-bar-mode only def in graphics
 ;(when window-system
 ;  (tool-bar-mode nil))
-
-;; java
-;;
-;; make arguments indented only 4 spaces past function, when all
-;; function args on subsequent lines.  Good for
-;; reallyLongJavaMethodNames.
-;;
-;; setting the c-style messes up the indent distance (c-basic-offset),
-;; so reset after setting c-style.
-(add-hook 'java-mode-hook
-          (lambda ()
-            (progn
-              (c-set-style "linux")
-              (setq c-basic-offset 4))))
-
- ; removed
- ;'(desktop-save-mode 1)
 
 ; Make M-x apropos, and maybe C-h a, show more results. This var has
 ; documentation *after* apropos.el loads, e.g. after using M-x
@@ -206,45 +197,6 @@ See `nc:custom-set-variable'."
 ;                (font-lock-reference-face "CadetBlue")))
 
 ;;; End CSL stuff
-
-;;; Some customization from
-;;; http://www.xsteve.at/prg/emacs/power-user-tips.html
-
-(desktop-load-default) ; From the ``desktop'' docs.
-
-;; save a list of open files in ~/.emacs.desktop
-;; save the desktop file automatically if it already exists
-;(setq desktop-save 'if-exists)
-;;(when (boundp 'desktop-save-mode) ; Not defined on UW CS machines.
-;;  (desktop-save-mode 1))
-
-;; save a bunch of variables to the desktop file
-;; for lists specify the len of the maximal saved data also
-(setq desktop-globals-to-save
-      (append '((extended-command-history . 30)
-                (file-name-history        . 100)
-                (grep-history             . 30)
-                (compile-history          . 30)
-                (minibuffer-history       . 50)
-                (query-replace-history    . 60)
-                (read-expression-history  . 60)
-                (regexp-history           . 60)
-                (regexp-search-ring       . 20)
-                (search-ring              . 20)
-                (shell-command-history    . 50)
-                tags-file-name
-                register-alist)))
-
-;(desktop-read) ; From the ``desktop'' docs.
-
-;; Use M-x desktop-save once to save the desktop.  When it exists,
-;; Emacs updates it on every exit.  The desktop is saved in the
-;; directory where you started emacs, i.e. you have per-project
-;; desktops.  If you ever save a desktop in your home dir, then that
-;; desktop will be the default in the future when you start emacs in a
-;; dir with no desktop.  See the ``desktop'' docs for more info.
-
-;;; End xsteve stuff.
 
 ;;; linum-mode, new in emacs 23
 ;;

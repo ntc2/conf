@@ -128,3 +128,34 @@ $(_nc:vcs_info)
 %K{green} %k'
 
 PS2="$gr%_$pl> "
+
+################################################################
+# Prompt hooks
+#
+# See "SPECIAL FUNCTIONS -> Hook Functions" in 'man zshall'. The
+# 'precmd' is run before each prompt is drawn, and the 'preexec' is
+# run before each command is run, but after each prompt is drawn.
+
+zsh_load_time=$(date +%s)
+function maybe_reload_zsh {
+  : "Reload ZSH if '~/.zsh.reload' exists and has been touched"
+  : "since ZSH was started."
+  if [[ -e ~/.zsh.reload ]] && \
+     (( $(date --reference ~/.zsh.reload +%s) > $zsh_load_time )); then
+    print -P "%K{red}Reloading ZSH because ~/.zsh.reload has been touched!%k" >&2
+    # Don't want to simply do 'source ~/.zshrc' since my configs are
+    # not idempotent. So, restart ZSH with 'exec zsh'. However, we
+    # starting a new ZSH forgets the current command (in "$3"), so we
+    # have to run the command manually. Finally, when run with '-c
+    # <cmd>', ZSH exits after running '<cmd>', so we nest another
+    # 'exec zsh' to keep zsh running :P
+    exec zsh -c "$3; exec zsh"
+  fi
+}
+preexec_functions+=(maybe_reload_zsh)
+
+function nc:reload-all-shells {
+  : "Reload all interactive ZSH instances before they execute"
+  : "their next command".
+  touch ~/.zsh.reload
+}

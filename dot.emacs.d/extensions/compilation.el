@@ -41,7 +41,9 @@
 ;; This part does not work in haskell mode's GHCi compilation buffer :P
 (setq compilation-finish-functions '(
       (lambda (buf str)
-        (unless (string-match "exited abnormally" str)
+        (unless (or (string-match "exited abnormally" str)
+                    ;; Don't close grep buffers since they never fail.
+                    (equal (buffer-name buf) "*grep*"))
           ;; No errors, so make the compilation window go away in a
           ;; few seconds. The 'bury-buffer' function could be useful
           ;; here, to push the compilation buffer to the bottom of the

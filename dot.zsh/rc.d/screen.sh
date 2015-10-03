@@ -30,20 +30,22 @@ function nc:screen () {
 # which screen to switch to to continue what you were doing or to run
 # a new command.
 if [[ $TERM == "screen" ]]; then
-    precmd () {
+    screen_precmd () {
         : display current directory while waiting for commands
         echo -ne "\ek$(basename "$(pwd)")/\e\\"
         #'screen -X title <title>' also works ...
     }
+    precmd_functions+=(screen_precmd)
 
-    preexec () {
+    screen_preexec () {
         : fix env and then display current command while it runs
         # XXX, BUG: When we ssh inside screen, our $TERM is still
         # screen, but there may not be a fix-ssh.sh.  But moreover,
         # even if there is, it will probably be invalid, so this is
         # still wrong ... but right now I just want to make the error
         # message go away.
-        if [[ -e ~/local/bin/fix-ssh.sh ]] && nc:fixssh
+        [[ -e ~/local/bin/fix-ssh.sh ]] && nc:fixssh
         echo -ne "\ek$1\e\\"
     }
+    preexec_functions+=(screen_preexec)
 fi

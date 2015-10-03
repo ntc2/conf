@@ -22,18 +22,28 @@
 # know, so this is not the primary concern.
 
 typeset -U PATH
-export PATH=~/.cabal/bin:~/local/opt/bin:~/local/bin:~/local/scripts:~/local/more-scripts:/opt/bin:$PATH
+export PATH=~/.cabal/bin:~/local/scripts:$PATH
+
 # It turns out that `manpath`, which is used to find paths to search
 # for man pages, will infer MANPATH from PATH.  In particular, when
 # D/bin is on path, then D/share/man, if it exists, will be on
-# MANPATH.  This is not documented anywhere than I can find, although
+# MANPATH.  This is not documented anywhere that I can find, although
 # this old email
 # http://linux.derkeiler.com/Mailing-Lists/Debian/2003-08/0956.html
 # explains that D on PATH implies D/man and D/../man on MANPATH, if
 # they exist.
-
+#
+# If the there is an empty component in MANPATH, then auto generated
+# man paths from /etc/manpath.config will be inserted there. I don't
+# see where it's defined in /etc/manpath.config, but this will add
+# '<path>/share/man' to the man path whenever '<path>/bin' is in
+# 'PATH'. So, '~/local/opt/<path>/bin' paths above automatically add
+# the appropriate man paths, e.g. for GHC and Rust.
+#
+# This doesn't seem to play well with `typeset -U`.
 #typeset -U MANPATH
-#export MANPATH=~/local/opt/share/man:/opt/share/man:$MANPATH
+export MANPATH=:$MANPATH
+
 # zsh looks for "functions" here, which includes completion functions
 #
 # ???: the lowercase version, e.g. $fpath, don't seem to do the right
@@ -44,6 +54,7 @@ export FPATH=~/.zsh/completion:$FPATH
 typeset -TU PYTHONPATH pythonpath
 export PYTHONPATH=$HOME/local/scripts:$PYTHONPATH
 
+## History
 
 # If these first two aren't set no history is saved or loaded
 HISTFILE=~/.zsh-history
@@ -70,7 +81,8 @@ bd=%{$'\e[1m'%}		# bold
 
 ## Emacs 
 
-export VISUAL="emacs -nw" EDITOR="emacs -nw"
+export VISUAL="emacs -nw --no-desktop"
+export EDITOR="$VISUAL"
 # The -font is redundant, since it's also def in dot.emacs, but the
 # latter takes effect after emacs has loaded, which changes the screen
 # size and confuses xmonad :P ... and some computers don't have

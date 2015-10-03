@@ -11,6 +11,20 @@
 "   To get the current value of a variable do `:set <variable>?`. From
 "   http://awhan.wordpress.com/2010/07/15/default-values-of-variables-in-vimperator/
 
+
+" custom key bindings
+" ===================
+"
+" See `:help map`.
+"
+" - close tabs in a way that returns to the previously open tab
+"
+"   I'm using the standard Firefox command, `C-w`, but
+"   `map d :quit <CR>` also works.
+
+map d <C-w>
+
+
 " disable vimperator shorcuts
 " ===========================
 "
@@ -106,11 +120,19 @@ source! /home/collins/.vimperatorrc.local
 " :dialog <dialog> : open a firefox dialog
 " . : repeat last command
 " :w[in]c[close] : close current window
-" C-[ : <ESC>
 " C-^ or C-6 : switch to most recent buffer in *current* window
 " G or gg : beginning or end of document
 " gi : focus last input field; useful for focussing google search box
 " oO or tT or wW: open/tab/window, starting with current url if upper case
+
+" text fields
+" -----------
+"
+" enter a text field the same as a link, e.g. "f<hint><enter>".
+"
+" gi : focus last input field; useful for focussing google search box
+" <ESC> : leave a text field. But sometimes this doesn't work.
+" C-[ : <ESC>. This works to leave a text field when plain <ESC> doesn't.
 
 
 " zooming

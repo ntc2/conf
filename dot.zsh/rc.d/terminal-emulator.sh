@@ -15,9 +15,12 @@ fi
 #
 # Based on snippet from http://forums.gentoo.org/viewtopic-p-176209.html#176209.
 case $TERM in
-    *xterm*|rxvt|(dt|k|E)term)
+    *xterm*|rxvt*|(dt|k|E)term)
         # Run before each prompt is displayed.
-        precmd () { print -Pn "\e]0;$(hostname | cut -d . -f 1):%~\a" }
+        terminal_emulator_precmd () {
+          print -Pn "\e]0;$(hostname | cut -d . -f 1):%~\a"
+        }
+        precmd_functions+=(terminal_emulator_precmd)
         # Need to be careful with percent escapes in the command $1.
         # Solution from
 
@@ -42,7 +45,10 @@ case $TERM in
         # Run before each command is run.  The second argument, `$1`
         # contains a "size limited" version of the command, and `$2`
         # contains the full command.
-        preexec () { printf "\e]0;$(hostname | cut -d . -f 1):${1:gs/%/%%}\a" }
+        terminal_emulator_preexec () {
+          printf "\e]0;$(hostname | cut -d . -f 1):${1:gs/%/%%}\a"
+        }
+        preexec_functions+=(terminal_emulator_preexec)
         ;;
 esac
 
