@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+Name=Panel
+Comment=Launch other applications and provide various utilities to manage windows, show the time, etc.
+Icon=gnome-panel
+Exec=gnome-panel
+Terminal=false
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=gnome-panel
+X-GNOME-Bugzilla-Component=general
+X-GNOME-Bugzilla-Version=3.14.0
+Categories=GNOME;GTK;System;Core;
+OnlyShowIn=GNOME-Flashback;
+NoDisplay=true
+X-GNOME-AutoRestart=true
+X-GNOME-Autostart-Phase=Panel
+X-GNOME-Provides=panel
+X-Ubuntu-Gettext-Domain=gnome-panel-3.0
