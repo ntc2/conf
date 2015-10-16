@@ -52,6 +52,8 @@ def main():
               '.Xresources', '.xsession',
               '.config/gnome-session/sessions/local-xmonad-session.session',
               '.local/share/applications/local-xmonad-windowmanager-provider.desktop',
+              '.local/share/applications/local-gnome-panel.desktop',
+              '.local/share/applications/local-gnome-settings-daemon.desktop',
               '.gdbinit'
               ):
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()
@@ -65,8 +67,9 @@ def main():
     #     c('ln -Tfs %(from_)s %(to)s'  % locals())
 
     # emacs extensions.
-    c('ln -fs %(home)s/v/conf/dot.emacs.d/extensions %(home)s/.emacs.d/'
-      % locals())
+    for f in ('extensions', 'Cask'):
+        c('ln -fs %(home)s/v/conf/dot.emacs.d/%(f)s %(home)s/.emacs.d/'
+          % locals())
     # Install haskell-mode via darcs. Managed by el-get now.
     #
     # to = '%(home)s/local/opt/haskellmode-emacs' % locals()

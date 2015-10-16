@@ -17,6 +17,18 @@ Name=ThereDoesNotNeedToBeANameHere
 # 'gnome-session' errors are reported to syslog, and adding '--debug'
 # in ~/.xsession increases output.
 
+# Ubuntu 15.04
+#
+# Switch to locally managed `.desktop` files, since everything seems
+# to be gaining an incompatible `OnlyShowIn=<desktop>` setting. In
+# these local copies, I make the `OnlyShowIn` like compatible with
+# Unity.
+#
+# Could also try switching to `unity-panel` and
+# `unity-settings-daemon`, as suggested here:
+# http://blog.ezyang.com/2014/12/ubuntu-utopic-upgrade-xmonad/.
+RequiredComponents=local-gnome-panel;local-gnome-settings-daemon;local-xmonad-windowmanager-provider;
+
 # Ubuntu 14.10
 #
 # At some point Gnome 3 stopped supporting the 'RequiredProviders'
@@ -24,7 +36,10 @@ Name=ThereDoesNotNeedToBeANameHere
 # https://mail.gnome.org/archives/commits-list/2013-January/msg03356.html. Now,
 # you just list all the things you want to run in the
 # 'RequiredComponents' field.
-RequiredComponents=gnome-panel;gnome-settings-daemon;local-xmonad-windowmanager-provider;
+#
+# Commented out for 15.04 changes.
+#RequiredComponents=gnome-panel;gnome-settings-daemon;local-xmonad-windowmanager-provider;
+
 # Ubuntu 14.10
 #
 # This is essential: otherwise there is no mouse cursor, the
