@@ -54,6 +54,7 @@ def main():
               '.local/share/applications/local-xmonad-windowmanager-provider.desktop',
               '.local/share/applications/local-gnome-panel.desktop',
               '.local/share/applications/local-gnome-settings-daemon.desktop',
+              '.local/share/applications/local-unity-settings-daemon.desktop',
               '.gdbinit'
               ):
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()

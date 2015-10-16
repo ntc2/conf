@@ -2,7 +2,7 @@
 Type=Application
 Name=Unity Settings Daemon
 Exec=/usr/lib/unity-settings-daemon/unity-settings-daemon-localeexec
-OnlyShowIn=Unity;
+# OnlyShowIn=Unity
 NoDisplay=true
 X-GNOME-Autostart-Phase=Initialization
 X-GNOME-Autostart-Notify=true
