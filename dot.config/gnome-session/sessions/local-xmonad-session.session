@@ -27,7 +27,18 @@ Name=ThereDoesNotNeedToBeANameHere
 # Could also try switching to `unity-panel` and
 # `unity-settings-daemon`, as suggested here:
 # http://blog.ezyang.com/2014/12/ubuntu-utopic-upgrade-xmonad/.
-RequiredComponents=local-gnome-panel;local-gnome-settings-daemon;local-xmonad-windowmanager-provider;
+#
+# Grep found
+#
+#   /usr/share/gnome-session/sessions/gnome-flashback-compiz.session:
+#     RequiredComponents=gnome-flashback-init;gnome-flashback;gnome-panel;compiz;unity-settings-daemon;gnome-flashback-services;
+#
+# I tried adapting that, but, as far as I can tell, the result is not
+# any different from just running the parts I care about: I'd need to
+# also make `local-` versions of those and I don't know what they do.
+#
+#RequiredComponents=gnome-flashback-init;gnome-flashback;local-gnome-panel;local-xmonad-windowmanager-provider;local-unity-settings-daemon;gnome-flashback-services;
+RequiredComponents=local-gnome-panel;local-unity-settings-daemon;local-xmonad-windowmanager-provider;
 
 # Ubuntu 14.10
 #
@@ -37,8 +48,27 @@ RequiredComponents=local-gnome-panel;local-gnome-settings-daemon;local-xmonad-wi
 # you just list all the things you want to run in the
 # 'RequiredComponents' field.
 #
-# Commented out for 15.04 changes.
 #RequiredComponents=gnome-panel;gnome-settings-daemon;local-xmonad-windowmanager-provider;
+
+# Ubuntu 15.04
+#
+# Grep found
+#
+#   /usr/share/xsessions/gnome-flashback-compiz.desktop:
+#     DesktopNames=GNOME-Flashback;Unity;
+#
+# for me. So, it looks like they put all these stupid "OnlyShowIn"
+# entries in the .desktop files, and then realized they cause
+# problems ...
+#
+# UPDATE: these settings don't seem to matter: I've tried all
+# combinations, but I still need to create the "local" versions of the
+# `.desktop` files which comment out the `OnlyShowIn`
+# sections. However, I need to reconsider these when the next Gnome
+# upgrade breaks everything again.
+#
+#DesktopName=Unity
+#DesktopNames=GNOME-Flashback;Unity;
 
 # Ubuntu 14.10
 #
@@ -47,7 +77,8 @@ RequiredComponents=local-gnome-panel;local-gnome-settings-daemon;local-xmonad-wi
 # xterm. According to http://askubuntu.com/a/541404/56280, the problem
 # is that many Gnome .desktop files are configured to only run when
 # the 'DesktopName' is set to "Unity".
-DesktopName=Unity
+#
+#DesktopName=Unity
 
 # In Ubuntu 11.10 I get error in ~/.xsession-errors:
 #
@@ -61,7 +92,7 @@ DesktopName=Unity
 # requirements, all apps could be started in ~/.xsession.
 #
 # Ubuntu 11.04:
-DefaultApps=gnome-panel;gnome-settings-daemon;
+#DefaultApps=gnome-panel;gnome-settings-daemon;
 # Ubuntu 11.10:
 #RequiredComponents=gnome-panel;gnome-settings-daemon;
 
@@ -72,7 +103,7 @@ DefaultApps=gnome-panel;gnome-settings-daemon;
 # ~/.xsession ... the 'export WINDOW_MANAGER=xmonad' does not work.
 #
 # Ubuntu 11.04:
-Required=windowmanager;
+#Required=windowmanager;
 # Ubuntu 11.10:
 RequiredProviders=windowmanager;
 
@@ -80,6 +111,6 @@ RequiredProviders=windowmanager;
 # containing an Exec entry with a path.
 #
 # Ubuntu 11.04:
-Required-windowmanager=local-xmonad-windowmanager-provider
+#Required-windowmanager=local-xmonad-windowmanager-provider
 # Ubuntu 11.10:
 DefaultProvider-windowmanager=local-xmonad-windowmanager-provider
