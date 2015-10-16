@@ -70,4 +70,5 @@ log "~/.xsession was run"
 #
 # Add '--debug' below to get more output (it also goes to syslog).
 #exec gnome-session --session=local-xmonad-session 2>&1 | tee -a ~/.xsession-log ~/.xsession-errors
-exec gnome-session --session=local-xmonad-session
+exec gnome-session --debug --session=local-xmonad-session 2>&1 | \
+  tee -a ~/.xsession-log ~/.xsession-errors

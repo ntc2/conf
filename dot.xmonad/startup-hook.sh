@@ -21,3 +21,5 @@ dbus-send \
   org.gnome.SessionManager.RegisterClient \
   string:local-xmonad-windowmanager-provider.desktop \
   string:$DESKTOP_AUTO_START_ID
+
+echo 'dot.xmonad/startup-hook.sh ran!' | tee -a ~/.xsession-log
