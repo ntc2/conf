@@ -1,3 +1,7 @@
+;; Enable math-mode by default, i.e. the ` escapes in auctex.
+;(require 'latex)                ; defines LaTeX-math-mode
+(add-hook 'TeX-mode-hook 'LaTeX-math-mode)
+
 ;; Enable RefTex
 ;; - http://www.gnu.org/software/auctex/manual/reftex/index.html
 ;; - http://emacswiki.org/emacs/AUCTeX#toc2

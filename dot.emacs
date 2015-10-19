@@ -8,7 +8,7 @@
 ;; where it was set.  The comment is shown when using the customize
 ;; interface to customize the variable.
 ;;
-;; See `./extensions/white-space.el' for example usage.
+;; See `./extensions/white-space-and-punctuation.el' for example usage.
 ;;
 ;; Note: `setq' does not always work as a replacement for a
 ;; `custom-set-variables' entry.  E.g. `(setq tab-width 2)' has no
@@ -70,8 +70,6 @@ See `nc:custom-set-variable'."
  '(ps-print-color-p (quote black-white))
  '(rst-level-face-base-color "not-a-color-so-ill-get-black")
  '(save-place t nil (saveplace))
- '(show-paren-mode t nil (paren))
- '(tags-case-fold-search nil)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 (custom-set-faces
@@ -80,6 +78,18 @@ See `nc:custom-set-variable'."
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+
+;; Highlight matching parens.
+(add-hook 'after-init-hook #'show-paren-mode)
+
+;;; TAGS
+
+;; Respect case in TAGS search.
+(nc:custom-set-variable tags-case-fold-search nil)
+
+;; Reread the TAGS files automatically when they change.
+(nc:custom-set-variable tags-revert-without-query t)
+
 
 ;;; Load customizations
 ;;;
@@ -130,7 +140,7 @@ See `nc:custom-set-variable'."
 ; Make M-x apropos, and maybe C-h a, show more results. This var has
 ; documentation *after* apropos.el loads, e.g. after using M-x
 ; apropos.
-(setq apropos-do-all t)
+(nc:custom-set-variable apropos-do-all t)
 
 ; Make backspace work more often.
 ;
@@ -160,13 +170,7 @@ See `nc:custom-set-variable'."
 ;(set-foreground-color "grey")
 ;(set-background-color "black")
 
-;; Enable math-mode by default, i.e. the ` escapes in auctex.
-;(require 'latex)                ; defines LaTeX-math-mode
-(add-hook 'TeX-mode-hook 'LaTeX-math-mode)
-
 ;;; Some customization from the UW CSL .emacs
-(column-number-mode t)
-(display-time)
 
 ;; If you would like smooth scrolling, uncomment this line
 (setq scroll-step 1)
