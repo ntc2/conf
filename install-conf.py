@@ -67,24 +67,12 @@ def main():
     #     c('ln -Tfs %(from_)s %(to)s'  % locals())
 
     # emacs extensions.
-    for f in ('extensions', 'Cask'):
+    for f in ('extensions', 'Cask', 'README'):
         c('ln -fs %(home)s/v/conf/dot.emacs.d/%(f)s %(home)s/.emacs.d/'
           % locals())
-    # Install haskell-mode via darcs. Managed by el-get now.
-    #
-    # to = '%(home)s/local/opt/haskellmode-emacs' % locals()
-    # if not exists(to):
-    #     # tags are listed on the main page
-    #     # http://projects.haskell.org/haskellmode-emacs/, or use
-    #     # 'darcs list tags'.
-    #     if c('which darcs') == 0:
-    #         print 'Downloading haskell-mode ...'
-    #         c('darcs get --lazy --tag 2.8.0 \
-    #             http://code.haskell.org/haskellmode-emacs %(to)s'
-    #           % locals())
-    #         c('cd %(to)s && make' % locals())
-    #     else:
-    #         print 'Error downloading haskellmode-emacs.  Do you have darcs installed?'
+    if c('which cask >/dev/null') != 0:
+        print 'Cask is not installed. See `~/v/conf/install/cask.sh`.'
+    print 'You may need to update Cask-installed Emacs deps with `nc:emacs:cask install`.'
 
     # misc programs.
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())

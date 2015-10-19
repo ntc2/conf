@@ -79,18 +79,10 @@ pl=%{$'\e[0m'%}		# plain
 bk=%{$'\e[5m'%}		# blinking
 bd=%{$'\e[1m'%}		# bold
 
-## Emacs 
+## Editor
 
 export VISUAL="emacs -nw --no-desktop"
 export EDITOR="$VISUAL"
-# The -font is redundant, since it's also def in dot.emacs, but the
-# latter takes effect after emacs has loaded, which changes the screen
-# size and confuses xmonad :P ... and some computers don't have
-# terminus, so try again if the '-fn terminus' version fails.
-function nc:ex () {
-  { emacs -fs -rv "$@" -font terminus || emacs -fs -rv "$@" } &!
-}
-function nc:et () { emacs -nw -rv "$@" }
 
 ## Python 
 
