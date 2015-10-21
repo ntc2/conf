@@ -70,8 +70,10 @@ def main():
     for f in ('extensions', 'Cask', 'README'):
         c('ln -fs %(home)s/v/conf/dot.emacs.d/%(f)s %(home)s/.emacs.d/'
           % locals())
-    if c('which cask >/dev/null') != 0:
+    if c('which cask &>/dev/null') != 0:
         print 'Cask is not installed. See `~/v/conf/install/cask.sh`.'
+        print 'Before installing Cask, you should delete stale `.elc` files. Roughly:'
+        print '    find ~/.emacs.d ~/v/conf -name \'*.elc\' -exec rm {} +'
     print 'You may need to update Cask-installed Emacs deps with `nc:emacs:cask install`.'
 
     # misc programs.
