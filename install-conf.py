@@ -54,7 +54,8 @@ def main():
               '.local/share/applications/local-xmonad-windowmanager-provider.desktop',
               '.local/share/applications/local-gnome-panel.desktop',
               '.local/share/applications/local-unity-settings-daemon.desktop',
-              '.gdbinit'
+              '.gdbinit',
+              '.tmux.conf'
               ):
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()
         to = '%(home)s/%(f)s' % locals()
