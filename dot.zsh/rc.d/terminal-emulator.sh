@@ -42,11 +42,32 @@ case $TERM in
         # don't really understand the leading ~ in the expansion, so I
         # left it out ...
 
-        # Run before each command is run.  The second argument, `$1`
-        # contains a "size limited" version of the command, and `$2`
-        # contains the full command.
+        # UPDATE: had trouble with `\n` in command, e.g. `echo -e
+        # 'a\nb'`. Solution is to simply split the terminal setting
+        # command into parts: the first and third parts that send
+        # special characters to the terminal, which need `print -P` to
+        # interpret escapes, and the middle part, which needs `print`
+        # without `-P` to avoid interpreting `%`. We also need to
+        # avoid interpreting `\n`, which we get by escaping the
+        # command string using `${(q)1}`, following
+        # http://www.zsh.org/mla/users/2003/msg00593.html.
+
+        # http://zsh.sourceforge.net/Doc/Release/Functions.html#Hook-Functions:
+        #
+        # Executed just after a command has been read and is about to
+        # be executed. If the history mechanism is active (regardless
+        # of whether the line was discarded from the history buffer),
+        # the string that the user typed is passed as the first
+        # argument (`$1`), otherwise it is an empty string. The actual
+        # command that will be executed (including expanded aliases)
+        # is passed in two different forms: the second argument (`$2`)
+        # is a single-line, size-limited version of the command (with
+        # things like function bodies elided); the third argument
+        # (`$3`) contains the full text that is being executed.
         terminal_emulator_preexec () {
-          printf "\e]0;$(hostname | cut -d . -f 1):${1:gs/%/%%}\a"
+          print -Pn "\e]0;$(hostname | cut -d . -f 1):"
+          print -n ${(q)1}
+          print -Pn "\a"
         }
         preexec_functions+=(terminal_emulator_preexec)
         ;;
