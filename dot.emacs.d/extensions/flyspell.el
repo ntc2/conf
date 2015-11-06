@@ -11,6 +11,17 @@
 ;(add-hook 'font-lock-mode-hook 'flyspell-prog-mode)
 ;(add-hook 'text-mode-hook 'flyspell-mode)
 
+;; Tell `flyspell` to not bind `M-TAB`, which is used for completion
+;; by default.
+;;
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Symbol-Completion.html#Symbol-Completion
+;;
+;; Flyspell actually provides a special way to do this:
+;;
+;;(nc:custom-set-variable flyspell-use-meta-tab nil)
+;;
+;; but here is a general way:
+(eval-after-load 'flyspell '(define-key flyspell-mode-map "\M-\t" nil))
 
 ;; Enable `flyspell-mode` or `flyspell-prog-mode` selectively. I
 ;; separately enable `flyspell-prog-mode` in `./haskell.el` for

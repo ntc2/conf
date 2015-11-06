@@ -1,3 +1,13 @@
+;;; Completion
+;;
+;; In `./flyspell.el` we disable `M-TAB` in `flyspell-mode`. By
+;; default
+;;
+;; - `M-TAB`: `complete-symbol`:
+;;   https://www.gnu.org/software/emacs/manual/html_node/emacs/Symbol-Completion.html#Symbol-Completion
+;;
+;; See notes in `./haskell.el` for Haskell specific completion notes.
+
 ;; Remove annoying functions from hippie-expand.
 ;;
 ;; It might make more sense to leave these functions in, but put them
@@ -12,9 +22,13 @@
 
 (global-set-key (kbd "M-/") 'hippie-expand)
 
-;; Wish I had iswitchb for xmonad ...
-(iswitchb-mode t)
-(icomplete-mode t)
+(require 'ido)
+(ido-mode t)
+
+;; Provides `C-,` and `C-.`, which are also provided by `ido`.
+;(icomplete-mode t)
+
+
 ;; For completing e.g. 'h-e-t-f-l' to
 ;; 'hippie-expand-try-functions-list'
 ;;
@@ -23,6 +37,5 @@
 ;(partial-completion-mode t)
 ;;
 ;; Instead use:
-;;
-(setq completion-styles '(partial-completion initials))
-(setq completion-pcm-complete-word-inserts-delimiters t)
+(nc:custom-set-variable completion-styles '(partial-completion initials))
+(nc:custom-set-variable completion-pcm-complete-word-inserts-delimiters t)
