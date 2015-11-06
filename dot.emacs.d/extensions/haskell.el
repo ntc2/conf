@@ -14,6 +14,19 @@
 ;; - M-*: jump back to where you were.
 ;; - f8: jump to (next block of) imports.
 ;; - C-u f8: jump back to last place you were before first f8.
+;; - TAG: cycle indentation.
+;; - M-TAB: smart completions after using `C-c C-l`.
+;;
+;;   After starting the completion cycle, you can use plain `TAB` to
+;;   get further completions, even after adding and deleting
+;;   characters. If you complete the name completely, you can see the
+;;   type in the echo area -- assuming `haskell-doc-mode` is enabled
+;;   -- and then delete and continue completing. Would be nice to just
+;;   see all the types in the completion list itself, maybe via
+;;   `company` ...
+;;
+;; - M-{n,p}: jump between highlighted error from `C-c C-l`.
+
 
 ;;; Misc.
 
@@ -31,15 +44,25 @@
 ;; COMPLETION? However, <f1> will still show the types for
 ;; completions. Also, this collision only happens when prefix being
 ;; completed is itself a valid name (e.g. completing 'map' to 'mapM').
-(add-hook 'haskell-mode-hook 'haskell-doc-mode)
+;;
+;; This also conflicts with error print outs from `M-{n,p}` after
+;; `C-cC-l` in Haskell mode.
+;;
+;; TODO: figure out how to make doc mode compatible with other modes
+;; that use the minibuffer.
+
+;;(add-hook 'haskell-mode-hook 'haskell-doc-mode)
 
 (add-hook 'haskell-mode-hook 'flyspell-prog-mode)
 
 (nc:custom-set-variable haskell-tags-on-save t)
 ;; Sometimes when I get prompted to remove unnecessary imports,
 ;; nothing happens when I enter "y"; it just hangs.
-(nc:custom-set-variable
-  haskell-process-suggest-remove-import-lines t)
+;;
+;; E.g., the hang happens in `log-analyze` package.
+
+;; (nc:custom-set-variable
+;;   haskell-process-suggest-remove-import-lines t)
 
 ;; Use Hoogle to suggest missing imports?
 (nc:custom-set-variable
@@ -47,6 +70,20 @@
 
 ;; Create TAGS on every save.
 (nc:custom-set-variable haskell-tags-on-save t)
+
+;; The default is `auto`, which tries to guess. However, this isn't
+;; much better, since if it can't find a sandbox it assumes you want a
+;; global Cabal install. What we need is a way to be explicit about
+;; the project config, e.g. defined in a `dir-locals.el` file.
+
+;; (nc:custom-set-variable haskell-process-type 'cabal-repl)
+
+;; I think this is supposed to make the inferior GHCi auto load
+;; imported modules, but it appears this already happens ... need to
+;; figure out exactly what this does.
+;;
+;;(nc:custom-set-variable
+;;  haskell-process-auto-import-loaded-modules t)
 
 ;;; indentation modes
 
