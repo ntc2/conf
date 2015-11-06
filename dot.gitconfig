@@ -405,6 +405,9 @@
     # above aliases.  Also, aliases break zsh completion.
     gr         = !git grtwolines --all
     grTopology = !git grtwolines --all --simplify-by-decoration
+[pull]
+    # Don't allow non-fastforward merges on pull.
+    ff = only
 [push]
     # Make `git push` only push the current branch, and only if it has
     # matching name upstream branch.
