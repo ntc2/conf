@@ -13,7 +13,7 @@ from os import chdir, getenv
 from os.path import exists, realpath
 
 def c(cmd):
-    return call(cmd,shell=True)
+    return call(cmd,shell=True,executable='/bin/bash')
 
 def main():
     """Set up home dir.
