@@ -29,12 +29,13 @@
 (add-hook 'font-lock-mode-hook
   (lambda ()
     (when (member major-mode
-                  '(text-mode
-                    rst-mode
-                    latex-mode
-                    bibtex-mode
+                  '(bibtex-mode
+                    default-generic-mode
                     fundamental-mode
-                    default-generic-mode))
+                    latex-mode
+                    org-mode
+                    rst-mode
+                    text-mode))
       (flyspell-mode t))
    (when (member major-mode
                  '(emacs-lisp-mode))

@@ -29,6 +29,9 @@ function delay {
 while ! pgrep gnome-panel; do
     sleep 0.1
 done
+# And then spin a little longer, since the above spinning stopped
+# being sufficient in Ubuntu 15.04 or 15.10.
+sleep 1
 "$@"
 } &
 }
