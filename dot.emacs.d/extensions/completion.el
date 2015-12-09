@@ -24,6 +24,11 @@
 
 (require 'ido)
 (ido-mode t)
+;; Ask if I want to jump to existing visible frame instead of assuming
+;; that I do. In XMonad, Emacs always thinks all frames on all visible
+;; desktops are visible :P
+(nc:custom-set-variable ido-default-file-method 'maybe-frame)
+(nc:custom-set-variable ido-default-buffer-method 'maybe-frame)
 
 ;; Provides `C-,` and `C-.`, which are also provided by `ido`.
 ;(icomplete-mode t)
