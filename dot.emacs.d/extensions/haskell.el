@@ -55,6 +55,11 @@
 
 (add-hook 'haskell-mode-hook 'flyspell-prog-mode)
 
+;; Disable electric-indent-mode, which is enabled by default in Emacs
+;; 24.4, and is very annoying haskell-mode (e.g. it attempts to indent
+;; every top-level definition :P).
+(add-hook 'haskell-mode-hook '(lambda () (electric-indent-mode 0)))
+
 (nc:custom-set-variable haskell-tags-on-save t)
 ;; Sometimes when I get prompted to remove unnecessary imports,
 ;; nothing happens when I enter "y"; it just hangs.
