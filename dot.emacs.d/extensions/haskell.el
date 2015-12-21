@@ -138,6 +138,8 @@
   ;;   1. Complete imports, letting you choose the module name.
   ;;   2. Show the type of the symbol after the space.
   (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+  ;; Make the GHCi prompt visible.
+  (define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-bring)
   ;; Indent the below lines on columns after the current column.
   (define-key haskell-mode-map (kbd "C-M-<right>")
     (lambda ()

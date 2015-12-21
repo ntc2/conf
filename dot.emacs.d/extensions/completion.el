@@ -30,6 +30,9 @@
 (nc:custom-set-variable ido-default-file-method 'maybe-frame)
 (nc:custom-set-variable ido-default-buffer-method 'maybe-frame)
 
+;; Case-insensitive completion. This is on by default.
+(nc:custom-set-variable ido-case-fold t)
+
 ;; Provides `C-,` and `C-.`, which are also provided by `ido`.
 ;(icomplete-mode t)
 
