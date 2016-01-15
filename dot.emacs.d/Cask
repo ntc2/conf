@@ -38,6 +38,9 @@
 ;; Chris Done's version of `flycheck-haskell`.
 ;;
 ;; Install from GitHub, since there is no Emacs package proper.
-(depends-on "haskell-flycheck"
-  :git "git@github.com:chrisdone/haskell-flycheck.git"
-  :files ("*.el"))
+;;
+;; This causes problems on fresh installs with no GitHub SSH keys.
+
+;;(depends-on "haskell-flycheck"
+;;  :git "git@github.com:chrisdone/haskell-flycheck.git"
+;;  :files ("*.el"))
