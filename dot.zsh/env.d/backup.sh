@@ -5,7 +5,7 @@
 BACKUP_HOST=linux.cecs.pdx.edu
 BACKUP_USER=ntc2
 
-# Mirror a file or directory on linuxlab
+# Mirror a file or directory to BACKUP_HOST
 function nc:mirror:put {
   : 'usage: $0 (FILE | DIR) [RSYNC_OPTS]'
   :
@@ -36,7 +36,7 @@ function nc:mirror:put {
   # result in only having 'b' in 'foo' on the destination host.
   rsync -avz --relative --human-readable --delete "$@" "$normalpath" \
     $BACKUP_USER@$BACKUP_HOST:mirror/$(hostname -f)/
-  # Note what was mirrored, to making exploring the mirror later
+  # Note what was mirrored, to make exploring the mirror later
   # easier.  Encode the slashes as '<slash>' since they aren't allowed
   # in file names. May there never be a day that I want '<slash>' in
   # my file names ...
@@ -46,6 +46,23 @@ function nc:mirror:put {
   local ghostpath="mirror/$(echo "$(hostname -f) $normalpath" | \
                             sed -re 's|/|<slash>|g')"
   ssh $BACKUP_USER@$BACKUP_HOST "touch '$ghostpath'"
+}
+
+function nc:mirror:put-if-exists () {
+  : 'usage: $0 PATH'
+  :
+  : 'Mirror FILE, ignoring common Haskell build artifacts.'
+  : "Unlike 'nc:mirror', it's not an error if FILE does not exist."
+  file="$1"
+  if [ -e "$file" ]; then
+    nc:mirror:put "$file" \
+                  --exclude='dist/' \
+                  --exclude='.stack-work/' \
+                  --exclude='.*-sandbox/' \
+                  --delete-excluded
+  else
+    echo "$0: skipping non-existent file: $file ..."
+  fi
 }
 
 # Like 'nc:git:mirror', but uses more general '.nc-mirror-magic' file
