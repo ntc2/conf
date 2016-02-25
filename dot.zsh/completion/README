@@ -1,3 +1,5 @@
+See ../rc.d/completion.sh for one-off completion additions.
+
 Haskell completion from http://www.haskell.org/haskellwiki/Zsh on 2011-3-29
 
 Default Git completion on Ubuntu comes from

@@ -1,33 +1,12 @@
 # -*- shell-script -*-
 
-## ZSH completion and conf
-
-# The following lines were added by compinstall
+## ZSH conf
+#
+# Completion is in ./dot.zsh/rc.d/completion.sh.
 
 if [ -e /etc/profile ]; then
     source /etc/profile
 fi
-
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' completions 1
-zstyle ':completion:*' glob 1
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt '[%l] %SAt %p: Hit TAB for more, or the character to insert%s'
-zstyle ':completion:*' max-errors 1
-zstyle ':completion:*' prompt 'Error Completion [%e]: '
-zstyle ':completion:*' substitute 1
-zstyle ':completion:*' verbose true
-#zstyle :compinstall filename '/root/.zshrc' #???
-
-autoload -U compinit
-compinit
-# End of lines added by compinstall
-
-# Include dot files in tab completion of file names.
-# From http://osdir.com/ml/shells.zsh.user/2007-06/msg00001.html
-_comp_options+=(globdots)
-# Not sure how that differs from `setopt globdots`.
 
 # See FILENAME GENERATION section of man zshexpn.
 #
@@ -53,21 +32,6 @@ setopt interactivecomments
 # Baffles the mind ...
 setopt no_multios
 
-# Enable "tab once" completion, e.g.
-# /u/s/d/python<TAB> => /usr/share/doc/python
-compctl -D -f + -U -Q -K multicomp 
-
-# SSH host completion (from Gentoo Wiki:
-# http://gentoo-wiki.com/TIP_Advanced_zsh_Completion)
-#
-# NB: Doesn't work when HashKnownHosts is set to yes (can override in
-# ~/.ssh/config if you don't have root).
-if [[ -e $HOME/.ssh/known_hosts ]]; then
-  local _myhosts
-  _myhosts=( ${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
-  zstyle ':completion:*' hosts $_myhosts
-fi
-
 ## Key bindings
 #
 # See `stty -a` and `bindkey` for key bindings.  The stty bindings
@@ -90,14 +54,6 @@ esac
 # in history.
 
 bindkey '^O' vi-open-line-above
-
-# Force file name completion on C-x TAB, Shift-TAB.
-#
-# From http://chneukirchen.org/blog/archive/2011/02/10-more-zsh-tricks-you-may-not-know.html
-zle -C complete-files complete-word _generic
-zstyle ':completion:complete-files:*' completer _files
-bindkey "^X^I" complete-files
-bindkey "^[[Z" complete-files
 
 # Delete word stops at slash, like in bash.
 #
