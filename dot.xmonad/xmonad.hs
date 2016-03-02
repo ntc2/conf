@@ -37,22 +37,23 @@
 -- -  {aptitude install dmenu}
 import XMonad
 import XMonad.Config.Gnome (gnomeConfig,gnomeRun)
+import qualified XMonad.Actions.PhysicalScreens as PS
+import XMonad.Actions.UpdateFocus (adjustEventInput)
 import XMonad.Actions.UpdatePointer -- mouse follows focus
 --import XMonad.Layout.TabBarDecoration -- tabs: sucks by default: the tabs don't do anything :P
 import XMonad.Hooks.ManageHelpers -- fullscreen flash Using
 -- gnomeConfig and desktopLayoutModifiers take care of avoidStruts and
 -- more. See XMonad.Config.Desktop docs.
 import XMonad.Hooks.ManageDocks (SetStruts(..),ToggleStruts(..),Direction2D(..),avoidStrutsOn)
-import XMonad.Actions.UpdateFocus (adjustEventInput)
 import XMonad.Config.Desktop (desktopLayoutModifiers) -- custom layoutHook + gnome
-import XMonad.Layout.NoBorders (smartBorders)
 
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-SubLayouts.html
 --
 -- and below in layoutHook.  Not actually doing anything right now ...
+import XMonad.Layout.BoringWindows
+import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.SubLayouts
 import XMonad.Layout.WindowNavigation
-import XMonad.Layout.BoringWindows
 
 -- Get a prompt for running XMonad X () actions interactively.
 import XMonad.Prompt
@@ -259,6 +260,21 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
              zip (zip (repeat (modm)) [xK_1..xK_9]) (map (withNthWorkspace W.greedyView) [0..])
              ++
              zip (zip (repeat (modm .|. shiftMask)) [xK_1..xK_9]) (map (withNthWorkspace W.shift) [0..])
+             ++
+             -- Rebind @M-{w,e,r}@ physical, left-to-right screen
+             -- order. This avoids the problem with the default
+             -- behavior where the @M-{w,e,r}@ bindings don't always
+             -- correspond to the left-to-right order of the screens.
+             --
+             -- Based on
+             -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-PhysicalScreens.html.
+             --
+             -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
+             -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
+             [ ((modm .|. mask, key), f sc)
+             | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+             , (f, mask) <- [ (PS.viewScreen, 0)
+                            , (PS.sendToScreen, shiftMask) ] ]
 
 -- this is probably not the right way: sometimes needs a mod-q to reload the xmodmap setting?
 --       , startupHook = spawn "xmodmap -e \"keysym Menu = Super_L\""
