@@ -126,7 +126,12 @@ function _nc:vcs_info {
 #
 # The 'nc_timer_dt' is computed below in 'nc:timer:preexec' and
 # 'nc:timer:precmd'.
-PS1='[$rd%n$pl@$gr$(hostname)$pl][$gr%~$pl][%%$rd%j$pl][%*]%(?..[?$rd%?$pl])[%F{yellow}$nc_timer_dt%fs]\
+PS1='[$rd%n$pl@$gr$(hostname)$pl]\
+[$gr%~$pl]\
+[%%$rd%j$pl]\
+[%*]\
+%(?..[?$rd%?$pl])\
+[%F{yellow}$nc_timer_dt_m_s_ms%f]\
 $(_nc:vcs_info)
 %K{green} %k'
 
@@ -169,6 +174,10 @@ function nc:reload-all-shells {
 ################################################################
 # Time each command as it runs.
 
+# Use millisecond-accurate float for seconds-since-ZSH-started
+# variable.
+typeset -F SECONDS
+
 # See time of last command in prompt, based on:
 # https://coderwall.com/p/kmchbw/zsh-display-commands-runtime-in-prompt
 # The 'nc_timer_dt' is used in 'PS1' above.
@@ -192,6 +201,8 @@ function nc:timer:precmd () {
   elif ! ((${+nc_timer_dt})); then
     nc_timer_dt=0
   fi
+  local dt=$nc_timer_dt
+  nc_timer_dt_m_s_ms=$(printf "%i:%.3f" $(($dt / 60)) $(($dt % 60)))
   unset nc_timer
 }
 precmd_functions+=(nc:timer:precmd)
