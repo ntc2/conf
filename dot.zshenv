@@ -66,6 +66,8 @@ HISTSIZE=10000
 setopt INC_APPEND_HISTORY # use fc -RI to manually merge the other shells' history
 alias nc:mergehist="fc -RI"
 alias nc:grephist="fc -l -n 0 | grep -E --color=auto"
+# See ~/v/conf/dot.zsh/rc.d/prompt.sh for settings related to history
+# and timing.
 
 ## Colors
 

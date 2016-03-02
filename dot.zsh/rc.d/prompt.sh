@@ -123,7 +123,10 @@ function _nc:vcs_info {
 # Strange: at some point in early 2014 the '%m' (unqualified hostname)
 # started printing as 'linux', and '%M' as 'linux.cecs.pdx.edu' ???
 # Easy test with 'print -P %M'.
-PS1='[$rd%n$pl@$gr$(hostname)$pl][$gr%~$pl][%%$rd%j$pl][%*]%(?..[$rd%?$pl])\
+#
+# The 'nc_timer_dt' is computed below in 'nc:timer:preexec' and
+# 'nc:timer:precmd'.
+PS1='[$rd%n$pl@$gr$(hostname)$pl][$gr%~$pl][%%$rd%j$pl][%*]%(?..[?$rd%?$pl])[%F{yellow}$nc_timer_dt%fs]\
 $(_nc:vcs_info)
 %K{green} %k'
 
@@ -135,6 +138,9 @@ PS2="$gr%_$pl> "
 # See "SPECIAL FUNCTIONS -> Hook Functions" in 'man zshall'. The
 # 'precmd' is run before each prompt is drawn, and the 'preexec' is
 # run before each command is run, but after each prompt is drawn.
+
+################################################################
+# Optionally reload all shells.
 
 zsh_load_time=$(date +%s)
 function maybe_reload_zsh {
@@ -159,3 +165,41 @@ function nc:reload-all-shells {
   : "their next command".
   touch ~/.zsh.reload
 }
+
+################################################################
+# Time each command as it runs.
+
+# See time of last command in prompt, based on:
+# https://coderwall.com/p/kmchbw/zsh-display-commands-runtime-in-prompt
+# The 'nc_timer_dt' is used in 'PS1' above.
+function nc:timer:preexec () {
+  nc_timer=$SECONDS
+}
+preexec_functions+=(nc:timer:preexec)
+
+function nc:timer:precmd () {
+  # The 'preexec' runs right before a command is executed. However, if
+  # you just hit ENTER with no command, then the 'precmd' runs without
+  # an intervening 'preexec'. So, we unset 'nc_timer' after drawing
+  # the prompt, so that it will only be set when a command has been
+  # run since the last prompt was drawn. If no command has been run
+  # since last prompt, then we preserve the existing dt -- just like
+  # '$?' preserves the existing exit code -- default dt to zero when
+  # the shell first starts.
+  if ((${+nc_timer})); then
+    nc_timer_dt=$(($SECONDS - $nc_timer))
+  # Set to 0 if unset.
+  elif ! ((${+nc_timer_dt})); then
+    nc_timer_dt=0
+  fi
+  unset nc_timer
+}
+precmd_functions+=(nc:timer:precmd)
+
+# http://stackoverflow.com/questions/2704635/is-there-a-way-to-find-the-running-time-of-the-last-executed-command-in-the-shel
+#
+# Show 'time' stats for last command if it consumed more than
+# specified number of seconds of *CPU* time (Note: *not* wall time).
+export REPORTTIME=60
+# Show time for all commands in history; use 'history -D' to see the times.
+setopt inc_append_history_time
