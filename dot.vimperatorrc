@@ -21,9 +21,12 @@
 "
 "   I'm using the standard Firefox command, `C-w`, but
 "   `map d :quit <CR>` also works.
-
 map d <C-w>
-
+" - make 'j' and 'k' scroll a multiple of the default. Could also
+" remap 'h' and 'l' like this, but I use them so rarely it probably
+" makes sense to keep them precise.
+noremap j 5j
+noremap k 5k
 
 " disable vimperator shorcuts
 " ===========================
@@ -43,12 +46,14 @@ map d <C-w>
 " These run in order: the first rule sets default policy and the
 " subsequent rules add exceptions.
 autocmd LocationChange .*                  js modes.passAllKeys = false
-autocmd LocationChange mail\\.google\\.com js modes.passAllKeys = true
+
 autocmd LocationChange typewith\\.me       js modes.passAllKeys = true
 autocmd LocationChange piratepad\\.net     js modes.passAllKeys = true
 autocmd LocationChange duolingo\\.com      js modes.passAllKeys = true
-autocmd LocationChange docs\\.google\\.com  js modes.passAllKeys = true
-autocmd LocationChange drive\\.google\\.com js modes.passAllKeys = true
+autocmd LocationChange calendar\\.google\\.com js modes.passAllKeys = true
+autocmd LocationChange docs\\.google\\.com     js modes.passAllKeys = true
+autocmd LocationChange drive\\.google\\.com    js modes.passAllKeys = true
+autocmd LocationChange mail\\.google\\.com     js modes.passAllKeys = true
 
 " menus
 " =====
@@ -81,16 +86,21 @@ set defsearch=g
 " google search keyword is still 'google', nothing breaks !!!  Using
 " `:set defsearch?` to get the value of 'defsearch', I see that still
 " has the value 'google' after the above runs, when there is not 'g'
-" keyword.  So, I guess the 'set' of 'defsearch' is "smart" in that it
-" only lets you set to the value of a defined search engine.
+" keyword -- however, I get a harmless error "Invalid argument: g"
+" when 'g' is not defined.  So, I guess the 'set' of 'defsearch' is
+" "smart" in that it only lets you set to the value of a defined
+" search engine.
 "
 " After changing the keyword from 'google' to 'g' the default searches
 " failed until I restarted vimperator.
-
+"
 " Got this from:
 " http://code.google.com/p/vimperator-labs/issues/detail?id=589
 "
-" XXX: need to figure out how to store the search engines.
+" XXX: need to figure out how to store the search engines: One
+" possibility is to set up a bunch of search keywords / bookmarks, and
+" then use firefox sync to sync them across browsers. Even better
+" would be to define them in this config ...
 "
 " You can access the search engines and change the keywords with
 "
@@ -99,6 +109,11 @@ set defsearch=g
 " but the only way I know to *install* search engines is click on
 " links, e.g. the 'search plugin' link at the top of
 " haskell.org/hoogle.
+"
+" There is a great website for custom search engine plugins --
+" http://mycroftproject.com/dlstats.html -- everything I wanted was
+" already there, e.g. hayoo, and it looks like it's easy to add new
+" search engines.
 
 " added by vimperator
 " ===================
