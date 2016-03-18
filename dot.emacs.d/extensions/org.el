@@ -12,3 +12,14 @@
 
     (local-set-key (kbd "C-c C-n") 'outline-forward-same-level)
     (local-set-key (kbd "C-c C-p") 'outline-backward-same-level)))
+
+;; Syntax highlight "src" blocks when they have a language tag, e.g
+;;
+;; #+begin_src haskell
+;; module Main where
+;; foo :: Int -> Int
+;; foo x = x
+;; #+end_src
+(nc:custom-set-variable org-src-fontify-natively t)
+;; Don't mess with whitespace after editing src blocks using `C-c ''.
+(nc:custom-set-variable org-src-preserve-indentation t)
