@@ -130,9 +130,9 @@ PS1='[$rd%n$pl@$gr$(hostname)$pl]\
 [$gr%~$pl]\
 [%%$rd%j$pl]\
 [%*]\
-%(?..[?$rd%?$pl])\
 [%F{yellow}$nc_timer_dt_m_s_ms%f]\
 $(_nc:vcs_info)
+%(?..[?$rd%?$pl])\
 %K{green} %k'
 
 PS2="$gr%_$pl> "
