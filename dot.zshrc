@@ -67,18 +67,6 @@ zle -N backward-delete-to-slash
 # '^[^?' means M-Backspace :P
 bindkey '^[^?' backward-delete-to-slash
 
-# Disable flow control with C-s
-#
-# From http://smlv.cc.gatech.edu/2010/07/08/small-tip-for-terminal-prevent-ctrl-s-ctrl-q/
-stty stop undef
-
-# Make incremental history search with C-s and C-r support glob
-# patterns
-#
-# From http://chneukirchen.org/blog/archive/2012/02/10-new-zsh-tricks-you-may-not-know.html
-bindkey "^R" history-incremental-pattern-search-backward
-bindkey "^S" history-incremental-pattern-search-forward
-
 ## Fancy looking messages.
 message () {
     # -P means interpret % escapes
