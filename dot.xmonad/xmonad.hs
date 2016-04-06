@@ -183,10 +183,10 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
              -- * Cycle windows
              [ ((modm                , xK_s), cycleRecentWindows [xK_Super_L] xK_s xK_w)
              , ((modm                , xK_z), rotOpposite)
-             , ((modm                , xK_i), rotUnfocusedUp)
-             , ((modm                , xK_u), rotUnfocusedDown)
-             , ((modm .|. controlMask, xK_i), rotFocusedUp)
-             , ((modm .|. controlMask, xK_u), rotFocusedDown)
+             , ((modm .|. controlMask, xK_i), rotUnfocusedUp)
+             , ((modm .|. controlMask, xK_u), rotUnfocusedDown)
+             , ((modm                , xK_i), rotFocusedUp)
+             , ((modm                , xK_u), rotFocusedDown)
 
              -- From XMonad.Prompt.XMonad:
              , ((modm                , xK_x), xmonadPrompt defaultXPConfig)
