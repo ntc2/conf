@@ -216,4 +216,12 @@ precmd_functions+=(nc:timer:precmd)
 # specified number of seconds of *CPU* time (Note: *not* wall time).
 export REPORTTIME=60
 # Show time for all commands in history; use 'history -D' to see the times.
-setopt inc_append_history_time
+#
+# Docs say this is mutually exclusive with 'share_history', but I'm
+# not sure why. In any case, with this off at least but
+# 'share_history' on, running 'history -D' only shows run time for
+# local commands run in current shell, not for commands merged into
+# history from other shells, and not for commands that were in
+# existing history when current shell started.
+#
+#setopt inc_append_history_time

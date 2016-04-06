@@ -3,6 +3,9 @@
 # keybindings need to be in a "rc" file; they don't have any affect
 # when I put them in the "env" file.
 
+# Below we use 'up-line-or-search' instead of 'up-line-or-history' to
+# get this "no dups" effect when pressing '<up>' and '<down>'.
+#
 # "When searching for history entries in the line editor, do not
 # display duplicates of a line previously found, even if the
 # duplicates are not contiguous."
@@ -49,6 +52,13 @@ stty stop '^T'
 # 'C-n' and 'M-p', are bound to search global history, as '<up>' and
 # '<down>' did before this override.
 #
+# Use 'up-line-or-search' instead of 'up-line-or-history', because an
+# empty search is just like going up in history, except
+# 'HIST_FIND_NO_DUPS' is respected by searches, but not simple history
+# stepping. This has the additional benefit that it's also a search,
+# so e.g. 'man<up><up><up>' shows the third most recent, unique man
+# page viewed.
+#
 # 'set-local-history': "By default, history movement commands visit
 # the imported lines as well as the local lines. This widget lets you
 # toggle this on and off, or set it with the numeric argument. Zero
@@ -56,14 +66,14 @@ stty stop '^T'
 
 nc:up-line-or-history () {
   zle set-local-history 1
-  zle up-line-or-history
+  zle up-line-or-search
   zle set-local-history 0
 }
 zle -N nc:up-line-or-history
 
 nc:down-line-or-history () {
   zle set-local-history 1
-  zle down-line-or-history
+  zle down-line-or-search
   zle set-local-history 0
 }
 zle -N nc:down-line-or-history
