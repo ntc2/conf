@@ -78,12 +78,15 @@ nc:down-line-or-history () {
 }
 zle -N nc:down-line-or-history
 
-bindkey "${key[Up]}"   nc:up-line-or-history
-bindkey "${key[Down]}" nc:down-line-or-history
-# Same as
+# Doesn't work over SSH in Fedora VM:
 #
-#bindkey "^[[A" nc:up-line-or-history
-#bindkey "^[[B" nc:down-line-or-history
+#bindkey "${key[Up]}"   nc:up-line-or-history
+#bindkey "${key[Down]}" nc:down-line-or-history
+#
+# but same this, which does work:
+#
+bindkey "^[[A" nc:up-line-or-history
+bindkey "^[[B" nc:down-line-or-history
 #
 # the mysterious escapes can be discovered by running 'read' and then
 # typing. Current bindings are displayed in terms of mysterious
