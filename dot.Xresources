@@ -127,6 +127,11 @@ Rxvt.font: terminus-14
 Rxvt.secondaryScroll: on
 ! Rxvt only: remove some of the scrollbar decorations.
 Rxvt.scrollBar_floating: on
+! Avoid selecting the tmux vertical pane divider ("│") when
+! double-click copying. The other characters are the defaults
+! from 'man urxvt'. Got here via
+! http://superuser.com/questions/692988/is-there-a-way-to-set-margins-paddings-in-tmux.
+Rxvt.cutchars: '\\ `"\'&()*,;<=>?@[]^{|}│'
 
 !!! Emacs
 Emacs.font: terminus-12
