@@ -161,6 +161,37 @@
     # Make 'git fetch; git merge' behave like 'git pull' on the
     # current branch.
     defaultToUpstream = true
+    # Show common ancestor version, in addition to "mine" and "theirs"
+    # hunks when marking up merge conflicts.
+    #
+    # E.g., if I have a README with contents "Version 1", and then I
+    # change it to "Version 2" in master and to "Version branch" in a
+    # branch, then merge the branch into master, by default I get
+    #
+    #     $ git merge branch
+    #     $ cat README
+    #     <<<<<<< HEAD
+    #     Version 2
+    #     =======
+    #     Version in branch
+    #     >>>>>>> branch
+    #
+    # on the other hand, using the 'diff3' conflictstyle, I get
+    #
+    #    $ git -c merge.conflictstyle=diff3 merge branch
+    #    $ cat README
+    #    <<<<<<< HEAD
+    #    Version 2
+    #    ||||||| merged common ancestors
+    #    Version 1
+    #    =======
+    #    Version in branch
+    #    >>>>>>> branch
+    #
+    # which additionally shows the common ancestor version. It's a
+    # little more to delete when resolving conflicts, but also
+    # additional helpful context.
+    conflictstyle = diff3
 
 # Git !-aliases are run with current dir set to `git rev-parse
 # --show-toplevel`, with the variable 'GIT_PREFIX' set to `git
