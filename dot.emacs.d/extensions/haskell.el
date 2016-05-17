@@ -134,10 +134,16 @@
 (defun nc-haskell-hook ()
   ;; Use `C-u [f8]` to jump back.
   (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
+
   ;; Contextually do clever things on the space key, in particular:
   ;;   1. Complete imports, letting you choose the module name.
   ;;   2. Show the type of the symbol after the space.
-  (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+  ;;
+  ;; Update: removed around Mar 5:
+  ;; https://github.com/haskell/haskell-mode/issues/1182.
+  ;;
+  ;;(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+
   ;; Make the GHCi prompt visible.
   (define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-bring)
   ;; Indent the below lines on columns after the current column.
