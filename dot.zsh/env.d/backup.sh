@@ -93,9 +93,25 @@ function nc:mirror:magic {
 }
 
 function nc:mirror:get {
-  : 'usage: $0 SOURCE_HOST FILE'
+  : 'usage: $0 SOURCE_HOST (FILE|DIR)'
   :
-  : 'Recover a backup of FILE created from host SOURCE_HOST.'
+  : 'Recover a backup of (FILE|DIR) created from host SOURCE_HOST.'
+  :
+  : 'The path (FILE|DIR) is normalized before rsync is called,'
+  : 'removing the trailing slash, if any. So, the last component'
+  : 'of a DIR will be duplicated locally.'
+  :
+  : 'So, for example, use'
+  :
+  :   'cd /home'
+  :   'nc:mirror:get <source host> /home/collins'
+  :
+  : 'to mirror /home/collins from <source host> to /home/collins'
+  : 'on local host. This mirroring does not use --delete, so files'
+  : 'on local host not present in mirror will not be deleted.'
+  :
+  : 'Feature idea: support trailing slashes in the DIR, and add a'
+  : 'third, destination argument, to avoid needing to cd on first.'
   if [[ $# -ne 2 ]]; then
     return $(nc:usage nc:mirror:get "Wrong number of arguments.")
   fi
