@@ -205,7 +205,7 @@ function nc:timer:precmd () {
   # Experiments indicate that value here is 0.001 to 0.002 larger than
   # value computed by 'time <cmd>', so limit to hundredths accuracy
   # where they should agree better.
-  nc_timer_dt_m_s_ms=$(printf "%i:%.2f" $(($dt / 60)) $(($dt % 60)))
+  nc_timer_dt_m_s_ms=$(printf "%i:%05.2f" $(($dt / 60)) $(($dt % 60)))
   unset nc_timer
 }
 precmd_functions+=(nc:timer:precmd)
