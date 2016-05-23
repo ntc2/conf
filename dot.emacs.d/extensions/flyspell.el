@@ -40,5 +40,6 @@
    (when (member major-mode
                  '(emacs-lisp-mode
                    haskell-mode
-                   haskell-cabal-mode))
+                   haskell-cabal-mode
+                   sh-mode))
      (flyspell-prog-mode))))
