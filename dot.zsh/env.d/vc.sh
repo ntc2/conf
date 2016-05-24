@@ -26,8 +26,11 @@ function nc:git:disable-whitespace-conversion-on-one-file {
   : Disable whitespace-conversion related attributes on PATH, locally
   : in the current repo.  "Absolute" path relative repo root is
   : safest.
-
-  echo "$1 -text -whitespace" >> $(git rev-parse --git-dir)/info/attributes
+  # The 'sed -re 's/ /?/' replaces spaces with single char wild card
+  # to avoid this:
+  # http://thread.gmane.org/gmane.comp.version-control.git/295351/focus=295389
+  file=$(echo "$1" | sed -re 's/ /?/g')
+  echo "$file -text -whitespace" >> $(git rev-parse --git-dir)/info/attributes
 }
 
 function nc:git:disable-whitespace-conversion-on-all-modified-files {
@@ -35,12 +38,13 @@ function nc:git:disable-whitespace-conversion-on-all-modified-files {
   :
   : Disable whitespace-conversion related attributes on all
   : currently modified files, locally in the current repo.
-
+  # The 'xargs echo' removes quotes.
   (cd `git rev-parse --show-toplevel` && \
-   git st -s | grep '^ M' | awk '{print $2}' | \
-   while read f; do
-     nc:git:disable-whitespace-conversion-on-one-file $f
-   done)
+      git status --porcelain | grep '^ M' | sed -re 's/^ M //' | \
+        xargs -n1 echo | \
+        while read f; do
+          nc:git:disable-whitespace-conversion-on-one-file "$f"
+        done)
 }
 
 function nc:git:mirror {
