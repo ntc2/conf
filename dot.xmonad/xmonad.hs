@@ -92,7 +92,7 @@ myDefaultConfig = gnomeConfig -- defaultConfig
 main = xmonad myDefaultConfig
        { logHook = logHook myDefaultConfig
                    -- mouse follows focus to middle-top
-                   >> updatePointer (Relative 0.5 0.0) 
+                   >> updatePointer (0.5, 0.0) (0.0, 0.0)
          -- i have two mod keys: the left
          -- windows key (Super_L) and the right menu key (Menu)
          -- 
