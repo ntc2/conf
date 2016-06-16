@@ -35,7 +35,9 @@ function nc:mirror:put {
   # synced. So, e.g, separate syncs of 'foo/a' and 'foo/b' will not
   # result in only having 'b' in 'foo' on the destination host.
   rsync -avz --relative --human-readable --delete "$@" "$normalpath" \
-    $BACKUP_USER@$BACKUP_HOST:mirror/$(hostname -f)/
+        $BACKUP_USER@$BACKUP_HOST:mirror/$(hostname -f)/ \
+        2>&1 | \
+    perl -pe '$_ = "  $_"' # Indent output.
   # Note what was mirrored, to make exploring the mirror later
   # easier.  Encode the slashes as '<slash>' since they aren't allowed
   # in file names. May there never be a day that I want '<slash>' in
