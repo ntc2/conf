@@ -41,8 +41,12 @@ Name=ThereNeedsToBeANameHereOrItDoesntWork
 # script). Now I can use 'Exec=xmonad' again, but it doesn't seem to
 # have any benefits over the simpler 'Exec=sh -c "xmonad &"' solution.
 #
-#Exec=sh -c 'xmonad &'
-Exec=xmonad
+# UPDATE: my PATH is inexplicably no longer setup when the 'Exec'
+# command runs, so going back to the full path solution. I also notice
+# that logging out doesn't work now -- gnome exits but xmonad does
+# not, or at least, my windows don't close -- but I don't know if
+# this is related to using 'sh' to start xmonad.
+Exec=sh -c '~/.cabal/bin/xmonad'
 NoDisplay=true
 X-GNOME-WMName=Xmonad
 X-GNOME-Autostart-Phase=WindowManager
