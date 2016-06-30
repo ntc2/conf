@@ -44,9 +44,14 @@ Name=ThereNeedsToBeANameHereOrItDoesntWork
 # UPDATE: my PATH is inexplicably no longer setup when the 'Exec'
 # command runs, so going back to the full path solution. I also notice
 # that logging out doesn't work now -- gnome exits but xmonad does
-# not, or at least, my windows don't close -- but I don't know if
-# this is related to using 'sh' to start xmonad.
-Exec=sh -c '~/.cabal/bin/xmonad'
+# not, or at least, my windows don't close -- but I don't know if this
+# is related to using the shell to start xmonad (I think it's not
+# related, since I think I also had this problem on another laptop,
+# which probably wasn't using this updated config yet). Using 'zsh'
+# instead of 'sh' or 'bash', in hopes of my PATH being correctly set
+# for the runnig 'xmonad' process, so that e.g. 'Mod-q' works to
+# restart Xmonad.
+Exec=zsh -c 'xmonad'
 NoDisplay=true
 X-GNOME-WMName=Xmonad
 X-GNOME-Autostart-Phase=WindowManager
