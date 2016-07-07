@@ -219,9 +219,11 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
 
              -- * Struts
              --
-             -- Toggle the top strut.  M-b is bound to toggle all struts.
-             , ((modm                , xK_b), sendMessage $ ToggleStruts)
-             , ((modm .|. controlMask, xK_b), sendMessage $ ToggleStrut U)
+             -- Toggle all struts.
+             , ((modm .|. controlMask, xK_b), sendMessage $ ToggleStruts)
+             -- Toggle top strut. I usually don't actually care about
+             -- the bottom strut.
+             , ((modm,                 xK_b), sendMessage $ ToggleStrut U)
              -- Disable all struts.
              -- , ((modm .|. controlMask, xK_b), sendMessage $ SetStruts [] [minBound .. maxBound])
              -- , ((modm                , xK_x), evalPrompt defaultEvalConfig defaultXPConfig)
@@ -233,7 +235,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
                -- Remove current.  Moves windows to another workspace
              , ((modm .|. shiftMask, xK_BackSpace), removeWorkspace)
                -- Remove by name.
-             , ((modm .|. shiftMask, xK_r        ), renameWorkspace defaultXPConfig)
+             , ((modm .|. controlMask, xK_r      ), renameWorkspace defaultXPConfig)
                -- Select by name. If hitting tab is annoying, see
                -- http://www.haskell.org/pipermail/xmonad/2011-April/011319.html
              , ((modm              , xK_g        ), selectWorkspace defaultXPConfig)
@@ -271,6 +273,13 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
              --
              -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
              -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
+             --
+             -- NOTE: the screen order is determined by upper left
+             -- corner, FIRST TOP TO BOTTOM, and then left to
+             -- right. so, if you use the Gnome GUI to arrange your
+             -- displays, you might accidentally make one a little
+             -- lower than the others, leading to confusion when it
+             -- appears out of order.
              [ ((modm .|. mask, key), f sc)
              | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
              , (f, mask) <- [ (PS.viewScreen, 0)
