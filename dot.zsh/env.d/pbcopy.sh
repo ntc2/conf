@@ -30,4 +30,4 @@ alias nc:pbpaste:ctrlc='xsel --output --clipboard'
 # Separate commands for duplicating the highlight and C-c / C-v
 # clipboards to both clipboards.
 alias nc:pbcopy:highlight='nc:pbpaste:highlight | xsel --input --clipboard'
-alias nc:pbcopy:ctrlc='nc:pbpaste:clipboard | xsel --input --primary'
+alias nc:pbcopy:ctrlc='nc:pbpaste:ctrlc | xsel --input --primary'

@@ -38,8 +38,9 @@
                     text-mode))
       (flyspell-mode t))
    (when (member major-mode
-                 '(emacs-lisp-mode
-                   haskell-mode
+                 '(c-mode
+                   emacs-lisp-mode
                    haskell-cabal-mode
+                   haskell-mode
                    sh-mode))
      (flyspell-prog-mode))))
