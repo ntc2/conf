@@ -11,7 +11,12 @@
     (setq truncate-lines nil)
 
     (local-set-key (kbd "C-c C-n") 'outline-forward-same-level)
-    (local-set-key (kbd "C-c C-p") 'outline-backward-same-level)))
+    (local-set-key (kbd "C-c C-p") 'outline-backward-same-level)
+
+    (local-set-key (kbd "C-c <left>")  'windmove-left)
+    (local-set-key (kbd "C-c <right>") 'windmove-right)
+    (local-set-key (kbd "C-c <up>")    'windmove-up)
+    (local-set-key (kbd "C-c <down>")  'windmove-down)))
 
 ;; Syntax highlight "src" blocks when they have a language tag, e.g
 ;;
