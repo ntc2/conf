@@ -1,3 +1,5 @@
+(require 'flyspell)
+
 ;; Optionally disable `flyspell`.
 ;;
 ;; http://www.math.utah.edu/docs/info/elisp_11.html#SEC127 
@@ -26,21 +28,24 @@
 ;; Enable `flyspell-mode` or `flyspell-prog-mode` selectively. I
 ;; separately enable `flyspell-prog-mode` in `./haskell.el` for
 ;; `haskell-mode`.
+;;
+;; Defaults to `flyspell-mode`.
 (add-hook 'font-lock-mode-hook
   (lambda ()
-    (when (member major-mode
-                  '(bibtex-mode
-                    default-generic-mode
-                    fundamental-mode
-                    latex-mode
-                    org-mode
-                    rst-mode
-                    text-mode))
-      (flyspell-mode t))
-   (when (member major-mode
-                 '(c-mode
-                   emacs-lisp-mode
-                   haskell-cabal-mode
-                   haskell-mode
-                   sh-mode))
-     (flyspell-prog-mode))))
+    ;; (when (member major-mode
+    ;;               '(bibtex-mode
+    ;;                 default-generic-mode
+    ;;                 fundamental-mode
+    ;;                 latex-mode
+    ;;                 org-mode
+    ;;                 rst-mode
+    ;;                 text-mode))
+    ;;   (flyspell-mode t))
+   (if (member major-mode
+               '(c-mode
+                 emacs-lisp-mode
+                 haskell-cabal-mode
+                 haskell-mode
+                 sh-mode))
+       (flyspell-prog-mode)
+     (flyspell-mode t))))
