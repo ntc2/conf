@@ -64,9 +64,21 @@ case $TERM in
         # is a single-line, size-limited version of the command (with
         # things like function bodies elided); the third argument
         # (`$3`) contains the full text that is being executed.
+
+        # UPDATE: more newline trouble, now with multiline
+        # commands. E.g.
+        #
+        #   $ echo abc\
+        #   def
+        #
+        # Would print part of the command before executing
+        # it. Limiting to the first line of the command solves the
+        # problem with extra printing, but the title does not get
+        # updated. A rare case, so I'm not going to worry about fixing
+        # the title here.
         terminal_emulator_preexec () {
           print -Pn "\e]0;$(hostname | cut -d . -f 1):"
-          print -n ${(q)1}
+          print -n "${(q)1}" | head -n1
           print -Pn "\a"
         }
         preexec_functions+=(terminal_emulator_preexec)
