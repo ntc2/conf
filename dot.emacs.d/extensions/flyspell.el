@@ -46,6 +46,8 @@
                  emacs-lisp-mode
                  haskell-cabal-mode
                  haskell-mode
+                 java-mode
+                 javascript-mode
                  sh-mode))
        (flyspell-prog-mode)
      (flyspell-mode t))))
