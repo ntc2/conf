@@ -3,6 +3,8 @@
 ;;; http://www.haskell.org/haskellwiki/Haskell_mode_for_Emacs
 ;;; http://projects.haskell.org/haskellmode-emacs/
 
+(when nil
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; haskell-mode
@@ -159,6 +161,8 @@
 )
 (add-hook 'haskell-mode-hook 'nc-haskell-hook)
 
+)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ghc-mod
 ;;
@@ -279,3 +283,9 @@
 (setq-default flycheck-disabled-checkers '(haskell-hlint))
 
 )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Intero
+(add-hook 'haskell-mode-hook 'intero-mode)
+(nc:custom-set-variable haskell-tags-on-save nil)
+(nc:custom-set-variable flycheck-check-syntax-automatically '(mode-enabled save))

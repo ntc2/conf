@@ -46,6 +46,10 @@
 ;;(depends-on "haskell-flycheck"
 ;;  :git "git@github.com:chrisdone/haskell-flycheck.git"
 ;;  :files ("*.el"))
+
+;; Another Haskell IDE mode.
+(depends-on "intero")
+
 ;; Show Git status of lines in "gutter" (left margin).
 ;;
 ;;(depends-on "git-gutter+")
