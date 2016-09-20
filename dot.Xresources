@@ -135,6 +135,102 @@ Rxvt.scrollBar_floating: on
 ! http://superuser.com/questions/692988/is-there-a-way-to-set-margins-paddings-in-tmux.
 Rxvt.cutchars: '\\ `"\'&()*,;<=>?@[]^{|}│'
 
+! The blue colors are impossible to read on dark backgrounds, so we override them here.
+!
+! From 'man urxvt':
+!
+! COLOURS AND GRAPHICS
+!        In addition to the default foreground and background
+!        colours, urxvt can display up to 88/256 colours: 8 ANSI
+!        colours plus high-intensity (potentially bold/blink)
+!        versions of the same, and 72 (or 240 in 256 colour mode)
+!        colours arranged in an 4x4x4 (or 6x6x6) colour RGB cube
+!        plus a 8 (24) colour greyscale ramp.
+!
+!        Here is a list of the ANSI colours with their names.
+!
+!        color0       (black)            = Black
+!        color1       (red)              = Red3
+!        color2       (green)            = Green3
+!        color3       (yellow)           = Yellow3
+!        color4       (blue)             = Blue3
+!        color5       (magenta)          = Magenta3
+!        color6       (cyan)             = Cyan3
+!        color7       (white)            = AntiqueWhite
+!        color8       (bright black)     = Grey25
+!        color9       (bright red)       = Red
+!        color10      (bright green)     = Green
+!        color11      (bright yellow)    = Yellow
+!        color12      (bright blue)      = Blue
+!        color13      (bright magenta)   = Magenta
+!        color14      (bright cyan)      = Cyan
+!        color15      (bright white)     = White
+!        foreground                      = Black
+!        background                      = White
+!
+!        It is also possible to specify the colour values of
+!        foreground, background, cursorColor, cursorColor2,
+!        colorBD, colorUL as a number 0-15, as a convenient
+!        shorthand to reference the colour name of
+!        color0-color15.
+!
+!        The following text gives values for the standard 88
+!        colour mode (and values for the 256 colour mode in
+!        parentheses).
+!
+!        The RGB cube uses indices 16..79 (16..231) using the
+!        following formulas:
+!
+!           index_88  = (r * 4 + g) * 4 + b + 16   # r, g, b = 0..3
+!           index_256 = (r * 6 + g) * 6 + b + 16   # r, g, b = 0..5
+!
+!        The grayscale ramp uses indices 80..87 (232..239), from
+!        10% to 90% in 10% steps (1/26 to 25/26 in 1/26 steps) -
+!        black and white are already part of the RGB cube.
+!
+!        Together, all those colours implement the 88 (256)
+!        colour xterm colours. Only the first 16 can be changed
+!        using resources currently, the rest can only be changed
+!        via command sequences ("escape codes").
+!
+!        Applications are advised to use terminfo or command
+!        sequences to discover number and RGB values of all
+!        colours (yes, you can query this...).
+!
+!        Note that -rv ("reverseVideo: True") simulates reverse
+!        video by always swapping the foreground/background
+!        colours. This is in contrast to xterm(1) where the
+!        colours are only swapped if they have not otherwise been
+!        specified. For example,
+!
+!           urxvt -fg Black -bg White -rv
+!
+!        would yield White on Black, while on xterm(1) it would
+!        yield Black on White.
+
+! Rxvt*color0: #FF5555
+! Rxvt*color1: #FF5555
+! Rxvt*color2: #FF5555
+! Rxvt*color3: #FF5555
+
+! Blue:
+Rxvt*color4: #5555FF
+
+! Rxvt*color5: #FF5555
+! Rxvt*color6: #FF5555
+! Rxvt*color7: #FF5555
+! Rxvt*color8: #FF5555
+! Rxvt*color9: #FF5555
+! Rxvt*color10: #FF5555
+! Rxvt*color11: #FF5555
+
+! Bright blue:
+Rxvt*color12: #7777FF
+
+! Rxvt*color13: #FF5555
+! Rxvt*color14: #FF5555
+! Rxvt*color15: #FF5555
+
 !!! Emacs
 Emacs.font: terminus-12
 Emacs.reverseVideo: on
