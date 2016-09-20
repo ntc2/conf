@@ -8,9 +8,19 @@
 ;;
 ;; It might be OK to use git-gutter-mode with org-mode; I haven't
 ;; tested, but folding surely can't make sense.
-(add-hook 'font-lock-mode-hook
-          (lambda ()
-            (require 'git-gutter-fringe)
-            (when (not (member major-mode '(org-mode)))
-              (git-gutter-mode 1)
-              (linum-mode 1))))
+(when (require 'git-gutter-fringe nil t)
+  (add-hook 'font-lock-mode-hook
+            (lambda ()
+              (when (not (member major-mode '(org-mode)))
+                (git-gutter-mode 1)
+                (linum-mode 1)))))
+
+;; Make git-gutter work with magit. By default, when committing from
+;; magit-status, git-gutter doesn't realize a commit has been made.
+;;
+;; See
+;; http://stackoverflow.com/questions/23344540/emacs-update-git-gutter-annotations-when-staging-or-unstaging-changes-in-magit.
+(when (and (require 'git-gutter-fringe nil t)
+           (require 'magit nil t))
+  (add-hook 'magit-post-refresh-hook
+            #'git-gutter:update-all-windows))
