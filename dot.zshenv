@@ -93,11 +93,5 @@ nc:load-custom ~/.zshenv.system-custom
 
 ## Run last
 
-# gets later overridden to 022 on some systems ... e.g., on my laptop
-# /etc/profile is responsible, although i can't figure out what
-# actually calls /etc/profile (the zsh docs indicate only
-# /etc/zsh-beta/ scripts would be run, and those don't call
-# /etc/profile afaict) ???
-
 # ALSO SET in .zshrc, although that only runs for interactive shells
 umask 077

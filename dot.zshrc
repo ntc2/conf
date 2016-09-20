@@ -4,10 +4,6 @@
 #
 # Completion is in ./dot.zsh/rc.d/completion.sh.
 
-if [ -e /etc/profile ]; then
-    source /etc/profile
-fi
-
 # See FILENAME GENERATION section of man zshexpn.
 #
 # Enabled operators include difference (~), negation (^), repetition (#, ##)
