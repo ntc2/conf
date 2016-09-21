@@ -29,7 +29,7 @@
 ;; separately enable `flyspell-prog-mode` in `./haskell.el` for
 ;; `haskell-mode`.
 ;;
-;; Defaults to `flyspell-mode`.
+;; Default is to enable to `flyspell-mode`.
 (add-hook 'font-lock-mode-hook
   (lambda ()
     ;; (when (member major-mode
@@ -41,13 +41,20 @@
     ;;                 rst-mode
     ;;                 text-mode))
     ;;   (flyspell-mode t))
-   (if (member major-mode
-               '(c-mode
-                 emacs-lisp-mode
-                 haskell-cabal-mode
-                 haskell-mode
-                 java-mode
-                 javascript-mode
-                 sh-mode))
-       (flyspell-prog-mode)
-     (flyspell-mode t))))
+    (let ((flyspell-prog-modes
+          '(c-mode
+            emacs-lisp-mode
+            haskell-cabal-mode
+            haskell-mode
+            java-mode
+            javascript-mode
+            sh-mode))
+          (no-flyspell-modes
+           '(help-mode
+             magit-status-mode)))
+      (cond ((member major-mode flyspell-prog-modes)
+             (flyspell-prog-mode))
+            ((member major-mode no-flyspell-modes)
+             (flyspell-mode 0))
+            (t
+             (flyspell-mode t))))))

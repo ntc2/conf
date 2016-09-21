@@ -79,6 +79,12 @@ See `nc:custom-set-variable'."
   ;; If there is more than one, they won't work right.
  )
 
+;; Don't complain about these variables when set e.g. in
+;; .dir-locals.el file.
+;;
+(nc:custom-set-variable safe-local-variable-values
+                        '((haskell-tags-on-save)))
+
 ;; Highlight matching parens.
 (add-hook 'after-init-hook #'show-paren-mode)
 
@@ -89,7 +95,6 @@ See `nc:custom-set-variable'."
 
 ;; Reread the TAGS files automatically when they change.
 (nc:custom-set-variable tags-revert-without-query t)
-
 
 ;;; Load customizations
 ;;;
