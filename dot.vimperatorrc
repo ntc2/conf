@@ -3,6 +3,16 @@
 
 " use :source ~/.vimperatorrc to reload this file
 
+" bug work around
+" ===============
+"
+" See https://github.com/vimperator/vimperator-labs/issues/590#issuecomment-248833125.
+"
+" Fix is already committed, so should be fixed in next version of
+" Vimperator (current version is 3.14.0 and today is Sep 28, 2016).
+
+js services.services.autoCompleteSearch.class_="@mozilla.org/autocomplete/search;1?name=unifiedcomplete"
+
 " notes
 " =====
 " 
