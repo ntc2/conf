@@ -85,10 +85,18 @@ set gui=none,tabs
 "   open the pickles
 "
 " it runs the shortcut with keyword defined by the defsearch variable.
-" This variable defaults to 'google', which is the default keyword for
-" google in firefox.  So, if you change the keyword for google, say to
-" 'g', then this default search behavior breaks.  You can fix it by
-" manually setting defsearch:
+"
+" NOTE: however, you only get search completions when you use the
+" keyword. E.g. "o" followed by "g trump is" presents "trump is love
+" trump is life" (?!?!) among other completions, but plain "trump is"
+" after "o" only shows URLs I've visited before that include at least
+" one of "trump" and "is". The URL completions are also included in
+" the "g trump is" version.
+"
+" The 'defsearch' variable defaults to 'google', which is the default
+" keyword for google in firefox.  So, if you change the keyword for
+" google, say to 'g', then this default search behavior breaks.  You
+" can fix it by manually setting defsearch:
 
 set defsearch=g
 
