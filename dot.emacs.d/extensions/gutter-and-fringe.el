@@ -20,6 +20,9 @@
 ;;
 ;; See
 ;; http://stackoverflow.com/questions/23344540/emacs-update-git-gutter-annotations-when-staging-or-unstaging-changes-in-magit.
+;;
+;; Another choice for a Git gutter is diff-hl-mode:
+;; https://github.com/dgutov/diff-hl. Haven't tried that one yet.
 (when (and (require 'git-gutter-fringe nil t)
            (require 'magit nil t))
   (add-hook 'magit-post-refresh-hook
