@@ -8,12 +8,12 @@
 ;;
 ;; It might be OK to use git-gutter-mode with org-mode; I haven't
 ;; tested, but folding surely can't make sense.
-(when (require 'git-gutter-fringe nil t)
-  (add-hook 'font-lock-mode-hook
-            (lambda ()
-              (when (not (member major-mode '(org-mode)))
-                (git-gutter-mode 1)
-                (linum-mode 1)))))
+(require 'git-gutter-fringe nil t)
+(add-hook 'font-lock-mode-hook
+          (lambda ()
+            (when (not (member major-mode '(org-mode)))
+              (git-gutter-mode 1)
+              (linum-mode 1))))
 
 ;; Make git-gutter work with magit. By default, when committing from
 ;; magit-status, git-gutter doesn't realize a commit has been made.
@@ -23,7 +23,7 @@
 ;;
 ;; Another choice for a Git gutter is diff-hl-mode:
 ;; https://github.com/dgutov/diff-hl. Haven't tried that one yet.
-(when (and (require 'git-gutter-fringe nil t)
-           (require 'magit nil t))
-  (add-hook 'magit-post-refresh-hook
-            #'git-gutter:update-all-windows))
+(require 'git-gutter-fringe nil t)
+(require 'magit nil t)
+(add-hook 'magit-post-refresh-hook
+          #'git-gutter:update-all-windows)
