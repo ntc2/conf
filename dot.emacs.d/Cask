@@ -60,3 +60,14 @@
 ;; Using git-gutter-fringe because it plays well with linum-mode.
 (depends-on "fringe-helper")     ;; Dep of git-gutter-fringe.
 (depends-on "git-gutter-fringe") ;; Works with linum-mode. same namespace as git-gutter. delete other before using
+
+;; Markdown.
+;;
+;; More recent than the version that ships with Emacs.
+(depends-on "markdown-mode")
+;; For syntax highlighting in "GFM fenced code blocks", e.g.
+;;
+;; ``` haskell
+;; module Test where
+;; ```
+(depends-on "polymode")

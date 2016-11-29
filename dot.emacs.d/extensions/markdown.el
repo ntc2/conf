@@ -1,2 +1,5 @@
-;; Surprised this isn't done automatically ???
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(package-initialize)
+(require 'markdown-mode)
+(require 'polymode)
+(require 'poly-markdown)
+(add-to-list 'auto-mode-alist '("\\.md\\'" . poly-markdown-mode))
