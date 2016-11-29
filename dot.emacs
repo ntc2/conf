@@ -103,22 +103,35 @@ See `nc:custom-set-variable'."
 ;;; system-custom.el to disable the guarded code. See
 ;;; extensions/flyspell.el for an example.
 
-;; Byte-compile any out-of-date configurations.
-(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
-(byte-recompile-directory (expand-file-name "~/.emacs.d/extensions") 0)
-
-;; Add my custom lib dir to the path.
-;;
 ;; Emacs now (Since Emacs 24?) warns that I shouldn't add '~/.emacs.d'
 ;; to my path.
-;;
-;;(add-to-list 'load-path "~/.emacs.d/") ;(push "~/.emacs.d" load-path)
 
-;; System (e.g. math.wisc.edu vs uoregon.edu) *specific* code.  In
-;; practice I symlink a system specific versioned file here.
-(load "~/.emacs.d/system-custom.el" t)
-;; Common extensions to load on *all* systems.
-(mapc 'load-file (file-expand-wildcards "~/.emacs.d/extensions/*.el"))
+(require 'bytecomp)
+(let ((files (append
+              ;; System (e.g. math.wisc.edu vs uoregon.edu) *specific*
+              ;; code.  In practice I symlink a system specific
+              ;; versioned file here.
+              ;;
+              ;; Could just search for all `.el' files in
+              ;; `~/.emacs.d'. If the system custom config ever
+              ;; depends on Cask, then I'll need to make sure that
+              ;; `~/.emacs.d/extensions/00-dependencies.el' loads
+              ;; first.
+              '("~/.emacs.d/system-custom.el")
+              ;; My customizations, split up in separate files.
+              (file-expand-wildcards "~/.emacs.d/extensions/*.el")))
+      ;; Byte-compile any out-of-date configurations and load all
+      ;; configurations.
+      ;;
+      ;; The `nil' arg means only recompile when `.el' file is newer
+      ;; than `.elc' file.
+      ;;
+      ;; The `0' arg means to compile `foo.el' to `foo.elc' even if
+      ;; there is no `foo.elc' already (so "compile or recompile").
+      ;;
+      ;; The `t' arg means load the file after compilation.
+      (load (lambda (f) (byte-recompile-file f nil 0 t))))
+  (mapc load files))
 
 ;;; Mouse
 ;; use SHIFT+<arrow> to navigate windows
