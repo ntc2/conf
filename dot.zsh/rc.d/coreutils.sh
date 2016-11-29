@@ -19,7 +19,9 @@ eval $(dircolors | sed -re 's/\bdi=01;34\b/di=01/')
 
 alias rm="rm -iv"
 alias cp="cp -v"
-alias j="jobs -l"
+# The 'j' alias is used by 'autojump'; see './autojump.sh'.
+#
+#alias j="jobs -l"
 alias l.=ldot	# seems i cant call my subroutine l. so this is a workaround.
 
 alias nc:grep="egrep -nH --color=auto"
