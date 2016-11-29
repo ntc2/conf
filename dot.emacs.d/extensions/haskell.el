@@ -3,6 +3,7 @@
 ;;; http://www.haskell.org/haskellwiki/Haskell_mode_for_Emacs
 ;;; http://projects.haskell.org/haskellmode-emacs/
 
+;; Commented out for Intero below.
 (when nil
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -129,38 +130,6 @@
 
 ;;(setq haskell-program-name "ghci -ignore-dot-ghci -ghci-script ~/.ghc/non-prompt.ghci")
 
-;;; Keyboard shortcuts.
-
-;; Copied from example Haskell Mode `init.el` here:
-;; https://github.com/haskell/haskell-mode/wiki/Example-init.el.
-(defun nc-haskell-hook ()
-  ;; Use `C-u [f8]` to jump back.
-  (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
-
-  ;; Contextually do clever things on the space key, in particular:
-  ;;   1. Complete imports, letting you choose the module name.
-  ;;   2. Show the type of the symbol after the space.
-  ;;
-  ;; Update: removed around Mar 5:
-  ;; https://github.com/haskell/haskell-mode/issues/1182.
-  ;;
-  ;;(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
-
-  ;; Make the GHCi prompt visible.
-  (define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-bring)
-  ;; Indent the below lines on columns after the current column.
-  (define-key haskell-mode-map (kbd "C-M-<right>")
-    (lambda ()
-      (interactive)
-      (haskell-move-nested 1)))
-  ;; Same as above but backwards.
-  (define-key haskell-mode-map (kbd "C-M-<left>")
-    (lambda ()
-      (interactive)
-      (haskell-move-nested -1)))
-)
-(add-hook 'haskell-mode-hook 'nc-haskell-hook)
-
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -233,7 +202,6 @@
 ;; complete arbitrary strings in current buffer, since 'ghc-mod' does
 ;; not provide that?
 (setq company-dabbrev-code-other-buffers nil)
-(setq company-show-numbers t)
 
 )
 
@@ -286,6 +254,46 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Intero
+
 (add-hook 'haskell-mode-hook 'intero-mode)
 (nc:custom-set-variable haskell-tags-on-save nil)
 (nc:custom-set-variable flycheck-check-syntax-automatically '(mode-enabled save))
+;; Based on example Haskell Mode `init.el` here:
+;; https://github.com/haskell/haskell-mode/wiki/Example-init.el.
+(defun nc:haskell-mode-hooks ()
+  (local-set-key (kbd "M-n") 'flycheck-next-error)
+  (local-set-key (kbd "M-p") 'flycheck-previous-error)
+  ;; Use `C-u [f8]` to jump back.
+  (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
+
+  (setq-local company-show-numbers t)
+
+  ;; Contextually do clever things on the space key, in particular:
+  ;;   1. Complete imports, letting you choose the module name.
+  ;;   2. Show the type of the symbol after the space.
+  ;;
+  ;; Update: removed around Mar 5:
+  ;; https://github.com/haskell/haskell-mode/issues/1182.
+  ;;
+  ;;(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+
+  ;; Make the GHCi prompt visible.
+  ;;(define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-bring)
+
+  ;; Indent the below lines on columns after the current column.
+  (define-key haskell-mode-map (kbd "C-M-<right>")
+    (lambda ()
+      (interactive)
+      (haskell-move-nested 1)))
+  ;; Same as above but backwards.
+  (define-key haskell-mode-map (kbd "C-M-<left>")
+    (lambda ()
+      (interactive)
+      (haskell-move-nested -1)))
+
+  ;; Generate <project root>/TAGS.
+  ;;
+  ;; Note that 'C-c C-t' is bound to 'intero-type-at' by default.
+  (define-key haskell-mode-map (kbd "C-c t")
+    (haskell-mode-generate-tags)))
+(add-hook 'haskell-mode-hook 'nc:haskell-mode-hooks)
