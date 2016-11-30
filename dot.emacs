@@ -130,7 +130,16 @@ See `nc:custom-set-variable'."
       ;; there is no `foo.elc' already (so "compile or recompile").
       ;;
       ;; The `t' arg means load the file after compilation.
-      (load (lambda (f) (byte-recompile-file f nil 0 t))))
+
+      ;;(load (lambda (f) (byte-recompile-file f nil 0 t))))
+
+      ;; Had problems with my `nc:custom-set-variable' macro not
+      ;; working correctly in byte compiled files, probably since the
+      ;; introduction of the above code. I couldn't figure out what
+      ;; was wrong, but it seems that startup isn't any slower with
+      ;; using regular `.el' files, so I'm not going to bother with
+      ;; byte compiling anymore.
+      (load 'load-file))
   (mapc load files))
 
 ;;; Mouse

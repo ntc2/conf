@@ -75,7 +75,17 @@ def main():
         print 'Cask is not installed. See `~/v/conf/install/cask.sh`.'
         print 'Before installing Cask, you should delete stale `.elc` files. Roughly:'
         print '    find ~/.emacs.d ~/v/conf -name \'*.elc\' -exec rm {} +'
-    print 'You may need to update Cask-installed Emacs deps with `nc:emacs:cask install`.'
+    if c('which zsh &>/dev/null') != 0:
+        print 'No ZSH available, so couldn\'t run `nc:emacs:cask install`.'
+    else:
+        c('zsh -c "nc:emacs:cask install"')
+    # remove byte compiled local configs. No real point right now as
+    # I'm not loading `.elc` files for my local configs anymore, but
+    # I've had various problems in the past with stale `.elc`
+    # files. E.g., they don't necessary recompile when macros they
+    # depend on change!
+    c('''find -L ~/.emacs.d/ -name .cask -prune -o -name '*.elc' -exec rm -v {} +''')
+    print 'You may want to update Cask-installed Emacs deps with `nc:emacs:cask update`.'
 
     # misc programs.
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())
