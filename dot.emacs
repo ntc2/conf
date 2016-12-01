@@ -117,7 +117,9 @@ See `nc:custom-set-variable'."
               ;; depends on Cask, then I'll need to make sure that
               ;; `~/.emacs.d/extensions/00-dependencies.el' loads
               ;; first.
-              '("~/.emacs.d/system-custom.el")
+              (if (file-exists-p "~/.emacs.d/system-custom.el")
+                  '("~/.emacs.d/system-custom.el")
+                '())
               ;; My customizations, split up in separate files.
               (file-expand-wildcards "~/.emacs.d/extensions/*.el")))
       ;; Byte-compile any out-of-date configurations and load all
