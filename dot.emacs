@@ -106,43 +106,31 @@ See `nc:custom-set-variable'."
 ;; Emacs now (Since Emacs 24?) warns that I shouldn't add '~/.emacs.d'
 ;; to my path.
 
-(require 'bytecomp)
-(let ((files (append
-              ;; System (e.g. math.wisc.edu vs uoregon.edu) *specific*
-              ;; code.  In practice I symlink a system specific
-              ;; versioned file here.
-              ;;
-              ;; Could just search for all `.el' files in
-              ;; `~/.emacs.d'. If the system custom config ever
-              ;; depends on Cask, then I'll need to make sure that
-              ;; `~/.emacs.d/extensions/00-dependencies.el' loads
-              ;; first.
-              (if (file-exists-p "~/.emacs.d/system-custom.el")
-                  '("~/.emacs.d/system-custom.el")
-                '())
-              ;; My customizations, split up in separate files.
-              (file-expand-wildcards "~/.emacs.d/extensions/*.el")))
-      ;; Byte-compile any out-of-date configurations and load all
-      ;; configurations.
-      ;;
-      ;; The `nil' arg means only recompile when `.el' file is newer
-      ;; than `.elc' file.
-      ;;
-      ;; The `0' arg means to compile `foo.el' to `foo.elc' even if
-      ;; there is no `foo.elc' already (so "compile or recompile").
-      ;;
-      ;; The `t' arg means load the file after compilation.
+;; Byte-compile any out-of-date configurations and load all
+;; configurations.
+;;
+;; The `nil' arg means only recompile when `.el' file is newer than
+;; `.elc' file.
+;;
+;; The `0' arg means to compile `foo.el' to `foo.elc' even if there is
+;; no `foo.elc' already (so "compile or recompile").
+;;
+;; The `t' arg means load the file after compilation.
+;;
+;;(require 'bytecomp)
+;;(defun nc:load (f) (byte-recompile-file f nil 0 t))
 
-      ;;(load (lambda (f) (byte-recompile-file f nil 0 t))))
-
-      ;; Had problems with my `nc:custom-set-variable' macro not
-      ;; working correctly in byte compiled files, probably since the
-      ;; introduction of the above code. I couldn't figure out what
-      ;; was wrong, but it seems that startup isn't any slower with
-      ;; using regular `.el' files, so I'm not going to bother with
-      ;; byte compiling anymore.
-      (load 'load-file))
-  (mapc load files))
+;; Had problems with my `nc:custom-set-variable' macro not working
+;; correctly in byte compiled files, probably since the introduction
+;; of the above code. I couldn't figure out what was wrong, but it
+;; seems that startup isn't any slower with using regular `.el' files,
+;; so I'm not going to bother with byte compiling anymore.
+(defun nc:load (f) (load-file f))
+(let (;; My customizations, split up in separate files. The
+      ;; `~/.emacs.d/system-custom.el' is loaded separately at the end
+      ;; of this file.
+      (files (file-expand-wildcards "~/.emacs.d/extensions/*.el")))
+  (mapc 'nc:load files))
 
 ;;; Mouse
 ;; use SHIFT+<arrow> to navigate windows
@@ -258,3 +246,11 @@ See `nc:custom-set-variable'."
 ;; control-lock
 ;(require 'control-lock) ; already loaded above
 (control-lock-keys)
+
+;; System (e.g. math.wisc.edu vs uoregon.edu) *specific*
+;; code.  In practice I symlink a system specific
+;; versioned file here.
+;;
+;; Load this last, in case it overrides existing settings.
+(when (file-exists-p "~/.emacs.d/system-custom.el")
+    (nc:load "~/.emacs.d/system-custom.el"))
