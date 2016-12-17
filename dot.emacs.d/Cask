@@ -71,3 +71,17 @@
 ;; module Test where
 ;; ```
 (depends-on "polymode")
+
+;; Use-package.
+;;
+;; This can replace Cask: i.e. it can auto install things.
+;;
+;; https://github.com/jwiegley/use-package
+(depends-on "use-package")
+(depends-on "diminish")
+
+;; Helm.
+;;
+;; https://github.com/emacs-helm/helm
+(depends-on "helm")
+(depends-on "helm-descbinds")

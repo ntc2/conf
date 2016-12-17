@@ -22,6 +22,8 @@
 
 (global-set-key (kbd "M-/") 'hippie-expand)
 
+;; I'm now using `helm' instead of `ido'; see ./helm.el.
+(when nil
 (require 'ido)
 (ido-mode t)
 ;; Ask if I want to jump to existing visible frame instead of assuming
@@ -32,6 +34,7 @@
 
 ;; Case-insensitive completion. This is on by default.
 (nc:custom-set-variable ido-case-fold t)
+)
 
 ;; Provides `C-,` and `C-.`, which are also provided by `ido`.
 ;(icomplete-mode t)
