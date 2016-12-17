@@ -16,7 +16,9 @@
     (local-set-key (kbd "C-c <left>")  'windmove-left)
     (local-set-key (kbd "C-c <right>") 'windmove-right)
     (local-set-key (kbd "C-c <up>")    'windmove-up)
-    (local-set-key (kbd "C-c <down>")  'windmove-down)))
+    (local-set-key (kbd "C-c <down>")  'windmove-down)
+
+    (local-set-key (kbd "C-c C-a") 'align-regexp)))
 
 ;; Syntax highlight "src" blocks when they have a language tag, e.g
 ;;
