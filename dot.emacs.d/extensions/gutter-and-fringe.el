@@ -12,8 +12,13 @@
 (add-hook 'font-lock-mode-hook
           (lambda ()
             (when (not (member major-mode '(org-mode)))
-              (git-gutter-mode 1)
-              (linum-mode 1))))
+              (git-gutter-mode 1))))
+
+;; Use `linum-mode' in all programming modes, except `org-mode'.
+(add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'org-mode-hook (lambda () (linum-mode 0)))
+
+(add-hook 'text-mode-hook 'linum-mode)
 
 ;; Make git-gutter work with magit. By default, when committing from
 ;; magit-status, git-gutter doesn't realize a commit has been made.
