@@ -85,3 +85,6 @@
 ;; https://github.com/emacs-helm/helm
 (depends-on "helm")
 (depends-on "helm-descbinds")
+(depends-on "projectile")
+(depends-on "helm-projectile")
+(depends-on "helm-ag")
