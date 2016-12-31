@@ -210,6 +210,9 @@
     # http://stackoverflow.com/questions/591923/make-git-automatically-remove-trailing-whitespace-before-committing/15398512#15398512
     ######################################################################
 
+    # Fix whitespace in HEAD commit.
+    fixws-head = !"git rebase --whitespace=fix HEAD~"
+
     # Check that it's safe to fix whitespace.
     #
     # Called by whitespace fixers below.
