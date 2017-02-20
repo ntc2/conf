@@ -203,6 +203,9 @@
     # Amend, reusing the commit message.
     autoamend = commit --amend -CHEAD
 
+    # Pull, stashing and popping local changes automatically.
+    pullstash = -c rebase.autoStash=true pull --rebase
+
     ######################################################################
     # Clean up whitespace.
     #
