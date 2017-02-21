@@ -1,3 +1,14 @@
+-- Reloading this file (copied from fresh-ubuntu-install.org):
+--
+-- Install deps if necessary:
+--
+--     sudo aptitude install libx11-dev libxinerama-dev libxrandr-dev libxft-dev
+--     cabal update && cabal install xmonad xmonad-contrib
+--
+-- Rebuild and reload xmonad after each edit:
+--
+--     xmonad --recompile && xmonad --reload
+
 -- Gnome config now given in org/notes/fresh-ubuntu-install.org.
 --
 -- Gnome config from (OLD)
@@ -167,8 +178,32 @@ myWorkspaces = -- map show [1 .. (9 - length namedWorkspaces)] ++
 -- Use 'xprop' to find the resource strings: run 'xprop' and then click on a window of the app in question.
 namedWorkspaceHook = composeAll [ resource =? "update-manager" --> doF (W.shift "update") 
                                 , resource =? "synaptic"       --> doF (W.shift "update")
-                                , className =? "Firefox"       --> doF (W.shift "web")
+                                , isFirefoxBrowserWindow       --> doF (W.shift "web")
                                 ]
+  where
+    -- Don't want to match dialogs, since they should stay with the
+    -- window that generates them, which isn't always in the "web"
+    -- workspace..
+    --
+    -- Based on
+    -- https://wiki.haskell.org/Xmonad/General_xmonad.hs_config_tips#ManageHook_examples.
+    --
+    -- Using 'xprop', I see
+    --
+    --     WM_CLASS(STRING) = "Navigator", "Firefox"
+    --
+    -- for the browser windows and
+    --
+    --     WM_CLASS(STRING) = "Dialog", "Firefox"
+    --
+    -- and
+    --
+    --     WM_CLASS(STRING) = "firefox", "Firefox"
+    --
+    -- for the dialogs (save-or-open dialog, and save-as dialog,
+    -- respectively). So, I'm guessing the first part is the
+    -- "resource" and the second part is the "class name".
+    isFirefoxBrowserWindow = className =? "Firefox" <&&> resource =? "Navigator"
 
 myManageHook = fullscreenHook <+> namedWorkspaceHook
 
