@@ -247,7 +247,7 @@
 	  "~/tmp/cabal-cargs/.cabal-sandbox/bin/cabal-cargs"))))
 ;; But `haskell-hlint` is annoying anyway, so disable it. It can warn
 ;; about unused PRAGMAs though, which is actually useful. May be
-;; worthwhile to figure out how toonly enable that.
+;; worthwhile to figure out how to only enable that.
 (setq-default flycheck-disabled-checkers '(haskell-hlint))
 
 )
@@ -267,6 +267,21 @@
   (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
 
   (setq-local company-show-numbers t)
+  ;; Don't downcase completions in comments. Without this writing
+  ;; haddocks is really annoying, since e.g. 'con<complete>' completes
+  ;; to 'concatmap' instead of 'concatMap', since 'con' is lowercase
+  ;; :P
+  (setq-local company-dabbrev-downcase nil)
+  ;; The minimum string length before auto completion starts. The
+  ;; default is 3, but that doesn't work for completing single letter
+  ;; qualified imports, since `M.` is only two letters.
+  (setq-local company-minimum-prefix-length 2)
+  ;; Time to wait before starting automatic company completion. The
+  ;; default is 0.5. If this is annoying, or too resource hungry, than
+  ;; perhaps what I really want is an easy single key sequence to
+  ;; start company completion, perhaps integrating it into some other
+  ;; completion (like `M-TAB` or `M-/`).
+  (setq-local company-idle-delay 0.1)
 
   ;; Contextually do clever things on the space key, in particular:
   ;;   1. Complete imports, letting you choose the module name.
