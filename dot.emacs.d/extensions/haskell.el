@@ -282,6 +282,10 @@
   ;; start company completion, perhaps integrating it into some other
   ;; completion (like `M-TAB` or `M-/`).
   (setq-local company-idle-delay 0.1)
+  ;; Make C-s filter completions by search, instead of just
+  ;; highlighting matches. Very useful with qualified import
+  ;; completion.
+  (setq-local company-search-filtering t)
 
   ;; Contextually do clever things on the space key, in particular:
   ;;   1. Complete imports, letting you choose the module name.
@@ -312,3 +316,16 @@
   (define-key haskell-mode-map (kbd "C-c t")
     (haskell-mode-generate-tags)))
 (add-hook 'haskell-mode-hook 'nc:haskell-mode-hooks)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Intero mode shortcuts (at the bottom so I find them easily)
+;;
+;; C-s in company completion list: filter the current completions by
+;; case insensitive substring search. Depends on setting
+;; `company-search-filtering` non-nil; otherwise C-M-s does filtering.
+;;
+;; C-c C-,: haskell-mode-format-imports: sort and align imports in
+;; block at cursor.
+;;
+;; C-c ! l: flycheck-list-errors: list all errors in a separate
+;; buffer.
