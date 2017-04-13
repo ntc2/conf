@@ -132,11 +132,18 @@ See `nc:custom-set-variable'."
       (files (file-expand-wildcards "~/.emacs.d/extensions/*.el")))
   (mapc 'nc:load files))
 
-;;; Mouse
 ;; use SHIFT+<arrow> to navigate windows
 (windmove-default-keybindings)
 ;; like focus follows mouse in gnome
 ;(setq mouse-autoselect-window t)
+
+;; Use CUA rectangles, but not other cua bindings like `C-c' for
+;; copy. Use `C-RET' to start cua rectangle mode, and `RET' in mode to
+;; move cursor to different rectangle corners. Cursor motion expands
+;; or contracts the rectangle by default, but `M-<cursor movement>`
+;; instead moves the whole rectangle. Editing while the rectangle is
+;; active results in the same action on all lines.
+(cua-selection-mode 1)
 
 ;;; disable tool bar (DISABLED IN ~/.Xresources NOW)
 ; some mode might use this in a useful way, e.g. debuggers or web
