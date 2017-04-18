@@ -50,6 +50,7 @@ def main():
               '.gitconfig', '.gitattributes',
               '.xmonad/xmonad.hs', '.xmonad/startup-hook.sh',
               '.Xresources', '.xsession',
+              '.config/redshift.conf',
               '.config/gnome-session/sessions/local-xmonad-session.session',
               '.local/share/applications/local-xmonad-windowmanager-provider.desktop',
               '.local/share/applications/local-gnome-panel.desktop',
