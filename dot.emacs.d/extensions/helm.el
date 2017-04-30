@@ -21,6 +21,7 @@
 (use-package helm
   ;; Defining `:commands' or `:bind' turns on lazy loading.
   :commands helm-mode
+  :diminish helm-mode
   :defer t
   ;; Force eager loading. This seems to fix my complete-as-I-type
   ;; problem! Got the idea that lazy loading could be the problem
@@ -71,7 +72,7 @@
   :defer t
   ;; :ensure t
   :commands projectile-global-mode
-;;  :diminish projectile-mode
+  :diminish projectile-mode
   :init
   (progn
     (projectile-global-mode 1)
