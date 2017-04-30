@@ -48,6 +48,12 @@ See `nc:custom-set-variable'."
   (custom-set-faces
     `(,face ,spec nil ,(nc:custom-set-warning))))
 
+(global-font-lock-mode 1)
+
+;; Save last cursor position in files and jump there when reopening.
+(setq-default saveplace t)
+(require 'saveplace)
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -55,21 +61,13 @@ See `nc:custom-set-variable'."
   ;; If there is more than one, they won't work right.
  '(case-fold-search t)
  '(current-language-environment "English")
- '(global-font-lock-mode t nil (font-lock))
  '(inhibit-startup-screen t)
- '(iswitchb-default-method (quote maybe-frame))
- '(jit-lock-defer-time 0.25)
- '(js2-auto-indent-flag nil)
- '(js2-bounce-indent-flag t)
- '(js2-highlight-level 3)
- '(js2-mirror-mode nil)
  '(mouse-wheel-follow-mouse t)
  '(mouse-wheel-mode t nil (mwheel))
  '(ps-black-white-faces (quote ((font-lock-builtin-face "black" nil bold underline) (font-lock-comment-face "gray20" nil italic) (font-lock-constant-face "black" nil bold) (font-lock-function-name-face "black" nil bold) (font-lock-keyword-face "black" nil bold underline) (font-lock-string-face "black" nil italic) (font-lock-type-face "black" nil italic) (font-lock-variable-name-face "black" nil bold italic) (font-lock-warning-face "black" nil bold italic))))
  '(ps-line-number t)
  '(ps-print-color-p (quote black-white))
  '(rst-level-face-base-color "not-a-color-so-ill-get-black")
- '(save-place t nil (saveplace))
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 (custom-set-faces
@@ -131,6 +129,10 @@ See `nc:custom-set-variable'."
       ;; of this file.
       (files (file-expand-wildcards "~/.emacs.d/extensions/*.el")))
   (mapc 'nc:load files))
+;; Generate list of extensions for (e.g. bisection) debugging config
+;; probllems.
+;;
+;; find ~/.emacs.d/extensions/ -name '*.el' | xargs -n1 -i echo "(nc:load \"{}\")"
 
 ;; use SHIFT+<arrow> to navigate windows
 (windmove-default-keybindings)
@@ -199,9 +201,6 @@ See `nc:custom-set-variable'."
 ;; If you would like smooth scrolling, uncomment this line
 (setq scroll-step 1)
 
-;; For a much better buffer list:
-(global-set-key "\C-x\C-b" 'electric-buffer-list)
-
 ; Not sure which modes become more decorated?
 (setq font-lock-maximum-decoration t)
 
@@ -211,18 +210,6 @@ See `nc:custom-set-variable'."
 
 ;; Make emacs shell display ascii color escapes properly.
 (ansi-color-for-comint-mode-on)
-
-; A useful looking snippet for setting up custom colors...
-
-;        (font-lock-make-faces t)
-;        (setq font-lock-face-attributes
-;              '((font-lock-comment-face "Firebrick")
-;                (font-lock-string-face "RosyBrown")
-;                (font-lock-keyword-face "Purple")
-;                (font-lock-function-name-face "Blue")
-;                (font-lock-variable-name-face "DarkGoldenrod")
-;                (font-lock-type-face "DarkOliveGreen")
-;                (font-lock-reference-face "CadetBlue")))
 
 ;;; End CSL stuff
 
@@ -238,10 +225,6 @@ See `nc:custom-set-variable'."
 ;; file; follow link?" every time I open a symlink to a versioned
 ;; file.
 (setq vc-follow-symlinks t)
-
-;; control-lock
-;(require 'control-lock) ; already loaded above
-(control-lock-keys)
 
 ;; System (e.g. math.wisc.edu vs uoregon.edu) *specific*
 ;; code.  In practice I symlink a system specific

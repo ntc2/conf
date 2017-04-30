@@ -20,16 +20,24 @@
 ;;
 ;; Flyspell actually provides a special way to do this:
 ;;
-;;(nc:custom-set-variable flyspell-use-meta-tab nil)
+(nc:custom-set-variable flyspell-use-meta-tab nil)
 ;;
 ;; but here is a general way:
-(eval-after-load 'flyspell '(define-key flyspell-mode-map "\M-\t" nil))
+;;
+;;(eval-after-load 'flyspell '(define-key flyspell-mode-map "\M-\t" nil))
+
+;; (add-hook 'font-lock-mode-hook (lambda () (flyspell-mode 1)))
 
 ;; Enable `flyspell-mode` or `flyspell-prog-mode` selectively. I
 ;; separately enable `flyspell-prog-mode` in `./haskell.el` for
 ;; `haskell-mode`.
 ;;
 ;; Default is to enable to `flyspell-mode`.
+;;
+;; UPDATE: enabling `flyspell-mode' in arbitrary modes as the default
+;; case is problematic. E.g. it broke Helm completion in a subtle way,
+;; introducing a long delay. It may also have broken other modes that
+;; I wasn't aware of ...
 (add-hook 'font-lock-mode-hook
   (lambda ()
     ;; (when (member major-mode
@@ -46,9 +54,16 @@
             emacs-lisp-mode
             haskell-cabal-mode
             haskell-mode
+            lisp-mode
+            lisp-interaction-mode
+            emacs-lisp-mode
             java-mode
             javascript-mode
+            python-mode
             sh-mode))
+          (flyspell-modes
+           '(text-mode
+             fundamental-mode))
           (no-flyspell-modes
            '(help-mode
              magit-status-mode)))
@@ -56,5 +71,5 @@
              (flyspell-prog-mode))
             ((member major-mode no-flyspell-modes)
              (flyspell-mode 0))
-            (t
-             (flyspell-mode t))))))
+            ((member major-mode flyspell-modes)
+             (flyspell-mode 1))))))

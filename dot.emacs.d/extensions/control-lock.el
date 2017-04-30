@@ -162,3 +162,6 @@ user uses to enable control-lock."
       (customize-set-variable 'cursor-type '(hbar . 3)))))
 
 (provide 'control-lock)
+;; Turn it on.
+(control-lock-keys)
+
