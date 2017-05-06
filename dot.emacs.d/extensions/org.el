@@ -13,29 +13,36 @@
     (local-set-key (kbd "C-c C-n") 'outline-forward-same-level)
     (local-set-key (kbd "C-c C-p") 'outline-backward-same-level)
 
-    ;; The `windmove-default-keybindings' binds `S-<direction>' to
-    ;; move to window in that direction. By default `org' binds key
-    ;; combos to the `org-shift<direction>' functions, e.g. for
-    ;; adjusting dates or indentation levels.
-    (local-set-key (kbd "C-<left>")  'org-shiftleft)
-    (local-set-key (kbd "C-<right>") 'org-shiftright)
-    (local-set-key (kbd "C-<up>")    'org-shiftup)
-    (local-set-key (kbd "C-<down>")  'org-shiftdown)
-    ;; The following doesn't seem to have any effect:
-    ;;
-    ;; (unbind-key (kbd "S-<left>"))
-    ;; (unbind-key (kbd "S-<right>"))
-    ;; (unbind-key (kbd "S-<up>"))
-    ;; (unbind-key (kbd "S-<down>"))
-    ;; (windmove-default-keybindings)
-    ;;
-    ;; so bind explicitly instead.
-    (local-set-key (kbd "S-<left>")  'windmove-left)
-    (local-set-key (kbd "S-<right>") 'windmove-right)
-    (local-set-key (kbd "S-<up>")    'windmove-up)
-    (local-set-key (kbd "S-<down>")  'windmove-down)
+    (bind-windmove-keys)
 
     (local-set-key (kbd "C-c C-a") 'align-regexp)))
+(add-hook 'org-agenda-mode-hook
+          (lambda ()
+            (bind-windmove-keys)))
+
+(defun bind-windmove-keys ()
+  ;; The `windmove-default-keybindings' binds `S-<direction>' to
+  ;; move to window in that direction. By default `org' binds key
+  ;; combos to the `org-shift<direction>' functions, e.g. for
+  ;; adjusting dates or indentation levels.
+  (local-set-key (kbd "C-<left>")  'org-shiftleft)
+  (local-set-key (kbd "C-<right>") 'org-shiftright)
+  (local-set-key (kbd "C-<up>")    'org-shiftup)
+  (local-set-key (kbd "C-<down>")  'org-shiftdown)
+  ;; The following doesn't seem to have any effect:
+  ;;
+  ;; (unbind-key (kbd "S-<left>"))
+  ;; (unbind-key (kbd "S-<right>"))
+  ;; (unbind-key (kbd "S-<up>"))
+  ;; (unbind-key (kbd "S-<down>"))
+  ;; (windmove-default-keybindings)
+  ;;
+  ;; so bind explicitly instead.
+  (local-set-key (kbd "S-<left>")  'windmove-left)
+  (local-set-key (kbd "S-<right>") 'windmove-right)
+  (local-set-key (kbd "S-<up>")    'windmove-up)
+  (local-set-key (kbd "S-<down>")  'windmove-down))
+
 
 ;; Syntax highlight "src" blocks when they have a language tag, e.g
 ;;
