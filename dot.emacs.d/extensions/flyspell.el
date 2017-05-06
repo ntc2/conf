@@ -63,7 +63,8 @@
             sh-mode))
           (flyspell-modes
            '(text-mode
-             fundamental-mode))
+             fundamental-mode
+             org-mode))
           (no-flyspell-modes
            '(help-mode
              magit-status-mode)))
