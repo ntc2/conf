@@ -62,9 +62,11 @@
             python-mode
             sh-mode))
           (flyspell-modes
-           '(text-mode
-             fundamental-mode
-             org-mode))
+           '(fundamental-mode
+             markdown-mode
+             org-mode
+             rst-mode
+             text-mode))
           (no-flyspell-modes
            '(help-mode
              magit-status-mode)))
