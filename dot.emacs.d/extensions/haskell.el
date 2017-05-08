@@ -310,11 +310,15 @@
       (interactive)
       (haskell-move-nested -1)))
 
+  ;; Usually have to restart Intero whenever I change the .cabal file,
+  ;; so make that easier.
+  (define-key haskell-mode-map (kbd "C-c i r") 'intero-restart)
+
   ;; Generate <project root>/TAGS.
   ;;
   ;; Note that 'C-c C-t' is bound to 'intero-type-at' by default.
-  (define-key haskell-mode-map (kbd "C-c t")
-    (haskell-mode-generate-tags)))
+  (define-key haskell-mode-map (kbd "C-c i t") 'haskell-mode-generate-tags))
+
 (add-hook 'haskell-mode-hook 'nc:haskell-mode-hooks)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
