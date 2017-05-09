@@ -23,6 +23,8 @@ nc:pdf:magic () {
 :
 : Guess watermark, apply watermark, open watermarked file, 
 : and insert imcomplete 'pdfnup' command.
+
+which pdftk &>/dev/null || return `(nc:usage $0 "You need to install pdftk")`
 [[ $# -eq 1 ]] && [[ -e "$1" ]] || return `(nc:usage $0)`
 local file="$1"
 
