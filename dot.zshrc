@@ -33,7 +33,20 @@ setopt no_multios
 # See `stty -a` and `bindkey` for key bindings.  The stty bindings
 # take precedence (e.g. the C-s freezing the terminal (disabled below)
 # taking precedence over C-s incremental forward searching the
-# history).
+# history). Run `read` and then type things to see escapes that `stty`
+# and `bindkey` understand.
+
+nc:show-bindinds () {
+  : 'Show (some of) the keybindings available in the terminal.'
+  : 'Use `read` to discover escapes that can be used with `bindkey` and `stty`.'
+  echo "Bindkey bindings:"
+  echo "================================================================"
+  bindkey
+  echo
+  echo "Stty bindings:"
+  echo "================================================================"
+  stty -a
+}
 
 # Make HOME and END work.
 
