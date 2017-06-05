@@ -11,3 +11,8 @@ function nc:xmonad:hack-gnome-panel {
   # process.
   mutter
 }
+
+function nc:xmonad:galois:config-monitors {
+  : 'Configure monitors for laptop when lid is closed and external monitors are attached.'
+   xrandr --output DP-2 --mode 1680x1050 --left-of DP-3 --output DP-3 --mode 1920x1080 --left-of DP-0 --output DP-0 --off
+}
