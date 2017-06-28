@@ -40,15 +40,8 @@
 ;; I wasn't aware of ...
 (add-hook 'font-lock-mode-hook
   (lambda ()
-    ;; (when (member major-mode
-    ;;               '(bibtex-mode
-    ;;                 default-generic-mode
-    ;;                 fundamental-mode
-    ;;                 latex-mode
-    ;;                 org-mode
-    ;;                 rst-mode
-    ;;                 text-mode))
-    ;;   (flyspell-mode t))
+    ;; To learn what mode you want to add here, do `C-h v major-mode
+    ;; RET' in the buffer whose mode you want to know.
     (let ((flyspell-prog-modes
           '(c-mode
             emacs-lisp-mode
@@ -56,7 +49,7 @@
             haskell-mode
             lisp-mode
             lisp-interaction-mode
-            emacs-lisp-mode
+            makefile-gmake-mode
             java-mode
             javascript-mode
             python-mode
