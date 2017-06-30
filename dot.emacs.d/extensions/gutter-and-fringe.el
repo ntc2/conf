@@ -7,12 +7,20 @@
 ;; major modes that correspond to text editing.
 ;;
 ;; It might be OK to use git-gutter-mode with org-mode; I haven't
-;; tested, but folding surely can't make sense.
+;; tested, but folding surely can't make sense. This hack doesn't work
+;; very consistently ... perhaps font lock starts before org mode
+;; sometimes?
 (require 'git-gutter-fringe nil t)
 (add-hook 'font-lock-mode-hook
           (lambda ()
             (when (not (member major-mode '(org-mode)))
               (git-gutter-mode 1))))
+
+;; Make it easy to quickly jump between modified sections of the
+;; file. Using some kind of outline/folding mode might be a more
+;; general way to achieve this kind of navigation.
+(global-set-key (kbd "M-<prior>") 'git-gutter:previous-hunk)
+(global-set-key (kbd "M-<next>")  'git-gutter:next-hunk)
 
 ;; Use `linum-mode' in all programming modes, except `org-mode'.
 (add-hook 'prog-mode-hook 'linum-mode)
