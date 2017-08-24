@@ -1,0 +1,13 @@
+# -*- conf -*-
+#
+# This file being '~/.gitignore' is non-standard and configured by
+# 'core.excludesFile' in '~/.gitconfig'.
+#
+# Note that there is also '<repo>/.git/info/exclude' for repo local,
+# non-versioned ignores.
+
+.emacs.desktop
+.emacs.desktop.lock
+TAGS
+
+*.pyc

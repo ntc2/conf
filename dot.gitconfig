@@ -12,6 +12,14 @@
 [apply]
 	whitespace = fix
 [core]
+  # Global excludes file that applies to all repos. The default value
+  # is '$XDG_CONFIG_HOME/git/ignore', which in turn defaults to
+  # '~/.config/git/ignore'.
+  #
+  # There is also '.git/info/exclude', which is a per repo, but
+  # unversioned gitignore file. See 'man gitignore'.
+  excludesFile = ~/.gitignore
+
   # Apparently git sets 'LESS=FRSX'. The 'F' means to quit if output
   # fits on one screen, the 'R' means to interpret escapes (e.g. ANSI
   # color), the 'S' means to chop long lines, and the 'X' means not to

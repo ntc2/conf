@@ -47,7 +47,7 @@ def main():
               '.zsh', '.zshrc', '.zshenv', '.zprofile',
               '.ghc/ghci.conf', '.ghc/ghci-prompt.conf', '.haskeline',
               '.vimperatorrc',
-              '.gitconfig', '.gitattributes',
+              '.gitconfig', '.gitattributes', '.gitignore',
               '.xmonad/xmonad.hs', '.xmonad/startup-hook.sh',
               '.Xresources', '.xsession',
               '.config/redshift.conf',
