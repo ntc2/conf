@@ -83,6 +83,11 @@ See `nc:custom-set-variable'."
 (nc:custom-set-variable safe-local-variable-values
                         '((haskell-tags-on-save)))
 
+;; Always select / jump to help window when it opens. This lets you
+;; hit "q" to close the help window, without having to select it
+;; first.
+(nc:custom-set-variable help-window-slect t)
+
 ;; Highlight matching parens.
 (add-hook 'after-init-hook #'show-paren-mode)
 
