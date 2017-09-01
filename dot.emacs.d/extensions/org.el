@@ -1,9 +1,31 @@
 ;;; Org mode
 
 ;; suggested global bindings from docs
-;(global-set-key (kbd "C-c l") 'org-store-link)
+;;
+;;
+;;(global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
-(setq org-agenda-files '("~/v/org/"))
+;;
+;; Default files for "C-c a".
+;;
+;;(setq org-agenda-files '("~/v/org/"))
+
+;; Org todo keywords
+;;
+;; For todo items, the the priority is INPROGRESS > NEXT > TODO.
+;;
+;; Use separate groups so that they can be cycled separately by using
+;; `C-c C-t'. The `C-<left>' and `C-<right>' cycle through all
+;; sets. Docs:
+;; http://orgmode.org/manual/Multiple-sets-in-one-file.html#Multiple-sets-in-one-file
+;;
+;; Use single-letter shortcuts (e.g. "t" in "TODO(t)") for fast access
+;; to TODO state, e.g. with `C-c C-t t' to set to "TODO". Docs:
+;; http://orgmode.org/manual/Fast-access-to-TODO-states.html#Fast-access-to-TODO-states
+(nc:custom-set-variable org-todo-keywords
+                        '((sequence "TODO(t)" "NEXT(n)" "INPROGRESS(i)" "|" "DONE(d)")
+                          (sequence "|" "MAYBE(m)" "WAITING(w)" "CANCELLED(c)")))
+
 (add-hook 'org-mode-hook
   (lambda ()
     ;; turn on soft wrapping mode for org mode, from
