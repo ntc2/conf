@@ -6,8 +6,17 @@
 # Note that there is also '<repo>/.git/info/exclude' for repo local,
 # non-versioned ignores.
 
+# Emacs
 .emacs.desktop
 .emacs.desktop.lock
 TAGS
 
+# Python
 *.pyc
+
+# Java
+*.class
+
+# Haskell
+*.o
+*.hi
