@@ -45,7 +45,7 @@ def main():
     # the idempotence of {ln ~/v/conf/dot.zsh ~/.zsh}.
     for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config',
               '.zsh', '.zshrc', '.zshenv', '.zprofile',
-              '.ghc/ghci.conf', '.ghc/ghci-prompt.conf', '.haskeline',
+              '.ghc/ghci.conf', '.haskeline',
               '.vimperatorrc',
               '.gitconfig', '.gitattributes', '.gitignore',
               '.xmonad/xmonad.hs', '.xmonad/startup-hook.sh',
