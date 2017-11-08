@@ -10,6 +10,8 @@
 .emacs.desktop
 .emacs.desktop.lock
 TAGS
+.projectile
+.dir-locals.el
 
 # Python
 *.pyc
