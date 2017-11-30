@@ -12,4 +12,8 @@
 # or
 #
 #   * text=
-* text=auto
+
+# This creates too many problems when checking out repos I don't
+# control, so I need to make it opt in, not opt out.
+#
+#* text=auto
