@@ -82,13 +82,6 @@ message () {
     print -P "${rd}[${bl}* ${gr}$@ ${bl}*${rd}]${pl}"
 }
 
-## Poor man's attempt at bash's 'help' command
-#
-# From http://chneukirchen.org/blog/archive/2012/02/10-new-zsh-tricks-you-may-not-know.html
-zman () {
-  PAGER="less -g -s '+/^       $1\b'" man zshall
-}
-
 ## Load extensions
 
 for f in ~/.zsh/rc.d/*; do

@@ -1,7 +1,3 @@
-# Man page fixed at 65 columns. Full width man pages in a wide
-# terminal are hard to read.
-alias nc:man="MANWIDTH=65 man"
-
 # Historical comment :)
 
 # #10/1/04 a good ol` fashion bashrc
