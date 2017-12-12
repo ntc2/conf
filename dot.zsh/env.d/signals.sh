@@ -4,14 +4,14 @@
 # This trap affects the whole shell, and moreover will kill any shell
 # it runs in! So, only do this in a subshell, with
 #
-#   (install-ctrl-c-handler; <cmd>)
+#   (nc:kill-everything-on-ctrl-c; <cmd>)
 #
 # or in a dedicated shell, with
 #
-#   zsh -c "install-ctrl-c-handler; <cmd>"
+#   zsh -c "nc:kill-everything-on-ctrl-c; <cmd>"
 #
 # if you don't want the current shell to exit too.
-nc:kill-everthing-on-ctrl-c () {
+nc:kill-everything-on-ctrl-c () {
   # In ZSH, defining a TRAP<sig> function is like setting a trap for
   # <sig> with 'trap <cmd> <sig>'.
   TRAPINT () {
@@ -55,7 +55,7 @@ _nc:test:child-cmd () {
 
 _nc:test:cmd-with-children () {(
   ;
-  nc:kill-everthing-on-ctrl-c
+  nc:kill-everything-on-ctrl-c
   trap
   _nc:test:child-cmd 1 &
   _nc:test:child-cmd 2 &
