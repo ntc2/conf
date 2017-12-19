@@ -109,7 +109,9 @@ import XMonad.Actions.CycleWindows
 import XMonad.Actions.CycleWS (toggleWS)
 
 import qualified Data.Map as M
-
+import Data.List
+import Text.Printf
+import System.Environment
 
 myDefaultConfig = gnomeConfig -- defaultConfig
 main = xmonad myDefaultConfig
@@ -218,7 +220,31 @@ namedWorkspaceHook = composeAll [ resource =? "update-manager" --> doF (W.shift 
     -- for the dialogs (save-or-open dialog, and save-as dialog,
     -- respectively). So, I'm guessing the first part is the
     -- "resource" and the second part is the "class name".
-    isFirefoxBrowserWindow = className =? "Firefox" <&&> resource =? "Navigator"
+    --
+    -- For Firefox ESR, the class name is "Firefox-esr", so we only
+    -- match on a prefix of the class name.
+    isFirefoxBrowserWindow = isPrefixOf "Firefox" <$> className
+                        <&&> resource =? "Navigator"
+    -- Debug namedWorkspaceHook. See also @xprop@ usage described
+    -- above.
+    {-
+      let query = isPrefixOf "Firefox" <$> className
+             <&&> resource =? "Navigator"
+      result <- query
+      cName <- className
+      rName <- resource
+      aName <- appName
+      let msg = printf "isFirefoxBrowserWindow: \
+                       \className = '%s', resource = '%s', appName = '%s',\
+                       \result = '%s'\n"
+                       cName rName aName (show result)
+
+      file <- liftIO $ do
+        Just home <- lookupEnv "HOME"
+        return $ home ++ "/.xmonad/debug.txt"
+      liftIO $ appendFile file msg
+      liftIO $ putStr msg -- Don't know where this goes
+    -}
 
 myManageHook = fullscreenHook <+> namedWorkspaceHook
 
