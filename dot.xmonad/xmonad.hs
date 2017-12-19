@@ -136,14 +136,14 @@ main = xmonad myDefaultConfig
        , startupHook = myStartupHook
        , manageHook  = myManageHook -- full-screen flash
                        <+> manageHook myDefaultConfig
-                       -- no borders for single window
-       , layoutHook  = id -- windowNavigation $ subTabbed $ boringWindows
-
-                       -- !!!: Here I say to avoid *no* struts, but
-                       -- leaving this out means strut toggling
-                       -- operations (M-b an C-M-b) don't work
-                       -- ... seems like a bug.
-                       . avoidStrutsOn []
+       , layoutHook  = id
+                       -- Leave (U)pper struts visible on startup. The
+                       -- "avoid" here means "avoid covering".
+                       -- Leaving this out, even when the avoid list
+                       -- is empty, makes strut toggling operations
+                       -- (M-b an C-M-b) not work, which seems like a
+                       -- bug.
+                       . avoidStrutsOn [U]
                        . smartBorders
                        $ Full ||| tall ||| Mirror tall
        , workspaces = myWorkspaces
