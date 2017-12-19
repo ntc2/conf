@@ -7,7 +7,10 @@
 --
 -- Rebuild and reload xmonad after each edit:
 --
---     xmonad --recompile && xmonad --reload
+--     cabal sandbox -- xmonad --recompile && cabal sandbox -- xmonad --restart
+--
+-- This doesn't change the globally installed xmonad binary, but that
+-- doesn't seem to matter.
 
 -- Gnome config now given in org/notes/fresh-ubuntu-install.org.
 --
@@ -58,17 +61,26 @@ import XMonad.Hooks.ManageHelpers -- fullscreen flash Using
 import XMonad.Hooks.ManageDocks (SetStruts(..),ToggleStruts(..),Direction2D(..),avoidStrutsOn)
 import XMonad.Config.Desktop (desktopLayoutModifiers) -- custom layoutHook + gnome
 
--- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-SubLayouts.html
---
--- and below in layoutHook.  Not actually doing anything right now ...
-import XMonad.Layout.BoringWindows
-import XMonad.Layout.NoBorders (smartBorders)
-import XMonad.Layout.SubLayouts
-import XMonad.Layout.WindowNavigation
 
 -- Get a prompt for running XMonad X () actions interactively.
 import XMonad.Prompt
 import XMonad.Prompt.XMonad
+
+-- * Window Layouts
+--
+-- ** Resizeable Tall Layout
+import XMonad.Layout.ResizableTile
+  ( ResizableTall(..)
+  , MirrorResize(MirrorShrink,MirrorExpand) )
+-- ** SubLayouts (UNUSED)
+--
+-- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-SubLayouts.html
+--
+-- and below in layoutHook.
+import XMonad.Layout.BoringWindows
+import XMonad.Layout.NoBorders (smartBorders)
+import XMonad.Layout.SubLayouts
+import XMonad.Layout.WindowNavigation
 
 -- * Named workspaces
 --
@@ -133,17 +145,20 @@ main = xmonad myDefaultConfig
                        -- ... seems like a bug.
                        . avoidStrutsOn []
                        . smartBorders
-                       -- http://haskell.cs.yale.edu/haskellwiki/Xmonad/Using_xmonad_in_Gnome#Layouts
-                       -- . desktopLayoutModifiers -- desktopLayoutModifiers = avoidStruts :P
                        $ Full ||| tall ||| Mirror tall
---       , layoutHook = simpleTabBar $ layoutHook gnomeConfig
        , workspaces = myWorkspaces
        , keys = myKeys
        , terminal = "urxvt" -- "xterm" -- Had trouble with jumpscrolling not working in xterm.
        }
-
--- two master, 1/10th resize increment, only show master by default
-tall = Tall 2 (1/10) 1
+  where
+    -- Two master panes, 1/10th resize increment, only show master
+    -- panes by default. Unlike plain 'Tall', this also allows
+    -- resizing the master panes, via the 'MirrorShrink' and
+    -- 'MirrorExpand' messages.
+    tall = ResizableTall 2 (1/10) 1 []
+    -- Two master panes, 1/10th resize increment, only show master
+    -- panes by default.
+    --tall = Tall 2 (1/10) 1
 
 -- fullscreen
 --
@@ -229,6 +244,11 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
              -- * Cycle workspace
              , ((modm,               xK_Tab), toggleWS)
 
+             -- * Resize windows
+             , ((modm,               xK_Left),  sendMessage MirrorExpand)
+             , ((modm,               xK_Up),    sendMessage MirrorExpand)
+             , ((modm,               xK_Right), sendMessage MirrorShrink)
+             , ((modm,               xK_Down),  sendMessage MirrorShrink)
              -- * Rebind launcher.
              --
              -- Work around for idiotic ubuntu bug: Mod4+p is
@@ -269,7 +289,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
 
                -- Remove current.  Moves windows to another workspace
              , ((modm .|. shiftMask, xK_BackSpace), removeWorkspace)
-               -- Remove by name.
+               -- Rename given workspace.
              , ((modm .|. controlMask, xK_r      ), renameWorkspace defaultXPConfig)
                -- Select by name. If hitting tab is annoying, see
                -- http://www.haskell.org/pipermail/xmonad/2011-April/011319.html
