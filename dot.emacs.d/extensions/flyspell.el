@@ -56,6 +56,7 @@
             sh-mode))
           (flyspell-modes
            '(fundamental-mode
+             gfm-mode
              markdown-mode
              org-mode
              rst-mode
