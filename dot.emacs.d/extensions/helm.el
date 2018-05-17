@@ -61,7 +61,10 @@
   (progn
     (setq
      ;; Don't prompt before creating new files.
-     helm-ff-newfile-prompt-p nil)))
+     helm-ff-newfile-prompt-p nil
+     ;; Don't truncate buffer names in helm buffer list.
+     helm-buffer-max-length nil
+     helm-buffers-truncate-lines nil)))
 
 ;; Use `C-c p h' to run `projectile-find-file'. Unlike plain Helm,
 ;; this completes as you type, and shows full paths. Since I mostly
