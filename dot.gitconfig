@@ -471,3 +471,9 @@
 # 'user.email'.
 [include]
     path = ~/.gitconfig.system-custom
+# Automatically added when I used Git LFS on Brittle.
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
