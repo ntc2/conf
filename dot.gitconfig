@@ -477,3 +477,8 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+# Show files in untracked directories. This is useful with Magit in
+# Emacs, since it lets you hit TAB to expand unversioned dirs and add
+# unversioned files selectively.
+[status]
+	showUntrackedFiles = all
