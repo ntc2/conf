@@ -83,7 +83,14 @@
     ;; Need to manually manage stale caches, and doesn't work with
     ;; subversion that needs password.
     ;;
-    ;; (setq projectile-enable-caching t)
+    (setq projectile-enable-caching t)
+    ;; The leading '*' means ignore not just at the top-level. It does
+    ;; *not* mean ignore any dir whose name ends with the string after
+    ;; the '*' :P
+    ;;
+    ;; See: https://github.com/bbatsov/projectile/pull/1153
+    (setq projectile-globally-ignored-directories
+          '("*.svn" "*.git" "*.stack-work" "*dist" "*dist-newstyle"))
     (helm-projectile-on))
 
   :config
