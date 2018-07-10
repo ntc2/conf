@@ -6,6 +6,9 @@
 # Note that there is also '<repo>/.git/info/exclude' for repo local,
 # non-versioned ignores.
 
+# Misc
+tmp/
+
 # Emacs
 .emacs.desktop
 .emacs.desktop.lock
@@ -23,5 +26,8 @@ TAGS
 *.o
 *.hi
 .stack-work/
+# E.g. 'stack --work-dir .stack-work.profile build --profile'.
+.stack-work*/
 cabal.project.local
 dist-newstyle/
+dist/
