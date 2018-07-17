@@ -49,6 +49,15 @@
 
 ;; Another Haskell IDE mode.
 (depends-on "intero")
+;; Install development version of Intero. This works, but is a little
+;; confusing because it ends up in
+;; ~/.emacs.d/.cask/25.3/elpa/intero-<date>.<time>, the same as if I
+;; install from MELPA.
+;;
+;; (depends-on "intero"
+;;             :git "https://github.com/commercialhaskell/intero.git"
+;;             :ref "7db6ba44572dc8207a2c6d24c14e06206f7426d2"
+;;             :files ("elisp/intero.el"))
 
 ;; Show Git status of lines in "gutter" (left margin).
 ;;
