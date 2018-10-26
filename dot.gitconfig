@@ -200,7 +200,30 @@
     # little more to delete when resolving conflicts, but also
     # additional helpful context.
     conflictstyle = diff3
+[pull]
+    # Don't allow non-fastforward merges on pull.
+    ff = only
+[push]
+    # Make `git push` only push the current branch, and only if it has
+    # matching name upstream branch.
+    default = simple
+[diff]
+    # Helpful if you don't know which file is which.
+    #mnemonicprefix = true
 
+    # Helpful if you want to double click copy a file name.
+    noprefix = true
+[blame]
+    date = relative
+# Doesn't matter if these files exist or not. Overridden values that
+# already appear above are configured twice, but only the last value
+# matters for single-value config parameters like 'user.name' and
+# 'user.email'.
+[include]
+    path = ~/.gitconfig.system-custom
+# Automatically added when I used Git LFS on Brittle.
+[status]
+	showUntrackedFiles = all
 # Git !-aliases are run with current dir set to `git rev-parse
 # --show-toplevel`, with the variable 'GIT_PREFIX' set to `git
 # rev-parse --show-prefix`.
@@ -213,6 +236,44 @@
 
     # Pull, stashing and popping local changes automatically.
     pullstash = -c rebase.autoStash=true pull --rebase
+
+    # Work around 'log.date = local' bug discussed above.
+    stashlist = !git stash list --date=default
+
+    # SVN style short aliases.
+    #
+    # from https://git.wiki.kernel.org/index.php/Aliases
+    st = status
+    ci = commit --verbose
+    br = branch
+    co = checkout
+    di = diff
+    # lgs -p
+    lgp = log --stat -p
+    lgs = log --stat
+    who = shortlog -sn
+
+    # On newer gits, --oneline abbreviates --pretty=oneline
+    # --abbrev-commit.  To get more verbose commit info, append
+    # --pretty=short or similar
+    #
+    # grOneline = log --graph --all --pretty='format:%h %C(yellow)%ar%Creset %Cgreen%aN%Creset%C(yellow)%d%Creset %s'
+
+    # This version uses only one line per commit, and includes only
+    # the commit hash, the subject, and the refs.  The refs are added
+    # with '--decorate', which does a much better job than '%d' used
+    # below: different colors for different kinds of refs (HEAD vs
+    # branches tags), and prefixes tags with 'tag: '.
+    grShort = log --graph --pretty=oneline --decorate --abbrev-commit
+    # The rest are based on http://stackoverflow.com/a/9074343/470844
+    grTwoLines = log --graph --format=format:'%C(red)%h%C(reset) %C(green)(%ad)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%an%C(reset)%n''%C(white)%s%C(reset)' --abbrev-commit
+    # All entries have an extra newline here :P Using '%+b' to avoid
+    # two extra newlines when body is empty though.
+    grFull = log --graph --format=format:'%C(red)%h%C(reset) %C(green)(%ad)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%an%C(reset)%n''%C(white)%s%C(reset)%n%+b' --abbrev-commit
+    # Seems like a bug: git will only accept underline versions of the
+    # above aliases.  Also, aliases break zsh completion.
+    gr         = !git grtwolines --all
+    grTopology = !git grtwolines --all --simplify-by-decoration
 
     ######################################################################
     # Clean up whitespace.
@@ -410,75 +471,3 @@
       # git reset --soft 'HEAD^' && \
       # git fixws-index && \
       # git stash pop
-
-    ######################################################################
-
-    # Work around 'log.date = local' bug discussed above.
-    stashlist = !git stash list --date=default
-
-    # SVN style short aliases.
-    #
-    # from https://git.wiki.kernel.org/index.php/Aliases
-    st = status
-    ci = commit --verbose
-    br = branch
-    co = checkout
-    di = diff
-    # lgs -p
-    lgp = log --stat -p
-    lgs = log --stat
-    who = shortlog -sn
-
-    # On newer gits, --oneline abbreviates --pretty=oneline
-    # --abbrev-commit.  To get more verbose commit info, append
-    # --pretty=short or similar
-    #
-    # grOneline = log --graph --all --pretty='format:%h %C(yellow)%ar%Creset %Cgreen%aN%Creset%C(yellow)%d%Creset %s'
-
-    # This version uses only one line per commit, and includes only
-    # the commit hash, the subject, and the refs.  The refs are added
-    # with '--decorate', which does a much better job than '%d' used
-    # below: different colors for different kinds of refs (HEAD vs
-    # branches tags), and prefixes tags with 'tag: '.
-    grShort = log --graph --pretty=oneline --decorate --abbrev-commit
-    # The rest are based on http://stackoverflow.com/a/9074343/470844
-    grTwoLines = log --graph --format=format:'%C(red)%h%C(reset) %C(green)(%ad)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%an%C(reset)%n''%C(white)%s%C(reset)' --abbrev-commit
-    # All entries have an extra newline here :P Using '%+b' to avoid
-    # two extra newlines when body is empty though.
-    grFull = log --graph --format=format:'%C(red)%h%C(reset) %C(green)(%ad)%C(reset)%C(bold yellow)%d%C(reset) %C(yellow)%an%C(reset)%n''%C(white)%s%C(reset)%n%+b' --abbrev-commit
-    # Seems like a bug: git will only accept underline versions of the
-    # above aliases.  Also, aliases break zsh completion.
-    gr         = !git grtwolines --all
-    grTopology = !git grtwolines --all --simplify-by-decoration
-[pull]
-    # Don't allow non-fastforward merges on pull.
-    ff = only
-[push]
-    # Make `git push` only push the current branch, and only if it has
-    # matching name upstream branch.
-    default = simple
-[diff]
-    # Helpful if you don't know which file is which.
-    #mnemonicprefix = true
-
-    # Helpful if you want to double click copy a file name.
-    noprefix = true
-[blame]
-    date = relative
-# Doesn't matter if these files exist or not. Overridden values that
-# already appear above are configured twice, but only the last value
-# matters for single-value config parameters like 'user.name' and
-# 'user.email'.
-[include]
-    path = ~/.gitconfig.system-custom
-# Automatically added when I used Git LFS on Brittle.
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-# Show files in untracked directories. This is useful with Magit in
-# Emacs, since it lets you hit TAB to expand unversioned dirs and add
-# unversioned files selectively.
-[status]
-	showUntrackedFiles = all
