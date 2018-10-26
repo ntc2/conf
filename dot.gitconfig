@@ -240,6 +240,15 @@
     # Work around 'log.date = local' bug discussed above.
     stashlist = !git stash list --date=default
 
+    # Ignore changes in versioned files
+    #
+    # Ignore changes in argument files
+    ignore-changes-set = update-index --skip-worktree
+    # Unignore changes in argument files
+    ignore-changes-unset = update-index --no-skip-worktree
+    # List files with ignored changes set
+    ignore-changes-ls = !git ls-files -t | grep '^S '
+
     # SVN style short aliases.
     #
     # from https://git.wiki.kernel.org/index.php/Aliases
