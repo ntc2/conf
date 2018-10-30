@@ -76,12 +76,6 @@ zle -N backward-delete-to-slash
 # '^[^?' means M-Backspace :P
 bindkey '^[^?' backward-delete-to-slash
 
-## Fancy looking messages.
-message () {
-    # -P means interpret % escapes
-    print -P "${rd}[${bl}* ${gr}$@ ${bl}*${rd}]${pl}"
-}
-
 ## Load extensions
 
 for f in ~/.zsh/rc.d/*; do

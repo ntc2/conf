@@ -84,6 +84,15 @@ function nc:quiet () {
     "$@" &>/dev/null &!
 }
 
+## Fancy looking messages.
+message () {
+  # Only print errors in interactive shells.
+  if [[ -o interactive ]]; then
+    # -P means interpret % escapes
+    print -P "${rd}[${bl}* ${gr}$@ ${bl}*${rd}]${pl}"
+  fi
+}
+
 ## Load extensions
 source ~/.zsh/env.d/util.sh
 for f in ~/.zsh/env.d/*; do

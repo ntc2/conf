@@ -11,13 +11,9 @@ alias less="less -RMi"
 # the one in conf/lib is slightly modified (lines added at the end).
 alias vless='vim -u ~/v/conf/lib/less.vim'
 
-# standard
+# Setup lesspipe.
 if which lesspipe &>/dev/null; then
-    eval $(lesspipe)
-# Gentoo
-elif which lesspipe.sh &>/dev/null; then
-    export LESSOPEN="|lesspipe.sh %s"
+  eval $(lesspipe)
 else
-    message "Unable to setup LESSOPEN filter."
+  message "Unable to setup LESSOPEN filter."
 fi
-
