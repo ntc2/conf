@@ -228,6 +228,8 @@
 # --show-toplevel`, with the variable 'GIT_PREFIX' set to `git
 # rev-parse --show-prefix`.
 [alias]
+    # WARNING: the '!' alias run at the *top-level* of the repo.
+
     # List all aliases.
     aliases = config --get-regexp alias
 
@@ -242,12 +244,14 @@
 
     # Ignore changes in versioned files
     #
-    # Ignore changes in argument files
+    # Ignore changes in argument FILES
     ignore-changes-set = update-index --skip-worktree
-    # Unignore changes in argument files
+    # Unignore changes in argument FILES
     ignore-changes-unset = update-index --no-skip-worktree
-    # List files with ignored changes set
-    ignore-changes-ls = !git ls-files -t | grep '^S '
+    # List files with ignored changes set (no args)
+    ignore-changes-ls = !git ls-files -t | grep '^S ' | sed -re 's/^S //'
+    # Show diff for files with ignored changes set (no args)
+    ignore-changes-diff = !~/local/scripts/git/ignore-changes-diff.sh
 
     # SVN style short aliases.
     #
