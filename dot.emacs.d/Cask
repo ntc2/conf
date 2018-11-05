@@ -80,6 +80,7 @@
 ;; module Test where
 ;; ```
 (depends-on "polymode")
+(depends-on "poly-markdown")
 
 ;; Use-package.
 ;;
