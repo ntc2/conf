@@ -74,11 +74,13 @@
 (use-package projectile
   :defer t
   ;; :ensure t
-  :commands projectile-global-mode
+  :commands projectile-mode
   :diminish projectile-mode
   :init
   (progn
-    (projectile-global-mode 1)
+    (projectile-mode +1)
+    ;; Use `C-c p' as projectile command prefix.
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (setq projectile-completion-system 'helm)
     ;; Need to manually manage stale caches, and doesn't work with
     ;; subversion that needs password.
