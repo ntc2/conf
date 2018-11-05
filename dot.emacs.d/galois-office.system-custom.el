@@ -4,4 +4,10 @@
 
 ;; Use my modified haskell-mode until my patch is accepted.
 (add-to-list 'load-path "~/v/haskell-mode.fork.git/")
-(add-to-list 'load-path "~/v/intero.fork.git/elisp/")
+;; Use my modified intero.
+;;
+;; Use this to override what version of the `intero' executable is
+;; used by the Intero Emacs mode when a the released version of the
+;; Intero Emacs mode uses a too old `intero' executable.
+;;
+;; (add-to-list 'load-path "~/v/intero.fork.git/elisp/")
