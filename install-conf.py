@@ -46,7 +46,7 @@ def main():
     for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config',
               '.zsh', '.zshrc', '.zshenv', '.zprofile',
               '.ghc/ghci.conf', '.haskeline',
-              '.vimperatorrc',
+              '.tridactylrc', # '.vimperatorrc',
               '.gitconfig', '.gitattributes', '.gitignore',
               '.xmonad/xmonad.hs', '.xmonad/startup-hook.sh',
               '.Xresources', '.xsession',

@@ -1,0 +1,100 @@
+" -*- vimrc-generic -*-
+"
+" Base on
+" https://raw.githubusercontent.com/tridactyl/tridactyl/master/.tridactylrc
+" See that for more advanced examples.
+
+" Move this to $XDG_CONFIG_DIR/tridactyl/tridactylrc (that's
+" ~/.config/tridactyl/tridactylrc to mere mortals) or ~/.tridactylrc and
+" install the native messenger (:installnative in Tridactyl). Run :source to
+" get it in the browser, or just restart.
+
+" NB: If you want "vim-like" behaviour where removing a line from
+" here makes the setting disappear, uncomment the line below.
+sanitise tridactyllocal tridactylsync
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Search Urls
+"
+" In addition to using %s for a single query param, you can use %1,
+" %2, etc, for multiple query params.
+
+set searchurls.hackage http://hackage.haskell.org/package/%s
+set searchurls.hayoo http://hayoo.fh-wedel.de/?query=%s
+set searchurls.h4 https://www.haskell.org/hoogle/?hoogle=%s
+set searchurls.h5 https://hoogle.haskell.org/?hoogle=%s&scope=set%3Astackage
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Quickmarks
+"
+" Use go<key>/gn<key>/gw<key> to open quickmark for <key> in
+" current/new tab/new window
+
+quickmark g https://mail.google.com/mail/u/0/#inbox
+quickmark G https://mail.google.com/mail/u/1/#inbox
+quickmark m https://mattermost.galois.com/galwegians/channels/echo-chamber
+quickmark u http://hamilton.galois.com:8080/unanet/action/time
+
+""""""""""""""""
+"
+" Disable on some sites
+"
+
+blacklistadd calendar.google.com
+blacklistadd docs.google.com
+blacklistadd drive.google.com
+blacklistadd mail.google.com
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Binds
+"
+" Some defaults:
+" - :help
+" - :tutor
+" - b : buffers/tabs navigation
+" - yy : yank url
+" - gg : top of page
+" - G : bottom of page
+" - shift+insert, ctrl+alt+`, shift+escape : toggle pass thru
+" - d/D : close current tab and move focus right/left
+" - p/P : open url in clipboard or search for clipboard content in current/new tab
+" - zi/zo/zz : zoom in/out/reset
+" - \[\[ / \]\] : guess previous/next page (seems smart, e.g. works when
+"   url does not end in a number, but "next" occurs in link text)
+" - ;p : copy element (e.g. link, paragraph) to clipboard
+" - ;k : kill element (e.g. a big "please disable your ad blocker" banner)
+" - :viewconfig nmaps : see all key bindings (but how to delete?)
+" - f/;f/F: follow hint in current/new foreground/new background tab
+
+" Make d switch to previous active tab after close
+bind d composite tabclose | buffer #
+" Don't bind paste to ignore mode. Can use S-Esc instead.
+unbind <S-Insert>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Misc settings
+"
+
+" Vimperator-style hinting, using numbers to select and letters to
+" narrow, instead of just letters to select.
+set hintfiltermode vimperator-reflow
+set hintnames numeric
+
+" Make Tridactyl work on more sites at the expense of some security
+" set csp clobber
+" fixamo_quiet
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" URL redirects
+"
+
+" Always use smile.amazon.com
+autocmd DocStart www.amazon.com js tri.excmds.urlmodify("-t", "www", "smile")
+
+" This will have to do until someone writes us a nice syntax file :)
+" vim: set filetype=vim:
