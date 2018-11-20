@@ -46,6 +46,7 @@ blacklistadd calendar.google.com
 blacklistadd docs.google.com
 blacklistadd drive.google.com
 blacklistadd mail.google.com
+blacklistadd mattermost.galois.com
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
