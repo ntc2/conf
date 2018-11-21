@@ -79,6 +79,7 @@ bind --mode=ignore d composite tabclose | buffer #
 " and so they are in ignore mode, not input mode. We don't want typing
 " 'd' while composing an email to kill GMail, so disable it :P
 unbindurl mail.google.com --mode=ignore d
+unbindurl mattermost.galois.com --mode=ignore d
 " Don't bind paste to ignore mode. Can use 'S-Esc' instead.
 unbind <S-Insert>
 
@@ -91,6 +92,10 @@ unbind <S-Insert>
 " narrow, instead of just letters to select.
 set hintfiltermode vimperator-reflow
 set hintnames numeric
+
+" Include numbers in tab names, to make 'b' and '<A-<number>>'
+" switching easier.
+guiset tabs numbers
 
 " Make Tridactyl work on more sites at the expense of some security
 " set csp clobber
