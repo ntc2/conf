@@ -78,7 +78,7 @@ bind --mode=ignore d composite tabclose | buffer #
 " ... except that in GMail the text boxes are not actually text boxes,
 " and so they are in ignore mode, not input mode. We don't want typing
 " 'd' while composing an email to kill GMail, so disable it :P
-unbindurl mail.google.com --mode=ignore d
+unbindurl .*.google.com --mode=ignore d
 unbindurl mattermost.galois.com --mode=ignore d
 " Don't bind paste to ignore mode. Can use 'S-Esc' instead.
 unbind <S-Insert>
