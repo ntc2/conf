@@ -139,6 +139,18 @@
     #
     # editor = emacs -nw -f text-mode
     # editor = emacs -nw --eval '(setq nc:use-flyspell nil)' -f flyspell-mode
+[pager]
+  # Use the 'diff-highlight' contrib script to highlight word changes
+  # in diffs. See /usr/share/doc/git/contrib/diff-highlight/README for
+  # more info and options. Also described in the Git 2.9 release
+  # summary:
+  # https://blog.github.com/2016-06-13-git-2-9-has-been-released/.
+  #
+  # The weird 'less -Mi -+F' is a duplication of my 'core.pager'
+  # setting.
+  log = perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less -Mi -+F
+  diff = perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less -Mi -+F
+  show = perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less -Mi -+F
 [color]
 	ui = auto
 [log]

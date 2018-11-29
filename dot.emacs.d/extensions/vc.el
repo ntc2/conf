@@ -11,3 +11,8 @@
 ;; seems to do the trick (but why can't I make this happen
 ;; automatically ...).
 (global-set-key (kbd "C-c m r") 'magit-refresh-all)
+
+;; Highlight word differences in diffs. This is independent from and
+;; produces different results than the 'diff-highlight' script I'm
+;; using for command line Git, as configured by ~/.gitconfig.
+(nc:custom-set-variable magit-diff-refine-hunk 'all)
