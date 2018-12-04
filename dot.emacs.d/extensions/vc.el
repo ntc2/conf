@@ -16,3 +16,13 @@
 ;; produces different results than the 'diff-highlight' script I'm
 ;; using for command line Git, as configured by ~/.gitconfig.
 (nc:custom-set-variable magit-diff-refine-hunk 'all)
+
+;; Wrap long lines in Magit diffs, instead of truncating them (the
+;; default).
+;;
+;; There is also `word-wrap' (off by default), which makes wrapping
+;; respect word boundaries.
+(defun wrap-lines ()
+  (setq truncate-lines nil))
+(add-hook 'magit-status-mode-hook 'wrap-lines)
+(add-hook 'magit-diff-mode-hook 'wrap-lines)
