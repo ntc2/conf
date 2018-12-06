@@ -7,7 +7,7 @@
 # tag, corresponding to a stable release, but it easy to just choose a
 # stable release source tarball
 
-release=1.9.3
+release=2.19.2
 prefix=~/local/opt/git-${release}
 # Another place to get Git: https://code.google.com/p/git-core/downloads/list
 url=https://www.kernel.org/pub/software/scm/git/
@@ -37,7 +37,7 @@ cd git-${release}
 #
 #flair="NO_CURL=1"
 #
-# Or, install curl locallys:
+# Or, install curl locally:
 #
 # $ ./curl.sh
 #
@@ -58,7 +58,7 @@ cd git-${release}
 # expanded after the equal sign in
 # 'CURLDIR=~/local/opt/curl-7.36.0'. This makes sense: tildes
 # shouldn't be expanded arbitrarily. The confusing part is that if the
-# shell is were interpreting that assignment, then the tilde would be
+# shell were interpreting that assignment, then the tilde would be
 # expanded. Tricky tricky ...
 #
 #flair=(NO_R_TO_GCC_LINKER=1 CURLDIR=$HOME/local/opt/curl-7.36.0)
@@ -77,8 +77,11 @@ make -j$NUMCPUS $flair prefix=$(readlink -f $prefix) install
 # download the prebuilt docs (there is also a
 # git-htmldocs-${release}):
 
-(cd $prefix/share/man &&
-wget $url/git-manpages-${release}.tar.gz -O- | tar xzf -)
+mkdir -p $prefix/share/man
+(
+  cd $prefix/share/man &&
+    wget $url/git-manpages-${release}.tar.gz -O- | tar xzf -
+)
 
 # ZSH configuration.
 #
