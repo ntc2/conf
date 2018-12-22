@@ -83,6 +83,9 @@ setup described above.
 
 A nice thing about the old setup is that it doesn't require root. An
 unresolved problem with the old setup in 18.04, besides the
-`unity-settings-daemon` stuff, is that I can't figure out how to get
-GDM or LightDM to provide the option of running a custom
-`~/.xsession`.
+`unity-settings-daemon` stuff, is that I couldn't figure out how to
+get GDM or LightDM to provide the option of running a custom
+`~/.xsession`. UPDATE: looking at old notes
+`~/v/org/notes/fresh-ubuntu-install.org` it appears I had to create a
+`/usr/share/xsessions/conathan-xsession.desktop` with a
+`Exec=/etc/X11/Xsession` line, among other things.
