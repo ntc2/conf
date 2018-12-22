@@ -27,7 +27,7 @@ def main():
     chdir(home)
 
     for d in ('v', 'tmp', 'local', 'local/opt', '.subversion', '.ghc', '.emacs.d',
-              '.xmonad', '.local/share/applications', '.config/gnome-session/sessions'):
+              '.local/share/applications', '.config/gnome-session/sessions'):
         if not exists(d): c('mkdir -p %s' % d)
     chdir('v')
 
@@ -46,9 +46,9 @@ def main():
     for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config',
               '.zsh', '.zshrc', '.zshenv', '.zprofile',
               '.ghc/ghci.conf', '.haskeline',
-              '.tridactylrc', # '.vimperatorrc',
+              '.tridactylrc',
               '.gitconfig', '.gitattributes', '.gitignore',
-              '.xmonad/xmonad.hs', '.xmonad/startup-hook.sh',
+              '.xmonad',
               '.Xresources', '.xsession',
               '.config/redshift.conf',
               '.config/gnome-session/sessions/local-xmonad-session.session',

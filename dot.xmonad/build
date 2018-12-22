@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+# Script that runs for 'xmonad --recompile'.
+#
+# From the xmonad changelog:
+#
+#   A custom build script can be used when xmonad is given the
+#   --recompile command line option. If an executable named build
+#   exists in the xmonad configuration directory it will be called
+#   instead of ghc. It takes one argument, the name of the executable
+#   binary it must produce.
+
+#echo "build: the output is [$1]" >> /tmp/xmonad
+stack build my-xmonad && install "$(stack exec which my-xmonad)" "$1"
