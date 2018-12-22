@@ -97,4 +97,7 @@ def main():
         print '''You are using "%(shell)s" but this conf is for zsh.  Changing shell to zsh ...''' % locals()
         c('chsh -s /bin/zsh')
 
+    # Suggest setting xmonad if we have root.
+    print 'You may want to run :/submodules/gnome-session-xmonad/minimal-install.sh if you have root and want xmonad.'
+
 if __name__ == '__main__': main()
