@@ -1,0 +1,4 @@
+[submodule "submodules/gnome-session-xmonad"]
+	path = submodules/gnome-session-xmonad
+	url = git@github.com:ntc2/gnome-session-xmonad.git
+	branch = ubuntu/bionic
