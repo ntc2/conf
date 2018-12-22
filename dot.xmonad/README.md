@@ -1,4 +1,3 @@
-======================
 XMonad + Gnome + Stack
 ======================
 
@@ -31,7 +30,7 @@ In any case, common errors include:
 New Setup (tested on Ubuntu 18.04)
 ----------------------------------
 
-## XMonad + Stack
+### XMonad + Stack
 
 The XMonad + Stack stuff is based on
 http://sitr.us/2018/05/13/build-xmonad-with-stack.html.
@@ -51,7 +50,7 @@ The `:/submodules/gnome-session-xmonad/minimal-install.sh` installs
 all of the X11 deps needed to build XMonad, but doesn't install Ubuntu
 GHC, since I'm already getting that from Stack.
 
-## XMonad + Gnome
+### XMonad + Gnome
 
 The XMonad + Gnome stuff is based on
 https://github.com/Gekkio/gnome-session-xmonad, which I bring in as a
