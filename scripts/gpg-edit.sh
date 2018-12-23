@@ -63,11 +63,11 @@ echo
 stty echo
 
 # view file and maybe edit and save
-gpg --yes --no-use-agent   -o $t --passphrase-file $pw $in && \
+gpg --yes --batch  -o $t --passphrase-file $pw $in && \
 if [[ $mode != edit ]]; then
   chmod 0400 $t
 fi && \
 $edit $t && \
 if [[ $mode == edit ]]; then
-  gpg --yes --no-use-agent -aco $in --passphrase-file $pw $t
+  gpg --yes --batch -aco $in --passphrase-file $pw $t
 fi
