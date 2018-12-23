@@ -122,4 +122,10 @@ unset NOTIFY
 umask 077
 
 # Procrastinate
-which fortune &>/dev/null && fortune
+if which fortune &>/dev/null; then
+   # In Ubuntu 18.04 it doesn't show the Spanish fortunes, even if
+   # they're the only ones installed :P If trying to debug 'fortune',
+   # running 'fortune -f <other args>' is useful: it prints the
+   # fortune databases it would be choosing from.
+  fortune es es/off 2>/dev/null || fortune es 2>/dev/null || fortune
+fi
