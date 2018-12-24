@@ -64,7 +64,15 @@
      helm-ff-newfile-prompt-p nil
      ;; Don't truncate buffer names in helm buffer list.
      helm-buffer-max-length nil
-     helm-buffers-truncate-lines nil)))
+     helm-buffers-truncate-lines nil)
+    ;; Bind tab to file name completion so that it's more like
+    ;; traditional `C-xC-f'. Note that Right also completes, and Left
+    ;; removes path components. And swap other bindings accordingly
+    ;; (but I don't think I ever use `helm-select-action' on purpose
+    ;; ...).
+    (bind-key "<tab>" 'helm-execute-persistent-action helm-map)
+    (bind-key "C-i"   'helm-execute-persistent-action helm-map)
+    (bind-key "C-z"   'helm-select-action helm-map)))
 
 ;; Use `C-c p h' to run `projectile-find-file'. Unlike plain Helm,
 ;; this completes as you type, and shows full paths. Since I mostly
