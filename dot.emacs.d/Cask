@@ -98,3 +98,6 @@
 (depends-on "projectile")
 (depends-on "helm-projectile")
 (depends-on "helm-ag")
+
+;; Trim whitespace at end of edited lines.
+(depends-on "ws-butler")

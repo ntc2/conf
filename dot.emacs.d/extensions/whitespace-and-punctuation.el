@@ -9,10 +9,8 @@
 (use-package ws-butler
   :commands ws-butler-mode
   :diminish ws-butler-mode
-  :ensure t ;; Install the package from Elpa if necessary.
   :init
-  (progn
-    (add-hook 'prog-mode-hook #'ws-butler-mode)))
+  (add-hook 'prog-mode-hook #'ws-butler-mode))
 
 ;; Tabs
 ;;
