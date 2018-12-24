@@ -1,3 +1,19 @@
+;; See `./helm.el'.
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+
+;; Clean up whitespace on edited lines on save. This allows you to
+;; never add accidental EOL whitespace in Git commits, but also not
+;; remove EOL whitespace in code you didn't change.
+(use-package ws-butler
+  :commands ws-butler-mode
+  :diminish ws-butler-mode
+  :ensure t ;; Install the package from Elpa if necessary.
+  :init
+  (progn
+    (add-hook 'prog-mode-hook #'ws-butler-mode)))
+
 ;; Tabs
 ;;
 ;; I created a .dir-locals.el to configure tabs on git-annex, with
