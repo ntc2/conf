@@ -37,6 +37,10 @@
          ("C-h f" . helm-apropos)
          ("C-h a" . helm-apropos)
          ("C-h v" . helm-apropos))
+  :custom
+  ;; Use `C-c h' as the prefix for Helm commands.
+  (helm-command-prefix-key "C-c h" "Mnemonic Helm prefix.")
+
   ;; This runs before the package is loaded.
   :init
   (progn
@@ -51,12 +55,17 @@
 
     (use-package helm-projectile)
 
-    (when nil
-    (progn
-      ;; Maximal fuzzy matching:
-      ;; https://github.com/emacs-helm/helm/wiki/Fuzzy-matching
-      (setq helm-mode-fuzzy-match t
-            helm-completion-in-region-fuzzy-match t))))
+    ;; Maximal fuzzy matching:
+    ;; https://github.com/emacs-helm/helm/wiki/Fuzzy-matching
+    (setq helm-mode-fuzzy-match t
+          helm-completion-in-region-fuzzy-match t)
+    ;; Make `helm-find' use `-path' patterns instead of `-name'
+    ;; patterns when invoking `find'.
+    (setq helm-findutils-search-full-path t)
+    ;; Turn on helm mode right away, so that e.g. `DefaultPath'
+    ;; completion in `helm-find' (via `C-u C-c h /') works.
+    (helm-mode 1))
+
   :config
   (progn
     (setq
