@@ -10,5 +10,16 @@
 #   instead of ghc. It takes one argument, the name of the executable
 #   binary it must produce.
 
+# Fail if any command fails.
+set -e
+
 #echo "build: the output is [$1]" >> /tmp/xmonad
-stack build my-xmonad && install "$(stack exec which my-xmonad)" "$1"
+
+# Seems that Stack figures out it's not being run interactively and
+# suppresses its output. Wrapping it in 'script' here makes it print
+# its progress as it goes. The '-e' makes 'script' exit with the exit
+# code of 'stack build'. I bet this is Xmonad's fault, not Stack's
+# fault, since e.g. setting command tracing with 'set -x' at the top
+# also produces no additional output.
+script -q -e -c "stack build my-xmonad" /dev/null
+install "$(stack exec which my-xmonad)" "$1"
