@@ -39,6 +39,7 @@ def main():
             c('sleep 5')
             print
             c('git clone https://github.com/ntc2/conf.git conf')
+    c('git -C conf submodule update --init')
 
     # {ln -T} mean treat destination as a normal file, i.e. don't
     # create file *in* target if target is a dir.  this is needed for
