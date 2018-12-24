@@ -3,9 +3,9 @@
 # size and confuses xmonad :P ... and some computers don't have
 # terminus, so try again if the '-fn terminus' version fails.
 function nc:ex () {
-  { emacs -fs -rv "$@" -font terminus || emacs -fs -rv "$@" } &!
+  { emacs -fs "$@" -font terminus || emacs -fs "$@" } &!
 }
-function nc:et () { emacs -nw -rv "$@" }
+function nc:et () { emacs -nw "$@" }
 
 function nc:emacs:cask {
   : 'Usage: Run `cask` using my global Cask file.'
