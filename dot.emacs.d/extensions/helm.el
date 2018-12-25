@@ -93,6 +93,10 @@
   ;; :ensure t
   :commands projectile-mode
   :diminish projectile-mode
+
+  :custom
+  (projectile-file-exists-remote-cache-expire nil "Don't cache remote files, to avoid getting prompted for SSH passwords where keys are not available.")
+
   :init
   (progn
     (projectile-mode +1)
