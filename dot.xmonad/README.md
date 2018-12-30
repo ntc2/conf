@@ -62,7 +62,7 @@ up.
 This sets up a bunch of Gnome/GDM `.session` and `.desktop` files, and
 I mostly don't understand it.
 
-Old Setup (tested on Ubuntu 16.04, and many earlier versions)
+Old Setup (using xsession, tested on Ubuntu 16.04, and many earlier versions)
 -------------------------------------------------------------
 
 This doesn't use Stack. Instead, I build XMonad in a Cabal sandbox,
@@ -88,4 +88,5 @@ get GDM or LightDM to provide the option of running a custom
 `~/.xsession`. UPDATE: looking at old notes
 `~/v/org/notes/fresh-ubuntu-install.org` it appears I had to create a
 `/usr/share/xsessions/conathan-xsession.desktop` with a
-`Exec=/etc/X11/Xsession` line, among other things.
+`Exec=/etc/X11/Xsession` line, among other things. I made a
+versioned copy here at `./conathan-xsession.desktop`.
