@@ -317,7 +317,30 @@
   ;; Generate <project root>/TAGS.
   ;;
   ;; Note that 'C-c C-t' is bound to 'intero-type-at' by default.
-  (define-key haskell-mode-map (kbd "C-c i t") 'haskell-mode-generate-tags))
+  (define-key haskell-mode-map (kbd "C-c i t") 'haskell-mode-generate-tags)
+
+  (define-key intero-mode-map (kbd "M-.") 'intero-goto-or-haskell-jump-or-tag))
+
+;; Define our own "jump to def" that falls back on Hakell mode and
+;; then tags if Intero's jump fails (returns nil).
+;;
+;; Based on
+;;
+;; https://github.com/chrisdone/intero/issues/231#issuecomment-451459657
+;;
+;; A big improvement would be to add `C-u' support so that we can
+;; optionally specify what name to find the def for. That probably
+;; won't work with the "smart" Intero jump, but we can fall back to
+;; tags in that case, and then get TAB completion on the tags.
+(defun intero-goto-or-haskell-jump-or-tag ()
+    "Try Intero goto, then Haskell Mode goto, then tags jump.
+
+For the tags jump to work you need TAGS. Use `C-c i t' or a
+project specific script to generate tags. Can also set
+`haskell-tags-on-save' to run `C-c i t' automaticlaly."
+    (interactive)
+    (let ((d (intero-goto-definition)))
+      (when (sequencep d) (haskell-mode-jump-to-def-or-tag))))
 
 (add-hook 'haskell-mode-hook 'nc:haskell-mode-hooks)
 
