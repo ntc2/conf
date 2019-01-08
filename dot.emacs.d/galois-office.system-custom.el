@@ -3,7 +3,9 @@
 (add-to-list 'desktop-globals-to-save 'file-name-history)
 
 ;; Use my modified haskell-mode until my patch is accepted.
-(add-to-list 'load-path "~/v/haskell-mode.fork.git/")
+;;
+;;(add-to-list 'load-path "~/v/haskell-mode.fork.git/")
+
 ;; Use my modified intero.
 ;;
 ;; Use this to override what version of the `intero' executable is
