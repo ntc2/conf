@@ -328,19 +328,28 @@
 ;;
 ;; https://github.com/chrisdone/intero/issues/231#issuecomment-451459657
 ;;
-;; A big improvement would be to add `C-u' support so that we can
-;; optionally specify what name to find the def for. That probably
-;; won't work with the "smart" Intero jump, but we can fall back to
-;; tags in that case, and then get TAB completion on the tags.
-(defun intero-goto-or-haskell-jump-or-tag ()
+;; An improvement would be to not try to load the Haskell module first
+;; if loading the module failed last time and we haven't made any
+;; changes since then. In fact, if we only loaded the module on save
+;; that would be sufficient. But the loading seems to be built into
+;; `intero-goto-definition'.
+(defun intero-goto-or-haskell-jump-or-tag (&optional prefix)
     "Try Intero goto, then Haskell Mode goto, then tags jump.
+
+With prefix argument, run `xref-find-definitions' directly, which
+prompts for a TAG, defaulting to ident at point. The
+`intero-goto-definition' and `haskell-mode-jump-to-def-or-tag'
+ignore the prefix argument, so we bypass them.
 
 For the tags jump to work you need TAGS. Use `C-c i t' or a
 project specific script to generate tags. Can also set
 `haskell-tags-on-save' to run `C-c i t' automaticlaly."
-    (interactive)
-    (let ((d (intero-goto-definition)))
-      (when (sequencep d) (haskell-mode-jump-to-def-or-tag))))
+    (interactive "P")
+    ;; (message "Prefix is %S" prefix)
+    (if (not prefix)
+        (let ((d (intero-goto-definition)))
+          (when (sequencep d) (haskell-mode-jump-to-def-or-tag)))
+      (call-interactively 'xref-find-definitions)))
 
 (add-hook 'haskell-mode-hook 'nc:haskell-mode-hooks)
 
@@ -356,3 +365,8 @@ project specific script to generate tags. Can also set
 ;;
 ;; C-c ! l: flycheck-list-errors: list all errors in a separate
 ;; buffer.
+;;
+;; M-.: jump to def, with prefix use TAGS, prompting for ident with
+;; completion from TAGS.
+;;
+;; M-,: jump back to source of last `M-.'.
