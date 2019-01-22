@@ -37,7 +37,9 @@
 
     (bind-windmove-keys)
 
-    (local-set-key (kbd "C-c C-a") 'align-regexp)))
+    (local-set-key (kbd "C-c C-a") 'align-regexp)
+    ;; Search Org headings using Helm.
+    (local-set-key (kbd "C-c o s") 'helm-org-in-buffer-headings)))
 (add-hook 'org-agenda-mode-hook
           (lambda ()
             (bind-windmove-keys)))
