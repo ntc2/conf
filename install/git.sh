@@ -7,7 +7,7 @@
 # tag, corresponding to a stable release, but it easy to just choose a
 # stable release source tarball
 
-release=2.19.2
+release=2.20.1
 prefix=~/local/opt/git-${release}
 # Another place to get Git: https://code.google.com/p/git-core/downloads/list
 url=https://www.kernel.org/pub/software/scm/git/
