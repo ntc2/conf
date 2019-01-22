@@ -319,7 +319,7 @@
   ;; Note that 'C-c C-t' is bound to 'intero-type-at' by default.
   (define-key haskell-mode-map (kbd "C-c i t") 'haskell-mode-generate-tags)
 
-  (define-key intero-mode-map (kbd "M-.") 'intero-goto-or-haskell-jump-or-tag))
+  (define-key intero-mode-map (kbd "M-.") 'nc:intero-goto-or-haskell-jump-or-tag))
 
 ;; Define our own "jump to def" that falls back on Hakell mode and
 ;; then tags if Intero's jump fails (returns nil).
@@ -333,7 +333,7 @@
 ;; changes since then. In fact, if we only loaded the module on save
 ;; that would be sufficient. But the loading seems to be built into
 ;; `intero-goto-definition'.
-(defun intero-goto-or-haskell-jump-or-tag (&optional prefix)
+(defun nc:intero-goto-or-haskell-jump-or-tag (&optional prefix)
     "Try Intero goto, then Haskell Mode goto, then tags jump.
 
 With prefix argument, run `xref-find-definitions' directly, which
