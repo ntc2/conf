@@ -12,6 +12,12 @@
 ;; automatically ...).
 (global-set-key (kbd "C-c m r") 'magit-refresh-all)
 
+;; Popup a buffer showing the hunk and point and ask to revert
+;; it. Answering "no" or hitting `C-g' results in the popup buffer
+;; getting buried and the hunk not getting reverted, so it's also a
+;; way to see hunk diffs without changing to Magit status mode.
+(global-set-key (kbd "C-c m k") 'git-gutter:revert-hunk)
+
 ;; Highlight word differences in diffs. This is independent from and
 ;; produces different results than the 'diff-highlight' script I'm
 ;; using for command line Git, as configured by ~/.gitconfig.
