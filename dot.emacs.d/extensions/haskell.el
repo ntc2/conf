@@ -255,71 +255,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Intero
 
-(add-hook 'haskell-mode-hook 'intero-mode)
-(nc:custom-set-variable haskell-tags-on-save nil)
-(nc:custom-set-variable flycheck-check-syntax-automatically '(mode-enabled save))
-;; Based on example Haskell Mode `init.el` here:
-;; https://github.com/haskell/haskell-mode/wiki/Example-init.el.
-(defun nc:haskell-mode-hooks ()
-  (local-set-key (kbd "M-n") 'flycheck-next-error)
-  (local-set-key (kbd "M-p") 'flycheck-previous-error)
-  ;; Use `C-u [f8]` to jump back.
-  (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
-
-  (setq-local company-show-numbers t)
-  ;; Don't downcase completions in comments. Without this writing
-  ;; haddocks is really annoying, since e.g. 'con<complete>' completes
-  ;; to 'concatmap' instead of 'concatMap', since 'con' is lowercase
-  ;; :P
-  (setq-local company-dabbrev-downcase nil)
-  ;; The minimum string length before auto completion starts. The
-  ;; default is 3, but that doesn't work for completing single letter
-  ;; qualified imports, since `M.` is only two letters.
-  (setq-local company-minimum-prefix-length 2)
-  ;; Time to wait before starting automatic company completion. The
-  ;; default is 0.5. If this is annoying, or too resource hungry, than
-  ;; perhaps what I really want is an easy single key sequence to
-  ;; start company completion, perhaps integrating it into some other
-  ;; completion (like `M-TAB` or `M-/`).
-  (setq-local company-idle-delay 0.1)
-  ;; Make C-s filter completions by search, instead of just
-  ;; highlighting matches. Very useful with qualified import
-  ;; completion.
-  (setq-local company-search-filtering t)
-
-  ;; Contextually do clever things on the space key, in particular:
-  ;;   1. Complete imports, letting you choose the module name.
-  ;;   2. Show the type of the symbol after the space.
-  ;;
-  ;; Update: removed around Mar 5:
-  ;; https://github.com/haskell/haskell-mode/issues/1182.
-  ;;
-  ;;(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
-
-  ;; Make the GHCi prompt visible.
-  ;;(define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-bring)
-
-  ;; Indent the below lines on columns after the current column.
-  (define-key haskell-mode-map (kbd "C-M-<right>")
-    (lambda ()
-      (interactive)
-      (haskell-move-nested 1)))
-  ;; Same as above but backwards.
-  (define-key haskell-mode-map (kbd "C-M-<left>")
-    (lambda ()
-      (interactive)
-      (haskell-move-nested -1)))
-
-  ;; Usually have to restart Intero whenever I change the .cabal file,
-  ;; so make that easier.
-  (define-key haskell-mode-map (kbd "C-c i r") 'intero-restart)
-
-  ;; Generate <project root>/TAGS.
-  ;;
-  ;; Note that 'C-c C-t' is bound to 'intero-type-at' by default.
-  (define-key haskell-mode-map (kbd "C-c i t") 'haskell-mode-generate-tags)
-
-  (define-key intero-mode-map (kbd "M-.") 'nc:intero-goto-or-haskell-jump-or-tag))
+;; See :/dot.emacs.d/extensions/helm.el for comments explaining
+;; `use-package'.
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
 
 ;; Define our own "jump to def" that falls back on Hakell mode and
 ;; then tags if Intero's jump fails (returns nil).
@@ -351,7 +292,79 @@ project specific script to generate tags. Can also set
           (when (sequencep d) (haskell-mode-jump-to-def-or-tag)))
       (call-interactively 'xref-find-definitions)))
 
-(add-hook 'haskell-mode-hook 'nc:haskell-mode-hooks)
+(use-package intero
+  :commands intero-mode
+  :config
+  (progn
+    (bind-key "M-." 'nc:intero-goto-or-haskell-jump-or-tag intero-mode-map)))
+
+(use-package haskell-mode
+  :commands haskell-mode
+  :init
+  (add-hook 'haskell-mode-hook 'intero-mode)
+  :config
+  ;; Based on example Haskell Mode `init.el` here:
+  ;; https://github.com/haskell/haskell-mode/wiki/Example-init.el.
+  (progn
+    (nc:custom-set-variable haskell-tags-on-save nil)
+    (nc:custom-set-variable flycheck-check-syntax-automatically '(mode-enabled save))
+    (bind-key "M-n" 'flycheck-next-error haskell-mode-map)
+    (bind-key "M-p" 'flycheck-previous-error haskell-mode-map)
+    ;; Use `C-u [f8]` to jump back.
+    (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
+
+    (setq-local company-show-numbers t)
+    ;; Don't downcase completions in comments. Without this writing
+    ;; haddocks is really annoying, since e.g. 'con<complete>' completes
+    ;; to 'concatmap' instead of 'concatMap', since 'con' is lowercase
+    ;; :P
+    (setq-local company-dabbrev-downcase nil)
+    ;; The minimum string length before auto completion starts. The
+    ;; default is 3, but that doesn't work for completing single letter
+    ;; qualified imports, since `M.` is only two letters.
+    (setq-local company-minimum-prefix-length 2)
+    ;; Time to wait before starting automatic company completion. The
+    ;; default is 0.5. If this is annoying, or too resource hungry, than
+    ;; perhaps what I really want is an easy single key sequence to
+    ;; start company completion, perhaps integrating it into some other
+    ;; completion (like `M-TAB` or `M-/`).
+    (setq-local company-idle-delay 0.1)
+    ;; Make C-s filter completions by search, instead of just
+    ;; highlighting matches. Very useful with qualified import
+    ;; completion.
+    (setq-local company-search-filtering t)
+
+    ;; Contextually do clever things on the space key, in particular:
+    ;;   1. Complete imports, letting you choose the module name.
+    ;;   2. Show the type of the symbol after the space.
+    ;;
+    ;; Update: removed around Mar 5:
+    ;; https://github.com/haskell/haskell-mode/issues/1182.
+    ;;
+    ;;(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+
+    ;; Make the GHCi prompt visible.
+    ;;(define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-bring)
+
+    ;; Indent the below lines on columns after the current column.
+    (define-key haskell-mode-map (kbd "C-M-<right>")
+      (lambda ()
+        (interactive)
+        (haskell-move-nested 1)))
+    ;; Same as above but backwards.
+    (define-key haskell-mode-map (kbd "C-M-<left>")
+      (lambda ()
+        (interactive)
+        (haskell-move-nested -1)))
+
+    ;; Usually have to restart Intero whenever I change the .cabal file,
+    ;; so make that easier.
+    (define-key haskell-mode-map (kbd "C-c i r") 'intero-restart)
+
+    ;; Generate <project root>/TAGS.
+    ;;
+    ;; Note that 'C-c C-t' is bound to 'intero-type-at' by default.
+    (define-key haskell-mode-map (kbd "C-c i t") 'haskell-mode-generate-tags)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Intero mode shortcuts (at the bottom so I find them easily)
