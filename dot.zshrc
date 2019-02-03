@@ -119,7 +119,7 @@ unset NOTIFY
 
 # ALSO SET in .zshenv, although that is sometimes overridden, and this
 # only runs for interactive shells
-umask 077
+umask 0022
 
 # Procrastinate
 if which fortune &>/dev/null; then

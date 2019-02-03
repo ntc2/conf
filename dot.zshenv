@@ -103,4 +103,4 @@ nc:load-custom ~/.zshenv.system-custom
 ## Run last
 
 # ALSO SET in .zshrc, although that only runs for interactive shells
-umask 077
+umask 0022
