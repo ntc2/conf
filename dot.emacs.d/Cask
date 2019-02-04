@@ -101,3 +101,6 @@
 
 ;; Trim whitespace at end of edited lines.
 (depends-on "ws-butler")
+
+;; Edit Firefox/Chrome text areas in Emacs.
+(depends-on "atomic-chrome")

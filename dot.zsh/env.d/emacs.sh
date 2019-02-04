@@ -16,3 +16,12 @@ function nc:emacs:cask {
   : '- `cask outdated`: print outdated packages, i.e. those that `cask update` would update.'
   cask --path ~/.emacs.d --verbose "$@"
 }
+
+# Don't want to run 'atomic-chrome-server' in all Emacs instances,
+# because I want to control which Emacs the GhostText buffers get
+# created in. Need to run this command before asking GhostText to edit
+# a text area.
+function nc:ghosttext () {
+  : 'Start Emacs and listen for GhostText connections from Firefox and Chrome'
+  nc:ex --funcall atomic-chrome-start-server
+}
