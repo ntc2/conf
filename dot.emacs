@@ -145,8 +145,6 @@ See `nc:custom-set-variable'."
 ;;
 ;; find ~/.emacs.d/extensions/ -name '*.el' | xargs -n1 -i echo "(nc:load \"{}\")"
 
-;; use SHIFT+<arrow> to navigate windows
-(windmove-default-keybindings)
 ;; like focus follows mouse in gnome
 ;(setq mouse-autoselect-window t)
 

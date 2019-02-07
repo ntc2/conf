@@ -87,6 +87,8 @@
 ;; This can replace Cask: i.e. it can auto install things.
 ;;
 ;; https://github.com/jwiegley/use-package
+;;
+;; At work straight.el has been suggested as a Cask replacement.
 (depends-on "use-package")
 (depends-on "diminish")
 
@@ -104,3 +106,6 @@
 
 ;; Edit Firefox/Chrome text areas in Emacs.
 (depends-on "atomic-chrome")
+
+;; Move buffers with ease.
+(depends-on "buffer-move")
