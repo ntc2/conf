@@ -4,10 +4,14 @@
 " https://raw.githubusercontent.com/tridactyl/tridactyl/master/.tridactylrc
 " See that for more advanced examples.
 
-" Move this to $XDG_CONFIG_DIR/tridactyl/tridactylrc (that's
-" ~/.config/tridactyl/tridactylrc to mere mortals) or ~/.tridactylrc and
-" install the native messenger (:installnative in Tridactyl). Run :source to
-" get it in the browser, or just restart.
+" Installing Tridactyl:
+"
+" * Put this config in ~/.tridactylrc (or $XDG_CONFIG_DIR/tridactyl/tridactylrc).
+"
+" * Install the native messenger by running :installnative in Tridactyl
+"   and then running the shell command it copies to clipboard.
+"
+" * Run :source in the browser or just restart.
 
 " NB: If you want "vim-like" behaviour where removing a line from
 " here makes the setting disappear, uncomment the line below.
