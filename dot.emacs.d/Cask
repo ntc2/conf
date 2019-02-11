@@ -109,3 +109,6 @@
 
 ;; Move buffers with ease.
 (depends-on "buffer-move")
+
+;; Typescript (used in Haddock to generate JS)
+(depends-on "typescript-mode")
