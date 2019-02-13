@@ -103,6 +103,48 @@
     ;; Use `C-c p' as projectile command prefix.
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (setq projectile-completion-system 'helm)
+    ;; The default is the `alien' indexing method, but that ignores
+    ;; the settings in the .projectile file. In particular, the
+    ;; .projectile file can be used to override the .gitignores.
+    ;;
+    ;; WHAT DOESN'T WORK: The docs say to add
+    ;;
+    ;;   !/path/to/be/unignored
+    ;;
+    ;; to .projectile to add a Git-ignored file to the project. This
+    ;; doesn't appear to actually work though in my SFE project, and I
+    ;; tried several variations ... the problem seems to be related to
+    ;; the fact that when a directory is ignored by Git, git doesn't
+    ;; list the contents. I tried explicitly including the contents of
+    ;; the ignored directory with things like
+    ;;
+    ;;   !/ignored/dir/*
+    ;;
+    ;; but no dice.
+    ;;
+    ;; WHAT DOES WORK: projectile also has an "explicit include" mode,
+    ;; where the default is to not include any files in the project,
+    ;; and you specify directories to include using '+<dir>'. This can
+    ;; be combined with '-<pattern>' to then ignore some stuff that
+    ;; '+<dir>' included. A few confusing points: the explicit include
+    ;; with "+" only applies to directories, not individual files,
+    ;; according to the docs. However, it seems the "!<pattern>" might
+    ;; allow including individual files, altho as I said above I
+    ;; couldn't make it work for me.
+    ;;
+    ;; In any case, this setup in the '.projectile' file works for me:
+    ;;
+    ;;   +.
+    ;;   +/deps/<submodule> ;; One such line for each submodule :P
+    ;;   +/ignored/dir
+    ;;
+    ;; where the '+.' means "include everything that Git is tracking"
+    ;; and then I additionally add the directory that Git is ignoring
+    ;; to the project.
+    ;;
+    ;; Documentation:
+    ;; https://docs.projectile.mx/en/latest/projects/#ignoring-files
+    (setq projectile-indexing-method 'hybrid)
     ;; Need to manually manage stale caches, and doesn't work with
     ;; subversion that needs password.
     ;;
