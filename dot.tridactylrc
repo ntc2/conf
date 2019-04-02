@@ -77,14 +77,6 @@ blacklistadd youtube.com
 
 " Make 'd' switch to previous active tab after close
 bind d composite tabclose | buffer #
-" And make 'd' work even on pages where Tridactyl is disabled. Note
-" that this doesn't affect input mode, i.e. editing text boxes ...
-bind --mode=ignore d composite tabclose | buffer #
-" ... except that in GMail the text boxes are not actually text boxes,
-" and so they are in ignore mode, not input mode. We don't want typing
-" 'd' while composing an email to kill GMail, so disable it :P
-unbindurl .*.google.com --mode=ignore d
-unbindurl mattermost.galois.com --mode=ignore d
 " Don't bind paste to ignore mode. Can use 'S-Esc' instead.
 unbind <S-Insert>
 
