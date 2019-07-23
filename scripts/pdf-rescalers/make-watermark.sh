@@ -7,7 +7,8 @@
 width="$1"
 height="$2"
 
-prefix="/tmp/watermark-$width-$height"
+mkdir -p ~/tmp
+prefix="$HOME/tmp/watermark-$width-$height"
 
 # NB: Latex defines a 'pt' differently than a 'bp' (big point). We
 # want big points.

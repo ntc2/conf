@@ -28,8 +28,15 @@ which pdftk &>/dev/null || return `(nc:usage $0 "You need to install pdftk")`
 [[ $# -eq 1 ]] && [[ -e "$1" ]] || return `(nc:usage $0)`
 local file="$1"
 
+# Doing everything in ~/tmp instead of /tmp to work around bug in
+# pdftk Snap package on Ubuntu:
+# https://github.com/smoser/pdftk/issues/1
+mkdir -p ~/tmp
+cp "$file" ~/tmp/
+file=~/tmp/$(basename "$file")
+
 local wmfile=$(nc:pdf:watermark "$file")
-local nupfile=/tmp/$(basename "$file").pdfnup.pdf
+local nupfile=~/tmp/$(basename "$file").pdfnup.pdf
 evince "$wmfile" &>/dev/null &!
 
 local left bottom right top nup
@@ -55,6 +62,7 @@ nc:pdf:watermark () {
 : usage: $0 FILE
 :
 : Apply a watermark to a pdf, to help calculate pdfnup trim params.
+
 local file="$1"
 
 local size="$(pdfinfo "$file" | grep 'Page size:')"
@@ -62,9 +70,12 @@ local  width=$(echo "$size" | sed -nre 's/.*: *([.0-9]+) x ([.0-9]+) pts.*/\1/p'
 local height=$(echo "$size" | sed -nre 's/.*: *([.0-9]+) x ([.0-9]+) pts.*/\2/p')
 
 local watermark="$(~/v/conf/scripts/pdf-rescalers/make-watermark.sh $width $height)"
-local watermarked=/tmp/$(basename "$file").wm
+mkdir -p ~/tmp
+local watermarked=~/tmp/$(basename "$file").wm
+# Prefer 'stamp' to 'background' because it works even for PDFs with
+# opaque backgrounds.
 pdftk "$file" \
-  background "$watermark" \
+  stamp "$watermark" \
   output "$watermarked"
 
 echo "$watermarked"
