@@ -110,3 +110,15 @@ in buffer with regular spaces"
         (beginning-of-buffer)
         (while (search-forward from nil t)
           (replace-match to nil t))))))
+
+;; From https://www.emacswiki.org/emacs/UnfillParagraph
+;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph
+(defun nc:unfill-paragraph (&optional region)
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive (progn (barf-if-buffer-read-only) '(t)))
+  (let ((fill-column (point-max))
+        ;; This would override `fill-column' if it's an integer.
+        (emacs-lisp-docstring-fill-column t))
+    (fill-paragraph nil region)))
+;; The standard `fill-paragraph' is bound to `M-q'.
+(define-key global-map "\M-Q" 'nc:unfill-paragraph)
