@@ -195,9 +195,15 @@ myWorkspaces = -- map show [1 .. (9 - length namedWorkspaces)] ++
 -- Use 'xprop' to find the resource strings: run 'xprop' and then click on a window of the app in question.
 namedWorkspaceHook = composeAll [ resource =? "update-manager" --> doF (W.shift "update") 
                                 , resource =? "synaptic"       --> doF (W.shift "update")
-                                , isFirefoxBrowserWindow       --> doF (W.shift "web")
+                                -- This is annoying when doing web stuff in more than one work space.
+                                -- , isFirefoxBrowserWindow       --> doF (W.shift "web")
+                                , isFirefoxWindow --> unfloat
+                                -- , resourceTest
                                 ]
   where
+    -- Force a window to be tiled (like pressing 'mod-t').
+    unfloat = ask >>= doF . W.sink
+    isFirefoxWindow = isPrefixOf "Firefox" <$> className
     -- Don't want to match dialogs, since they should stay with the
     -- window that generates them, which isn't always in the "web"
     -- workspace..
@@ -227,24 +233,38 @@ namedWorkspaceHook = composeAll [ resource =? "update-manager" --> doF (W.shift 
                         <&&> resource =? "Navigator"
     -- Debug namedWorkspaceHook. See also @xprop@ usage described
     -- above.
-    {-
+    --
+    -- To use,
+    --
+    -- - uncomment 'resourceTest' in the 'composeAll' list above;
+    --
+    -- - watch the log file with 'tail -f ~/.xmonad/debug.txt'
+    --
+    -- - create a window.
+    resourceTest = resourceTestQuery --> doF id
+    resourceTestQuery = do
       let query = isPrefixOf "Firefox" <$> className
              <&&> resource =? "Navigator"
       result <- query
       cName <- className
       rName <- resource
       aName <- appName
+      tName <- title
+      -- Use 'xprop' (by running it an clicking on a window) to figure
+      -- out the valid string properties.
+      roleName <- stringProperty "WM_WINDOW_ROLE"
       let msg = printf "isFirefoxBrowserWindow: \
-                       \className = '%s', resource = '%s', appName = '%s',\
+                       \className = '%s', resource = '%s', appName = '%s', title = '%s', role = '%s', \
                        \result = '%s'\n"
-                       cName rName aName (show result)
+                       cName rName aName tName roleName (show result)
 
       file <- liftIO $ do
         Just home <- lookupEnv "HOME"
         return $ home ++ "/.xmonad/debug.txt"
       liftIO $ appendFile file msg
       liftIO $ putStr msg -- Don't know where this goes
-    -}
+      -- Never match.
+      return False
 
 myManageHook = fullscreenHook <+> namedWorkspaceHook
 
