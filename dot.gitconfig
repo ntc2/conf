@@ -496,3 +496,5 @@
       # git reset --soft 'HEAD^' && \
       # git fixws-index && \
       # git stash pop
+[credential]
+	helper = cache --timeout=86400
