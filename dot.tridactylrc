@@ -38,8 +38,6 @@ set searchurls.h5 https://hoogle.haskell.org/?hoogle=%s&scope=set%3Astackage
 
 quickmark g https://mail.google.com/mail/u/0/#inbox
 quickmark G https://mail.google.com/mail/u/1/#inbox
-quickmark m https://mattermost.galois.com/galwegians/channels/echo-chamber
-quickmark u http://hamilton.galois.com:8080/unanet/action/time
 
 """"""""""""""""
 "
@@ -49,6 +47,7 @@ quickmark u http://hamilton.galois.com:8080/unanet/action/time
 blacklistadd calendar.google.com
 blacklistadd docs.google.com
 blacklistadd drive.google.com
+blacklistadd keep.google.com
 blacklistadd mail.google.com
 blacklistadd mattermost.galois.com
 blacklistadd youtube.com
@@ -77,7 +76,7 @@ blacklistadd youtube.com
 
 " Make 'd' switch to previous active tab after close
 bind d composite tabclose | buffer #
-" Don't bind paste to ignore mode. Can use 'S-Esc' instead.
+" Don't bind paste to ignore mode. Can use 'S-Esc' or 'C-A-Esc' instead.
 unbind <S-Insert>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -96,7 +95,7 @@ guiset tabs numbers
 
 " Make Tridactyl work on more sites at the expense of some security
 " set csp clobber
-" fixamo_quiet
+fixamo_quiet
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
