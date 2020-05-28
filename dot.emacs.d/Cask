@@ -112,3 +112,6 @@
 
 ;; Typescript (used in Haddock to generate JS)
 (depends-on "typescript-mode")
+
+;; To get `debian-changelog-mode'.
+(depends-on "dpkg-dev-el")
