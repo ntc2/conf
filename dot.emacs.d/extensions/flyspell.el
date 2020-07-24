@@ -55,7 +55,9 @@
             python-mode
             sh-mode))
           (flyspell-modes
-           '(fundamental-mode
+           '(conf-mode
+             conf-unix-mode
+             fundamental-mode
              gfm-mode
              markdown-mode
              org-mode
