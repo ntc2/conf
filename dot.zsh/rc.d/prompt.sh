@@ -110,6 +110,35 @@ function _nc:vcs_info {
     fi
 }
 
+# Add a string to PS1_PREFIX if it's not already present.
+function nc:push_ps1_prefix {
+  s="$1"
+  if ! [[ "$PS1_PREFIX" =~ "$s" ]]; then
+    if [[ -n "$PS1_PREFIX" ]]; then
+      export PS1_PREFIX="$s $PS1_PREFIX"
+    else
+      export PS1_PREFIX="$s"
+    fi
+  fi
+}
+
+# Print a prompt prefix consisting of '(<py venv>)[$PS1_PREFIX]', with
+# each part included iff corresponding env var is defined.
+function _nc:ps1_prefix {
+  # Special handling of Python virtual env prompt prefixes: because
+  # PS1 is not inherited by new shells, we recover the venv prefix
+  # from the inherited VIRTUAL_ENV var.
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    if ! [[ "$PS1" =~ "($(basename "$VIRTUAL_ENV"))" ]]; then
+      print -n "(%F{yellow}$(basename "$VIRTUAL_ENV")%f)"
+    fi
+  fi
+  if [[ -n "$PS1_PREFIX" ]]; then
+    print -n "[%F{yellow}$PS1_PREFIX%f]"
+  fi
+
+}
+
 # The green block on the last line has a point: the command still
 # stands out from the output, but triple-click-to-copy also copies a
 # valid command, whereas a leading '$' makes the command invalid when
@@ -126,7 +155,7 @@ function _nc:vcs_info {
 #
 # The 'nc_timer_dt' is computed below in 'nc:timer:preexec' and
 # 'nc:timer:precmd'.
-PS1='[$rd%n$pl@$gr$(hostname)$pl]\
+PS1='$(_nc:ps1_prefix)[$rd%n$pl@$gr$(hostname)$pl]\
 [$gr%~$pl]\
 [%%$rd%j$pl]\
 [%*]\
