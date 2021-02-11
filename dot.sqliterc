@@ -1,0 +1,12 @@
+.print  Show 'select' results with one field per line, with format
+.print '<field name> = <value>'. The default setting is '.mode list'.
+.echo on
+.mode line
+.echo off
+
+.print Another useful setting, if the query results are skinny enough to
+.print fit on one line. This doesn't do anything in 'mode line', but shows
+.print the headers in the default '.mode list'.
+.echo on
+.headers on
+.echo off

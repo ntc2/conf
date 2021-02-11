@@ -57,7 +57,8 @@ def main():
               '.local/share/applications/local-gnome-panel.desktop',
               '.local/share/applications/local-unity-settings-daemon.desktop',
               '.gdbinit',
-              '.tmux.conf'
+              '.tmux.conf',
+              '.sqliterc',
               ):
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()
         to = '%(home)s/%(f)s' % locals()
