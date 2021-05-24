@@ -50,29 +50,6 @@
 ;;  :git "git@github.com:chrisdone/haskell-flycheck.git"
 ;;  :files ("*.el"))
 
-;; Another Haskell IDE mode.
-(depends-on "intero")
-;; Install development version of Intero. This works, but is a little
-;; confusing because it ends up in
-;; ~/.emacs.d/.cask/25.3/elpa/intero-<date>.<time>, the same as if I
-;; install from MELPA.
-;;
-;; (depends-on "intero"
-;;             :git "https://github.com/commercialhaskell/intero.git"
-;;             :ref "7db6ba44572dc8207a2c6d24c14e06206f7426d2"
-;;             :files ("elisp/intero.el"))
-
-;; Show Git status of lines in "gutter" (left margin).
-;;
-;;(depends-on "git-gutter+")
-;;(depends-on "git-gutter-fringe+") ;; Version that works together with linum-mode, but not in ttys.
-;;
-;;(depends-on "git-gutter")
-;;
-;; Using git-gutter-fringe because it plays well with linum-mode.
-(depends-on "fringe-helper")     ;; Dep of git-gutter-fringe.
-(depends-on "git-gutter-fringe") ;; Works with linum-mode. same namespace as git-gutter. delete other before using
-
 ;; Markdown.
 ;;
 ;; More recent than the version that ships with Emacs.
@@ -121,3 +98,6 @@
 
 ;; To get `racket-mode'.
 (depends-on "racket-mode")
+
+;; Git-gutter doesn't work well for me in Emacs 27.
+(depends-on "diff-hl")
