@@ -96,6 +96,20 @@
 
   :custom
   (projectile-file-exists-remote-cache-expire nil "Don't cache remote files, to avoid getting prompted for SSH passwords where keys are not available.")
+  ;; The leading '*' means ignore not just at the top-level. It does
+  ;; *not* mean ignore any dir whose name ends with the string after
+  ;; the '*' :P
+  ;;
+  ;; See: https://github.com/bbatsov/projectile/pull/1153
+  (projectile-globally-ignored-directories
+   (append '("*.svn" "*.git" "*.stack-work" "*dist" "*dist-newstyle")
+           projectile-globally-ignored-directories))
+  ;; This doesn't seem to take effect until you delete
+  ;; `~/.emacs.d/projectile-bookmarks.eld', or remove the offending
+  ;; project from it. In particular, the
+  ;; `projectile-cleanup-known-projects' doesn't not remove these :/
+  (projectile-ignored-projects
+   (append '("~/.emacs.d/" "/tmp/") projectile-ignored-projects))
 
   :init
   (progn
@@ -149,13 +163,6 @@
     ;; subversion that needs password.
     ;;
     (setq projectile-enable-caching t)
-    ;; The leading '*' means ignore not just at the top-level. It does
-    ;; *not* mean ignore any dir whose name ends with the string after
-    ;; the '*' :P
-    ;;
-    ;; See: https://github.com/bbatsov/projectile/pull/1153
-    (setq projectile-globally-ignored-directories
-          '("*.svn" "*.git" "*.stack-work" "*dist" "*dist-newstyle"))
     (helm-projectile-on))
 
   :config

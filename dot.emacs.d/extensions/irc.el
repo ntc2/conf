@@ -1,5 +1,5 @@
 ;; Use fly-spell
-(erc-spelling-mode 1)
+;(erc-spelling-mode 1)
 
 ;; Log all irc activity.
 ;;
