@@ -14,9 +14,10 @@
 
 ;; Use `linum-mode' in all programming modes, except `org-mode'.
 (if (version<= "26.0.50" emacs-version )
-    ;; In newer versions of emacs use new display-line-numbers
-    ;; everywhere, since it doesn't slow down org-mode.
-    (global-display-line-numbers-mode)
+    (progn
+      (global-display-line-numbers-mode)
+      (add-hook 'org-mode-hook
+                (lambda () (display-line-numbers-mode 0))))
   (progn
     (add-hook 'prog-mode-hook 'linum-mode)
     (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
