@@ -1,5 +1,10 @@
 ;;; Org mode
 
+;; Enable the #+BEGIN_* shortcuts.
+;;
+;; https://orgmode.org/manual/Structure-Templates.html#Structure-Templates
+(require 'org-tempo)
+
 ;; suggested global bindings from docs
 ;;
 ;;
