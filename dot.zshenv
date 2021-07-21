@@ -14,15 +14,7 @@
 # seem to work, altho my reading of `man zshbuiltins` indicates that
 # it should :P OTOH, PATH, MANPATH, and FPATH are already tied, and
 # retying them results in an error.
-
-# Having '~/.cabal/bin' first here could be dangerous: a malicious
-# package could install a rogue core util.  So, do I need to make a
-# point of looking in '~/.cabal/bin' after running 'cabal install'?
-# Well, cabal install can spawn arbitrary shell commands for all I
-# know, so this is not the primary concern.
-
 typeset -U PATH
-export PATH=~/.cabal/bin:~/local/scripts:$PATH
 
 # It turns out that `manpath`, which is used to find paths to search
 # for man pages, will infer MANPATH from PATH.  In particular, when
@@ -51,8 +43,6 @@ export MANPATH=:$MANPATH
 # completion (see ~/v/conf/install-git.sh).
 typeset -U FPATH
 export FPATH=~/.zsh/completion:$FPATH
-typeset -TU PYTHONPATH pythonpath
-export PYTHONPATH=$HOME/local/scripts:$PYTHONPATH
 
 ## Colors
 
@@ -70,11 +60,6 @@ bd=%{$'\e[1m'%}		# bold
 
 export VISUAL="emacs -nw --no-desktop"
 export EDITOR="$VISUAL"
-
-## Python 
-
-# Doesn't work with ~ in path.
-export PYTHONSTARTUP="$HOME/.pythonrc"
 
 ## Run quietly
 function nc:quiet () {

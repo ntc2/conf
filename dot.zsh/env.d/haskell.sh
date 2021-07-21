@@ -1,3 +1,5 @@
+export PATH=~/.cabal/bin:~/local/scripts:$PATH
+
 function nc:set_ghc () {
   : Add GHC bin/ of specified version to PATH, removing
   : any other GHC bins from PATH. E.g. 'nc:set_ghc 8.4.4'.

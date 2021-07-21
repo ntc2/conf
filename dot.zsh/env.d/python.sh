@@ -1,3 +1,10 @@
+# See ~/.zshenv.
+typeset -TU PYTHONPATH pythonpath
+export PYTHONPATH=$HOME/local/scripts:$PYTHONPATH
+
+# Doesn't work with ~ in path.
+export PYTHONSTARTUP="$HOME/.pythonrc"
+
 # Keep .pyc files in one place (Python 3.8 and later). This stops
 # Python from littering project dirs with __pycache__ directories
 export PYTHONPYCACHEPREFIX="$HOME/.cache/pycache/"
@@ -19,10 +26,19 @@ function nc:upgrade-pyenv () {
   echo "You need to 'rm -rf ~/.pyenv' and then run nc:install-pyenv."
 }
 
-if false && [[ -e "$HOME/.pyenv" ]]; then
+if [[ -e "$HOME/.pyenv" ]]; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
+fi
+
+# This helps keep the virtual env path settings at front, e.g. inside
+# shells started by tmux. We use typeset -U PATH to make the path
+# elements unique, but redundant additions still move the addition to
+# the front of the path.
+if [[ -n "$VIRTUAL_ENV" ]]; then
+  echo "Sourcing $VIRTUAL_ENV/bin/activate in ~/v/conf/dot.zsh/env.d/python.sh ..."
+  source "$VIRTUAL_ENV"/bin/activate
 fi
