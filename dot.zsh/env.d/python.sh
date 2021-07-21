@@ -15,8 +15,14 @@ function nc:install-pyenv () {
   echo "E.g. 'pyenv install 3.9.1' to install Python 3.9.1"
 }
 
-if [[ -e "$HOME/.pyenv/bin" ]]; then
-  export PATH="$HOME/.pyenv/bin:$PATH"
+function nc:upgrade-pyenv () {
+  echo "You need to 'rm -rf ~/.pyenv' and then run nc:install-pyenv."
+}
+
+if false && [[ -e "$HOME/.pyenv" ]]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
