@@ -10,3 +10,9 @@
 .echo on
 .headers on
 .echo off
+
+.print Turn on foreign key support, so that foreign key constraints are
+.print enforced and cascade deletes work.
+.echo on
+PRAGMA foreign_keys=ON;
+.echo off
