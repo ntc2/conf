@@ -62,7 +62,8 @@
              markdown-mode
              org-mode
              rst-mode
-             text-mode))
+             text-mode
+             web-mode))
           (no-flyspell-modes
            '(help-mode
              magit-status-mode)))
