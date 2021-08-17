@@ -34,11 +34,12 @@ if [[ -e "$HOME/.pyenv" ]]; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
-# This helps keep the virtual env path settings at front, e.g. inside
-# shells started by tmux. We use typeset -U PATH to make the path
-# elements unique, but redundant additions still move the addition to
-# the front of the path.
-if [[ -n "$VIRTUAL_ENV" ]]; then
-  echo "Sourcing $VIRTUAL_ENV/bin/activate in ~/v/conf/dot.zsh/env.d/python.sh ..."
-  source "$VIRTUAL_ENV"/bin/activate
+# This helps keep the virtual env path settings at the front of the
+# PATH, e.g. inside shells started by tmux. We use typeset -U PATH to
+# make the path elements unique, but redundant additions still move
+# the addition to the front of the path.
+if [[ -n "$VIRTUAL_ENV" && -e "$VIRTUAL_ENV/bin/activate" ]]; then
+  # This breaks projectile.
+  #echo "Sourcing $VIRTUAL_ENV/bin/activate in ~/v/conf/dot.zsh/env.d/python.sh ..." >&2
+  source "$VIRTUAL_ENV/bin/activate"
 fi
