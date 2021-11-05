@@ -100,3 +100,8 @@ dyndir_git_repo() {
         *) echo unsupported query "$1" in "$0" >&2;;
     esac
 }
+
+function nc:git:cdup {
+  : 'CD to Git repo root.'
+  cd ~[r]
+}
