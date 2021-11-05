@@ -26,7 +26,8 @@ def main():
     home = realpath(getenv('HOME')) 
     chdir(home)
 
-    for d in ('v', 'tmp', 'local', 'local/opt', '.subversion', '.ghc', '.emacs.d',
+    for d in ('v', 'tmp', 'local', 'local/opt', '.subversion', '.ghc',
+              '.emacs.d', '.pip',
               '.local/share/applications', '.config/gnome-session/sessions'):
         if not exists(d): c('mkdir -p %s' % d)
     chdir('v')
@@ -59,6 +60,7 @@ def main():
               '.gdbinit',
               '.tmux.conf',
               '.sqliterc',
+              '.pip/pip.conf',
               ):
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()
         to = '%(home)s/%(f)s' % locals()
