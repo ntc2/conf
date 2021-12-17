@@ -1,5 +1,9 @@
 # -*- shell-script -*-
 
+# See https://www.emacswiki.org/emacs/TrampMode#toc8. This is probably
+# only necessary in ~/.zshrc.
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 ## Path
 
 # If you want to be sure that path elements are unique, you can use

@@ -4,6 +4,9 @@
 #
 # Completion is in ./dot.zsh/rc.d/completion.sh.
 
+# See https://www.emacswiki.org/emacs/TrampMode#toc8
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 # See FILENAME GENERATION section of man zshexpn.
 #
 # Enabled operators include difference (~), negation (^), repetition (#, ##)
