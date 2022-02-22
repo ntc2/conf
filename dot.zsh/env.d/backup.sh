@@ -17,6 +17,7 @@ function nc:mirror:put {
   if [[ $# -eq 0 ]]; then
     return $(nc:usage nc:mirror:put "You must specify a file or dir!")
   fi
+  # After this the rsync args are in "$@".
   file="$1"; shift
   if [[ ! (-e "$file") ]]; then
     return $(nc:usage nc:mirror:put "Source '$1' does not exist.")
@@ -34,7 +35,9 @@ function nc:mirror:put {
   # the host, but only for *directories* that are explicitly
   # synced. So, e.g, separate syncs of 'foo/a' and 'foo/b' will not
   # result in only having 'b' in 'foo' on the destination host.
-  rsync -avz --relative --human-readable --delete "$@" "$normalpath" \
+  rsync -avz --relative --human-readable --delete --chmod 'o-rX' \
+        "$@" \
+        "$normalpath" \
         $BACKUP_USER@$BACKUP_HOST:mirror/$(hostname -f)/ \
         2>&1 | \
     perl -pe '$_ = "  $_"' # Indent output.
@@ -48,6 +51,25 @@ function nc:mirror:put {
   local ghostpath="mirror/$(echo "$(hostname -f) $normalpath" | \
                             sed -re 's|/|<slash>|g')"
   ssh $BACKUP_USER@$BACKUP_HOST "touch '$ghostpath'"
+}
+
+function nc:mirror:put-git () {
+  : 'usage: $0 GIT_REPO_PATH [RSYNC_OPTS]'
+  :
+  : 'Mirror a Git repo, ignoring any files ignored by Git, but'
+  : 'including unversioned but not ignored files. Addtional args'
+  : 'will be passed to rsync.'
+  if [[ $# -eq 0 ]]; then
+    return $(nc:usage nc:mirror:put-git "You must a Git repo!")
+  fi
+  echo "Calculating ignores for $1 ..."
+  excludes_file=/tmp/git-excludes-$RANDOM
+  # List all the Git ignored files, but only print the dir name when
+  # the whole dir is ignored.
+  git -C "$1"\
+      ls-files --ignored --exclude-standard --others --directory\
+      > $excludes_file
+  nc:mirror:put "$@" --delete --exclude-from=$excludes_file --delete-excluded
 }
 
 function nc:mirror:put-if-exists () {
