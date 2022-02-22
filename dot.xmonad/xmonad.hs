@@ -106,7 +106,7 @@ import XMonad.Actions.CopyWindow (copy)
 import XMonad.Actions.CycleWindows
 
 -- * Work space selection
-import XMonad.Actions.CycleWS (toggleWS)
+import XMonad.Actions.CycleRecentWS (cycleRecentWS)
 
 import qualified Data.Map as M
 import Data.List
@@ -288,7 +288,10 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
              , ((modm                , xK_x), xmonadPrompt def)
 
              -- * Cycle workspace
-             , ((modm,               xK_Tab), toggleWS)
+             --
+             -- The 'xK_grave' is backtick ("`"), so tab cycles
+             -- forward, and backtick cycles back.
+             , ((modm,               xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_grave)
 
              -- * Resize windows
              , ((modm,               xK_Left),  sendMessage MirrorExpand)
