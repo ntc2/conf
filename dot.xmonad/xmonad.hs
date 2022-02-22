@@ -1,37 +1,8 @@
--- Reloading this file (copied from fresh-ubuntu-install.org):
---
--- Install deps if necessary:
---
---     sudo aptitude install libx11-dev libxinerama-dev libxrandr-dev libxft-dev
---     cabal update && cabal install xmonad xmonad-contrib
---
--- Rebuild and reload xmonad after each edit:
---
---     cabal sandbox -- xmonad --recompile && cabal sandbox -- xmonad --restart
---
--- This doesn't change the globally installed xmonad binary, but that
--- doesn't seem to matter.
-
--- Gnome config now given in org/notes/fresh-ubuntu-install.org.
---
--- Gnome config from (OLD)
--- http://haskell.org/haskellwiki/Xmonad/Basic_Desktop_Environment_Integration
--- see also
--- http://donsbot.wordpress.com/2010/03/13/after-3-years-my-xmonad-configuration-now-uses-gnome/
---
--- need to set up gnome to use xmonad though
--- http://haskell.org/haskellwiki/Xmonad/Using_xmonad_in_Gnome#Starting_GNOME_with_xmonad
--- change the windowmanager used by gnome (and then logout, or start a
--- new gnome with {startx -- :1} in a tty):
--- 
---   gconftool-2 -s /desktop/gnome/session/required_components/windowmanager xmonad --type string
---   gconftool-2 -s /desktop/gnome/session/required_components/windowmanager metacity --type string
---
--- this gives multihead for free.
---
 -- TODO
 --
--- -  better completion of workspace names: something more like iswitchb in emacs?
+-- -  better completion of workspace names: something more like
+--    iswitchb in emacs? See
+--    https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/XMonad-Prompt-FuzzyMatch.html
 --
 -- -  tabbing or stacking
 --
@@ -43,12 +14,6 @@
 --
 --    see
 --    http://www.haskell.org/haskellwiki/Xmonad/Frequently_asked_questions#Multi_head_and_workspaces_.28desktops.29
---
--- -  dzen or xmobar
--- 
--- DONE
---
--- -  {aptitude install dmenu}
 import XMonad
 import XMonad.Config.Gnome (gnomeConfig,gnomeRun)
 import qualified XMonad.Actions.PhysicalScreens as PS
@@ -407,22 +372,3 @@ myStartupHook = do
   startupHook myDefaultConfig
   adjustEventInput
   spawn "~/.xmonad/startup-hook.sh"
-
-
--- Hide/show all gaps. From XMonad.Hooks.ManageDocks docs.
--- hideStruts = sendMessage $ SetStruts [] [minBound .. maxBound]
--- showStruts = sendMessage $ SetStruts [minBound .. maxBound] [] 
-
--- http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Layout-Tabbed.html
--- http://haskell.org/haskellwiki/Xmonad/Frequently_asked_questions#Multi_head_and_workspaces_.28desktops.29
--- 
-
--- complicated config, could be educational:
---
--- http://snipt.net/doitian/xmonad-configuration/
-
--- Another config with lots of good stuff.  Has lots of comments, and
--- cool named workspace set-up and search engines (I have similar in
--- vimperator, but I have to recreate them on each new vimperator
--- install).
--- http://www.haskell.org/haskellwiki/Xmonad/Config_archive/Brent_Yorgey%27s_darcs_xmonad.hs
