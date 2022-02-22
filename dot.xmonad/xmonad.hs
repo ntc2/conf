@@ -277,6 +277,18 @@ myManageHook = fullscreenHook <+> namedWorkspaceHook
 myKeys x = M.fromList (newKeys x) `M.union` keys myDefaultConfig x
 newKeys conf@(XConfig {XMonad.modMask = modm}) =
              -- * Cycle windows
+             --
+             -- The font used by the prompt here got ugly in
+             -- xmonad-0.17.0. It's defined in the 'def' value for
+             -- 'XPConfig' in
+             -- https://hackage.haskell.org/package/xmonad-contrib-0.17.0/docs/src/XMonad.Prompt.html
+             -- using a CPP macro, 'XFT'. I couldn't figure out a way
+             -- to undefine 'XFT' in my .cabal file, so I'm just going
+             -- to live with the bad font. An alternative would be to
+             -- fork xmonad-contrib and change the font, which would
+             -- be pretty easy. The font change was announced in
+             -- "breaking changes" for xmonad-contrib-0.17.0:
+             -- https://xmonad.org/news/2021/10/27/xmonad-0-17-0.html.
              [ ((modm                , xK_s), cycleRecentWindows [xK_Super_L] xK_s xK_w)
              , ((modm                , xK_z), rotOpposite)
              , ((modm .|. controlMask, xK_i), rotUnfocusedUp)
@@ -284,8 +296,12 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
              , ((modm                , xK_i), rotFocusedUp)
              , ((modm                , xK_u), rotFocusedDown)
 
-             -- From XMonad.Prompt.XMonad:
-             , ((modm                , xK_x), xmonadPrompt def)
+             -- Verify that the new font in 'XPConfig' in
+             -- xmonad-contrib-0.17.0 is causing the prompt problem.
+             , let font1 = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
+                   font2 = "xft:monospace-12"
+               in
+               ((modm                , xK_x), xmonadPrompt def { font = font1 })
 
              -- * Cycle workspace
              --
