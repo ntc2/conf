@@ -1,12 +1,12 @@
-# GHC 8.4
-resolver: lts-12.25
+# GHC 9.0.2
+resolver: nightly-2022-02-19
 
 packages:
 - .
 
 extra-deps:
-- xmonad-0.15
-- xmonad-contrib-0.15
+- xmonad-0.17.0
+- xmonad-contrib-0.17.0
 
 # Override default flag values for local packages and extra-deps
 flags: {}
