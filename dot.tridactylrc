@@ -21,6 +21,9 @@ sanitise tridactyllocal tridactylsync
 "
 " Search Urls
 "
+" These work in the 'o' -> ':open ' dialog, but not in the regular
+" address bar.
+"
 " In addition to using %s for a single query param, you can use %1,
 " %2, etc, for multiple query params.
 
@@ -49,8 +52,8 @@ blacklistadd docs.google.com
 blacklistadd drive.google.com
 blacklistadd keep.google.com
 blacklistadd mail.google.com
-blacklistadd mattermost.galois.com
 blacklistadd youtube.com
+blacklistadd tomatoes2.herokuapp.com
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
