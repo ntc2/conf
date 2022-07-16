@@ -1,7 +1,44 @@
 ;;; Haskell
-;;;
-;;; http://www.haskell.org/haskellwiki/Haskell_mode_for_Emacs
-;;; http://projects.haskell.org/haskellmode-emacs/
+
+;; See :/dot.emacs.d/extensions/helm.el for comments explaining
+;; `use-package'.
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
+
+(use-package lsp-mode
+  :ensure t
+  :hook ((haskell-mode . lsp)
+         (haskell-literate-mode . lsp))
+  :commands lsp)
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+(use-package lsp-haskell
+  :ensure t
+  :config
+ (setq lsp-haskell-server-path "haskell-language-server-wrapper")
+ (setq lsp-haskell-server-args ())
+ ;; Comment/uncomment this line to see interactions between lsp
+ ;; client/server.
+ (setq lsp-log-io t))
+(use-package haskell-mode
+  :ensure t)
+(use-package company
+  :ensure t)
+(use-package yasnippet
+  :hook (lsp-mode . yas-minor-mode))
+  ;; :ensure t
+  ;; :hook (prog-mode . yas-minor-mode)
+  ;; :config (yas-reload-all))
+(use-package flycheck)
+;; Pop-up flycheck error on cursor focus.
+(use-package flycheck-pos-tip
+  :ensure t
+  ;; Default 5 seconds.
+  :custom (flycheck-pos-tip-timeout 1000 "Make error popups persist.")
+  :hook (flycheck-mode . flycheck-pos-tip-mode))
 
 ;; Commented out for Intero below.
 (when nil
@@ -133,31 +170,6 @@
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ghc-mod
-;;
-;; http://www.mew.org/~kazu/proj/ghc-mod/en/preparation.html
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; - completions with C-M-i, if that key combo is not taken by
-;;   flyspell-mode.
-;;
-;; The M-t works in many cases, e.g. to insert a module for a name at
-;; point. To insert pragmas, when they are breaking compilation, you
-;; can use C-cC-l: you'll be prompted if you want to add the missing
-;; LANGUAGE pragma at the top. Doesn't work for all pragmas though.
-
-(when nil
-
-(autoload 'ghc-init "ghc" nil t)
-(autoload 'ghc-debug "ghc" nil t)
-(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
-
-)
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; company-mode and company-ghc
 ;;
 ;; TODO: move some of this to it's own file?
@@ -254,6 +266,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Intero
+
+(when nil
 
 ;; See :/dot.emacs.d/extensions/helm.el for comments explaining
 ;; `use-package'.
@@ -365,6 +379,8 @@ project specific script to generate tags. Can also set
     ;;
     ;; Note that 'C-c C-t' is bound to 'intero-type-at' by default.
     (define-key haskell-mode-map (kbd "C-c i t") 'haskell-mode-generate-tags)))
+
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Intero mode shortcuts (at the bottom so I find them easily)
