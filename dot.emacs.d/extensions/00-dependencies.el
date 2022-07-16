@@ -22,7 +22,7 @@
 ;; https://github.com/cask/cask/issues/463#issuecomment-794249642
 (setq warning-suppress-log-types '((package reinitialization)))
 (require 'cask "~/local/opt/cask.git/cask.el")
-(cask-initialize)
+(cask--initialize)
 
 ;; Add dependencies in `~/.emacs.d/Cask` and then
 ;;

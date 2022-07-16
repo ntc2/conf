@@ -38,18 +38,6 @@
 
 ;; Packages I depend on. Some are duplicated above.
 
-(depends-on "haskell-mode")
-(depends-on "flycheck")
-;; Chris Done's version of `flycheck-haskell`.
-;;
-;; Install from GitHub, since there is no Emacs package proper.
-;;
-;; This causes problems on fresh installs with no GitHub SSH keys.
-
-;;(depends-on "haskell-flycheck"
-;;  :git "git@github.com:chrisdone/haskell-flycheck.git"
-;;  :files ("*.el"))
-
 ;; Markdown.
 ;;
 ;; More recent than the version that ships with Emacs.
