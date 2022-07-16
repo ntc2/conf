@@ -6,7 +6,7 @@ BACKUP_HOST=linux.cecs.pdx.edu
 BACKUP_USER=ntc2
 
 # Mirror a file or directory to BACKUP_HOST
-function nc:mirror:put {
+function nc:mirror:put () {(
   : 'usage: $0 (FILE | DIR) [RSYNC_OPTS]'
   :
   : 'Copy (FILE | DIR) to ~/mirror/ on $BACKUP_HOST.'
@@ -51,28 +51,52 @@ function nc:mirror:put {
   local ghostpath="mirror/$(echo "$(hostname -f) $normalpath" | \
                             sed -re 's|/|<slash>|g')"
   ssh $BACKUP_USER@$BACKUP_HOST "touch '$ghostpath'"
-}
+)}
 
-function nc:mirror:put-git () {
+function _nc:mirror:get-git-ignores () {(
+  : 'usage: $0 GIT_REPO_PATH OUT_FILE_PATH'
+  :
+  : 'Recursively calculate the git ignores in this repo'
+  : 'and all submodules.'
+  :
+  : 'Helper function for nc:mirror:put-git.'
+  if [[ $# -ne 2 ]]; then
+    return $(nc:usage _nc:mirror:get-git-ignores "Wrong number of args!")
+  fi
+  repo="$1"
+  out="$2"
+  echo "Calculating ignores for $repo ..."
+  # List all the Git ignored files, but only print the dir name when
+  # the whole dir is ignored.
+  git -C "$repo"\
+      ls-files --ignored --exclude-standard --others --directory\
+      >> "$out"
+  # Find the submodules. Based on
+  # https://stackoverflow.com/a/40877379/470844 .
+  git -C "$repo" submodule--helper list | awk '{print $4}' | \
+    while read sub; do
+      echo "Recursiving into submodule $sub ..."
+      _nc:mirror:get-git-ignores "$repo/$sub" "$out"
+    done
+)}
+
+function nc:mirror:put-git () {(
   : 'usage: $0 GIT_REPO_PATH [RSYNC_OPTS]'
   :
   : 'Mirror a Git repo, ignoring any files ignored by Git, but'
   : 'including unversioned but not ignored files. Addtional args'
   : 'will be passed to rsync.'
   if [[ $# -eq 0 ]]; then
-    return $(nc:usage nc:mirror:put-git "You must a Git repo!")
+    return $(nc:usage nc:mirror:put-git "You must specify a Git repo!")
   fi
-  echo "Calculating ignores for $1 ..."
   excludes_file=/tmp/git-excludes-$RANDOM
-  # List all the Git ignored files, but only print the dir name when
-  # the whole dir is ignored.
-  git -C "$1"\
-      ls-files --ignored --exclude-standard --others --directory\
-      > $excludes_file
+  _nc:mirror:get-git-ignores "$1" "$excludes_file"
+  #echo "Excludes file:"
+  #cat $excludes_file
   nc:mirror:put "$@" --delete --exclude-from=$excludes_file --delete-excluded
-}
+)}
 
-function nc:mirror:put-if-exists () {
+function nc:mirror:put-if-exists () {(
   : 'usage: $0 PATH'
   :
   : 'Mirror FILE, ignoring common Haskell build artifacts.'
@@ -87,7 +111,7 @@ function nc:mirror:put-if-exists () {
   else
     echo "$0: skipping non-existent file: $file ..."
   fi
-}
+)}
 
 # Like 'nc:git:mirror', but uses more general '.nc-mirror-magic' file
 # instead of looking for '.git' dir.
