@@ -1,7 +1,16 @@
+# Once upon a time these ran automatically via cron, but that was
+# removed in 2022 and these are just for documentation now. I modify
+# the keybard in ~/.zshenv.system-custom now.
+
 function nc:xmonad:hack-keyboard {
-  : 'See `~/.xsession` for details.'
-  # Make the menu key another XMonad meta key.
-  xmodmap -e "keysym Menu = Super_R"
+  : 'See `~/.xsession` for details; use xev to find keycodes.'
+  # Make the menu key and printscreen key additional XMonad meta keys.
+  xmodmap -e "keysym Menu = Super_L"
+  # The Print is keycode 107 on the x230.
+  #
+  # Using Super_R for Print was causing weird problems with the M-Tab
+  # combo, but Super_L seems to work fine.
+  xmodmap -e "keysym Print = Super_L"
 }
 
 function nc:xmonad:hack-gnome-panel {

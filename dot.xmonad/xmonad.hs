@@ -73,6 +73,8 @@ import XMonad.Actions.CycleWindows
 -- * Work space selection
 import XMonad.Actions.CycleRecentWS (cycleRecentWS)
 
+import XMonad.Util.Paste (sendKey)
+
 import qualified Data.Map as M
 import Data.List
 import Text.Printf
@@ -328,6 +330,9 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
              , ((modm .|. shiftMask, xK_g        ), withWorkspace def (windows . W.shift))
                -- Copy window.
              --, ((modm .|. shiftMask, xK_m        ), withWorkspace defaultXPConfig (windows . copy))
+
+             -- Passthru super-l so that LSP in Emacs sees it (it's the prefix).
+             , ((modm, xK_l                      ), sendKey modm xK_l)
 
              -- Prompt for named workspace to switch to. Can use
              -- W.shift instead to move current window to named
