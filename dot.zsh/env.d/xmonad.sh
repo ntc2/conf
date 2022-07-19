@@ -1,24 +1,19 @@
-# Once upon a time these ran automatically via cron, but that was
-# removed in 2022 and these are just for documentation now. I modify
-# the keybard in ~/.zshenv.system-custom now.
+# Run some of these every minute vis cron. See 'crontab -l' or
+# fresh-ubuntu-install.org for more details.
 
 function nc:xmonad:hack-keyboard {
   : 'See `~/.xsession` for details; use xev to find keycodes.'
+  : 'Note that xmodmap changes DO NOT PERSIST across suspends.'
   # Make the menu key and printscreen key additional XMonad meta keys.
-  xmodmap -e "keysym Menu = Super_L"
+
+  #xmodmap -e "keysym Menu = Super_L"
+
   # The Print is keycode 107 on the x230.
   #
   # Using Super_R for Print was causing weird problems with the M-Tab
   # combo, but Super_L seems to work fine.
-  xmodmap -e "keysym Print = Super_L"
-}
-
-function nc:xmonad:hack-gnome-panel {
-  : 'See `~/.xsession` for details.'
-  # This segfaults, but not before fixing the struts (gaps for Gnome
-  # panel). However, it does move the windows around a little in the
-  # process.
-  mutter
+  #xmodmap -e "keysym Print = Super_L"
+  xmodmap -e "keycode 107 = Super_L"
 }
 
 function nc:xmonad:galois:config-monitors {
