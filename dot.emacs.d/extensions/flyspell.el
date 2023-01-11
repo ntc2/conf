@@ -59,6 +59,7 @@
              conf-unix-mode
              fundamental-mode
              gfm-mode
+             latex-mode
              markdown-mode
              org-mode
              rst-mode

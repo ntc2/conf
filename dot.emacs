@@ -228,6 +228,9 @@ See `nc:custom-set-variable'."
 ;; Variations: terminus:bold terminus-20:bold
 (add-to-list 'default-frame-alist '(font . "terminus"))
 
+;; Make font bigger.
+(set-face-attribute 'default nil :height 150)
+
 ;;; version control
 
 ;; Stop emacs from asking: "Symbolic link to SVN-controlled source

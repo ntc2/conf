@@ -89,3 +89,6 @@
 
 ;; Git-gutter doesn't work well for me in Emacs 27.
 (depends-on "diff-hl")
+
+;; Unfill paragraphs
+(depends-on "unfill")
