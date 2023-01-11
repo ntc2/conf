@@ -20,6 +20,14 @@
   :config
  (setq lsp-haskell-server-path "haskell-language-server-wrapper")
  (setq lsp-haskell-server-args ())
+ ;; Disable "type annotated argument holes" in completions, which I
+ ;; find really annoying. I guess the best would be a way to
+ ;; optionally include them, e.g. with C-u prefix, but I don't think
+ ;; that's worth the trouble since it's easy to pop up the type sig.
+ ;;
+ ;; Found this setting via the same setting in vscode. Run
+ ;; `(customize-group 'lsp-haskell)' to see all the settings.
+ (setq lsp-haskell-plugin-ghcide-completions-config-snippets-on nil)
  ;; Comment/uncomment this line to see interactions between lsp
  ;; client/server.
  (setq lsp-log-io t))
