@@ -92,3 +92,6 @@
 
 ;; Unfill paragraphs
 (depends-on "unfill")
+
+;; Zenburn color theme
+(depends-on "zenburn-theme")
