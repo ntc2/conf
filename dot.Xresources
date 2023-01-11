@@ -82,9 +82,9 @@ XTerm*saveLines: 5000
 
 ! Might have to install a package to get terminus font.  To get this
 ! manually do xterm -fa terminus-12.  It''s an XFT.
-XTerm*faceName: Terminus
-XTerm*faceSize: 12
-!XTerm*font: terminus-12
+!XTerm*faceName: Terminus
+!XTerm*faceSize: 14
+XTerm*font: terminus-18
 
 !! Misc
 
@@ -105,12 +105,40 @@ XTerm*metaSendsEscape: on
 ! URxvt uses Rxvt resources when they overlap.
 !
 ! Mostly copying XTerm resources here :P
+
+!! Zenburn theme, based on https://gist.github.com/cqpx/1436584
+URxvt*termName: rxvt-256color
+URxvt*xftAntialias: true
+!URxvt*background: #3f3f3f
+URxvt*background: #333333
+URxvt*foreground: #dcdccc
+URxvt*cursorColor: #aaaaaa
+URxvt*colorUL: #669090
+URxvt*underlineColor: #dfaf8f
+URxvt*color0: #3f3f3f
+URxvt*color1: #cc9393
+URxvt*color2: #7f9f7f
+URxvt*color3: #d0bf8f
+URxvt*color4: #6ca0a3
+URxvt*color5: #dc8cc3
+URxvt*color6: #93e0e3
+URxvt*color7: #dcdccc
+URxvt*color8: #000000
+URxvt*color9: #dca3a3
+URxvt*color10: #bfebbf
+URxvt*color11: #f0dfaf
+URxvt*color12: #8cd0d3
+URxvt*color13: #dc8cc3
+URxvt*color14: #93e0e3
+URxvt*color15: #ffffff
+
+!! Color overrides and general config.
 Rxvt.colorULMode: on
 Rxvt.colorUL: light green
 Rxvt.colorBDMode: on
 Rxvt.colorBD: purple
 Rxvt.veryBoldColors: 6
-Rxvt.reverseVideo: on
+!Rxvt.reverseVideo: on
 Rxvt.scrollBar: on
 ! Values lower than about 6 are all treated as about 6.
 Rxvt.thickness: 4
@@ -120,7 +148,7 @@ Rxvt.scrollBarBorder: 0
 Rxvt.jumpScroll: on
 Rxvt.saveLines: 5000
 ! Seems to be the same as terminus-12 in emacs and xterm, except the interline spacing is less ???
-Rxvt.font: terminus-14
+Rxvt.font: terminus-18
 ! Was having a bunch of trouble with *rxvt ignoring Alt as a modifier.
 ! None of these options helped, but then I rebooted and all was well ...
 !Rxvt.meta: ignore
@@ -214,7 +242,7 @@ Rxvt.cutchars: '\\ `"\'&()*,;<=>?@[]^{|}│'
 ! Rxvt*color3: #FF5555
 
 ! Blue:
-Rxvt*color4: #5555FF
+!Rxvt*color4: #5555FF
 
 ! Rxvt*color5: #FF5555
 ! Rxvt*color6: #FF5555
@@ -225,18 +253,8 @@ Rxvt*color4: #5555FF
 ! Rxvt*color11: #FF5555
 
 ! Bright blue:
-Rxvt*color12: #7777FF
+!Rxvt*color12: #7777FF
 
 ! Rxvt*color13: #FF5555
 ! Rxvt*color14: #FF5555
 ! Rxvt*color15: #FF5555
-
-!!! Emacs
-Emacs.font: terminus-12
-Emacs.reverseVideo: on
-! Already on by default.  This is *not* the toolbar.
-!Emacs.menuBar: on
-
-! Number of lines for toolBar.  Stops screen resize on start-up, due
-! to toolbar being removed by ~/.emacs .
-Emacs.toolBar: 0
