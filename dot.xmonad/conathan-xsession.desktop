@@ -1,8 +1,0 @@
-# Copy this to /usr/share/xsessions/ to be able to run ~/.xsession.
-[Desktop Entry]
-Name=XSession (Nathan)
-Comment=This session uses the custom xsession file
-Exec=zsh -c /etc/X11/Xsession
-Type=Application
-DesktopNames=GNOME-Flashback;GNOME;
-X-Ubuntu-Gettext-Domain=gnome-flashback
