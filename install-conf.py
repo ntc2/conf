@@ -51,7 +51,6 @@ def main():
               '.tridactylrc',
               '.gitconfig', '.gitattributes', '.gitignore',
               '.xmonad',
-              '.config/redshift.conf',
               '.Xresources',
               '.gdbinit',
               '.tmux.conf',
@@ -60,13 +59,13 @@ def main():
               ):
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()
         to = '%(home)s/%(f)s' % locals()
-#         if exists(to):
-#             c('mv %(to)s %(to)s.backup' % locals())
         c('ln -Tfs %(from_)s %(to)s'  % locals())
-    # for f in ('.zshrc', '.zshenv'):
-    #     from_ = '%(home)s/.zsh/dot%(f)s' % locals()
-    #     to = '%(home)s/%(f)s' % locals()
-    #     c('ln -Tfs %(from_)s %(to)s'  % locals())
+    # Create *hard* links. Due to apparmor stupidity, it's not
+    # possible to have the conf file be a symlink since Ubuntu 22.04.
+    for f in ('.config/redshift.conf', ):
+        from_ = '%(home)s/v/conf/dot%(f)s' % locals()
+        to = '%(home)s/%(f)s' % locals()
+        c('ln -Tf %(from_)s %(to)s'  % locals())
 
     # emacs extensions.
     for f in ('extensions', 'Cask', 'README'):
@@ -76,17 +75,14 @@ def main():
         print 'Cask is not installed. See `~/v/conf/install/cask.sh`.'
         print 'Before installing Cask, you should delete stale `.elc` files. Roughly:'
         print '    find ~/.emacs.d ~/v/conf -name \'*.elc\' -exec rm {} +'
-    if c('which zsh &>/dev/null') != 0:
-        print 'No ZSH available, so couldn\'t run `nc:emacs:cask install`.'
-    else:
-        c('zsh -c "nc:emacs:cask install"')
     # remove byte compiled local configs. No real point right now as
     # I'm not loading `.elc` files for my local configs anymore, but
     # I've had various problems in the past with stale `.elc`
     # files. E.g., they don't necessary recompile when macros they
     # depend on change!
     c('''find -L ~/.emacs.d/ -name .cask -prune -o -name '*.elc' -exec rm -v {} +''')
-    print 'You may want to update Cask-installed Emacs deps with `nc:emacs:cask update`.'
+    print 'You may want to install Cask-installed Emacs deps with `nc:emacs:cask install`'
+    print 'and/or update them with `nc:emacs:cask update`.'
 
     # misc programs.
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())
@@ -98,6 +94,7 @@ def main():
         c('chsh -s /bin/zsh')
 
     # Suggest setting xmonad if we have root.
-    print 'You may want to run :/submodules/gnome-session-xmonad/minimal-install.sh if you have root and want xmonad.'
+    print 'You may want to run `:/submodules/gnome-session-xmonad/minimal-install.sh`'
+    print 'if you have root and want xmonad.'
 
 if __name__ == '__main__': main()
