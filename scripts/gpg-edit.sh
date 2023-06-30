@@ -41,8 +41,9 @@ else
 fi
 # set up tempfiles for auto deletion
 in="$1"
-t=$(tempfile -d /tmp -m 0600)
-pw=$(tempfile -d /tmp -m 0600)
+mkdir -p ~/tmp
+t=$(mktemp ~/tmp/tmp.XXX)
+pw=$(mktemp ~/tmp/tmp.XXX)
 trap "rm -f $t $pw && stty echo" EXIT # "finally"
 
 # read password
