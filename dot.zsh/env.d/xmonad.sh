@@ -5,8 +5,7 @@ function nc:xmonad:hack-keyboard {
   : 'See `~/.xsession` for details; use xev to find keycodes.'
   : 'Note that xmodmap changes DO NOT PERSIST across suspends.'
   # Make the menu key and printscreen key additional XMonad meta keys.
-
-  #xmodmap -e "keysym Menu = Super_L"
+  xmodmap -e "keysym Menu = Super_L"
 
   # The Print is keycode 107 on the x230.
   #
