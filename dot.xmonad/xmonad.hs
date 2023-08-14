@@ -23,9 +23,7 @@ import XMonad.Actions.UpdatePointer -- mouse follows focus
 import XMonad.Hooks.ManageHelpers -- fullscreen flash Using
 -- gnomeConfig and desktopLayoutModifiers take care of avoidStruts and
 -- more. See XMonad.Config.Desktop docs.
-import XMonad.Hooks.ManageDocks (SetStruts(..),ToggleStruts(..),Direction2D(..),avoidStrutsOn)
-import XMonad.Config.Desktop (desktopLayoutModifiers) -- custom layoutHook + gnome
-
+import XMonad.Hooks.ManageDocks (ToggleStruts(..),avoidStrutsOn)
 
 -- Get a prompt for running XMonad X () actions interactively.
 import XMonad.Prompt
@@ -42,9 +40,7 @@ import XMonad.Layout.ResizableTile
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-SubLayouts.html
 --
 -- and below in layoutHook.
-import XMonad.Layout.BoringWindows
 import XMonad.Layout.NoBorders (smartBorders)
-import XMonad.Layout.SubLayouts
 import XMonad.Layout.WindowNavigation
 
 -- * Named workspaces
@@ -53,19 +49,9 @@ import XMonad.Layout.WindowNavigation
 --
 --  http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#15
 import qualified XMonad.StackSet as W
--- ** Change to workspace by name
---
--- http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Prompt-Workspace.html
--- http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#10
-import XMonad.Prompt
-import XMonad.Prompt.Workspace (workspacePrompt)
+
 -- ** Create new named workspaces
 import XMonad.Actions.DynamicWorkspaces
--- See docs:
--- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-CopyWindow.html
--- Lots of good stuff there, e.g. copy firefox to current workspace,
--- do what you want, and then delete copy.
-import XMonad.Actions.CopyWindow (copy)
 
 -- from http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-CycleWindows.html
 import XMonad.Actions.CycleWindows

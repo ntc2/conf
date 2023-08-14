@@ -8,6 +8,7 @@ cabal-version:       >=1.10
 executable my-xmonad
   main-is:             xmonad.hs
   default-language:    Haskell2010
+  ghc-options: -Wunused-imports
   build-depends:       base
                      , containers
                      , xmonad
