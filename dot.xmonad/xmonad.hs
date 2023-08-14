@@ -71,11 +71,12 @@ import XMonad.Actions.CopyWindow (copy)
 import XMonad.Actions.CycleWindows
 
 -- * Work space selection
-import XMonad.Actions.CycleRecentWS (cycleRecentWS)
+import XMonad.Actions.CycleRecentWS (cycleWindowSets, recentWS)
 
 import XMonad.Util.Paste (sendKey)
 
 import qualified Data.Map as M
+import Data.Maybe (isJust)
 import Data.List
 import Text.Printf
 import System.Environment
@@ -242,6 +243,29 @@ myManageHook = fullscreenHook <+> namedWorkspaceHook
 --
 -- See EZConfig lib for emacs style key specs.
 myKeys x = M.fromList (newKeys x) `M.union` keys myDefaultConfig x
+
+-- Like @cycleRecentNonEmptyWS@, but don't include workspaces that are already
+-- visible, to avoid switching to other monitor in multi monitor
+-- setup.
+cycleRecentHiddenNonEmptyWS :: [KeySym] -> KeySym -> KeySym -> X ()
+cycleRecentHiddenNonEmptyWS mods keyNext keyPrev = do
+  pred <- getPred
+  cycleWindowSets (recentWS pred) mods keyNext keyPrev
+  where
+    -- Based on private function @wsTypeToPred@ in
+    -- @Xmonad.Actions.CycleWS@. Select workspaces that are non-empty
+    -- and not on another screen.
+    getPred :: X (WindowSpace -> Bool)
+    getPred = withWindowSet $ \ws -> do
+      -- The hidden windows don't include the currently focused
+      -- window, which means we can't abort once we start cycling. So,
+      -- instead, we define "hidden" as "focused or not visible". The
+      -- @W.visible@ screens are the non-focused but visible ones.
+      let visibles = map (W.tag . W.workspace) $ W.visible ws
+      let hidden w = W.tag w `notElem` visibles
+      let nonEmpty w = isJust (W.stack w)
+      return (\w -> hidden w && nonEmpty w)
+
 newKeys conf@(XConfig {XMonad.modMask = modm}) =
              -- * Cycle windows
              --
@@ -274,7 +298,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) =
              --
              -- The 'xK_grave' is backtick ("`"), so tab cycles
              -- forward, and backtick cycles back.
-             , ((modm,               xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_grave)
+             , ((modm,               xK_Tab), cycleRecentHiddenNonEmptyWS [xK_Super_L] xK_Tab xK_grave)
 
              -- * Resize windows
              , ((modm,               xK_Left),  sendMessage MirrorExpand)
