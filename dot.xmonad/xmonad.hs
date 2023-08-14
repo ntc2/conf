@@ -49,9 +49,10 @@ import XMonad.Layout.WindowNavigation
 --
 --  http://hackage.haskell.org/packages/archive/xmonad-contrib/0.9.1/doc/html/XMonad-Doc-Extending.html#15
 import qualified XMonad.StackSet as W
-
 -- ** Create new named workspaces
 import XMonad.Actions.DynamicWorkspaces
+-- ** Show workspace names when switching
+import XMonad.Layout.ShowWName (showWName)
 
 -- from http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-CycleWindows.html
 import XMonad.Actions.CycleWindows
@@ -92,7 +93,7 @@ main = xmonad myDefaultConfig
        , startupHook = myStartupHook
        , manageHook  = myManageHook -- full-screen flash
                        <+> manageHook myDefaultConfig
-       , layoutHook  = id
+       , layoutHook  = showWName
                        -- Leave (U)pper struts visible on startup. The
                        -- "avoid" here means "avoid covering".
                        -- Leaving this out, even when the avoid list
