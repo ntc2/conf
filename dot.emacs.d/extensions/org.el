@@ -33,6 +33,9 @@
 
 (add-hook 'org-mode-hook
   (lambda ()
+    ;; Don't indent drawers (e.g the LOGBOOK for clocking)
+    (setq org-adapt-indentation nil)
+
     ;; turn on soft wrapping mode for org mode, from
     ;; http://osdir.com/ml/emacs-orgmode-gnu/2009-04/msg00618.html
     (setq truncate-lines nil)
