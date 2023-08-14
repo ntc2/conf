@@ -140,6 +140,8 @@
     # editor = emacs -nw -f text-mode
     # editor = emacs -nw --eval '(setq nc:use-flyspell nil)' -f flyspell-mode
 [pager]
+  # Always use pager when showing status.
+  status = true
   # Use the 'diff-highlight' contrib script to highlight word changes
   # in diffs. See /usr/share/doc/git/contrib/diff-highlight/README for
   # more info and options. Also described in the Git 2.9 release
