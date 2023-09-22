@@ -56,6 +56,81 @@ See `nc:custom-set-variable'."
   (custom-set-faces
     `(,face ,spec nil ,(nc:custom-set-warning))))
 
+;;; default font
+
+;; An article on open source programming fonts:
+;; https://opensource.com/article/17/11/how-select-open-source-programming-font
+;;
+;; Article recommends, in preference order: FiraCode, Inconsolata,
+;; DejaVu Sans Mono, Source Code Pro, Noto Mono
+;;
+;; Some font packages on Ubuntu 22.04:
+;;
+;; fonts-inconsolata
+;; fonts-monoid?
+;; fonts-mononoki?
+;; fonts-noto-mono (but the zero and oh are not well distinguished :/)
+;; fonts-proggy?
+;; fonts-firacode
+;; fonts-recommended: depends on firacode and mononoki and several others, curated by debian fonts team
+;; fonts-terminus
+;; ttf-mscorefonts-installer: install non-free ms fonts, e.g. consolas
+;;
+;; The firacode readme mentions these alternatives:
+;;
+;; <quote>
+;; 190 ### Alternatives
+;; 191
+;; 192 Free monospaced fonts with ligatures:
+;; 193
+;; 194 - [Hasklig](https://github.com/i-tu/Hasklig)
+;; 195 - [Monoid](http://larsenwork.com/monoid/)
+;; 196 - [Fixedsys Excelsior](https://github.com/kika/fixedsys)
+;; 197 - [Iosevka](https://be5invis.github.io/Iosevka/)
+;; 198 - [DejaVu Sans Code](https://github.com/SSNikolaevich/DejaVuSansCode)
+;; 199 - [Victor Mono](https://rubjo.github.io/victor-mono/)
+;; 200 - [Cascadia Code](https://github.com/microsoft/cascadia-code)
+;; 201 - [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono)
+;; </quote>
+;;
+;; Can use e.g. `(member "Monaco" (font-family-list))' to check if a
+;; font (here "Monaco") is available and print an error message or try
+;; another.
+;;
+;; Some fonts I tried:
+;;
+;;(set-face-attribute 'default nil :font "DejaVu Sans Mono-12")
+;;(set-face-attribute 'default nil :font "Mononoki-14")
+;;(set-face-attribute 'default nil :font "Noto Mono-14")
+;;(set-face-attribute 'default nil :font "Inconsolata-14")
+;; To actually get ligatures with FiraCode, you need to enable
+;; ligatures. See https://github.com/mickeynp/ligature.el for
+;; instructions.
+;;(set-face-attribute 'default nil :font "FiraCode-12")
+;;
+;; FiraCode was good, but I think I prefer the crisp look of bitmap
+;; (non-antialiased) fonts, like Terminus. Trying bold in hopes it's
+;; easier on the eyes, altho this loses some info that used to be
+;; distinguished by selective bolding when the default wasn't bold.
+;;
+;; Terminus doesn't play well with lsp-ui: the stuff lsp
+;; adds to the right side of the screen wraps. Existing bug report
+;; here: https://github.com/emacs-lsp/lsp-ui/issues/285.
+(set-face-attribute 'default nil :font "Terminus-14:bold")
+;; Fix from above bug report.
+(custom-set-faces
+  '(markdown-code-face ((t (:inherit default)))))
+
+;; Variations: terminus:bold terminus-20:bold
+;;(add-to-list 'default-frame-alist '(font . "terminus"))
+
+;; Make font bigger. Seems to just choose the corresponding -<size>
+;; version of the font. But might be more predictable than using the
+;; -<size> suffixes, and doesn't require knowing which -<size>s are
+;; available (e.g. for Terminus where there are only a few sizes).
+;;
+;;(set-face-attribute 'default nil :height 150)
+
 (global-font-lock-mode 1)
 
 ;; Save last cursor position in files and jump there when reopening.
@@ -223,15 +298,6 @@ See `nc:custom-set-variable'."
 (ansi-color-for-comint-mode-on)
 
 ;;; End CSL stuff
-
-;;; default font
-
-;; NB: also def in nc:ex command.
-;; Variations: terminus:bold terminus-20:bold
-(add-to-list 'default-frame-alist '(font . "terminus"))
-
-;; Make font bigger.
-(set-face-attribute 'default nil :height 150)
 
 ;;; version control
 

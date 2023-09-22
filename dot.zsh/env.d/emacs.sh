@@ -1,10 +1,7 @@
-# The -font is redundant, since it's also def in dot.emacs, but the
-# latter takes effect after emacs has loaded, which changes the screen
-# size and confuses xmonad :P ... and some computers don't have
-# terminus, so try again if the '-fn terminus' version fails.
-function nc:ex () {
-  { emacs -fs "$@" -font terminus || emacs -fs "$@" } &!
-}
+# I used to specify the font with `-font` here, because otherwise
+# xmonad got confused when the font changed after startup, because
+# that changed the screen size. Doesn't seem to be an issue anymore.
+function nc:ex () { emacs -fs "$@" &! }
 function nc:et () { emacs -nw "$@" }
 
 function nc:emacs:cask {

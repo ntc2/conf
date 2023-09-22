@@ -11,7 +11,7 @@
 ;; desktop will be the default in the future when you start emacs in a
 ;; dir with no desktop.  See the ``desktop'' docs for more info.
 
-(desktop-save-mode 1)
+(desktop-save-mode 0)
 
 ;; Places to look for desktop files, '.emacs.desktop'.
 (nc:custom-set-variable desktop-path '("." "~/.emacs.d/"))
