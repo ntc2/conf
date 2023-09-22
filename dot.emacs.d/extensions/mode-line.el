@@ -19,12 +19,16 @@
 ;; it's short, which isn't ideal, but also not a big deal.
 
 (column-number-mode t)
-(display-time)
+;;(display-time)
+
+;; Don't show modes in modeline
+(setq-default mode-line-format (delq 'mode-line-modes mode-line-format))
 
 (defun nc:buffer-file-name ()
   "Like `buffer-file-name', but collapse '$HOME' to '~'"
   (replace-regexp-in-string (getenv "HOME") "~" (buffer-file-name)))
 
+(when nil
 ;; See
 ;;
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Line-Format.html#Mode-Line-Format
@@ -45,7 +49,7 @@
 ;; option would be to filter or shorten them somehow.
 (nc:custom-set-variable header-line-format
   '("" mode-line-modes))
-
+)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Uniquify buffer names.
 
@@ -56,5 +60,7 @@
 (nc:custom-set-variable uniquify-min-dir-content 2)
 )
 
+(when nil
 (require 'uniquify)
 (nc:custom-set-variable uniquify-buffer-name-style 'nil)
+)

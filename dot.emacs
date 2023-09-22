@@ -133,9 +133,15 @@ See `nc:custom-set-variable'."
 
 (global-font-lock-mode 1)
 
+;; Use shorter prompt for yes/no questions.
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; Remember recent files.
+(recentf-mode 1)
+(setq recentf-max-saved-items 100)
+
 ;; Save last cursor position in files and jump there when reopening.
-(setq-default saveplace t)
-(require 'saveplace)
+(save-place-mode 1)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
@@ -313,3 +319,10 @@ See `nc:custom-set-variable'."
 ;; Load this last, in case it overrides existing settings.
 (when (file-exists-p "~/.emacs.d/system-custom.el")
     (nc:load "~/.emacs.d/system-custom.el"))
+
+;; Show key sequence completion hints automatically on pause.
+(require 'use-package)
+(use-package which-key
+  :ensure
+  :init
+  (which-key-mode))

@@ -1,3 +1,4 @@
+(when nil
 ;;; Haskell
 
 ;; See :/dot.emacs.d/extensions/helm.el for comments explaining
@@ -48,7 +49,9 @@
   :custom (flycheck-pos-tip-timeout 1000 "Make error popups persist.")
   :hook (flycheck-mode . flycheck-pos-tip-mode))
 
-;; Commented out for Intero below.
+;; ================================================================
+;; Everything below is for old pre-lsp configs and is commented out.
+
 (when nil
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -407,3 +410,4 @@ project specific script to generate tags. Can also set
 ;; completion from TAGS.
 ;;
 ;; M-,: jump back to source of last `M-.'.
+)
