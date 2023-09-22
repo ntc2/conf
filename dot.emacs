@@ -36,16 +36,18 @@
   "Warning to insert in comment field of `custom-set-variable' entries."
   (format "!!! CAREFUL: CUSTOM-SET IN %s !!!" load-file-name))
 
+;; To debug, use `pp-macroexpand-last-sexp' to show the expansion of a
+;; macro call.
 (defmacro nc:custom-set-variable (var value)
   "Call `custom-set-variables' with a comment warning about
 customizing using the customize GUI.
 
 XXX: does not support setting the optional NOW and
 REQUEST (dependency) fields."
-  (custom-set-variables
+  `(custom-set-variables
     ;; 'load-file-name' is set by 'load':
     ;; http://stackoverflow.com/a/1971376/470844
-    `(,var ,value nil nil ,(nc:custom-set-warning))))
+    '(,var ,value nil nil ,(nc:custom-set-warning))))
 
 (defmacro nc:custom-set-face (face spec)
   "XXX: untested.
@@ -92,7 +94,7 @@ See `nc:custom-set-variable'."
 ;; Always select / jump to help window when it opens. This lets you
 ;; hit "q" to close the help window, without having to select it
 ;; first.
-(nc:custom-set-variable help-window-slect t)
+(nc:custom-set-variable help-window-select t)
 
 ;; Highlight matching parens.
 (add-hook 'after-init-hook #'show-paren-mode)
