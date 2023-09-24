@@ -110,11 +110,25 @@ annoying, sometimes be useful, that's why this can be handly."
   (setq rk/copilot-enable-for-org (not rk/copilot-enable-for-org))
   (message "copilot for org is %s" (if rk/copilot-enable-for-org "enabled" "disabled")))
 
+;; (eval-after-load 'copilot
+;;   '(progn
+;;      ;; Note company is optional but given we use some company commands above
+;;      ;; we'll require it here. If you don't use it, you can remove all company
+;;      ;; related code from this file, copilot does not need it.
+;;      (require 'company)
+;;      (global-copilot-mode)))
+
 ;; load the copilot package
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :ensure t
   :config
+  (add-hook 'prog-mode-hook 'copilot-mode)
+  (add-hook 'text-mode-hook 'copilot-mode)
+  ;; Open a mode's definition and look for `define-derived-mode' to
+  ;; find what mode it derives from.
+  (add-hook 'conf-mode-hook 'copilot-mode)
+
   ;; keybindings that are active when copilot shows completions
   (define-key copilot-mode-map (kbd "M-<up>") #'copilot-next-completion)
   ;;(define-key copilot-mode-map (kbd "M-]") #'copilot-previous-completion)
@@ -124,6 +138,7 @@ annoying, sometimes be useful, that's why this can be handly."
   ;; global keybindings
   (define-key global-map (kbd "M-C-<return>") #'rk/copilot-complete-or-accept)
   (define-key global-map (kbd "M-C-<escape>") #'rk/copilot-change-activation)
+  ;;(define-key global-map (kbd "<tab>") #'rk/copilot-tab)
 
   ;; Do copilot-quit when pressing C-g
   (advice-add 'keyboard-quit :before #'rk/copilot-quit)
@@ -162,6 +177,7 @@ annoying, sometimes be useful, that's why this can be handly."
               ("M-<". company-select-first)
               ("M->". company-select-last))
   (:map company-mode-map
+        ("C-<tab>" . company-complete)
         ("<tab>". tab-indent-or-complete)
         ("TAB". tab-indent-or-complete)))
 
@@ -185,22 +201,20 @@ annoying, sometimes be useful, that's why this can be handly."
   (let ((yas/fallback-behavior 'return-nil))
     (yas/expand)))
 
+;; NC: not quite right: when there is both a company completion and
+;; copilot completion available, tab only tries the company
+;; completion.
 (defun tab-indent-or-complete ()
   (interactive)
   (if (minibufferp)
       (minibuffer-complete)
-    (if (or (not yas/minor-mode)
-            (null (do-yas-expand)))
+    (if (or
+         (not (copilot-accept-completion))
+         (not yas/minor-mode)
+         (null (do-yas-expand)))
         (if (check-expansion)
             (company-complete-common)
           (indent-for-tab-command)))))
 
-(eval-after-load 'copilot
-  '(progn
-     ;; Note company is optional but given we use some company commands above
-     ;; we'll require it here. If you don't use it, you can remove all company
-     ;; related code from this file, copilot does not need it.
-     (require 'company)
-     (global-copilot-mode)))
-
+;; Need to run this once per machine (?) to login.
 ;;(copilot-login)
