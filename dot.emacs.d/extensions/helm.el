@@ -5,13 +5,7 @@
 (require 'diminish)
 (require 'bind-key)
 
-;; Apparently you can use `use-package' instead of e.g. Cask to auto
-;; install packages. See `use-package' docs for `:ensure' at
-;; https://github.com/jwiegley/use-package. This is what Adam does in
-;; his Emacs config at
-;; https://github.com/acfoltzer/.emacs.d/blob/master/init.el.
-;;
-;; See also: Adam uses `allout' mode to use an outline mode (the
+;; Adam uses `allout' mode to use an outline mode (the
 ;; `;;;_' prefixes) with his init file. This might be a nice
 ;; alternative to my splitting things into many files, since the
 ;; reason for that was to ease navigation and management.
@@ -93,6 +87,11 @@
   :diminish projectile-mode
 
   :custom
+  ;; Workaround problems due to old version of fd.
+  ;; https://github.com/bbatsov/projectile/issues/1788#issuecomment-1483871057
+  (projectile-git-fd-args "-H -0 -E .git -tf")
+  (projectile-generic-command "fd . -0 --type f --color=never")
+
   (projectile-file-exists-remote-cache-expire nil "Don't cache remote files, to avoid getting prompted for SSH passwords where keys are not available.")
   ;; The leading '*' means ignore not just at the top-level. It does
   ;; *not* mean ignore any dir whose name ends with the string after
