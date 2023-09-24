@@ -106,8 +106,10 @@ See `nc:custom-set-variable'."
 ;; To actually get ligatures with FiraCode, you need to enable
 ;; ligatures. See https://github.com/mickeynp/ligature.el for
 ;; instructions.
-;;(set-face-attribute 'default nil :font "FiraCode-12")
-;;
+
+;; In Emacs 27.1 Terminus-14 works, but in Emacs 28.1 it's tiny, so
+;; switched back to FiraCode.
+(set-face-attribute 'default nil :font "FiraCode-12")
 ;; FiraCode was good, but I think I prefer the crisp look of bitmap
 ;; (non-antialiased) fonts, like Terminus. Trying bold in hopes it's
 ;; easier on the eyes, altho this loses some info that used to be
@@ -116,10 +118,10 @@ See `nc:custom-set-variable'."
 ;; Terminus doesn't play well with lsp-ui: the stuff lsp
 ;; adds to the right side of the screen wraps. Existing bug report
 ;; here: https://github.com/emacs-lsp/lsp-ui/issues/285.
-(set-face-attribute 'default nil :font "Terminus-14:bold")
+;;(set-face-attribute 'default nil :font "Terminus-14:bold")
 ;; Fix from above bug report.
-(custom-set-faces
-  '(markdown-code-face ((t (:inherit default)))))
+;; (custom-set-faces
+;;   '(markdown-code-face ((t (:inherit default)))))
 
 ;; Variations: terminus:bold terminus-20:bold
 ;;(add-to-list 'default-frame-alist '(font . "terminus"))
