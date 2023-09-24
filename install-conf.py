@@ -68,21 +68,9 @@ def main():
         c('ln -Tf %(from_)s %(to)s'  % locals())
 
     # emacs extensions.
-    for f in ('extensions', 'Cask', 'README'):
+    for f in ('extensions', 'README'):
         c('ln -fs %(home)s/v/conf/dot.emacs.d/%(f)s %(home)s/.emacs.d/'
           % locals())
-    if c('which cask &>/dev/null') != 0:
-        print 'Cask is not installed. See `~/v/conf/install/cask.sh`.'
-        print 'Before installing Cask, you should delete stale `.elc` files. Roughly:'
-        print '    find ~/.emacs.d ~/v/conf -name \'*.elc\' -exec rm {} +'
-    # remove byte compiled local configs. No real point right now as
-    # I'm not loading `.elc` files for my local configs anymore, but
-    # I've had various problems in the past with stale `.elc`
-    # files. E.g., they don't necessary recompile when macros they
-    # depend on change!
-    c('''find -L ~/.emacs.d/ -name .cask -prune -o -name '*.elc' -exec rm -v {} +''')
-    print 'You may want to install Cask-installed Emacs deps with `nc:emacs:cask install`'
-    print 'and/or update them with `nc:emacs:cask update`.'
 
     # misc programs.
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())
