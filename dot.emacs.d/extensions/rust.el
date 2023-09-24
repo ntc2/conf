@@ -74,10 +74,16 @@
   ;; See https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/
   ;; for all available settings, including some other goodies like a
   ;; special smart join-line function, and a way to run tests for
-  ;; thing at point automatically. Seems that the inlay hints aren't
-  ;; actually working tho. Those docs mention that inlay hints don't
-  ;; get along with "lsp-ui sideline", which I think is the thing
-  ;; displaying the types on the RHS.
+  ;; thing at point automatically.
+  ;;
+  ;; NOTE: those docs mention that inlay hints don't get along with
+  ;; "lsp-ui sideline", which is the thing displaying the types on the
+  ;; RHS. But I'm not experiencing any trouble, besides the general
+  ;; clutter that I'm not sure is worth it.
+  ;;
+  ;; Need `lsp-inlay-hint-enable' here and `lsp-inlay-hints-mode' to
+  ;; get inlay hints working.
+  (lsp-inlay-hint-enable t)
   (lsp-rust-analyzer-server-display-inlay-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-chaining-hints t)
@@ -87,7 +93,8 @@
   (lsp-rust-analyzer-display-parameter-hints t)
   (lsp-rust-analyzer-display-reborrow-hints nil)
   :config
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  (add-hook 'lsp-mode-hook 'lsp-inlay-hints-mode))
 
 ;; Docs: https://emacs-lsp.github.io/lsp-ui/
 (use-package lsp-ui
@@ -96,7 +103,10 @@
   :custom
    ;; I can't figure out what "peek" is doing.
   (lsp-ui-peek-always-show t)
-  (lsp-ui-sideline-show-hover t)
+  ;; This "show-hover" shows the package for each symbol on line. I
+  ;; don't find this useful, especially when I can hover on a symbol
+  ;; to get all it's info.
+  (lsp-ui-sideline-show-hover nil)
   ;; This solves the "what code action is available when there's only
   ;; 1" problem, at the cost of some screen clutter. Might be better
   ;; to find a way to optionally list available code actions, e.g. by
