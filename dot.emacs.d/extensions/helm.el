@@ -44,8 +44,6 @@
   ;; This runs before the package is loaded.
   :init
   (progn
-    (use-package helm-config)
-
     ;; Supposed to make Helm adapt to my usage.
     (use-package helm-adaptive
       :config (helm-adaptive-mode 1))
