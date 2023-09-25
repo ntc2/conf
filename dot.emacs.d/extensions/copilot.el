@@ -179,7 +179,11 @@ annoying, sometimes be useful, that's why this can be handly."
   (:map company-mode-map
         ("C-<tab>" . company-complete)
         ("<tab>". tab-indent-or-complete)
-        ("TAB". tab-indent-or-complete)))
+        ("TAB". tab-indent-or-complete))
+  ;; Company is not enabled in text mode, but I still want the copilot
+  ;; completions to work there.
+  (:map text-mode-map
+        ("<tab>". tab-indent-or-complete)))
 
 (defun company-yasnippet-or-completion ()
   (interactive)
