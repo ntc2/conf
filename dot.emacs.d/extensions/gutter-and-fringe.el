@@ -12,16 +12,22 @@
 (global-set-key (kbd "M-<prior>") 'diff-hl-previous-hunk)
 (global-set-key (kbd "M-<next>")  'diff-hl-next-hunk)
 
-;; Use `linum-mode' in all programming modes, except `org-mode'.
-(if (version<= "26.0.50" emacs-version )
+;; Disable scroll bars: takes up space.
+(scroll-bar-mode 0)
+
+;; Add line numbers to wide windows.
+(defun nc/maybe-linum ()
+  (if (and (or (derived-mode-p 'prog-mode)
+               (derived-mode-p 'text-mode))
+           (not (or
+                 (derived-mode-p 'org-mode)
+                 (derived-mode-p 'magit-mode)))
+           (>= (window-width) 70))
+      (progn
+        (display-line-numbers-mode 1))
     (progn
-      (global-display-line-numbers-mode)
-      (add-hook 'org-mode-hook
-                (lambda () (display-line-numbers-mode 0))))
-  (progn
-    (add-hook 'prog-mode-hook 'linum-mode)
-    (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
-    (add-hook 'text-mode-hook 'linum-mode)))
+      (display-line-numbers-mode -1))))
+(add-hook 'window-configuration-change-hook #'nc/maybe-linum)
 
 (require 'magit nil t)
 (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
