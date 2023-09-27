@@ -43,6 +43,11 @@
     (local-set-key (kbd "C-c C-n") 'outline-forward-same-level)
     (local-set-key (kbd "C-c C-p") 'outline-backward-same-level)
 
+    ;; These are mapped to "M-<up>" and "M-<down>" by default, but
+    ;; I rebound those for copilot.
+    (local-set-key (kbd "C-M-<up>") 'org-metaup)
+    (local-set-key (kbd "C-M-<down>") 'org-metadown)
+
     (bind-windmove-keys)
 
     (local-set-key (kbd "C-c C-a") 'align-regexp)

@@ -171,19 +171,19 @@ annoying, sometimes be useful, that's why this can be handly."
 (use-package company
   :ensure
   :bind
-  (:map company-active-map
-              ("C-n". company-select-next)
-              ("C-p". company-select-previous)
-              ("M-<". company-select-first)
-              ("M->". company-select-last))
   (:map company-mode-map
         ("C-<tab>" . company-complete)
         ("<tab>". tab-indent-or-complete)
         ("TAB". tab-indent-or-complete))
+  :config
+  (add-hook 'prog-mode-hook 'company-mode)
   ;; Company is not enabled in text mode, but I still want the copilot
-  ;; completions to work there.
-  (:map text-mode-map
-        ("<tab>". tab-indent-or-complete)))
+  ;; completions to work there. But in org mode I want default tab
+  ;; behavior.
+  (add-hook 'text-mode-hook
+            (lambda ()
+              (unless (eq major-mode 'org-mode)
+                (bind-key "<tab>" 'tab-indent-or-complete text-mode-map)))))
 
 (defun company-yasnippet-or-completion ()
   (interactive)
@@ -212,13 +212,13 @@ annoying, sometimes be useful, that's why this can be handly."
   (interactive)
   (if (minibufferp)
       (minibuffer-complete)
-    (if (or
-         (not (copilot-accept-completion))
-         (not yas/minor-mode)
-         (null (do-yas-expand)))
-        (if (check-expansion)
-            (company-complete-common)
-          (indent-for-tab-command)))))
+    (unless (copilot-accept-completion)
+      (if yas/minor-mode
+          (unless
+              (do-yas-expand)
+            (if (check-expansion)
+                (company-complete-common)
+              (indent-for-tab-command)))))))
 
 ;; Need to run this once per machine (?) to login.
 ;;(copilot-login)
