@@ -16,6 +16,17 @@
 ;; vertical splits would result in windows with less than 70 columns.
 (setq split-width-threshold 140)
 
+;; Add window layout undo/redo, so that e.g. I can zoom into a window,
+;; and then revert.
+;;
+;; Default bindings include:
+;; - C-c <left>  winner-undo
+;; - C-c <right> winner-redo
+(use-package winner
+  :diminish winner-mode
+  :config
+  (winner-mode 1))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Navigation
 
