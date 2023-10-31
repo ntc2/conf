@@ -122,3 +122,25 @@ in buffer with regular spaces"
     (fill-paragraph nil region)))
 ;; The standard `fill-paragraph' is bound to `M-q'.
 (define-key global-map "\M-Q" 'nc:unfill-paragraph)
+
+;; Use visual-line-mode, where Emacs logically wraps long lines, but
+;; doesn't actually hard wrap them. Eliminates the need to constantly
+;; press `M-q'.
+;;
+;; Only enabled in non-prog text modes.
+(use-package emacs
+  :hook
+  ((text-mode . (lambda ()
+                  (unless (derived-mode-p 'prog-mode)
+                    (setq visual-line-fringe-indicators
+                          '(left-curly-arrow right-curly-arrow))
+                    (visual-line-mode 1))))))
+;; Use visual-fill-column-mode to wrap long lines in visual-fill
+;; mode. See markdown specific tweaks to this in `./markdown.el'.
+(use-package visual-fill-column
+  :ensure t
+  :config
+  (progn
+    (setq-default visual-fill-column-center-text nil)
+    (setq-default visual-fill-column-width 80)
+    (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)))
