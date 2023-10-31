@@ -23,6 +23,9 @@
 
 ;; Don't show modes in modeline
 (setq-default mode-line-format (delq 'mode-line-modes mode-line-format))
+;; Don't show git info in modeline.
+(advice-add 'vc-git-mode-line-string
+            :override (lambda (file) ""))
 
 (defun nc:buffer-file-name ()
   "Like `buffer-file-name', but collapse '$HOME' to '~'"
