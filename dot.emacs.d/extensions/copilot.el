@@ -172,18 +172,9 @@ annoying, sometimes be useful, that's why this can be handly."
   :ensure
   :bind
   (:map company-mode-map
-        ("C-<tab>" . company-complete)
-        ("<tab>". tab-indent-or-complete)
-        ("TAB". tab-indent-or-complete))
+        ("C-<tab>" . company-complete))
   :config
-  (add-hook 'prog-mode-hook 'company-mode)
-  ;; Company is not enabled in text mode, but I still want the copilot
-  ;; completions to work there. But in org mode I want default tab
-  ;; behavior.
-  (add-hook 'text-mode-hook
-            (lambda ()
-              (unless (eq major-mode 'org-mode)
-                (bind-key "<tab>" 'tab-indent-or-complete text-mode-map)))))
+  (add-hook 'prog-mode-hook 'company-mode))
 
 (defun company-yasnippet-or-completion ()
   (interactive)
