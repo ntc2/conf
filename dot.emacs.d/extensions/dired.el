@@ -29,8 +29,13 @@
                ;; https://github.com/Alexander-Miller/treemacs/issues/1063
                ("q" . nc/treemacs-quit)))
   :config
-  ;; Peek mode toggle is already bound to P by default.
-  (add-hook 'treemacs-mode-hook (lambda () (treemacs-peek-mode 1))))
+  (add-hook 'treemacs-mode-hook
+            (lambda ()
+              ;; Peek mode toggle is already bound to P by default.
+              (treemacs-peek-mode 1)
+              ;; Follow mode is annoying: you constantly lose your
+              ;; position in the tree.
+              (treemacs-follow-mode -1))))
 
 (use-package treemacs-projectile
   :after (treemacs projectile)
