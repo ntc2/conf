@@ -3,8 +3,9 @@
 ;; https://emacs.stackexchange.com/a/31874/9977
 ;;
 ;; There is no automatic upgrading. Note that things may break on
-;; upgrade. Would like a way to specify the previous versions an
-;; optionally revert ...
+;; upgrade; need to document manual upgrade using straight. Would like
+;; a way to specify the previous versions and optionally revert, and I
+;; believe straight has something called freeze/thaw that does this.
 
 ;; Setup `straight'.
 ;; https://github.com/radian-software/straight.el
@@ -34,13 +35,19 @@
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (setq package-user-dir (expand-file-name "pkgs/" user-emacs-directory))
-(package-initialize)
 
-;; Install use-package that we require for managing all other dependencies
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; If we run `package-initialize', then all installed packages get
+;; loaded, regardless of whether we explicitly load them elsewhere, so
+;; don't do that!
+;;
+;;(package-initialize)
+
+;; Install use-package
+(straight-use-package 'use-package)
 (require 'use-package)
+(use-package straight
+  :custom
+  (straight-use-package-by-default t))
 ;; Pin to nongnu by default.
 (setq use-package-always-pin "nongnu")
 
@@ -48,9 +55,9 @@
 ;; ================================================================
 
 ;; Git IDE.
-(use-package magit :ensure t)
+(use-package magit :ensure t :pin "melpa")
 ;; Git-gutter doesn't work well for me in Emacs 27.
-(use-package diff-hl :ensure t :pin "melpa-stable")
+(use-package diff-hl :ensure t :pin "melpa")
 
 ;; Markdown.
 ;;
@@ -93,7 +100,7 @@
 (use-package typescript-mode :ensure t)
 
 ;; To get `debian-changelog-mode'.
-(use-package dpkg-dev-el :ensure t :pin "melpa-stable")
+;;(use-package dpkg-dev-el :ensure t :pin "melpa")
 
 ;; To get `racket-mode'.
 (use-package racket-mode :ensure t)

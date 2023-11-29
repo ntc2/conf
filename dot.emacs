@@ -1,60 +1,7 @@
 ;; -*- emacs-lisp -*-
 
-;; * Custom set variables.
-;;
-;; Multiple `custom-set-variables' calls can be confusing [1], but
-;; having a single monolithic call is not modular.  Solution: use
-;; multiple calls, but comment each variable with a comment indicating
-;; where it was set.  The comment is shown when using the customize
-;; interface to customize the variable.
-;;
-;; See `./extensions/white-space-and-punctuation.el' for example usage.
-;;
-;; Note: `setq' does not always work as a replacement for a
-;; `custom-set-variables' entry.  E.g. `(setq tab-width 2)' has no
-;; effect. The following do work:
-;;
-;;   (custom-set-default 'tab-width 2)
-;;   (setq-default tab-width 2)
-;;   (custom-set-variables '(tab-width 2))
-;;
-;;
-;; On the other hand, it's not necessarily a good idea to use
-;; `custom-set-variables' on a variable that isn't hooked into the
-;; customize interface (you get a warning from customize, but I'm not
-;; sure if there are any pitfalls).
-
-;; [1]: http://www.dotemacs.de/custbuffer.html
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-;(package-initialize)
-
-(defun nc:custom-set-warning ()
-  "Warning to insert in comment field of `custom-set-variable' entries."
-  (format "!!! CAREFUL: CUSTOM-SET IN %s !!!" load-file-name))
-
-;; To debug, use `pp-macroexpand-last-sexp' to show the expansion of a
-;; macro call.
-(defmacro nc:custom-set-variable (var value)
-  "Call `custom-set-variables' with a comment warning about
-customizing using the customize GUI.
-
-XXX: does not support setting the optional NOW and
-REQUEST (dependency) fields."
-  `(custom-set-variables
-    ;; 'load-file-name' is set by 'load':
-    ;; http://stackoverflow.com/a/1971376/470844
-    '(,var ,value nil nil ,(nc:custom-set-warning))))
-
-(defmacro nc:custom-set-face (face spec)
-  "XXX: untested.
-
-See `nc:custom-set-variable'."
-  (custom-set-faces
-    `(,face ,spec nil ,(nc:custom-set-warning))))
+;; We're using straight.el.
+(setq package-enable-at-startup nil)
 
 ;;; default font
 
@@ -132,6 +79,64 @@ See `nc:custom-set-variable'."
 ;; available (e.g. for Terminus where there are only a few sizes).
 ;;
 ;;(set-face-attribute 'default nil :height 150)
+
+(apply 'load-file (file-expand-wildcards "~/v/conf/dot.emacs.d/extensions/00-dependencies.el"))
+
+;; * Custom set variables.
+;;
+;; Multiple `custom-set-variables' calls can be confusing [1], but
+;; having a single monolithic call is not modular.  Solution: use
+;; multiple calls, but comment each variable with a comment indicating
+;; where it was set.  The comment is shown when using the customize
+;; interface to customize the variable.
+;;
+;; See `./extensions/white-space-and-punctuation.el' for example usage.
+;;
+;; Note: `setq' does not always work as a replacement for a
+;; `custom-set-variables' entry.  E.g. `(setq tab-width 2)' has no
+;; effect. The following do work:
+;;
+;;   (custom-set-default 'tab-width 2)
+;;   (setq-default tab-width 2)
+;;   (custom-set-variables '(tab-width 2))
+;;
+;;
+;; On the other hand, it's not necessarily a good idea to use
+;; `custom-set-variables' on a variable that isn't hooked into the
+;; customize interface (you get a warning from customize, but I'm not
+;; sure if there are any pitfalls).
+
+;; [1]: http://www.dotemacs.de/custbuffer.html
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+;(package-initialize)
+
+(defun nc:custom-set-warning ()
+  "Warning to insert in comment field of `custom-set-variable' entries."
+  (format "!!! CAREFUL: CUSTOM-SET IN %s !!!" load-file-name))
+
+;; To debug, use `pp-macroexpand-last-sexp' to show the expansion of a
+;; macro call.
+(defmacro nc:custom-set-variable (var value)
+  "Call `custom-set-variables' with a comment warning about
+customizing using the customize GUI.
+
+XXX: does not support setting the optional NOW and
+REQUEST (dependency) fields."
+  `(custom-set-variables
+    ;; 'load-file-name' is set by 'load':
+    ;; http://stackoverflow.com/a/1971376/470844
+    '(,var ,value nil nil ,(nc:custom-set-warning))))
+
+(defmacro nc:custom-set-face (face spec)
+  "XXX: untested.
+
+See `nc:custom-set-variable'."
+  (custom-set-faces
+    `(,face ,spec nil ,(nc:custom-set-warning))))
 
 (global-font-lock-mode 1)
 
@@ -223,7 +228,11 @@ See `nc:custom-set-variable'."
 (let (;; My customizations, split up in separate files. The
       ;; `~/.emacs.d/system-custom.el' is loaded separately at the end
       ;; of this file.
-      (files (file-expand-wildcards "~/.emacs.d/extensions/*.el")))
+      ;;
+      ;; HACK: using [a-z] prefix to avoid loading
+      ;; 00-dependencies.el. Better to just move that out of
+      ;; extensions/ dir.
+      (files (file-expand-wildcards "~/.emacs.d/extensions/[a-z]*.el")))
   (mapc 'nc:load files))
 ;; Generate list of extensions for (e.g. bisection) debugging config
 ;; probllems.
