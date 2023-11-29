@@ -127,11 +127,15 @@ in buffer with regular spaces"
 ;; doesn't actually hard wrap them. Eliminates the need to constantly
 ;; press `M-q'.
 ;;
-;; Only enabled in non-prog text modes.
+;; Only enabled in non-prog, non-org text modes.
 (use-package emacs
   :hook
   ((text-mode . (lambda ()
-                  (unless (derived-mode-p 'prog-mode)
+                  (unless (or (derived-mode-p 'prog-mode)
+                              ;; When visual-line-mode is on in
+                              ;; org-mode, it results in files opening
+                              ;; up fully expanded, which is annoying.
+                              (derived-mode-p 'org-mode))
                     (setq visual-line-fringe-indicators
                           '(left-curly-arrow right-curly-arrow))
                     (visual-line-mode 1))))))
