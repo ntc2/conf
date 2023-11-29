@@ -121,7 +121,6 @@ annoying, sometimes be useful, that's why this can be handly."
 ;; load the copilot package
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
-  :ensure t
   :config
   (add-hook 'prog-mode-hook 'copilot-mode)
   (add-hook 'text-mode-hook 'copilot-mode)
@@ -162,14 +161,12 @@ annoying, sometimes be useful, that's why this can be handly."
 ;; filling in all the possible constructor branches.
 
 (use-package yasnippet
-  :ensure
   :config
   (yas-reload-all)
   (add-hook 'prog-mode-hook 'yas-minor-mode)
   (add-hook 'text-mode-hook 'yas-minor-mode))
 
 (use-package company
-  :ensure
   :bind
   (:map company-mode-map
         ("C-<tab>" . company-complete))

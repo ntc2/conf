@@ -1,16 +1,26 @@
-;; How to manually upgrade packages:
+;; I'm using straight.el + use-package to manage packages, after
+;; having trouble with package.el + use-package. Note that straight.el
+;; suggests removing all package.el related stuff, which includes not
+;; using `:pin' or `:ensure' with use-package. I haven't read the docs
+;; generally yet, just learned a few commands I needed to port my old
+;; setup. Main docs:
 ;;
-;; https://emacs.stackexchange.com/a/31874/9977
-;;
-;; There is no automatic upgrading. Note that things may break on
-;; upgrade; need to document manual upgrade using straight. Would like
-;; a way to specify the previous versions and optionally revert, and I
-;; believe straight has something called freeze/thaw that does this.
-
-;; Setup `straight'.
 ;; https://github.com/radian-software/straight.el
 ;;
-;; Use this to install copilot.
+;; There is no automatic upgrading. Note that things may break on
+;; upgrade. To manually update one package, e.g. after I change its
+;; source pin, use `straight-pull-package', and then restart Emacs. To
+;; update all packages, use `straight-pull-all', and then restart. But
+;; I might want to try "freezing" first, so I can revert if
+;; needed. Update commands:
+;;
+;; https://github.com/radian-software/straight.el#version-control-operations
+;;
+;; I didn't read about it yet, but freeze/thaw is available:
+;;
+;; https://github.com/radian-software/straight.el#configuration-reproducibility
+
+;; Install `straight'.
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -24,94 +34,77 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; Add package repos
-(require 'package)
-;; I don't understand why we want the Tromey ELPA?
-;;(add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
-;; The `t' means "append", so we keep the default repositories.
-;;
-;; Note that MELPA Stable is not what it sounds like: it's rarely
-;; updated, and it's not a collection compatible packages.
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(setq package-user-dir (expand-file-name "pkgs/" user-emacs-directory))
-
-;; If we run `package-initialize', then all installed packages get
-;; loaded, regardless of whether we explicitly load them elsewhere, so
-;; don't do that!
-;;
-;;(package-initialize)
-
-;; Install use-package
+;; Install use-package.
 (straight-use-package 'use-package)
 (require 'use-package)
 (use-package straight
   :custom
+  ;; Use straight to install packages in use-package. This has the
+  ;; effect of automatically `:ensure'ing all packages, but using
+  ;; actual `:ensure' is not supported afaict, since it implies some
+  ;; package.el interaction.
   (straight-use-package-by-default t))
-;; Pin to nongnu by default.
-(setq use-package-always-pin "nongnu")
 
-;; Install various deps.
+;; Install misc deps. Some of these should be moved to corresponding
+;; extension files.
 ;; ================================================================
 
 ;; Git IDE.
-(use-package magit :ensure t :pin "melpa")
-;; Git-gutter doesn't work well for me in Emacs 27.
-(use-package diff-hl :ensure t :pin "melpa")
+(use-package magit)
 
 ;; Markdown.
 ;;
 ;; More recent than the version that ships with Emacs.
-(use-package markdown-mode :ensure t)
+(use-package markdown-mode )
 ;; For syntax highlighting in "GFM fenced code blocks", e.g.
 ;;
 ;; ``` haskell
 ;; module Test where
 ;; ```
-(use-package polymode :ensure t :pin "melpa-stable")
-(use-package poly-markdown :ensure t :pin "melpa-stable")
+(use-package polymode)
+(use-package poly-markdown)
 
 ;; Use-package
 ;;
 ;; https://github.com/jwiegley/use-package
 ;;
 ;; At work straight.el has been suggested as a Cask replacement.
-(use-package diminish :ensure t :pin "melpa-stable")
+(use-package diminish)
 
 ;; Helm.
 ;;
 ;; https://github.com/emacs-helm/helm
-(use-package projectile :ensure t)
-(use-package helm :ensure t :pin "melpa")
-(use-package helm-descbinds :ensure t :pin "melpa")
-(use-package helm-projectile :ensure t :pin "melpa")
-(use-package helm-ag :ensure t :pin "melpa")
+(use-package projectile)
+(use-package helm)
+(use-package helm-descbinds)
+(use-package helm-projectile)
+(use-package helm-ag)
 
 ;; Trim whitespace at end of edited lines.
-(use-package ws-butler :ensure t)
+(use-package ws-butler)
 
 ;; Edit Firefox/Chrome text areas in Emacs.
-(use-package atomic-chrome :ensure t :pin "melpa-stable")
+(use-package atomic-chrome)
 
 ;; Move buffers with ease.
-(use-package buffer-move :ensure t :pin "melpa-stable")
+(use-package buffer-move)
 
 ;; Typescript (used in Haddock to generate JS)
-(use-package typescript-mode :ensure t)
+(use-package typescript-mode)
 
 ;; To get `debian-changelog-mode'.
-;;(use-package dpkg-dev-el :ensure t :pin "melpa")
+;;(use-package dpkg-dev-el)
 
 ;; To get `racket-mode'.
-(use-package racket-mode :ensure t)
+(use-package racket-mode)
 
 ;; Unfill paragraphs
-(use-package unfill :ensure t :pin "melpa-stable")
+(use-package unfill)
 
 ;; Zenburn color theme
-(use-package zenburn-theme :ensure t)
+(use-package zenburn-theme)
 
 ;; IDE
-(use-package yasnippet :ensure t :pin "melpa-stable")
-(use-package company :ensure t :pin "melpa-stable")
-(use-package flycheck :ensure t :pin "melpa-stable")
+(use-package yasnippet)
+(use-package company)
+(use-package flycheck)

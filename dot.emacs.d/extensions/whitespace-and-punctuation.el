@@ -142,7 +142,6 @@ in buffer with regular spaces"
 ;; Use visual-fill-column-mode to wrap long lines in visual-fill
 ;; mode. See markdown specific tweaks to this in `./markdown.el'.
 (use-package visual-fill-column
-  :ensure t
   :config
   (progn
     (setq-default visual-fill-column-center-text nil)

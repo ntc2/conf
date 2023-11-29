@@ -332,9 +332,6 @@ See `nc:custom-set-variable'."
     (nc:load "~/.emacs.d/system-custom.el"))
 
 ;; Show key sequence completion hints automatically on pause.
-(require 'use-package)
 (use-package which-key
-  :ensure
-  :pin "melpa"
   :init
   (which-key-mode))

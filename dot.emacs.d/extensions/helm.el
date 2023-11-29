@@ -40,16 +40,12 @@
   (progn
     ;; Supposed to make Helm adapt to my usage.
     ;; (use-package helm-adaptive
-    ;;   :ensure t
-    ;;   :pin melpa
     ;;   :config (helm-adaptive-mode 1))
 
     (use-package helm-descbinds
-      :ensure t
       :bind (("C-h b" . helm-descbinds)))
 
-    (use-package helm-projectile
-      :ensure t)
+    (use-package helm-projectile)
 
     ;; Maximal fuzzy matching:
     ;; https://github.com/emacs-helm/helm/wiki/Fuzzy-matching
@@ -86,7 +82,7 @@
 ;; map to `projectile-find-file' when in a Projectile project?).
 (use-package projectile
   :defer t
-  ;; :ensure t
+  ;;
   :commands projectile-mode
   :diminish projectile-mode
 

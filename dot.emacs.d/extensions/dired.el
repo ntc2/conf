@@ -18,9 +18,9 @@
 ;; - unbound functions: https://github.com/Alexander-Miller/treemacs#unbound-functions
 ;; - default keys: https://github.com/Alexander-Miller/treemacs#default-keymaps
 (use-package treemacs
-  :ensure t
+
   :defer t
-  :pin "melpa-stable"
+
   :bind (("C-c t" . treemacs)
          (:map treemacs-mode-map
                ;; By default q is bound to treemacs-quit, but that
@@ -39,12 +39,12 @@
 
 (use-package treemacs-projectile
   :after (treemacs projectile)
-  :ensure t
+
   :defer t
-  :pin "melpa-stable")
+ )
 
 (use-package treemacs-magit
   :after (treemacs magit)
-  :ensure t
+
   :defer t
-  :pin "melpa-stable")
+ )

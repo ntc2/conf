@@ -9,15 +9,14 @@
 (require 'bind-key)
 
 (use-package lsp-mode
-  :ensure t
   :hook ((haskell-mode . lsp)
          (haskell-literate-mode . lsp))
   :commands lsp)
 (use-package lsp-ui
-  :ensure t
+
   :commands lsp-ui-mode)
 (use-package lsp-haskell
-  :ensure t
+
   :config
  (setq lsp-haskell-server-path "haskell-language-server-wrapper")
  (setq lsp-haskell-server-args ())
@@ -33,18 +32,18 @@
  ;; client/server.
  (setq lsp-log-io t))
 (use-package haskell-mode
-  :ensure t)
+ )
 (use-package company
-  :ensure t)
+ )
 (use-package yasnippet
   :hook (lsp-mode . yas-minor-mode))
-  ;; :ensure t
+  ;;
   ;; :hook (prog-mode . yas-minor-mode)
   ;; :config (yas-reload-all))
 (use-package flycheck)
 ;; Pop-up flycheck error on cursor focus.
 (use-package flycheck-pos-tip
-  :ensure t
+
   ;; Default 5 seconds.
   :custom (flycheck-pos-tip-timeout 1000 "Make error popups persist.")
   :hook (flycheck-mode . flycheck-pos-tip-mode))

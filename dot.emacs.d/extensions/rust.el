@@ -10,8 +10,7 @@
 ;; rustic = basic rust-mode + additions
 
 (use-package rustic
-  :ensure
-  :pin "melpa"
+
   :bind (:map rustic-mode-map
               ("M-j" . lsp-ui-imenu)
               ("M-?" . lsp-find-references)
@@ -58,8 +57,7 @@
 ;; merging.
 
 (use-package lsp-mode
-  :ensure
-  :pin "melpa"
+
   :commands lsp
   :custom
   ;; what to use when checking on-save. "check" is default, I prefer clippy
@@ -100,8 +98,6 @@
 
 ;; Docs: https://emacs-lsp.github.io/lsp-ui/
 (use-package lsp-ui
-  :ensure
-  :pin "melpa"
   :commands lsp-ui-mode
   :custom
    ;; I can't figure out what "peek" is doing.
@@ -124,10 +120,10 @@
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;; Create / cleanup rust scratch projects quickly
 
-;;(use-package rust-playground :ensure)
+;;(use-package rust-playground)
 
 
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;; for Cargo.toml and other config files
 
-(use-package toml-mode :ensure :pin "melpa")
+(use-package toml-mode)
