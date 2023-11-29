@@ -21,18 +21,28 @@
 ;; Compute the root of the conf repo. The init file is at
 ;; <conf-root>/dot.emacs.d/test-init.el, so we need to go up two
 ;; levels.
-(setq conf-root (file-name-directory
-                 (directory-file-name
-                  (file-name-directory user-init-file))))
-;; Define user-emacs-directory as full path of absolute-path version
-;; of conf-root appended to "/var/tmp/emacs-test-init/".
+(setq conf-root (directory-file-name ;; Remove trailing slash
+                 (file-name-directory
+                  (directory-file-name ;; Remove trailing slash
+                   (file-name-directory user-init-file)))))
+;; Define `user-emacs-directory' as full path of absolute-path version
+;; of `conf-root' appended to "/var/tmp/emacs-test-init/". We replace
+;; the slashes ("/") in `conf-root' with dashes ("-") to avoid deep
+;; nesting.
 (setq user-emacs-directory
-      (expand-file-name (substring (expand-file-name conf-root) 1)
+      (expand-file-name (replace-regexp-in-string
+                         "/" "-"
+                         (substring (expand-file-name conf-root) 1))
                         "/var/tmp/emacs-test-init"))
 ;; Print use-emacs-directory to stdout and quit
-(print (format "usage-emacs-directory: %s" user-emacs-directory)
+(print (format "user-emacs-directory: %s" user-emacs-directory)
        #'external-debugging-output)
 ;; Where to save `custom-set-variable's and such.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+;; Announce in the mode-line that this is a test-init instance
+;; (otherwise I get confused between various open Emacs instances).
+(setq-default mode-line-format
+              (cons '("[test-init.el: " (:propertize conf-root face link) "]")
+                    mode-line-format))
 ;; Load the actual init file, taken from the tmp conf repo.
 (load-file (expand-file-name "dot.emacs" conf-root))
