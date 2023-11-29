@@ -4,7 +4,11 @@
 ;; Like git-gutter, but that stopped working for me in Emacs 27. The
 ;; commands are prefixed with `C-x v', e.g. `C-x v =' shows the diff
 ;; for the current file, focusing on the current hunk.
-(global-diff-hl-mode)
+;; Git-gutter doesn't work well for me in Emacs 27.
+(use-package diff-hl
+  :config
+  (global-diff-hl-mode 1)
+  (global-diff-hl-show-hunk-mouse-mode 1))
 
 ;; Make it easy to quickly jump between modified sections of the
 ;; file. Using some kind of outline/folding mode might be a more
