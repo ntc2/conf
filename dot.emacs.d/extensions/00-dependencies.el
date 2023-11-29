@@ -47,7 +47,15 @@
 
 ;; Install misc deps. Some of these should be moved to corresponding
 ;; extension files.
-;; ================================================================
+;;
+;; Here'a a repo with a very elaborate config that seems well
+;; organized using use-package, with a local packages for each
+;; extension. Using local packages would help with possible
+;; interdependency problems, by `require'ing any deps:
+;;
+;; https://github.com/jeremyf/dotemacs
+;;
+;;;; ================================================================
 
 ;; Git IDE.
 (use-package magit)

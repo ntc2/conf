@@ -91,3 +91,6 @@
 (nc:custom-set-variable org-src-fontify-natively t)
 ;; Don't mess with whitespace after editing src blocks using `C-c ''.
 (nc:custom-set-variable org-src-preserve-indentation t)
+;; Start org mode buffers collapsed. I swear this used to happen
+;; automatically ...
+(nc:custom-set-variable org-startup-folded t)
