@@ -5,12 +5,6 @@
 ;; http://stackoverflow.com/questions/384284/how-do-i-rename-an-open-file-in-emacs
 (require 'dired-x)
 
-(defun nc/treemacs-quit ()
-  "Workaround for buggy treemacs-quit function when in peek mode."
-  (interactive)
-  (treemacs-peek-mode -1)
-  (treemacs-quit))
-
 ;; Treemacs: graphical tree based file browser
 ;;
 ;; The docs are good:
@@ -18,16 +12,8 @@
 ;; - unbound functions: https://github.com/Alexander-Miller/treemacs#unbound-functions
 ;; - default keys: https://github.com/Alexander-Miller/treemacs#default-keymaps
 (use-package treemacs
-
   :defer t
-
-  :bind (("C-c t" . treemacs)
-         (:map treemacs-mode-map
-               ;; By default q is bound to treemacs-quit, but that
-               ;; doesn't do the right thing with temp buffers in peek
-               ;; mode. See
-               ;; https://github.com/Alexander-Miller/treemacs/issues/1063
-               ("q" . nc/treemacs-quit)))
+  :bind (("C-c t" . treemacs))
   :config
   (add-hook 'treemacs-mode-hook
             (lambda ()
@@ -39,12 +25,10 @@
 
 (use-package treemacs-projectile
   :after (treemacs projectile)
-
   :defer t
  )
 
 (use-package treemacs-magit
   :after (treemacs magit)
-
   :defer t
  )
