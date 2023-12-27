@@ -57,7 +57,6 @@
 ;; merging.
 
 (use-package lsp-mode
-
   :commands lsp
   :custom
   ;; what to use when checking on-save. "check" is default, I prefer clippy
@@ -83,15 +82,15 @@
   ;;
   ;; Need `lsp-inlay-hint-enable' here and `lsp-inlay-hints-mode' to
   ;; get inlay hints working.
-  (lsp-inlay-hint-enable t)
-  (lsp-rust-analyzer-server-display-inlay-hints t)
-  (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
-  (lsp-rust-analyzer-display-chaining-hints t)
-  (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
-  (lsp-rust-analyzer-display-closure-return-type-hints t)
-  ;; Turning this on doesn't do anything afaict?
-  (lsp-rust-analyzer-display-parameter-hints t)
-  (lsp-rust-analyzer-display-reborrow-hints nil)
+  ;; (lsp-inlay-hint-enable t)
+  ;; (lsp-rust-analyzer-server-display-inlay-hints t)
+  ;; (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
+  ;; (lsp-rust-analyzer-display-chaining-hints t)
+  ;; (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
+  ;; (lsp-rust-analyzer-display-closure-return-type-hints t)
+  ;; ;; Turning this on doesn't do anything afaict?
+  ;; (lsp-rust-analyzer-display-parameter-hints t)
+  ;; (lsp-rust-analyzer-display-reborrow-hints nil)
   :config
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
   (add-hook 'lsp-mode-hook 'lsp-inlay-hints-mode))
