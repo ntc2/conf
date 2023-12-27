@@ -250,6 +250,11 @@ See `nc:custom-set-variable'."
 ;; active results in the same action on all lines.
 (cua-selection-mode 1)
 
+;; Bind `C-v' to clipboard paste. There is already a binding of
+;; `S-<insert>', but I seem to instinctively type `C-v', since that's
+;; the binding in every other app.
+(global-set-key (kbd "C-v") 'cua-paste)
+
 ;;; disable tool bar (DISABLED IN ~/.Xresources NOW)
 ; some mode might use this in a useful way, e.g. debuggers or web
 ; browsers.  special case those as necessary ... or only disable for

@@ -91,7 +91,10 @@
 ;; Trim whitespace at end of edited lines.
 (use-package ws-butler)
 
-;; Edit Firefox/Chrome text areas in Emacs.
+;; Edit Firefox/Chrome text areas in Emacs. Also to install GhostText
+;; extenion on the Firefox/Chrome side, and run special Emacs with
+;; `nc:ghosttext` shell command. Only need one instance of
+;; `nc:ghosttext` for all browser text area editing.
 (use-package atomic-chrome)
 
 ;; Move buffers with ease.
