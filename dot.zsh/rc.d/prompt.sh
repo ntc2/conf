@@ -46,7 +46,7 @@ zstyle ':vcs_info:*' stagedstr ' %F{green}M%f'
 
 ### Display the existence of files not yet known to VCS
 
-### git: Show marker (T) if there are untracked files in repository
+### git: Show marker (?) if there are untracked files in repository
 # Make sure you have added unstaged to your 'formats': %u
 +vi-git-untracked(){
     if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
@@ -77,22 +77,62 @@ zstyle ':vcs_info:*' stagedstr ' %F{green}M%f'
 ### Compare local changes to remote changes
 
 ### git: Show +N/-N when your local branch is ahead-of or behind remote HEAD.
+#
 # Make sure you have added misc to your 'formats': %m
+#
+# Now that I'm using a "push remote" distinct from "upstream" for
+# feature branches [1], I want to show the diversion from the
+# push-remote and upstream separately, and make it clear that any
+# diversion from upstream is less relevant when a separate push remote
+# is set.
+#
+# When no push remote is set, the format is the same as always:
+#
+#     +A-B
+#
+# for A the number of commits and ahead and B the number of commits
+# behind upstream. However, when a push remote is set, I instead show
+#
+#     p+A-B (u+A-B)
+#
+# In both cases, I omit any part where both A and B are zero.
+#
+# [1]: push remotes are described in the Magit docs:
+# - https://magit.vc/manual/magit/The-Two-Remotes.html
+# - https://magit.vc/manual/magit/Branch-Git-Variables.html
 function +vi-git-st() {
-    local ahead behind
+    local u_ahead=0 u_behind=0 push_remote p_ahead=0 p_behind=0
     local -a gitstatus
 
-    # for git prior to 1.7
-    # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
-    ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
-    (( $ahead )) && gitstatus+=( "%F{green}+%f${ahead}" )
+    # Calculate push-remote (p) deltas.
+    push_remote=$(git config --get branch.${hook_com[branch]}.pushRemote)
+    if [[ -n "$push_remote" ]]; then
+      p_ahead=$(git rev-list $push_remote/${hook_com[branch]}..HEAD 2>/dev/null | wc -l)
+      p_behind=$(git rev-list HEAD..$push_remote/${hook_com[branch]} 2>/dev/null | wc -l)
+    fi
 
-    # for git prior to 1.7
-    # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
-    behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
-    (( $behind )) && gitstatus+=( "%F{red}-%f${behind}" )
+    # Calculate upstream (u) deltas.
+    u_ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
+    u_behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
 
-    #hook_com[misc]+=" "${(j:/:)gitstatus}
+    # Show p deltas prefixed with "p".
+    (( $p_ahead + $p_behind )) && gitstatus+=( "%F{yellow}p%f" )
+    (( $p_ahead )) && gitstatus+=( "%F{green}+%f${p_ahead}" )
+    (( $p_behind )) && gitstatus+=( "%F{red}-%f${p_behind}" )
+
+    # Add a padding space if both p and u deltas will be shown.
+    (( $p_ahead + $p_behind )) && (( $u_ahead + $u_behind )) && gitstatus+=( " " )
+
+    # Show u deltas. If a push remote is set, then prefix with "u" and
+    # wrap in parens, to emphasize that this delta might be less
+    # important: the ahead count is certainly less important in this
+    # case, since we can't do anything about it until the feature
+    # branch gets merged.
+    [[ -n $push_remote ]] && (( $u_ahead + $u_behind )) && gitstatus+=( "(%F{yellow}u%f" )
+    (( $u_ahead )) && gitstatus+=( "%F{green}+%f${u_ahead}" )
+    (( $u_behind )) && gitstatus+=( "%F{red}-%f${u_behind}" )
+    [[ -n $push_remote ]] && (( $u_ahead + $u_behind )) && gitstatus+=( ")" )
+
     [[ -n "$gitstatus" ]] && hook_com[misc]+=" "${(j::)gitstatus}
 }
 
