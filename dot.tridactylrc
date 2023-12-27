@@ -70,21 +70,41 @@ blacklistadd tomatoes2.herokuapp.com
 " - yy : yank url
 " - gg : top of page
 " - G : bottom of page
-" - shift+insert, ctrl+alt+`, shift+escape : toggle pass thru
+" - insert, shift+insert, ctrl+alt+`, shift+escape : toggle pass thru
 " - d/D : close current tab and move focus right/left
 " - p/P : open url in clipboard or search for clipboard content in current/new tab
 " - zi/zo/zz : zoom in/out/reset
 " - \[\[ / \]\] : guess previous/next page (seems smart, e.g. works when
 "   url does not end in a number, but "next" occurs in link text)
+" - ;; : focus an element. Useful if you want to scroll something non-default with up/down or j/k
 " - ;p : copy element (e.g. link, paragraph) to clipboard
 " - ;k : kill element (e.g. a big "please disable your ad blocker" banner)
 " - :viewconfig nmaps : see all key bindings (but how to delete?)
-" - f/;f/F: follow hint in current/new foreground/new background tab
+" - f/;t/F: follow hint in current tab/new foreground tab (switch focus)/new background tab (don't switch focus)
+" - C-o : run a single command (in normal mode) when in ignore mode, then switch back to ignore mode
 
 " Make 'd' switch to previous active tab after close
 bind d composite tabclose | buffer #
+
 " Don't bind paste to ignore mode. Can use 'S-Esc' or 'C-A-Esc' instead.
 unbind <S-Insert>
+
+" Bind <Insert> to toggle normal/ignore mode. I use <Insert> to toggle
+" Ctrl-lock in Emacs, so hopefully this will be memorable. We leave
+" insert mode, but don't enter it. The insert mode bind doesn't work,
+" but <C-,> still allows escape.
+bind --mode=normal <Insert> mode ignore
+bind --mode=ignore <Insert> mode normal
+"bind --mode=insert <Insert> mode normal
+
+" Bind <C-o> to toggle normal/ignore mode for one command. Already
+" bound to C-o in normal mode, make it work everywhere. I'm rebinding
+" the existing normal mode bind for completeness/clairity. We leave
+" insert mode, but don't enter. The insert mode bind doesn't work, but
+" <C-,> still allows escape.
+bind --mode=normal <C-o> nmode normal 1 mode ignore
+bind --mode=ignore <C-o> nmode ignore 1 mode normal
+"bind --mode=insert <C-o> nmode insert 1 mode normal
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
