@@ -10,7 +10,6 @@
 ;; rustic = basic rust-mode + additions
 
 (use-package rustic
-
   :bind (:map rustic-mode-map
               ("M-j" . lsp-ui-imenu)
               ("M-?" . lsp-find-references)
@@ -22,14 +21,27 @@
               ("C-c C-c s" . lsp-rust-analyzer-status)
               ("C-c C-c e" . lsp-rust-analyzer-expand-macro)
               ("C-c C-c d" . dap-hydra)
+              ("C-c C-c C-d" . rustic-cargo-build-doc)
 
               ;; Open docs in browser for thing at point.
               ("C-c C-c h w" . lsp-rust-analyzer-open-external-docs)
               ;; Pop-up temp docs that disappear when you move the cursor.
               ("C-c C-c h g" . lsp-ui-doc-glance)
               ;; Pop-up persistent docs in new/other window.
-              ("C-c C-c h o" . lsp-describe-thing-at-point))
+              ("C-c C-c h o" . lsp-describe-thing-at-point)
+              ;; Toggle `lsp-eldoc-render-all', which controls whether
+              ;; to show the docs of thing at point in the minibuffer.
+              ("C-c C-c h t" . (lambda ()
+                                 ;; Toggle `lsp-eldoc-render-all'.
+                                 (interactive)
+                                 (setq lsp-eldoc-render-all (not lsp-eldoc-render-all))
+                                 (message "lsp-eldoc-render-all is now %s"
+                                          lsp-eldoc-render-all))))
   :config
+  ;; Improve `which-key' doc strings.
+  (which-key-add-major-mode-key-based-replacements 'rustic-mode
+    "C-c C-c h" "docs"
+    "C-c C-c h t" "toggle lsp-render-all")
   ;; uncomment for less flashiness
   ;; (setq lsp-eldoc-hook nil)
   ;; (setq lsp-enable-symbol-highlighting nil)
@@ -64,7 +76,9 @@
   ;; When this is `t' you get a big annoying popup at the bottom of
   ;; the screen. When set to `nil' you just get the type of thing at
   ;; point. https://emacs-lsp.github.io/lsp-mode/page/settings/mode/#lsp-eldoc-render-all
-  (lsp-eldoc-render-all nil)
+  ;;
+  ;; Above I've bound `C-c C-c h t' to toggle this on/off.
+  (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   ;; This controls the overlays that display type and other hints inline. Enable
   ;; / disable as you prefer. Will require a `lsp-workspace-restart' to have an
@@ -114,7 +128,12 @@
   ;; https://emacs.stackexchange.com/a/77533/9977.
   (lsp-ui-sideline-show-code-actions t)
   (lsp-ui-sideline-show-diagnostics t)
-  (lsp-ui-doc-enable t))
+  ;; Don't show docs on mouse hover. I prefer to use
+  ;; `lsp-ui-doc-glance', bound to `C-c C-c h g' above, since
+  ;; otherwise the mouse seems to randomly popup docs when I switch
+  ;; windows, because e.g. I move the mouse in Firefox, and then
+  ;; switch to Emacs and now it's right on top of a symbol.
+  (lsp-ui-doc-enable nil))
 
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;; Create / cleanup rust scratch projects quickly
