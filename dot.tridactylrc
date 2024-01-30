@@ -106,6 +106,13 @@ bind --mode=normal <C-o> nmode normal 1 mode ignore
 bind --mode=ignore <C-o> nmode ignore 1 mode normal
 "bind --mode=insert <C-o> nmode insert 1 mode normal
 
+" Workaround bug on web.whatsapp.com that prevents focus from leaving
+" message entry
+" box. https://github.com/tridactyl/tridactyl/issues/3070
+bindurl web.whatsapp.com  --mode=normal         <Escape> composite hint -f m2 ; fillcmdline ; ex.hide_and_clear
+bindurl web.whatsapp.com  --mode=insert         <Escape> composite hint -f m2 ; fillcmdline ; ex.hide_and_clear
+bindurl web.whatsapp.com  --mode=input          <Escape> composite hint -f m2 ; fillcmdline ; ex.hide_and_clear
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 " Misc settings
