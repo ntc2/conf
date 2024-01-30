@@ -4,17 +4,20 @@
 ;; Like git-gutter, but that stopped working for me in Emacs 27. The
 ;; commands are prefixed with `C-x v', e.g. `C-x v =' shows the diff
 ;; for the current file, focusing on the current hunk.
-;; Git-gutter doesn't work well for me in Emacs 27.
 (use-package diff-hl
+  ;; Make it easy to quickly jump between modified sections of the
+  ;; file. Using some kind of outline/folding mode might be a more
+  ;; general way to achieve this kind of navigation.
+  :bind
+  (("M-<prior>" . diff-hl-previous-hunk)
+   ("M-<next>" . diff-hl-next-hunk))
   :config
   (global-diff-hl-mode 1)
-  (global-diff-hl-show-hunk-mouse-mode 1))
-
-;; Make it easy to quickly jump between modified sections of the
-;; file. Using some kind of outline/folding mode might be a more
-;; general way to achieve this kind of navigation.
-(global-set-key (kbd "M-<prior>") 'diff-hl-previous-hunk)
-(global-set-key (kbd "M-<next>")  'diff-hl-next-hunk)
+  (global-diff-hl-show-hunk-mouse-mode 1)
+  (lambda ()
+    (require 'magit nil t)
+    (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
 
 ;; Disable scroll bars: takes up space.
 (scroll-bar-mode 0)
@@ -32,7 +35,3 @@
     (progn
       (display-line-numbers-mode -1))))
 (add-hook 'window-configuration-change-hook #'nc/maybe-linum)
-
-(require 'magit nil t)
-(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)

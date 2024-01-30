@@ -118,4 +118,9 @@
 ;; IDE
 (use-package yasnippet)
 (use-package company)
-(use-package flycheck)
+(use-package flycheck
+  ;; Make it easier to jump between errors; the default `C-c ! n' is
+  ;; painful.
+  :bind (("C-<prior>" . flycheck-previous-error)
+         ("C-<next>" . flycheck-next-error))
+  )
