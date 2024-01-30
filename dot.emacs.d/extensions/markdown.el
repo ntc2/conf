@@ -49,4 +49,9 @@
   (if (eq major-mode 'nc/display-latex-mode)
       (visual-fill-column-mode -1)  ;; Disable visual-fill-column-mode
     (visual-fill-column-mode 1)))   ;; Else, enable visual-fill-column-mode
-(add-hook 'polymode-after-switch-buffer-hook 'nc/poly-disable-visual-fill-for-latex)
+
+;; This is annoying, and may be interfering with copilot. Better to
+;; just manually toggle `visual-fill-column-mode' in the rare cases it's
+;; a problem.
+;;
+;;(add-hook 'polymode-after-switch-buffer-hook 'nc/poly-disable-visual-fill-for-latex)
