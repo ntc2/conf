@@ -118,9 +118,36 @@
 ;; IDE
 (use-package yasnippet)
 (use-package company)
-(use-package flycheck
-  ;; Make it easier to jump between errors; the default `C-c ! n' is
-  ;; painful.
-  :bind (("C-<prior>" . flycheck-previous-error)
-         ("C-<next>" . flycheck-next-error))
+(use-package flycheck)
+
+;; Good discussion of keymaps here:
+;; https://www.masteringemacs.org/article/mastering-key-bindings-emacs#keymap-lookup-order
+(defun nc/next-error ()
+  "Jump to the next error in the current buffer, where 'error' is
+defined by what minor modes are in use.
+
+Specifically, in order of precedence:
+- if `smerge-mode' is active, jump to the next merge conflict;
+- if `flycheck-mode' is active, jump to the next flycheck error;
+"
+  (interactive)
+  (cond
+   ((bound-and-true-p smerge-mode) (smerge-next))
+   ;; Make it easier to jump between errors; the default `C-c ! n' is
+   ;; painful.
+   ((and (bound-and-true-p flycheck-mode)
+         flycheck-current-errors)
+    (flycheck-next-error))
+   (t (next-error))))
+(defun nc/previous-error ()
+  "Like `nc/next-error'."
+  (interactive)
+  (cond
+   ((bound-and-true-p smerge-mode) (smerge-prev))
+   ((bound-and-true-p flycheck-mode) (flycheck-previous-error))
+   (t (previous-error))))
+(use-package emacs
+  :bind
+  ("C-<prior>" . nc/previous-error)
+  ("C-<next>" . nc/next-error)
   )
