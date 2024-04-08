@@ -238,6 +238,12 @@
 # Automatically added when I used Git LFS on Brittle.
 [status]
 	showUntrackedFiles = all
+# For the `git absorb` extension
+[absorb]
+    # Don't create multiple fixup commits with the same target commit
+    oneFixupPerCommit = true
+[credential]
+	helper = cache --timeout=86400
 # Git !-aliases are run with current dir set to `git rev-parse
 # --show-toplevel`, with the variable 'GIT_PREFIX' set to `git
 # rev-parse --show-prefix`.
@@ -499,5 +505,3 @@
       # git reset --soft 'HEAD^' && \
       # git fixws-index && \
       # git stash pop
-[credential]
-	helper = cache --timeout=86400
