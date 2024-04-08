@@ -35,6 +35,8 @@
             java-mode
             javascript-mode
             python-mode
+            rust-mode
+            rustic-mode
             sh-mode))
           (flyspell-modes
            '(conf-mode

@@ -23,6 +23,10 @@
               ("C-c C-c d" . dap-hydra)
               ("C-c C-c C-d" . rustic-cargo-build-doc)
 
+              ;; Already bound to `C-c C-c C-k', but I use this
+              ;; constantly.
+              ("<f6>" . rustic-cargo-check)
+
               ;; Open docs in browser for thing at point.
               ("C-c C-c h w" . lsp-rust-analyzer-open-external-docs)
               ;; Pop-up temp docs that disappear when you move the cursor.
@@ -42,10 +46,6 @@
   (which-key-add-major-mode-key-based-replacements 'rustic-mode
     "C-c C-c h" "docs"
     "C-c C-c h t" "toggle lsp-render-all")
-  ;; uncomment for less flashiness
-  ;; (setq lsp-eldoc-hook nil)
-  ;; (setq lsp-enable-symbol-highlighting nil)
-  ;; (setq lsp-signature-auto-activate nil)
 
   ;; comment to disable rustfmt on save
   (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
