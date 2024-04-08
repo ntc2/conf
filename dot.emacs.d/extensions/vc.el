@@ -3,9 +3,19 @@
 ;; Edit Git commit messages in diff-mode.
 (add-to-list 'auto-mode-alist '("COMMIT_EDITMSG" . diff-mode))
 
+(use-package which-key
+  :config
+  (which-key-add-key-based-replacements
+    "C-c m" "magit"))
+
 ;; As suggested in https://magit.vc/manual/magit/Status-buffer.html,
 ;; so I can stop typing 'M-x magit-status RET'.
 (global-set-key (kbd "C-c m s") 'magit-status)
+(global-set-key (kbd "<f5>") 'magit-status)
+
+;; Popup the magit quick menu. Many options available here, e.g. press `d' to
+;; see diff for hunk at point.
+(global-set-key (kbd "C-c m m") 'magit-file-dispatch)
 
 ;; My `git-gutter' doesn't update properly after commits, but this
 ;; seems to do the trick (but why can't I make this happen
