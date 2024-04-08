@@ -41,6 +41,10 @@
                                  (setq lsp-eldoc-render-all (not lsp-eldoc-render-all))
                                  (message "lsp-eldoc-render-all is now %s"
                                           lsp-eldoc-render-all))))
+
+  :custom
+  (fill-column 80 "Rust likes long lines, 100 for code, 80 for comments: https://github.com/rust-lang/rustfmt/blob/master/Configurations.md#comment_width")
+
   :config
   ;; Improve `which-key' doc strings.
   (which-key-add-major-mode-key-based-replacements 'rustic-mode

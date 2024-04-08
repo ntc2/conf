@@ -147,6 +147,8 @@ Specifically, in order of precedence:
    ((bound-and-true-p flycheck-mode) (flycheck-previous-error))
    (t (previous-error))))
 (use-package emacs
+  :custom
+  (fill-column 80 "Set in use-package emacs. Default is 70 columns.")
   :bind
   ("C-<prior>" . nc/previous-error)
   ("C-<next>" . nc/next-error)
