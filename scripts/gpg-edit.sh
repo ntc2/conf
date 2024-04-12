@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# temporarily decrypt a gpg symmetric encrypted file, edit it in
-# {$EDITOR || $(which editor)}, and then re-encrypt.  to encrypt a
-# file the first time, before using this program, use
+# temporarily decrypt a gpg symmetric encrypted file, edit it in emacs, and then
+# re-encrypt.
+#
+# To encrypt a file the first time, before using this program, use
 #
 #   gpg -ac PLAIN_TEXT_FILE
 #
@@ -18,15 +19,10 @@ if [[ $1 == -h || $# -ne 1 ]]; then
     exit 1
 fi
 
-# attempt to choose an editor
-edit="$EDITOR"
-if [[ -z "$edit" ]]; then
-    edit="$(which editor 2>/dev/null)"
-    if [[ -z "$edit" ]]; then
-        echo "error: you must set EDITOR in your environment or have \
-a program called 'editor' on your path" >&2
-        exit 1
-    fi
+# configure emacs with default setup, no graphics, and no backups.
+edit='emacs -nw --eval "(setq make-backup-files nil)" -Q'
+if ! which emacs &>/dev/null; then
+  echo "error: no emacs!" >&2
 fi
 
 # tempfile permissions
@@ -63,12 +59,15 @@ head -n 1 > $pw
 echo
 stty echo
 
-# view file and maybe edit and save
+# view file and maybe edit and save. i get an error about "end of file while
+# parsing" if i don't run $edit $t inside a shell, since adding the {--eval ...}
+# part to the edit command. it works fine when i paste it into the shell. no
+# idea whats' going on???
 gpg --yes --batch  -o $t --passphrase-file $pw $in && \
 if [[ $mode != edit ]]; then
   chmod 0400 $t
 fi && \
-$edit $t && \
+sh -c "$edit $t" && \
 if [[ $mode == edit ]]; then
   gpg --yes --batch -aco $in --passphrase-file $pw $t
 fi
