@@ -142,11 +142,18 @@ function +vi-git-set-message { +vi-git-st ; +vi-git-untracked ; }
 zstyle ':vcs_info:git*+set-message:*' hooks git-set-message
 zstyle ':vcs_info:svn*+set-message:*' hooks svn-untracked
 
-# Print vcs_info on it's own line.
+# Print vcs_info on its own line.
 function _nc:vcs_info {
     vcs_info
     if [[ -n "$vcs_info_msg_0_" ]]; then
         echo -e "\n$vcs_info_msg_0_"
+    fi
+}
+
+# Print nix info on its own line.
+function _nc:nix_info {
+    if [[ -n "$IN_NIX_SHELL" ]]; then
+        print -n "\n[%F{magenta}nix-shell%f][name=$name]"
     fi
 }
 
@@ -200,7 +207,8 @@ PS1='$(_nc:ps1_prefix)[$rd%n$pl@$gr$(hostname)$pl]\
 [%%$rd%j$pl]\
 [%*]\
 [%F{yellow}$nc_timer_dt_m_s_ms%f]\
-$(_nc:vcs_info)
+$(_nc:vcs_info)\
+$(_nc:nix_info)
 %(?..[?$rd%?$pl])\
 %K{green} %k'
 
