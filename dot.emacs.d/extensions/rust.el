@@ -44,6 +44,7 @@
 
   :custom
   (fill-column 80 "Rust likes long lines, 100 for code, 80 for comments: https://github.com/rust-lang/rustfmt/blob/master/Configurations.md#comment_width")
+  (rustic-cargo-check-arguments "--benches --tests --examples --all-features" "By default '--examples' is not included")
 
   :config
   ;; Improve `which-key' doc strings.
