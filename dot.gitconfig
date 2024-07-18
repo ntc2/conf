@@ -244,6 +244,10 @@
     oneFixupPerCommit = true
 [credential]
 	helper = cache --timeout=86400
+# Auto translate https github urls to ssh.
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+
 # Git !-aliases are run with current dir set to `git rev-parse
 # --show-toplevel`, with the variable 'GIT_PREFIX' set to `git
 # rev-parse --show-prefix`.
