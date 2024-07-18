@@ -8,6 +8,12 @@
   (which-key-add-key-based-replacements
     "C-c m" "magit"))
 
+(use-package magit
+  :config
+  ;; Enable `git absorb' in menu. Need to install `git absorb' separately.
+  (transient-replace-suffix 'magit-commit 'magit-commit-autofixup
+  '("x" "Absorb changes" magit-commit-absorb)))
+
 ;; As suggested in https://magit.vc/manual/magit/Status-buffer.html,
 ;; so I can stop typing 'M-x magit-status RET'.
 (global-set-key (kbd "C-c m s") 'magit-status)
