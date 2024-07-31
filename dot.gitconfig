@@ -248,6 +248,16 @@
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 
+# Use SSH to sign commits.
+[gpg]
+	format = ssh
+# Sign commits to by default.
+[commit]
+	gpgsign = true
+# Use first key returned by agent to sign commits.
+[gpg "ssh"]
+	defaultKeyCommand = ssh-add -L
+
 # Git !-aliases are run with current dir set to `git rev-parse
 # --show-toplevel`, with the variable 'GIT_PREFIX' set to `git
 # rev-parse --show-prefix`.
