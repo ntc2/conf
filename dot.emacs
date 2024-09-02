@@ -1,5 +1,10 @@
 ;; -*- emacs-lisp -*-
 
+;; Compute directory of this file, after resolving all symlinks. This is used
+;; for loading extension files at relative paths.
+(setq conf-root (file-name-directory (file-truename load-file-name)))
+;; We include the trailing slash, which is consistent with `conf-root'.
+(setq extensions-dir (concat conf-root "dot.emacs.d/extensions/"))
 ;; We're using straight.el.
 (setq package-enable-at-startup nil)
 
@@ -80,7 +85,8 @@
 ;;
 ;;(set-face-attribute 'default nil :height 150)
 
-(apply 'load-file (file-expand-wildcards "~/v/conf/dot.emacs.d/extensions/00-dependencies.el"))
+;; Load dependencies. This includes downloading them if necessary.
+(load-file (concat extensions-dir "00-dependencies.el"))
 
 ;; * Custom set variables.
 ;;
@@ -232,7 +238,7 @@ See `nc:custom-set-variable'."
       ;; HACK: using [a-z] prefix to avoid loading
       ;; 00-dependencies.el. Better to just move that out of
       ;; extensions/ dir.
-      (files (file-expand-wildcards "~/.emacs.d/extensions/[a-z]*.el")))
+      (files (file-expand-wildcards (concat extensions-dir "[a-z]*.el"))))
   (mapc 'nc:load files))
 ;; Generate list of extensions for (e.g. bisection) debugging config
 ;; probllems.

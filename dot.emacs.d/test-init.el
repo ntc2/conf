@@ -34,7 +34,7 @@
                          "/" "-"
                          (substring (expand-file-name conf-root) 1))
                         "/var/tmp/emacs-test-init"))
-;; Print use-emacs-directory to stdout and quit
+;; Print use-emacs-directory to stdout
 (print (format "user-emacs-directory: %s" user-emacs-directory)
        #'external-debugging-output)
 ;; Where to save `custom-set-variable's and such.
