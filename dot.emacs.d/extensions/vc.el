@@ -8,7 +8,19 @@
   (which-key-add-key-based-replacements
     "C-c m" "magit"))
 
+;; I want the default before for wide monitors, but want to fill vertically for
+;; small windows.  The built-in `magit-display-buffer-full-column-most-v1' only
+;; handles the second case, so instead we reuse the default "traditional"
+;; display mode, and then just force it to fill vertically. Note that the
+;; `magit-display-buffer-function' needs to return the window it displayed to.
+(defun nc/display-buffer-fullcolumn (buffer)
+  (let ((window (magit-display-buffer-traditional buffer)))
+    (delete-other-windows-vertically window)
+    window))
+
 (use-package magit
+  :custom
+  (magit-display-buffer-function 'nc/display-buffer-fullcolumn)
   :config
   ;; Enable `git absorb' in menu. Need to install `git absorb' separately.
   (transient-replace-suffix 'magit-commit 'magit-commit-autofixup

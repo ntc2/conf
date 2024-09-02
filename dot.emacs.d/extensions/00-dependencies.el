@@ -57,9 +57,6 @@
 ;;
 ;;;; ================================================================
 
-;; Git IDE.
-(use-package magit)
-
 ;; Markdown.
 ;;
 ;; More recent than the version that ships with Emacs.
