@@ -123,19 +123,15 @@ in buffer with regular spaces"
 ;; The standard `fill-paragraph' is bound to `M-q'.
 (define-key global-map "\M-Q" 'nc:unfill-paragraph)
 
-;; Use visual-line-mode, where Emacs logically wraps long lines, but
+;; Use visual-line-mode, where Emacs logically/soft wraps long lines, but
 ;; doesn't actually hard wrap them. Eliminates the need to constantly
 ;; press `M-q'.
 ;;
-;; Only enabled in non-prog, non-org text modes.
+;; Only enabled in non-prog text modes.
 (use-package emacs
   :hook
   ((text-mode . (lambda ()
-                  (unless (or (derived-mode-p 'prog-mode)
-                              ;; When visual-line-mode is on in
-                              ;; org-mode, it results in files opening
-                              ;; up fully expanded, which is annoying.
-                              (derived-mode-p 'org-mode))
+                  (unless (derived-mode-p 'prog-mode)
                     (setq visual-line-fringe-indicators
                           '(left-curly-arrow right-curly-arrow))
                     (visual-line-mode 1))))))
@@ -147,3 +143,9 @@ in buffer with regular spaces"
     (setq-default visual-fill-column-center-text nil)
     (setq-default visual-fill-column-width 80)
     (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)))
+;; Indent soft-wrapped lines.
+(use-package adaptive-wrap
+  :ensure t
+  :config
+  ;; Indent wrapped lines.
+  (add-hook 'org-mode-hook 'adaptive-wrap-prefix-mode))
