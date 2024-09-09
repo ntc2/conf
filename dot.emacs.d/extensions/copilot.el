@@ -129,10 +129,10 @@ annoying, sometimes be useful, that's why this can be handly."
   (add-hook 'conf-mode-hook 'copilot-mode)
 
   ;; keybindings that are active when copilot shows completions
-  (define-key copilot-mode-map (kbd "M-<up>") #'copilot-next-completion)
+  (define-key copilot-mode-map (kbd "M-C-<up>") #'copilot-next-completion)
   ;;(define-key copilot-mode-map (kbd "M-]") #'copilot-previous-completion)
-  (define-key copilot-mode-map (kbd "M-<right>") #'copilot-accept-completion-by-word)
-  (define-key copilot-mode-map (kbd "M-<down>") #'copilot-accept-completion-by-line)
+  (define-key copilot-mode-map (kbd "M-C-<right>") #'copilot-accept-completion-by-word)
+  (define-key copilot-mode-map (kbd "M-C-<down>") #'copilot-accept-completion-by-line)
 
   ;; global keybindings
   (define-key global-map (kbd "M-C-<return>") #'rk/copilot-complete-or-accept)
