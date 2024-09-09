@@ -28,8 +28,8 @@
 ;; to TODO state, e.g. with `C-c C-t t' to set to "TODO". Docs:
 ;; http://orgmode.org/manual/Fast-access-to-TODO-states.html#Fast-access-to-TODO-states
 (nc:custom-set-variable org-todo-keywords
-                        '((sequence "TODO(t)" "NEXT(n)" "INPROGRESS(i)" "|" "DONE(d)")
-                          (sequence "|" "MAYBE(m)" "WAITING(w)" "CANCELLED(c)")))
+                        '((sequence "TODO(t)" "NEXT(n)" "INPROGRESS(p)" "|" "DONE(d)")
+                          (sequence "|" "MAYBE(m)" "WAITING(w)" "INREVIEW(r)" "CANCELLED(c)")))
 
 (add-hook 'org-mode-hook
   (lambda ()
