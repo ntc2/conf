@@ -5,19 +5,18 @@
 ;; commands are prefixed with `C-x v', e.g. `C-x v =' shows the diff
 ;; for the current file, focusing on the current hunk.
 (use-package diff-hl
+  :requires magit
   ;; Make it easy to quickly jump between modified sections of the
   ;; file. Using some kind of outline/folding mode might be a more
   ;; general way to achieve this kind of navigation.
   :bind
   (("M-<prior>" . diff-hl-previous-hunk)
    ("M-<next>" . diff-hl-next-hunk))
-  :config
+  :init
   (global-diff-hl-mode 1)
   (global-diff-hl-show-hunk-mouse-mode 1)
-  (lambda ()
-    (require 'magit nil t)
-    (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
+  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
 ;; Disable scroll bars: takes up space.
 (scroll-bar-mode 0)
