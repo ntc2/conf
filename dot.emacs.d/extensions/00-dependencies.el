@@ -1,3 +1,6 @@
+;; See ../test-init.el for sandboxing config changes, including upgrading all
+;; packages. Still need to try the freeze/thaw mentioned below.
+;;
 ;; I'm using straight.el + use-package to manage packages, after
 ;; having trouble with package.el + use-package. Note that straight.el
 ;; suggests removing all package.el related stuff, which includes not

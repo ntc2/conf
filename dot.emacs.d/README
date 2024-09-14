@@ -1,3 +1,6 @@
+See ./test-init.el for making major config changes or upgrading packages without
+hosing existing config.
+
 Not all of these files are linked into ~/.emacs.d
 automatically. Rather, some are linked in by ../install-conf.py, and
 others -- the workstation-specific *.system-custom configs -- are

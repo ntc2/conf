@@ -3,8 +3,8 @@
 ;; install Emacs deps in a temp dir, to experiment with new configs
 ;; without nuking existing install.
 ;;
-;; To use this, check out a tmp copy of this config repo, edit the
-;; configs, and run Emacs with this file as init:
+;; To use this, check out a tmp copy of this config repo (e.g. /var/tmp/conf),
+;; edit the configs, and run Emacs with this file as init:
 ;;
 ;;     emacs -Q --load <path to tmp copy of conf repo>/dot.emacs.d/test-init.el --debug-init
 ;;
