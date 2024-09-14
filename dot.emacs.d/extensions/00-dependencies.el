@@ -1,5 +1,5 @@
 ;; See ../test-init.el for sandboxing config changes, including upgrading all
-;; packages. Still need to try the freeze/thaw mentioned below.
+;; packages.
 ;;
 ;; I'm using straight.el + use-package to manage packages, after
 ;; having trouble with package.el + use-package. Note that straight.el
@@ -10,18 +10,28 @@
 ;;
 ;; https://github.com/radian-software/straight.el
 ;;
-;; There is no automatic upgrading. Note that things may break on
-;; upgrade. To manually update one package, e.g. after I change its
-;; source pin, use `straight-pull-package', and then restart Emacs. To
-;; update all packages, use `straight-pull-all', and then restart. But
-;; I might want to try "freezing" first, so I can revert if
-;; needed. Update commands:
+;; There is no automatic upgrading of packages; note that things may break on
+;; upgrade. To manually upgrade one package, e.g. after I change its source pin,
+;; or just to get latest upstream version, use `straight-pull-package', and then
+;; restart Emacs. To update all packages, use `straight-pull-all' (this takes a
+;; long time!), and then restart. These operations are smart about not
+;; overwriting any local changes you might have. Package upgrade docs:
 ;;
 ;; https://github.com/radian-software/straight.el#version-control-operations
 ;;
-;; I didn't read about it yet, but freeze/thaw is available:
+;; To get a consistent setup across machines, and be able to revert, use
+;; freeze/thaw. To freeze, use `straight-freeze-versions', and then commit the
+;; updated versions file in
+;; `~/v/conf/dot.emacs.d/straight/versions/default.el'. To revert to the state
+;; specified in the versions file, use `straight-thaw-versions'. Freeze/thaw docs:
 ;;
 ;; https://github.com/radian-software/straight.el#configuration-reproducibility
+;;
+;; To edit a package, e.g. to fix a bug, just edit the package directly in the
+;; straight checkout of its repo under `~/.emacs.d/straight/repos/'. Straight
+;; will not overwrite your changes without warning. Local editing docs:
+;;
+;; https://github.com/radian-software/straight.el#edit-packages-locally
 
 ;; Install `straight'.
 (defvar bootstrap-version)
