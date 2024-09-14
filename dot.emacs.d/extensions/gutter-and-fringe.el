@@ -16,7 +16,12 @@
   (global-diff-hl-mode 1)
   (global-diff-hl-show-hunk-mouse-mode 1)
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  ;; The default color for changed lines looks almost the same as the default
+  ;; color for added lines, so change to something more distinct. Emacs color
+  ;; list: https://www.raebear.net/computers/emacs-colors/
+  (custom-set-faces
+  '(diff-hl-change ((t (:foreground "sky blue" :background "dodger blue"))))))
 
 ;; Disable scroll bars: takes up space.
 (scroll-bar-mode 0)
