@@ -114,6 +114,27 @@
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
   (add-hook 'lsp-mode-hook 'lsp-inlay-hints-mode))
 
+;; Allow enabling non-default features. I already have "F5" setup to use
+;; "--all-features", but the rust-analyzer doesn't use that.
+;;
+;; Based on https://github.com/emacs-lsp/lsp-mode/issues/3375
+(defun edit-lsp-rust-features ()
+  "Edit `lsp-rust-features' and `lsp-rust-no-default-features'.
+
+If the first character of input is '=', then
+`lsp-rust-no-default-features' is set. Multiple features are
+specified by separating them with commas. The value \"all\" is
+special and means \"--all-features\"."
+  (interactive)
+  (let ((old-features (mapconcat 'identity lsp-rust-features ",")))
+    (when lsp-rust-no-default-features
+      (setq old-features (concat "=" old-features)))
+    (let ((new-features (read-string "Features? " old-features)))
+      (setq lsp-rust-no-default-features (string-prefix-p "=" new-features))
+      (if lsp-rust-no-default-features (aset new-features 0 ?,))
+      (setq lsp-rust-features (vconcat (split-string new-features "," t)))))
+  (call-interactively 'lsp-workspace-restart))
+
 ;; Docs: https://emacs-lsp.github.io/lsp-ui/
 (use-package lsp-ui
   :commands lsp-ui-mode
