@@ -27,9 +27,9 @@ def main():
     chdir(home)
 
     for d in ('v', 'tmp', 'local', 'local/opt', '.subversion', '.ghc',
-              '.emacs.d', '.pip',
+              '.emacs.d', '.emacs.d/straight', '.pip',
               '.local/share/applications', '.config/gnome-session/sessions'):
-        if not exists(d): c('mkdir -p %s' % d)
+        c('mkdir -p %s' % d)
     chdir('v')
 
     if not exists('conf'):
@@ -44,8 +44,9 @@ def main():
 
     # {ln -T} mean treat destination as a normal file, i.e. don't
     # create file *in* target if target is a dir.  this is needed for
-    # the idempotence of {ln ~/v/conf/dot.zsh ~/.zsh}.
-    for f in ('.emacs', '.pythonrc', '.screenrc', '.subversion/config',
+    # the idempotence of directory links, e.g. {ln ~/v/conf/dot.zsh ~/.zsh}.
+    for f in ('.emacs', '.emacs.d/extensions', '.emacs.d/README', '.emacs.d/straight/versions',
+              '.pythonrc', '.screenrc', '.subversion/config',
               '.zsh', '.zshrc', '.zshenv', '.zprofile',
               '.ghc/ghci.conf', '.haskeline',
               '.tridactylrc',
@@ -66,11 +67,6 @@ def main():
         from_ = '%(home)s/v/conf/dot%(f)s' % locals()
         to = '%(home)s/%(f)s' % locals()
         c('ln -Tf %(from_)s %(to)s'  % locals())
-
-    # emacs extensions.
-    for f in ('extensions', 'README'):
-        c('ln -fs %(home)s/v/conf/dot.emacs.d/%(f)s %(home)s/.emacs.d/'
-          % locals())
 
     # misc programs.
     c('ln -fs %(home)s/v/conf/scripts %(home)s/local/' % locals())
