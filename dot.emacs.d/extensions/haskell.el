@@ -1,3 +1,5 @@
+;; Warning: I also have lsp-mode configs in rust.el, and multiple use-package
+;; decls can conflict. So, need to deconflict before re-enabling haskell setup.
 (when nil
 ;;; Haskell
 

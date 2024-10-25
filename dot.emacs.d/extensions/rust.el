@@ -72,6 +72,9 @@
 ;; conflict. I'm not sure if multiple `use-package' calls for the same
 ;; package is officially supported, or what the semantics are for
 ;; merging.
+;;
+;; UPDATE: multiple use-package sections can definitely conflict! But Haskell
+;; config is commented out.
 
 (use-package lsp-mode
   :commands lsp
