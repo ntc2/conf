@@ -81,4 +81,5 @@
   ;; color for added lines, so change to something more distinct. Emacs color
   ;; list: https://www.raebear.net/computers/emacs-colors/
   (custom-set-faces
-  '(diff-hl-change ((t (:foreground "sky blue" :background "dodger blue"))))))
+   '(diff-hl-change ((t (:foreground "sky blue" :background "dodger blue")))
+                    nil "Overridden in `extensions/vc.el'")))
