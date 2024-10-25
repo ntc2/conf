@@ -83,3 +83,10 @@
   (custom-set-faces
    '(diff-hl-change ((t (:foreground "sky blue" :background "dodger blue")))
                     nil "Overridden in `extensions/vc.el'")))
+
+(use-package ediff
+  :custom
+  ;; Show ediff control panel in the same frame as diffs.
+  (ediff-window-setup-function 'ediff-setup-windows-plain)
+  ;; Show diffs side-by-side.
+  (ediff-split-window-function 'split-window-horizontally))
