@@ -118,7 +118,7 @@
 ;; "--all-features", but the rust-analyzer doesn't use that.
 ;;
 ;; Based on https://github.com/emacs-lsp/lsp-mode/issues/3375
-(defun edit-lsp-rust-features ()
+(defun nc/rust/edit-lsp-rust-features ()
   "Edit `lsp-rust-features' and `lsp-rust-no-default-features'.
 
 If the first character of input is '=', then
