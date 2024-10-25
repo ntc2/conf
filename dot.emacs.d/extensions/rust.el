@@ -26,6 +26,8 @@
               ;; Already bound to `C-c C-c C-k', but I use this
               ;; constantly.
               ("<f6>" . rustic-cargo-check)
+              ;; Get list of all errors, warnings, and info.
+              ("<f7>" . lsp-ui-flycheck-list)
 
               ;; Open docs in browser for thing at point.
               ("C-c C-c h w" . lsp-rust-analyzer-open-external-docs)
@@ -78,6 +80,11 @@
 
 (use-package lsp-mode
   :commands lsp
+  :init
+  (custom-set-faces
+   ;; Same color as the yellow for keywords in my theme.
+   '(warning ((t (:foreground "#F0DFAF" :weight bold)))
+             nil "Overridden in `extensions/rust.el'"))
   :custom
   ;; what to use when checking on-save. "check" is default, I prefer clippy
   (lsp-rust-analyzer-cargo-watch-command "clippy")
@@ -88,6 +95,10 @@
   ;; Above I've bound `C-c C-c h t' to toggle this on/off.
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
+  ;; Defaults to workspace, but it's distracting to see warning counts in files
+  ;; I didn't edit. Can get the full list of errors and warnings with
+  ;; `lsp-ui-flycheck-list'.
+  (lsp-modeline-diagnostics-scope :file "Overridden in `extensions/rust.el'")
   ;; This controls the overlays that display type and other hints inline. Enable
   ;; / disable as you prefer. Will require a `lsp-workspace-restart' to have an
   ;; effect on open projects.
