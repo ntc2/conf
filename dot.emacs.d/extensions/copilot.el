@@ -121,6 +121,9 @@ annoying, sometimes be useful, that's why this can be handly."
 ;; load the copilot package
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+  :custom
+  (copilot-indent-offset-warning-disable t)
+
   :config
   (add-hook 'prog-mode-hook 'copilot-mode)
   (add-hook 'text-mode-hook 'copilot-mode)
@@ -150,7 +153,12 @@ annoying, sometimes be useful, that's why this can be handly."
 
   ;; deactivate copilot for certain modes
   (add-to-list 'copilot-enable-predicates #'rk/copilot-enable-predicate)
-  (add-to-list 'copilot-disable-predicates #'rk/copilot-disable-predicate))
+  (add-to-list 'copilot-disable-predicates #'rk/copilot-disable-predicate)
+
+  ;; Disable common warnings.
+  (add-to-list 'warning-suppress-log-types '((copilot copilot-no-mode-indent)))
+  (add-to-list 'warning-suppress-types '((copilot copilot-exceeds-max-char)))
+  (add-to-list 'warning-suppress-types '((copilot copilot-no-mode-indent))))
 
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;; auto-completion and code snippets
