@@ -46,6 +46,14 @@
     (bind-windmove-keys)
 
     (local-set-key (kbd "C-c C-a") 'align-regexp)
+
+    ;; By default, `org-mode-map' remaps `kill-line' to `org-kill-line', which
+    ;; in turn inherits the default behavior of `visual-line-mode's kill line
+    ;; function, which only kills to the end of the visual/logical line. I want
+    ;; to kill to the end of the physical line, and i've separately overridden
+    ;; `C-k' in `visual-line-mode', so here I just need to remove the remapping.
+    (define-key org-mode-map [remap kill-line] nil)
+
     ;; Search Org headings using Helm.
     (local-set-key (kbd "C-c o s") 'helm-org-in-buffer-headings)))
 (add-hook 'org-agenda-mode-hook

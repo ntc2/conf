@@ -134,7 +134,13 @@ in buffer with regular spaces"
                   (unless (derived-mode-p 'prog-mode)
                     (setq visual-line-fringe-indicators
                           '(left-curly-arrow right-curly-arrow))
-                    (visual-line-mode 1))))))
+                    (visual-line-mode 1)
+                    ;; Make `C-k' kill to the end of the actual line, even if
+                    ;; visual line is wrapping it. By default visual-line-mode
+                    ;; remaps `kill-line' to `kill-visual-line', which only
+                    ;; kills to end of visual line, not actual line.
+                    (define-key visual-line-mode-map [remap kill-line] nil))))))
+
 ;; Use visual-fill-column-mode to wrap long lines in visual-fill
 ;; mode. See markdown specific tweaks to this in `./markdown.el'.
 (use-package visual-fill-column
