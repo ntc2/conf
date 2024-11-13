@@ -63,7 +63,10 @@
     ;; `C-k' in `visual-line-mode', so here I just need to remove the remapping.
     (define-key org-mode-map [remap kill-line] nil)
 
+    ;; Clocking.
     (local-set-key (kbd "<f6>") 'nc/org/start-work-day)
+    (local-set-key (kbd "<f7>") 'org-clock-in)
+    (local-set-key (kbd "<f8>") 'org-clock-out)
 
     ;; Search Org headings using Helm.
     (local-set-key (kbd "C-c o s") 'helm-org-in-buffer-headings)))
