@@ -131,7 +131,9 @@ in buffer with regular spaces"
 (use-package emacs
   :hook
   ((text-mode . (lambda ()
-                  (unless (derived-mode-p 'prog-mode)
+                  (unless (or (derived-mode-p 'prog-mode)
+                              ;; For minor modes, `derived-mode-p' doesn't work.
+                              (bound-and-true-p git-commit-mode))
                     (setq visual-line-fringe-indicators
                           '(left-curly-arrow right-curly-arrow))
                     (visual-line-mode 1)
