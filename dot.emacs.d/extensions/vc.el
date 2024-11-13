@@ -8,14 +8,17 @@
   (which-key-add-key-based-replacements
     "C-c m" "magit"))
 
-;; I want the default before for wide monitors, but want to fill vertically for
-;; small windows.  The built-in `magit-display-buffer-full-column-most-v1' only
-;; handles the second case, so instead we reuse the default "traditional"
-;; display mode, and then just force it to fill vertically. Note that the
+;; I want the default before for wide monitors, but want magit status buffers to
+;; fill vertically for small windows.  The built-in
+;; `magit-display-buffer-full-column-most-v1' only handles the second case, so
+;; instead we reuse the default "traditional" display mode, and then just force
+;; magit status buffers to fill vertically. Note that the
 ;; `magit-display-buffer-function' needs to return the window it displayed to.
 (defun nc/display-buffer-fullcolumn (buffer)
   (let ((window (magit-display-buffer-traditional buffer)))
-    (delete-other-windows-vertically window)
+    (when (with-current-buffer buffer
+            (derived-mode-p 'magit-status-mode))
+      (delete-other-windows-vertically window))
     window))
 
 (use-package magit
