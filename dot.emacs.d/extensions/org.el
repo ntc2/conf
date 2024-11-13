@@ -31,6 +31,15 @@
                         '((sequence "TODO(t)" "NEXT(n)" "INPROGRESS(p)" "|" "DONE(d)")
                           (sequence "|" "MAYBE(m)" "WAITING(w)" "INREVIEW(r)" "CANCELLED(c)")))
 
+(defun nc/org/start-work-day ()
+  "Insert subheading titled with today's date and clock in under it."
+  (interactive)
+  (org-insert-subheading "")
+  (insert (format-time-string "[%Y-%m-%d %a]"))
+  (org-clock-in)
+  ;; Start a new list item inside the clocked-in subheading.
+  (execute-kbd-macro (kbd "<down> <tab> <home> C-o - SPC")))
+
 (add-hook 'org-mode-hook
   (lambda ()
     ;; Don't indent drawers (e.g the LOGBOOK for clocking)
@@ -53,6 +62,8 @@
     ;; to kill to the end of the physical line, and i've separately overridden
     ;; `C-k' in `visual-line-mode', so here I just need to remove the remapping.
     (define-key org-mode-map [remap kill-line] nil)
+
+    (local-set-key (kbd "<f6>") 'nc/org/start-work-day)
 
     ;; Search Org headings using Helm.
     (local-set-key (kbd "C-c o s") 'helm-org-in-buffer-headings)))
